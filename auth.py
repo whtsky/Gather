@@ -12,9 +12,6 @@ class AuthSignupHandler(BaseHandler):
 
     def post(self):
         password = self.get_argument('password')
-        if password != self.get_argument('password-ag'):
-            self.render('error.html',errortext='两次密码不一样。')
-            return 
         username = self.get_argument('username')
         email = self.get_argument('email')
         account = self.db.users
