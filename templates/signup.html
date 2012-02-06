@@ -3,33 +3,53 @@
 {% block title %}注册 -- {{ escape(handler.settings['bbs_title']) }}{% end %}
 
 {% block style %}
-input
+form
 {
-    width:215px;
+    /*width:500px;*/
 }
 {% end %}
 
 {% block body %}
 <div class='container'>
   <div class='row'>
-    <div class='span4 offset4'>
-      <div class='box'>
-        <form class='well' action='/signup' method='post'>
+      <div class='box container'>
+        <form class='form-horizontal well span6 offset3'>
           <fieldset>
             <header><h2>注册</h2></header>
             {{ xsrf_form_html() }}
-            用户名：
-            <input type='text' class='span3' id='username'><br />
-            E-mail：
-            <input type='text' class='span3' id='email'><br />
-            密码：
-            <input type='text' class='span3' id='password' type='password'><br />
-            确认密码：
-            <input type='text' class='span3' id='password-ag' type='password'><br />
-            <button id='submit' class='btn btn-primary'>注册</button>
+            <div class="control-group">
+                <label class="control-label" for="username">用户名</label>
+                <div class="controls">
+                    <input type="text" id="username">
+                    <p class="help-block">用户名将是你以后在论坛的唯一标识，可以使用30个字符以下的中英文.</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="email">E-mail</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">@</span>
+                        <input type="text" id="email">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">密码</label>
+                <div class="controls">
+                    <input type="password" id="password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password-ag">重复密码</label>
+                <div class="controls">
+                    <input type="password" id="password-ag">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id='submit' class='btn btn-primary'>注册</button>
+            </div>
           </fieldset>
         </form>
-      </div>
     </div>
   </div>
 </div>
@@ -39,3 +59,5 @@ input
     });
 </script>
 {% end %}
+
+
