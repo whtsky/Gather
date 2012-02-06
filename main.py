@@ -17,6 +17,7 @@ define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
+from post import PostHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -26,6 +27,12 @@ class Application(tornado.web.Application):
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
+            
+            (r'/node/(\d+)/(\d+)', NodeViewHandler),
+            (r'/(\d+)', PostViewHandler),
+#            (r'/tag/(.*?)', TagViewHandler),
+
+            (r'/node/(\d+)/add', PostHandler),
             
             (r'/node/add/(.*)', AdminAddNodeHandler),
         ]
@@ -41,7 +48,6 @@ class Application(tornado.web.Application):
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
-        # Have one global connection to the blog DB across all handlers
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
 
 class HomeHandler(BaseHandler):
