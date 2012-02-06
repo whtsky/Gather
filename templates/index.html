@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class='container'>
+  <div class='row'>
+    <div class='span6 offset2'>
+      <div class='box'>
+        <table class='item-list'>
+          <tbody>
+          {% for node in self.db.nodes.find() %}
+            <tr>
+      </div>
+    </div>
+  </div>
+</div>
+{% end %}

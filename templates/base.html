@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>{% block title %}{{ escape(handler.settings['bbs_title']) }}{% end %}</title>
+    <link rel='stylesheet' href='{{ static_url("bootstrap.css") }}' type='text/css'/>
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    {% block head %}{% end %}
+  </head>
+  <body>
+    <div class='navbar navbar-fixed-top'>
+      <div class='navbar-inner'>
+        <div class='container-fluid'>
+          <a class='brand' href='#'>{{ escape(handler.settings['bbs_title_e']) }}</a>
+          <div class='nav-collapse'>
+            <ul class='nav'>
+              <li class='active'><a href='#'>论坛</a></li>
+              <li><a href='http://0-ms.org/'>零毫秒</a></li>
+            </ul>
+            <p class='navbar-text pull-right'>
+              {% if current_user %}
+                欢迎你，{{ current_user }}。<a href='/logout?next={{ url_escape(request.uri) }}'>退出</a>
+              {% else %}
+                还没有账号？<a href='/signup'>注册</a> 或者 <a href='/login'>登录</a>
+              {% end %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+{% block body %}{% end %}
+  </body>
+</html>
