@@ -2,6 +2,7 @@
 
 from common import BaseHandler
 from hashlib import sha1
+from tornado.escape import json_encode
 
 def hashpassword(username,password):
     return sha1(username+password+username+password[1]+username[2]).hexdigest()
@@ -15,13 +16,17 @@ class AuthSignupHandler(BaseHandler):
         username = self.get_argument('username')
         email = self.get_argument('email')
         account = self.db.users
-        if account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
-            self.render('error.html',errortext='用户名或邮箱已存在。')
-            return 
-        account.insert({'_id':account.count(),
+        if len(username)>30 or len(password)>30:
+            message = 'username or password too lang'
+        elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
+            message = 'username or email already exist'
+        elif:
+            account.insert({'_id':account.count(),
                         'username':username,
                         'email':email,
                         'password':hashpassword(username,password)})
+            message = 'success'
+        self.write(json_encode({'message':message}))
         self.set_secure_cookie('user',username)
 
 class AuthLogoutHandler(BaseHandler):
@@ -38,4 +43,6 @@ class AuthLoginHandler(BaseHandler):
         password = self.get_argument('password')
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
             self.set_secure_cookie('user',username)
-            self.redirect('/')
+            self.write(json_encode({'message':'success'}))
+        else:
+            self.write(json_encode({'message':'failed'}))

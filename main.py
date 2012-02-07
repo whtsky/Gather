@@ -28,8 +28,8 @@ class Application(tornado.web.Application):
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
             
-#            (r'/node/(\d+)/(\d+)', NodeViewHandler),
-#            (r'/(\d+)', PostViewHandler),
+#            (r'/topics/node(\d+)', NodeViewHandler),
+#            (r'/topics/(\d+)', PostViewHandler),∂
 #            (r'/tag/(.*?)', TagViewHandler),
 
             (r'/node/(\d+)/add', PostHandler),
