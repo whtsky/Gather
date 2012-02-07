@@ -34,7 +34,16 @@
         <div id='title' class='control-group'>
           <label class='control-label' for='title'>标题</label>
           <div class='controls'>
-            <select id='topic_node_id' ><option value='0' selected='selected'>选择节点</option></select>
+            <select id='topic_node_id' >
+              <option value='-1'>选择节点</option>
+              {% for x in db.nodes.find().sort('_id',1) %}
+                {% if node==x["_id"] %}
+                  <option value='{{ x["_id"] }}' selected='selected'>{{ x["name"] }}</option>
+                {% else %}
+                  <option value='{{ x["_id"] }}'>{{ x["name"] }}</option>
+                {% end %}
+              {% end %}
+            </select>
             <input type='text' id='title'>
           </div>
         </div>

@@ -8,7 +8,10 @@ class PostHandler(BaseHandler):
 
 #    @tornado.web.authenticated
     def get(self):
-        self.render('post.html')
+        try:
+            self.render('post.html',db=self.db,node=int(self.get_argument('node')))
+        except:
+            self.render('post.html',db=self.db,node=None)
 
 
 #    @tornado.web.authenticated
