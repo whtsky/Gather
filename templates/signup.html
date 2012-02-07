@@ -59,57 +59,31 @@ form
 </div>
 <script type="text/javascript">
   readySubmit=false;
-  $("#username").blur(function(){
-    if(!$(this).val() || !$(this).val().match(/.{1,30}$/))
+  function checkInput(id,bool)
+  {
+    if(bool)
     {
       readySubmit=false;
-      $("#username-t").show();
-      $("#username-g").addClass("error");
+      $(id+"-t").show();
+      $(id+"-g").addClass("error");
     }
     else
     {
-      $("#username-g").removeClass("error");
-      $("#username-t").hide();
+      $(id+"-g").removeClass("error");
+      $(id+"-t").hide();
     }
+  }
+  $("#username").blur(function(){
+    checkInput("#username",(!$(this).val() || !$(this).val().match(/.{1,30}$/)));
   });
   $("#email").blur(function(){
-    if(!$(this).val() || !$(this).val().match(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/))
-    {
-      readySubmit=false;
-      $("#email-t").show();
-      $("#email-g").addClass("error");
-    }
-    else
-    {
-      $("#email-g").removeClass("error");
-      $("#email-t").hide();
-    }
+    checkInput("#email",(!$(this).val() || !$(this).val().match(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/)));
   });
   $("#password").blur(function(){
-    if(!$(this).val() || !$(this).val().match(/.{6,}$/))
-    {
-      readySubmit=false;
-      $("#password-t").show();
-      $("#password-g").addClass("error");
-    }
-    else
-    {
-      $("#password-g").removeClass("error");
-      $("#password-t").hide();
-    }
+    checkInput("#password",(!$(this).val() || !$(this).val().match(/.{6,}$/)));
   });
   $("#password-ag").blur(function(){
-    if($(this).val()!=$("#password").val())
-    {
-      readySubmit=false;
-      $("#password-ag-t").show();
-      $("#password-ag-g").addClass("error");
-    }
-    else
-    {
-      $("#password-ag-g").removeClass("error");
-      $("#password-ag-t").hide();
-    }
+    checkInput("#password-ag",($(this).val()!=$("#password").val()));
   });
   $("#username-t").hide();
   $("#email-t").hide();
