@@ -21,7 +21,13 @@ class PostHandler(BaseHandler):
                       'author':self.get_secure_cookie('user'),
                       'content':self.get_argument('content'),
                       'node':nodeid,
-                      'comments':{},
+                      'comments':[],
                       'posttime':int(time()),
+                      'changedtime':int(time()),#发表评论请更新此条
                       'tags':self.get_argument('tags').split(','),
                       })
+
+class UploadHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def post(self):
