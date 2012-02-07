@@ -20,7 +20,7 @@ class PostHandler(BaseHandler):
         posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True).get('post_id'),
                       'title':self.get_argument('title'),
                       'author':self.get_secure_cookie('user'),
-                      'content':self.get_argument('content'),
+                      'content':self.get_argument('markdown'),
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
                       'posttime':int(time()),
