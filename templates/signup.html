@@ -13,36 +13,40 @@ form
 <div class='container'>
   <div class='row'>
     <div class='box container'>
-      <form class='form-horizontal well span6 offset2'>
+      <form class='form-horizontal well span7 offset2'>
         <fieldset>
           <header><h2>注册</h2></header>
           {{ xsrf_form_html() }}
-          <div class="control-group">
+          <div id="username-g" class="control-group">
             <label class="control-label" for="username">用户名</label>
             <div class="controls">
               <input type="text" id="username">
+              <span id="username-t" class="help-inline">你的输入不大正确哦</span>
               <p class="help-block">用户名将是你以后在论坛的唯一标识，可以使用30个字符以下的中英文.</p>
             </div>
           </div>
-          <div class="control-group">
+          <div id="email-g" class="control-group">
             <label class="control-label" for="email">E-mail</label>
             <div class="controls">
               <div class="input-prepend">
                 <span class="add-on">@</span>
                 <input type="text" id="email">
               </div>
+              <span id="email-t" class="help-inline">请输入有效的邮箱地址</span>
             </div>
           </div>
-          <div class="control-group">
+          <div id="password-g" class="control-group">
             <label class="control-label" for="password">密码</label>
             <div class="controls">
               <input type="password" id="password">
+              <span id="password-t" class="help-inline">请使用6位以上的密码</span>
             </div>
           </div>
-          <div class="control-group">
+          <div id="password-ag-g" class="control-group">
             <label class="control-label" for="password-ag">重复密码</label>
             <div class="controls">
               <input type="password" id="password-ag">
+              <span id="password-ag-t" class="help-inline">请重复上面的密码</span>
             </div>
           </div>
           <div class="form-actions">
@@ -54,8 +58,76 @@ form
   </div>
 </div>
 <script type="text/javascript">
+  readySubmit=false;
+  $("#username").blur(function(){
+    if(!$(this).val() || !$(this).val().match(/.{1,30}$/))
+    {
+      readySubmit=false;
+      $("#username-t").show();
+      $("#username-g").addClass("error");
+    }
+    else
+    {
+      $("#username-g").removeClass("error");
+      $("#username-t").hide();
+    }
+  });
+  $("#email").blur(function(){
+    if(!$(this).val() || !$(this).val().match(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/))
+    {
+      readySubmit=false;
+      $("#email-t").show();
+      $("#email-g").addClass("error");
+    }
+    else
+    {
+      $("#email-g").removeClass("error");
+      $("#email-t").hide();
+    }
+  });
+  $("#password").blur(function(){
+    if(!$(this).val() || !$(this).val().match(/.{6,}$/))
+    {
+      readySubmit=false;
+      $("#password-t").show();
+      $("#password-g").addClass("error");
+    }
+    else
+    {
+      $("#password-g").removeClass("error");
+      $("#password-t").hide();
+    }
+  });
+  $("#password-ag").blur(function(){
+    if($(this).val()!=$("#password").val())
+    {
+      readySubmit=false;
+      $("#password-ag-t").show();
+      $("#password-ag-g").addClass("error");
+    }
+    else
+    {
+      $("#password-ag-g").removeClass("error");
+      $("#password-ag-t").hide();
+    }
+  });
+  $("#username-t").hide();
+  $("#email-t").hide();
+  $("#password-t").hide();
+  $("#password-ag-t").hide();
   $("#submit").click(function(){
-    alert($.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),username:$("#username").val(),email:$("#email").val(),password:$("#password").val()}).text);
+    readySubmit=true;
+    $("#username").blur();
+    $("#email").blur();
+    $("#password").blur();
+    $("#password-ag").blur();
+    if(!readySubmit)
+      return false;
+    alert($.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),
+                            username:$("#username").val(),
+                            email:$("#email").val(),
+                            password:$("#password").val()}).text);
+    return false;
   });
 </script>
 {% end %}
