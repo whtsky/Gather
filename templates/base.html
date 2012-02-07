@@ -44,6 +44,11 @@
       </div>
     </div>
     <div id="main" class="container">
+      <ul class="breadcrumb">
+        {% block breadcrumb %}
+          <li class="active">{{ escape(handler.settings['bbs_title']) }}</li>
+        {% end %}
+      </ul>
       {% block body %}{% end %}
     </div>
   </body>

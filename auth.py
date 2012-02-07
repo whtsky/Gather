@@ -20,7 +20,7 @@ class AuthSignupHandler(BaseHandler):
             message = 'username or password too lang'
         elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
             message = 'username or email already exist'
-        elif:
+        else:
             account.insert({'_id':account.count(),
                         'username':username,
                         'email':email,

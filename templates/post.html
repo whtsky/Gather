@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}发表文章 -- {{ escape(handler.settings['bbs_title']) }}{% end %}
+
+{% block head %}
+<script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
+<script type="text/javascript">
+    wmd_options = {
+        // format sent to the server.  Use "Markdown" to return the markdown source.
+        output: "Markdown",
+        // line wrapping length for lists, blockquotes, etc.
+        lineLength: 80,
+        // toolbar buttons.  Undo and redo get appended automatically.
+        buttons: "bold italic | link blockquote code image | ol ul heading hr",
+        // option to automatically add WMD to the first textarea found.  See apiExample.html for usage.
+        autostart: true
+    };
+</script>
+{% end %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ escape(handler.settings['bbs_title']) }}</a> <span class="divider">/</span></li>
+<li class="active">发布主题</li>
+{% end %}
+
+
+{% block body %}
+<div class='container'>
+  <div class='row-fluid'>
+    <form class='form-horizontal well span8'>
+      <fieldset>
+        <header><h2>发表主题</h2></header>
+        {{ xsrf_form_html() }}
+        <div id='title' class='control-group'>
+          <label class='control-label' for='title'>标题</label>
+          <div class='controls'>
+            <select id='topic_node_id' ><option value='0' selected='selected'>选择节点</option></select>
+            <input type='text' id='title'>
+          </div>
+        </div>
+        <div id='content' class='control-group'>
+          <label class='control-label' for='content'>正文</label>
+          <div class='controls'>
+            <textarea name='markdown' cols=100 rows=20></textarea></div>
+            <textarea style="display:none;" name="html" class="wmd-output"></textarea>
+          </div>
+        </div>
+        <h2>预览</h2>
+        <div name="htmlcontent" class="wmd-preview"></div>
+        <button id='submit' class='btn btn-primary'>很好，我要发表</button>
+      </fieldset>
+    </form>
+    <div clss='span4'>
+
+    </div>
+  </div>
+</div>
+{% end %}
