@@ -26,6 +26,5 @@ class PostHandler(BaseHandler):
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
                       'posttime':int(time()),
-                      'changedtime':int(time()),#发表评论请更新此条
                       'tags':self.get_argument('tags').split(','),
                       })
