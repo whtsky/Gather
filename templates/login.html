@@ -13,16 +13,18 @@
             <label class="control-label" for="username">用户名</label>
             <div class="controls">
               <input type="text" id="username">
+              <span id="username-t" class="help-inline">请输入用户名</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="password">密码</label>
             <div class="controls">
               <input type="text" id="password">
+              <span id="password-t" class="help-inline">请输入密码</span>
             </div>
           </div>
           <div class="form-actions">
-            <button id='tsubmit' class='btn btn-primary'>登录</button>
+            <button id='submit' class='btn btn-primary'>登录</button>
           </div>
         </fieldset>
       </form>
@@ -30,8 +32,30 @@
   </div>
 </div>
 <script type="text/javascript">
-  $("#tsubmit").click(function(){
-    alert($.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),username:$("#username").val(),password:$("#password").val()}).text);
+  
+  $("#username").blur(function(){
+    checkInput("#username",!$(this).val());
+  });
+  $("#password").blur(function(){
+    checkInput("#email",!$(this).val());
+  });
+  $("#username-t").hide();
+  $("#password-t").hide();
+  $("#submit").click(function(){
+    readySubmit=true;
+    $("#username").blur();
+    $("#password").blur();
+    if(!readySubmit)
+      return false;
+    $.post("/login",{_xsrf:getCookie("_xsrf"),
+                     username:$("#username").val(),
+                     password:$("#password").val()},
+    function(data){
+      alert(data.message);
+      if(data.status=="success")
+        location.href="/";
+    },"json");
+    return false;
   });
 </script>
 

@@ -45,6 +45,6 @@ class AuthLoginHandler(BaseHandler):
         password = self.get_argument('password')
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
             self.set_secure_cookie('user',username)
-            self.write(json_encode({'message':'success'}))
+            self.write(json_encode({'status':'success','message':'登录成功'}))
         else:
-            self.write(json_encode({'message':'failed'}))
+            self.write(json_encode({'status':'error','message':'用户名或密码错误'}))
