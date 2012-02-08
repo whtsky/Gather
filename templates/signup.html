@@ -95,10 +95,15 @@
     $("#password-ag").blur();
     if(!readySubmit)
       return false;
-    alert($.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),
                             username:$("#username").val(),
                             email:$("#email").val(),
-                            password:$("#password").val()}).text);
+                            password:$("#password").val()},
+    function(data){
+      alert(data.message);
+      if(data.status=="success")
+        location.href="/";
+    },"json");
     return false;
   });
 </script>

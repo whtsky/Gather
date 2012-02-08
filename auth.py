@@ -19,14 +19,16 @@ class AuthSignupHandler(BaseHandler):
         if len(username)>30 or len(password)>30:
             return
         elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
-            message = 'username or email already exist'
+            message = '用户名或邮箱地址重复'
+            status = 'error'
         else:
             account.insert({'_id':account.count(),
                         'username':username,
                         'email':email,
                         'password':hashpassword(username,password)})
-            message = 'success'
-        self.write(json_encode({'message':message}))
+            message = '注册成功'
+            status = 'success'
+        self.write(json_encode({'status':status,'message':message}))
         self.set_secure_cookie('user',username)
 
 class AuthLogoutHandler(BaseHandler):
