@@ -22,12 +22,12 @@
              <h3>
                <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>
              </h3>
+
              {% for tag in post['tags'] %}
              <span class='tags'>
-               <a href="/tag/{% tag %}">{% tag %}</a>
+               <a href="/tag/{{ tag }}">{{ tag }}</a>
              </span>
              {% end %}
-
 
            </td>
            <td class='reply-count last'>
