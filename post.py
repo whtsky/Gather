@@ -4,7 +4,7 @@ import new
 from common import BaseHandler,time_span
 import tornado.web
 from time import time
-from tornado.escape import json_encode,
+from tornado.escape import json_encode,xhtml_escape
 from hashlib import md5
 
 class PostHandler(BaseHandler):
