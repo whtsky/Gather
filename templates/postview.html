@@ -19,7 +19,7 @@
 
 {% block breadcrumb %}
 <li><a href="/">{{ escape(handler.settings['bbs_title']) }}</a> <span class="divider">/</span></li>
-<li><a href="/topics/node{{ post['node'] }}">{{ db.posts.find_one({'_id':int(post['node'])})['name'] }}</a> <span class="divider">/</span></li>
+<li><a href="/topics/node{{ post['node'] }}">{{ db.nodes.find_one({'_id':post['node']})['name'] }}</a> <span class="divider">/</span></li>
 <li class="active">{{ post['title'] }}</li>
 {% end %}
 
@@ -27,7 +27,42 @@
 <div class='container'>
   <div class='row'>
     <div class='span8'>
+      <section class='box'>
+        <article id='topic-379'>
+          <header>
+            <table class='clear-table'>
+              <tbody>
+                <tr>
+                  <td>
+                    <h1>{{ post['title'] }}</h1>
+                    {% if len(post['tags']) > 0 %}
+                    <span class='tags'>
+                      {% for tag in post['tags'] %}
+                      <a href="/tag/{{ tag }}">{{ tag }}</a>
+                      {% end %}
+                    </span>
+                    {% end %}
+                    <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
+                  </td>
+                  <td class='avatar'>
+                    <img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=72' /></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </header>
+          {{ post['content'] }}
+          <footer>
+            <!-- 打算放些用户打分什么的-->
+          </footer>
+        </article>
+      </section>
 
+      <section class='box'>
+        <table class='item-list'>
+          <!-- 这里是评论 -->
+        </table>
+      </section>
     </div>
   </div>
 </div>

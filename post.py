@@ -6,6 +6,7 @@ import tornado.web
 from time import time
 from common import time_span
 from tornado.escape import json_encode
+from hashlib import md5
 
 class PostHandler(BaseHandler):
 
@@ -32,7 +33,8 @@ class PostHandler(BaseHandler):
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
-        self.render('postview.html',db=self.db,time_span=time_span,post=self.db.posts.find_one({'_id':int(postid)}))
+        self.render('postview.html',db=self.db,time_span=time_span,
+                    post=self.db.posts.find_one({'_id':int(postid)}),md5=md5)
 
     def post(self,postid):
         '''使用AJAX获取评论。返回JSON数据。

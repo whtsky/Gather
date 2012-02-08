@@ -23,5 +23,5 @@ def time_span(t):
         return str(timecha/3600)+u'小时前'
     elif timecha < 1296000:
         return str(timecha/86400)+u'天前'
-    else
+    else:
         return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))

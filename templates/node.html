@@ -24,10 +24,12 @@
                <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>
              </h3>
 
-             {% for tag in post['tags'] %}
-             <span class='tags'>
-               <a href="/tag/{{ tag }}">{{ tag }}</a>
-             </span>
+             {% if len(post['tags']) > 0 %}
+               <span class='tags'>
+                {% for tag in post['tags'] %}
+                <a href="/tag/{{ tag }}">{{ tag }}</a>
+                {% end %}
+               </span>
              {% end %}
              <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
              {% if len(post['comments']) > 0 %}
