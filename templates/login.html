@@ -9,14 +9,14 @@
       <form class='form-horizontal well span5 offset3'>
         <fieldset>
           <header><h2>登录</h2></header>
-          <div class="control-group">
+          <div id="username-g" class="control-group">
             <label class="control-label" for="username">用户名</label>
             <div class="controls">
               <input type="text" id="username">
               <span id="username-t" class="help-inline">请输入用户名</span>
             </div>
           </div>
-          <div class="control-group">
+          <div id="password-g" class="control-group">
             <label class="control-label" for="password">密码</label>
             <div class="controls">
               <input type="text" id="password">
@@ -37,7 +37,7 @@
     checkInput("#username",!$(this).val());
   });
   $("#password").blur(function(){
-    checkInput("#email",!$(this).val());
+    checkInput("#password",!$(this).val());
   });
   $("#username-t").hide();
   $("#password-t").hide();
