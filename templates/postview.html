@@ -33,6 +33,9 @@
             <table class='clear-table'>
               <tbody>
                 <tr>
+                  <td class='avatar'>
+                    <img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=72' /></a>
+                  </td>
                   <td>
                     <h1>{{ post['title'] }}</h1>
                     {% if len(post['tags']) > 0 %}
@@ -43,9 +46,6 @@
                     </span>
                     {% end %}
                     <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
-                  </td>
-                  <td class='avatar'>
-                    <img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=72' /></a>
                   </td>
                 </tr>
               </tbody>

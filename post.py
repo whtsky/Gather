@@ -1,10 +1,9 @@
 #coding=utf-8
 import new
 
-from common import BaseHandler
+from common import BaseHandler,time_span
 import tornado.web
 from time import time
-from common import time_span
 from tornado.escape import json_encode
 from hashlib import md5
 
@@ -48,7 +47,11 @@ class PostViewHandler(BaseHandler):
         count = comments.count()
         if start>count:
             self.write('{}')
+            return
         elif start+9>count:
-            self.write(json_encode(zip(range(1,11),comments[start-1:count])))
+            comments = comments[start-1:count]
         else:
-            self.write(json_encode(zip(range(1,11),comments[start-1:start+9])))
+            comments = comments[start-1:start+9]
+        for i in comments:
+            i['posttime'] = time_span(i['posttime'])
+        self.write(json_encode(zip(range(1,len(comments)+1),comments)))
