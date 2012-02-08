@@ -8,6 +8,7 @@ import tornado.options
 import tornado.web
 import pymongo
 from tornado.options import define, options
+from tornado.escape import xhtml_escape
 
 from common import BaseHandler
 
@@ -40,8 +41,8 @@ class Application(tornado.web.Application):
             (r'/node/add/(.*)', AdminAddNodeHandler),
         ]
         settings = dict(
-            bbs_title=u'精英盒子',
-            bbs_title_e=u'Jybox',
+            bbs_title=xhtml_escape(u'精英盒子'),
+            bbs_title_e=xhtml_escape(u'Jybox'),
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             xsrf_cookies=True,

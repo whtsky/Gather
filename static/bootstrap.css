@@ -1246,3 +1246,16 @@ table.clear-table td {
     margin: 0;
     border: none;
     line-height: 20px; }
+body
+{
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+#nav-in
+{
+    min-width:1000px;
+}
+.sidebar-nav
+{
+    padding: 9px 0;
+}

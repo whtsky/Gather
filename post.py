@@ -4,7 +4,7 @@ import new
 from common import BaseHandler,time_span
 import tornado.web
 from time import time
-from tornado.escape import json_encode
+from tornado.escape import json_encode,
 from hashlib import md5
 
 class PostHandler(BaseHandler):
@@ -20,7 +20,7 @@ class PostHandler(BaseHandler):
     def post(self):
         posts = self.db.posts
         posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id'],
-                      'title':self.get_argument('title'),
+                      'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
                       'content':self.get_argument('html'),
                       'md':self.get_argument('markdown'),
@@ -34,9 +34,19 @@ class CommentHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self,postid):
-        posts = self.db.posts
+        self.db.posts.update({'_id':postid},
+                             {'$push':
+                             {'comments':
+                             {'author':self.get_secure_cookie('user'),
+                              'content':self.get_argument('html'),
+                              'md':self.get_argument('markdown'),
+                              'posttime':int(time()),
+                             }
+                             }
+                             }
+                            )
         posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id'],
-                      'title':self.get_argument('title'),
+                      'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
                       'content':self.get_argument('html'),
                       'md':self.get_argument('markdown'),
@@ -70,4 +80,5 @@ class PostViewHandler(BaseHandler):
             comments = comments[start-1:start+9]
         for i in comments:
             i['posttime'] = time_span(i['posttime'])
+            i['author_email'] = self.db.users.find_one({"username":i["author"]})["email"]
         self.write(json_encode(zip(range(1,len(comments)+1),comments)))

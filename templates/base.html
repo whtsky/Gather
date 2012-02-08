@@ -2,25 +2,11 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>{% block title %}{{ escape(handler.settings['bbs_title']) }}{% end %}</title>
+    <title>{% block title %}{{ handler.settings['bbs_title'] }}{% end %}</title>
     <link rel='stylesheet' href='{{ static_url("bootstrap.css") }}' type='text/css'/>
     <script src='{{ static_url("jquery.js") }}' type="text/javascript"></script>
     <script src='{{ static_url("bootstrap.js") }}' type="text/javascript"></script>
-    <style type="text/css">
-      body
-      {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      #nav-in
-      {
-        min-width:1000px;
-      }
-      .sidebar-nav
-      {
-        padding: 9px 0;
-      }
-    </style>
+    <script src='{{ static_url("base.js") }}' type="text/javascript"></script>
     {% block head %}{% end %}
   </head>
   <body>
@@ -28,7 +14,7 @@
       <div class='navbar-inner'>
         <div class='container' id="nav-in">
           <ul class="nav">
-            <a class='brand' href='#'>{{ escape(handler.settings['bbs_title_e']) }}</a>
+            <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
             <li class='active'><a href='#'>论坛</a></li>
             <li><a href='http://0-ms.org/'>零毫秒</a></li>
           </ul>
@@ -45,31 +31,10 @@
     <div id="main" class="container">
       <ul class="breadcrumb">
         {% block breadcrumb %}
-          <li class="active">{{ escape(handler.settings['bbs_title']) }}</li>
+          <li class="active">{{ handler.settings['bbs_title'] }}</li>
         {% end %}
       </ul>
       {% block body %}{% end %}
     </div>
   </body>
-  <script type="text/javascript">
-    readySubmit=false;
-    function checkInput(id,bool)
-    {
-      if(bool)
-      {
-        readySubmit=false;
-        $(id+"-t").show();
-        $(id+"-g").addClass("error");
-      }
-      else
-      {
-        $(id+"-g").removeClass("error");
-        $(id+"-t").hide();
-      }
-    }
-    function getCookie(name) {
-      var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-      return r ? r[1] : undefined;
-    }
-  </script>
 </html>
