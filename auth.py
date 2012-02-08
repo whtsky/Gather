@@ -43,6 +43,7 @@ class AuthLoginHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username')
         password = self.get_argument('password')
+        account = self.db.users
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
             self.set_secure_cookie('user',username)
             self.write(json_encode({'status':'success','message':'登录成功'}))
