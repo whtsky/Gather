@@ -7,16 +7,47 @@
 <li class="active">{{ node['name'] }}</li>
 {% end %}
 
-
 {% block body %}
 <div class='container'>
   <div class='row-fluid'>
    <div class='span8'>
-       {% for post in db.posts.find({'node':node['_id']},sort=[('changedtime', 1)],limit=limit) %}
-         {{ post['author'] }}<br />{{ post['title'] }}<br />{{ len(post['comments']) }}<br /><hr>
-       {% end %}
-   </div>
+       共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
+     <table class='item-list'>
+       <tbody>
+       {% for post in posts.skip((p-1)*limit).limit(limit) %}
+         <tr>
+           <td class='avatar'>
+               <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=48' /></a>
+           </td>
+           <td>
+             <h3>
+               <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>
+             </h3>
 
+             {% for tag in post['tags'] %}
+             <span class='tags'>
+               <a href="/tag/{{ tag }}">{{ tag }}</a>
+             </span>
+             {% end %}
+             <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
+             {% if len(post['comments']) > 0 %}
+               ,<a href="/user/{{ post['comments'][-1]['author'] }}">{{ post['comments'][-1]['author'] }}</a>回复于{{ time_span(post['comments'][-1]['posttime']) }}
+             {% end %}
+
+           </td>
+           <td class='reply-count last'>
+             <a>{{ len(post['comments']) }}</a>
+           </td>
+       {% end %}
+       </tbody>
+     </table>
+     {% if p!=1 %}
+       <a href='node{{ node["_id"] }}?p={{ p-1 }}'>上一页</a>
+     {% end %}
+     {% if p*limit < posts.count() %}
+       <a href='node{{ node["_id"] }}?p={{ p+1 }}'>下一页</a>
+     {% end %}
+   </div>
   </div>
 </div>
 {% end %}
