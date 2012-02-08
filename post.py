@@ -19,7 +19,8 @@ class PostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         posts = self.db.posts
-        posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id'],
+        tid = posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
+        posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
                       'content':self.get_argument('html'),
@@ -29,6 +30,9 @@ class PostHandler(BaseHandler):
                       'posttime':int(time()),
                       'tags':self.get_argument('tags').split(','),
                       })
+        message = '发表成功'
+        status = 'success'
+        self.write(json_encode({'status':status,'message':message,'tid':tid}))
 
 class CommentHandler(BaseHandler):
 

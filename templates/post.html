@@ -6,13 +6,9 @@
 <script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
 <script type="text/javascript">
     wmd_options = {
-        // format sent to the server.  Use "Markdown" to return the markdown source.
         output: "Markdown",
-        // line wrapping length for lists, blockquotes, etc.
         lineLength: 80,
-        // toolbar buttons.  Undo and redo get appended automatically.
         buttons: "bold italic | link blockquote code image | ol ul heading hr",
-        // option to automatically add WMD to the first textarea found.  See apiExample.html for usage.
         autostart: true
     };
 </script>
@@ -30,7 +26,10 @@
     <form class='form-horizontal well' action='add' method='post'>
       <fieldset>
         <header><h2>发表主题</h2></header>
-        <div id='title' class='control-group'>
+        <div id='title-g' class='control-group nodeid-g'>
+          <div id="nodeid-t" class="box controls">
+            <span class="help-inline">你不选个节点人家怎么发嘛~</span>
+          </div>
           <label class='control-label' for='title'>标题</label>
           <div class='controls'>
             <select class="span3" id='nodeid' name='nodeid'>
@@ -45,18 +44,25 @@
             </select>
             <input class="span7" type='text' id='title' name='title'>
           </div>
-        </div>
-        <div id='content' class='control-group'>
-          <label class='control-label' for='content'>正文</label>
-          <div class='controls'>
-            <textarea class="span10" style="height:380px;" id='markdown' name='markdown'></textarea></div>
-            <textarea style="display:none;" name="html" class="wmd-output"></textarea>
+          <div id="title-t" class="box controls">
+            <span class="help-inline">起码也要输入几个字嘛~</span>
           </div>
         </div>
-        <div id='tags' class='control-group'>
+        <div id='markdown-g' class='control-group'>
+          <label class='control-label' for='content'>正文</label>
+          <div class='controls'>
+            <textarea class="span10" style="height:380px;" id='markdown' name='markdown'></textarea>
+            <textarea style="display:none;" name="html" id="html" class="wmd-output"></textarea>
+          </div>
+          <div id="markdown-t" class="box controls">
+            <span class="help-inline">起码也要输入几个字嘛~</span>
+          </div>
+        </div>
+        <div id='tags-g' class='control-group'>
           <label class='control-label' for='tags'>标签</label>
           <div class='controls'>
             <input class="span5" type='text' id='tags' name='tags'>
+            <span id="tags-t" class="help-inline">起码也要贴个标签嘛~</span>
             <p class="help-block">给主题设置标签可以帮助他人更好的找到你的主题。标签间使用英文引号(,)分割</p>
           </div>
         </div>
@@ -72,4 +78,43 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $("#title").blur(function(){
+    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,200}$/)));
+  });
+  $("#markdown").blur(function(){
+    checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+  });
+  $("#tags").blur(function(){
+    checkInput("#tags",(!$(this).val() || !$(this).val().match(/.{1,}$/)));
+  });
+  $("#nodeid").blur(function(){
+    checkInput("#nodeid",($("#nodeid")[0].value==-1));
+  });
+  $("#title-t").hide();
+  $("#markdown-t").hide();
+  $("#tags-t").hide();
+  $("#nodeid-t").hide();
+  $("#submit").click(function(){
+    readySubmit=true;
+    $("#title").blur();
+    $("#markdown").blur();
+    $("#tags").blur();
+    $("#nodeid").blur();
+    if(!readySubmit)
+      return false;
+    $.post("/topics/add",{_xsrf:getCookie("_xsrf"),
+                          title:$("#title").val(),
+                          nodeid:$("#nodeid")[0].value,
+                          markdown:$("#markdown").val(),
+                          html:$("#html").val(),
+                          tags:$("#tags").val()},
+    function(data){
+      alert(data.message);
+      if(data.status=="success")
+        location.href="/topics/"+data.tid;
+    },"json");
+    return false;
+  });
+</script>
 {% end %}
