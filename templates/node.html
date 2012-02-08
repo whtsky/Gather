@@ -11,7 +11,7 @@
 <div class='container'>
   <div class='row-fluid'>
    <div class='span8'>
-     <table>
+     <table class='item-list'>
        <tbody>
        {% for post in db.posts.find({'node':node['_id']},sort=[('changedtime', 1)],limit=limit) %}
          <tr>
