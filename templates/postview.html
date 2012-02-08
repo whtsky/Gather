@@ -2,6 +2,21 @@
 
 {% block title %}注册 -- {{ escape(handler.settings['bbs_title']) }}{% end %}
 
+{% block head %}
+<style type="text/css">
+    header {
+        margin-bottom: 17px;
+        padding-bottom: 17px;
+        border-bottom: 1px solid #EEE; }
+    header td.avatar {
+        width: 72px; }
+    header td.avatar img {
+        width: 72px;
+        height: 72px; }
+    {% block style %}{% end %}
+</style>
+{% end %}
+
 {% block breadcrumb %}
 <li><a href="/">{{ escape(handler.settings['bbs_title']) }}</a> <span class="divider">/</span></li>
 <li class="active">注册</li>

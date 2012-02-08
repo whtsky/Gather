@@ -33,15 +33,7 @@ class PostHandler(BaseHandler):
 class PostViewHandler(BaseHandler):
     def get(self,postid):
         '''
-        header {
-    margin-bottom: 17px;
-    padding-bottom: 17px;
-    border-bottom: 1px solid #EEE; }
-header td.avatar {
-    width: 72px; }
-header td.avatar img {
-    width: 72px;
-    height: 72px; }
+
         '''
         self.render('postview.html',db=self.db,time_span=time_span,post=self.db.posts.find_one({'_id':int(postid)}))
 
