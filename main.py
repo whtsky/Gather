@@ -17,7 +17,7 @@ define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
-from post import PostHandler,PostViewHandler
+from post import PostHandler,PostViewHandler,CommentHandler
 from node import NodeViewHandler
 
 
@@ -32,6 +32,7 @@ class Application(tornado.web.Application):
             
             (r'/topics/node(\d+)', NodeViewHandler),
             (r'/topics/(\d+)', PostViewHandler),
+            (r'/topics/(\d+)/comment', CommentHandler),
 #            (r'/tag/(.*?)', TagViewHandler),
 
             (r'/topics/add', PostHandler),
