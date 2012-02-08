@@ -7,16 +7,36 @@
 <li class="active">{{ node['name'] }}</li>
 {% end %}
 
-
 {% block body %}
 <div class='container'>
   <div class='row-fluid'>
    <div class='span8'>
+     <table>
+       <tbody>
        {% for post in db.posts.find({'node':node['_id']},sort=[('changedtime', 1)],limit=limit) %}
-         {{ post['author'] }}<br />{{ post['title'] }}<br />{{ len(post['comments']) }}<br /><hr>
-       {% end %}
-   </div>
+         <tr>
+           <td>
+               <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=48' /></a>
+           </td>
+           <td>
+             <h3>
+               <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>
+             </h3>
+             {% for tag in post['tags'] %}
+             <span class='tags'>
+               <a href="/tag/{% tag %}">{% tag %}</a>
+             </span>
+             {% end %}
 
+
+           </td>
+           <td class='reply-count last'>
+             <a>{{ len(post['comments']) }}</a>
+           </td>
+       {% end %}
+       </tbody>
+     </table>
+   </div>
   </div>
 </div>
 {% end %}

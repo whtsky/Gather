@@ -17,7 +17,7 @@ class AuthSignupHandler(BaseHandler):
         email = self.get_argument('email')
         account = self.db.users
         if len(username)>30 or len(password)>30:
-            message = 'username or password too lang'
+            return
         elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
             message = 'username or email already exist'
         else:
