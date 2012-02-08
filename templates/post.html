@@ -25,16 +25,16 @@
 
 
 {% block body %}
-<div class='container'>
+<div class='span10 offset1'>
   <div class='row-fluid'>
-    <form class='form-horizontal well span8' action='add' method='post'>
+    <form class='form-horizontal well' action='add' method='post'>
       <fieldset>
         <header><h2>发表主题</h2></header>
         {{ xsrf_form_html() }}
         <div id='title' class='control-group'>
           <label class='control-label' for='title'>标题</label>
           <div class='controls'>
-            <select id='nodeid' name='nodeid'>
+            <select class="span3" id='nodeid' name='nodeid'>
               <option value='-1'>选择节点</option>
               {% for x in db.nodes.find().sort('_id',1) %}
                 {% if node==x["_id"] %}
@@ -44,25 +44,27 @@
                 {% end %}
               {% end %}
             </select>
-            <input type='text' id='title' name='title'>
+            <input class="span7" type='text' id='title' name='title'>
           </div>
         </div>
         <div id='content' class='control-group'>
           <label class='control-label' for='content'>正文</label>
           <div class='controls'>
-            <textarea id='markdown' name='markdown' cols=100 rows=20></textarea></div>
+            <textarea class="span10" style="height:380px;" id='markdown' name='markdown'></textarea></div>
             <textarea style="display:none;" name="html" class="wmd-output"></textarea>
           </div>
         </div>
         <div id='tags' class='control-group'>
           <label class='control-label' for='tags'>标签</label>
           <div class='controls'>
-            <input type='text' id='tags' name='tags'>
+            <input class="span5" type='text' id='tags' name='tags'>
             <p class="help-block">给主题设置标签可以帮助他人更好的找到你的主题。标签间使用英文引号(,)分割</p>
           </div>
         </div>
-        <h2>预览</h2>
-        <div name="htmlcontent" class="wmd-preview"></div>
+        <div class="well">
+          <h2>预览</h2>
+          <div name="htmlcontent" class="wmd-preview"></div>
+        </div>
         <button id='submit' class='btn btn-primary'>很好，我要发表</button>
       </fieldset>
     </form>
