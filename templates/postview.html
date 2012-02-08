@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}注册 -- {{ escape(handler.settings['bbs_title']) }}{% end %}
+{% block title %}{{ post['title'] }} -- {{ escape(handler.settings['bbs_title']) }}{% end %}
 
 {% block head %}
 <style type="text/css">
@@ -19,13 +19,16 @@
 
 {% block breadcrumb %}
 <li><a href="/">{{ escape(handler.settings['bbs_title']) }}</a> <span class="divider">/</span></li>
-<li class="active">注册</li>
+<li><a href="/topics/node{{ post['node'] }}">{{ db.posts.find_one({'_id':int(post['node'])})['name'] }}</a> <span class="divider">/</span></li>
+<li class="active">{{ post['title'] }}</li>
 {% end %}
 
 {% block body %}
 <div class='container'>
   <div class='row'>
+    <div class='span8'>
 
+    </div>
   </div>
 </div>
 {% end %}

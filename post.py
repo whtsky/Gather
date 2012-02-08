@@ -32,9 +32,6 @@ class PostHandler(BaseHandler):
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
-        '''
-
-        '''
         self.render('postview.html',db=self.db,time_span=time_span,post=self.db.posts.find_one({'_id':int(postid)}))
 
     def post(self,postid):

@@ -1,7 +1,7 @@
 #coding=utf-8
 
 import tornado.web
-from time import time
+import time
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -14,16 +14,14 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.get_secure_cookie('user')
 
 def time_span(t):
-    timecha = int(time()) - t
+    timecha = int(time.time()) - t
     if timecha < 60:
         return str(timecha)+u'秒前'
     elif timecha < 3600:
         return str(timecha/60)+u'分钟前'
     elif timecha < 86400:
         return str(timecha/3600)+u'小时前'
-    elif timecha < 2678400:
+    elif timecha < 1296000:
         return str(timecha/86400)+u'天前'
-    elif timecha < 32140800:
-        return str(timecha/2678400)+u'月前'
-    else:
-        return str(timecha/32140800)+u'年前'
+    else
+        return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
