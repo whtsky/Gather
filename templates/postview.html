@@ -101,7 +101,7 @@
 </div>
 <script type="text/javascript">
   ajaxNum=1;
-  function ajaxComment(divid)
+  /*function ajaxComment(divid)
   {
     $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:ajaxNum},
@@ -111,7 +111,7 @@
       };
     },"json");
     ajaxNum=ajaxNum+10;
-  }
+  }*/
   $("#markdown").blur(function(){
     checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
