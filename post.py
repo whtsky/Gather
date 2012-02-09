@@ -91,8 +91,8 @@ class PostViewHandler(BaseHandler):
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
         try:
-            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags'tag},sort=[('changedtime', 1)]),
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
                 db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=int(self.get_argument('p')))
         except:
-            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags'tag},sort=[('changedtime', 1)]),
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
                 db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=1)
