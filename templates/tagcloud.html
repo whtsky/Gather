@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li class="active">标签</li>
+{% end %}
+
 {% block body %}
 <div class='container'>
     <div class='row'>

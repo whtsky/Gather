@@ -20,9 +20,9 @@ define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
-from post import PostHandler,PostViewHandler,CommentHandler
+from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler
 from node import NodeViewHandler
-from tag import TagViewHandler,tagcloud,TagCloudHandler
+from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -37,15 +37,19 @@ class Application(tornado.web.Application):
             (r'/topics/(\d+)', PostViewHandler),
             (r'/topics/(\d+)/comment', CommentHandler),
             (r'/tag', TagCloudHandler),
-            (r'/tag/(.*?)', TagViewHandler),
+            (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
+            (r'/tag/([^ ,/]*?)', TagViewHandler),
 
             (r'/topics/add', PostHandler),
             
             (r'/node/add/(.*)', AdminAddNodeHandler),
+
+            (r'/markdown',MarkDownPreViewHandler),
         ]
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
             bbs_title_e=xhtml_escape(u'Jybox'),
+            bbs_url=u'http://jybox.net/',
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             xsrf_cookies=True,
