@@ -66,12 +66,6 @@ class PostViewHandler(BaseHandler):
                     post=self.db.posts.find_one({'_id':int(postid)}),md5=md5)
 
     def post(self,postid):
-        '''使用AJAX获取评论。返回JSON数据。
-        每次返回10条数据。
-        需要向本页面POST`start_num`数据。本数据为所需的第一条评论标号。
-        比如，若需要取得第1-10条评论，则start_num为1.
-        若无评论可获取则返回{}。
-        '''
         start=int(self.get_argument('start_num'))
         comments=self.db.posts.find_one({'_id':int(postid)})['comments']
         count = len(comments)

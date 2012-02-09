@@ -60,17 +60,8 @@
         </article>
       </section>
       <section class='box'>
-        <table class='item-list'>
-          <tr>
-            <td class='avatar'>
-              <a href="/user/jybox"><img src='http://gravatar.com/avatar/efcc15b92617a95a09f514a9bff9e6c3.png?r=G&amp;s=48' /></a>
-            </td>
-            <td>
-              <h3><a href="/user/jybox">jybox</a></h3>
-              <div></div>
-              <a href="/user/jybox">jybox</a>创建于x
-            </td>
-          </tr>
+        <table id="comments" class='item-list'>
+
         </table>
       </section>
       <section class='box'>
@@ -100,11 +91,8 @@
     $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:ajaxNum},
     function(data){
-      for(i=1;i<=10;i++)
-      {
-        alert(data[i]);
-      }
-    },"json");
+      $("comments").append(data);
+    },"html");
     ajaxNum=ajaxNum+10;
   }
   ajaxComment(0);
