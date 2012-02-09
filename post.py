@@ -23,12 +23,12 @@ class PostHandler(BaseHandler):
         tags = []
         for x in self.get_argument('tags').split(','):
             for x in x.split(' '):
-                for x in x.split('/')
+                for x in x.split('/'):
                     tags.append(x)
         posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
-                      'content':self.get_argument('html'),
+                      'content':xhtml_escape(self.get_argument('html')),
                       'md':self.get_argument('markdown'),
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
@@ -48,23 +48,13 @@ class CommentHandler(BaseHandler):
                              {'$push':
                              {'comments':
                              {'author':self.get_secure_cookie('user'),
-                              'content':self.get_argument('html'),
+                              'content':xhtml_escape(self.get_argument('html')),
                               'md':self.get_argument('markdown'),
                               'posttime':int(time()),
                              }
                              }
                              }
                             )
-        posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id'],
-                      'title':xhtml_escape(self.get_argument('title')),
-                      'author':self.get_secure_cookie('user'),
-                      'content':self.get_argument('html'),
-                      'md':self.get_argument('markdown'),
-                      'node':int(self.get_argument('nodeid')),
-                      'comments':[],
-                      'posttime':int(time()),
-                      'tags':self.get_argument('tags').split(','),
-                      })
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
