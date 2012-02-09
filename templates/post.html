@@ -47,7 +47,7 @@
             <input class="span7" type='text' id='title' name='title'>
           </div>
           <div id="title-t" class="box controls">
-            <span class="help-inline">起码也要输入几个字嘛~</span>
+            <span class="help-inline">起码也要输入几个字嘛(五个字)~</span>
           </div>
         </div>
         <div id='markdown-g' class='control-group'>
@@ -56,7 +56,7 @@
             <textarea class="span10" style="height:380px;" id='markdown' name='markdown'></textarea>
           </div>
           <div id="markdown-t" class="box controls">
-            <span class="help-inline">起码也要输入几个字嘛~</span>
+            <span class="help-inline">起码也要输入几个字嘛(五个字)~</span>
           </div>
         </div>
         <div id='tags-g' class='control-group'>
@@ -68,8 +68,8 @@
           </div>
         </div>
         <div class="well">
-          <h2>预览</h2>
-          <div name="htmlcontent" class="wmd-preview"></div>
+          <h2>预览(焦点离开输入框后刷新)</h2>
+          <div id="preview"></div>
         </div>
         <button id='submit' class='btn btn-primary'>很好，我要发表</button>
       </fieldset>
@@ -81,10 +81,15 @@
 </div>
 <script type="text/javascript">
   $("#title").blur(function(){
-    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,200}$/)));
+    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
   });
   $("#markdown").blur(function(){
     checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
+                        md:$("#markdown").val()},
+    function(data){
+      $("#preview").html(data);
+    },"html");
   });
   $("#tags").blur(function(){
     checkInput("#tags",(!$(this).val() || !$(this).val().match(/.{1,}$/)));

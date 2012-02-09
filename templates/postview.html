@@ -82,7 +82,6 @@
       <section class='box'>
         {{ xsrf_form_html() }}
         <div id='markdown-g' class='control-group offset1'>
-          <label class='control-label' for='content'>正文</label>
           <div class='controls'>
             <textarea class="span6" style="height:200px;" id='markdown' name='markdown'></textarea>
             <textarea style="display:none;" name="html" id="html" class="wmd-output"></textarea>
@@ -92,8 +91,8 @@
           </div>
         </div>
         <div class="well">
-          <h2>预览</h2>
-          <div name="htmlcontent" class="wmd-preview"></div>
+          <h2>预览(焦点离开输入框后刷新)</h2>
+          <div id="preview"></div>
         </div>
         <button id='submit' class='btn btn-primary'>很好，我要发表</button>
       </section>
@@ -115,6 +114,11 @@
   }
   $("#markdown").blur(function(){
     checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
+                        md:$("#markdown").val()},
+    function(data){
+      $("#preview").html(data);
+    },"html");
   });
   $("#markdown-t").hide();
   $("#submit").click(function(){

@@ -85,5 +85,5 @@ class PostViewHandler(BaseHandler):
         self.write(json_encode(zip(range(1,len(comments)+1),comments)))
 
 class MarkDownPreViewHandler(BaseHandler):
-    def get(self):
+    def post(self):
         self.write(md_convert(xhtml_escape(self.get_argument('md'))))
