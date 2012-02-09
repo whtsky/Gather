@@ -10,7 +10,7 @@ def tagcloud(db,limit=100):
     tags = sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])
     tags.reverse()
     tags = tags[:limit]
-    return ''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (name,round(math.log(x,tags[0][1]),1)*14+8,name)) for name,count in tags)]])
+    return ''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (name,round(math.log(x,tags[0][1]),1)*14+8,name) for name,count in tags)]])
 
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
