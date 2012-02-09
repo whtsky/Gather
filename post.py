@@ -46,21 +46,10 @@ class CommentHandler(BaseHandler):
                              {'author':self.get_secure_cookie('user'),
                               'content':self.get_argument('html'),
                               'md':self.get_argument('markdown'),
-                              'posttime':int(time()),
-                             }
-                             }
-                             }
-                            )
-        posts.insert({'_id':posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id'],
-                      'title':xhtml_escape(self.get_argument('title')),
-                      'author':self.get_secure_cookie('user'),
-                      'content':self.get_argument('html'),
-                      'md':self.get_argument('markdown'),
-                      'node':int(self.get_argument('nodeid')),
-                      'comments':[],
-                      'posttime':int(time()),
-                      'tags':self.get_argument('tags').split(','),
-                      })
+                              'posttime':int(time()),}}})
+        message = '发表成功'
+        status = 'success'
+        self.write(json_encode({'status':status,'message':message}))
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):

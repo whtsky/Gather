@@ -3,16 +3,31 @@
 {% block title %}{{ post['title'] }} -- {{ handler.settings['bbs_title'] }}{% end %}
 
 {% block head %}
+<script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
+<script type="text/javascript">
+    wmd_options = {
+        output: "Markdown",
+        lineLength: 80,
+        buttons: "bold italic | link blockquote code image | ol ul heading hr",
+        autostart: true
+    };
+</script>
 <style type="text/css">
-    header {
-        margin-bottom: 17px;
-        padding-bottom: 17px;
-        border-bottom: 1px solid #EEE; }
-    header td.avatar {
-        width: 72px; }
-    header td.avatar img {
-        width: 72px;
-        height: 72px; }
+    header
+    {
+      margin-bottom: 17px;
+      padding-bottom: 17px;
+      border-bottom: 1px solid #EEE; 
+    }
+    header td.avatar
+    {
+      width: 72px; 
+    }
+    header td.avatar img
+    {
+      width: 72px;
+      height: 72px;
+    }
     {% block style %}{% end %}
 </style>
 {% end %}
@@ -57,15 +72,65 @@
           </footer>
         </article>
       </section>
-
       <section class='box'>
         <table class='item-list'>
           <!-- 这里是评论 -->
         </table>
       </section>
+      <section class='box'>
+        {{ xsrf_form_html() }}
+        <div id='markdown-g' class='control-group offset1'>
+          <label class='control-label' for='content'>正文</label>
+          <div class='controls'>
+            <textarea class="span6" style="height:200px;" id='markdown' name='markdown'></textarea>
+            <textarea style="display:none;" name="html" id="html" class="wmd-output"></textarea>
+          </div>
+          <div id="markdown-t" class="box controls">
+            <span class="help-inline">起码也要输入几个字嘛~</span>
+          </div>
+        </div>
+        <div class="well">
+          <h2>预览</h2>
+          <div name="htmlcontent" class="wmd-preview"></div>
+        </div>
+        <button id='submit' class='btn btn-primary'>很好，我要发表</button>
+      </section>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  ajaxNum=1;
+  function ajaxComment(divid)
+  {
+    $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
+                                        start_num:ajaxNum},
+    function(data){
+      $.each(data,function(i,v){
+        
+      };
+    },"json");
+    ajaxNum=ajaxNum+10;
+  }
+  $("#markdown").blur(function(){
+    checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+  });
+  $("#markdown-t").hide();
+  $("#submit").click(function(){
+    readySubmit=true;
+    $("#markdown").blur();
+    if(!readySubmit)
+      return false;
+    $.post("/topics/{{ post['_id'] }}/comment",{_xsrf:$("input[name='_xsrf']").val(),
+                                                markdown:$("#markdown").val(),
+                                                html:$("#html").val()},
+    function(data){
+      alert(data.message);
+      if(data.status=="success")
+        location.reload();
+    },"json");
+    return false;
+  });
+</script>
 {% end %}
 
 
