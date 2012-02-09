@@ -5,6 +5,7 @@
 {% block head %}
 <script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
+<script src='{{ static_url("md5.js") }}' type="text/javascript"></script>
 <script src='{{ static_url("highlight.pack.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("highlight.css") }}' type='text/css'/>
 <script type="text/javascript">
@@ -60,8 +61,8 @@
         </article>
       </section>
       <section class='box'>
-        <table class='item-list'>
-          <!-- 这里是评论 -->
+        <table id="comment" class='item-list'>
+          
         </table>
       </section>
       <section class='box'>
@@ -86,17 +87,22 @@
 </div>
 <script type="text/javascript">
   ajaxNum=1;
-  /*function ajaxComment(divid)
+  function ajaxComment(divid)
   {
     $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:ajaxNum},
     function(data){
-      $.each(data,function(i,v){
-        
-      };
+      for(i=1;i<=10;i++)
+      {
+        tHtml='<tr><td class="avatar"><a href="/user/'+data[i].author+'"><img src="http://gravatar.com/avatar/+hex_md5(data[i].author_email)+.png?r=G&amp;s=48" /></a>';
+        tHtml=tHtml+'</td><td><h3><a href="/user/'+data[i].author+'">'+data[i].author+'</a></h3><div></div><a href="/user/'+data[i].author+'">'+data[i].author+'</a>创建于';
+        tHtml=tHtml+data[i].posttime+'</td></tr>';
+        $("#comment").append(tHtml);
+      }
     },"json");
     ajaxNum=ajaxNum+10;
-  }*/
+  }
+  ajaxComment(1);
   $("#markdown").blur(function(){
     checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
