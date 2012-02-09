@@ -45,11 +45,11 @@ class CommentHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,postid):
         md = self.get_argument('markdown')
-        self.db.posts.update({'_id':postid},
+        self.db.posts.update({'_id':int(postid)},
                              {'$push':
                              {'comments':
                              {'author':self.get_secure_cookie('user'),
-                              'content':md_convert(xhtml_escape(md)),
+                              'content':xhtml_escape(md_convert(md)),
                               'md':md,
                               'posttime':int(time()),}}})
         message = '发表成功'
@@ -71,6 +71,7 @@ class PostViewHandler(BaseHandler):
         start=int(self.get_argument('start_num'))
         comments=self.db.posts.find_one({'_id':int(postid)})['comments']
         count = len(comments)
+        print start,count,comments
         if start>count:
             self.write('{}')
             return
