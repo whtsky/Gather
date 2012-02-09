@@ -12,7 +12,7 @@ def tagcloud(db,limit=100):
     tags = tags[:limit]
     html = []
     for x,y in tags:
-        html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(x,tags[0][1]),1)*14+8,x))
+        html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,tags[0][1]),1)*14+8,x))
     return ' '.join(html)
 
 class TagViewHandler(BaseHandler):
