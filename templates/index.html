@@ -6,7 +6,7 @@
       <div>
         <table class='table item-list'>
           <tbody>
-          {% for post in db.posts.find({},sort=[('changedtime', 1)],limit=15)%}
+          {% for post in db.posts.find({},sort=[('changedtime', -1)],limit=15)%}
           <tr>
             <td class='avatar'>
               <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=48' /></a>
