@@ -41,7 +41,8 @@ class PostHandler(BaseHandler):
         message = '发表成功'
         status = 'success'
         self.write(json_encode({'status':status,'message':message,'tid':tid}))
-        self.db.settings.update({'name':'tag-count'},{'$inc':dict(zip(tags,[1]*len(tags)))})
+        for tag in tags:
+            self.db.tags.update({'name':tag,update={'$inc':{'count':1}},true)
 
 class CommentHandler(BaseHandler):
 
@@ -67,7 +68,7 @@ class PostViewHandler(BaseHandler):
 
     def post(self,postid):
         start=int(self.get_argument('start_num'))
-        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[postid-1,10]}})['comments']
+        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[int(postid)-1,10]}})['comments']
         self.render('comments.html',comments=i,md5=md5,time_span=time_span,db=self.db)
 
 class MarkDownPreViewHandler(BaseHandler):
