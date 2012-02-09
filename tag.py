@@ -7,7 +7,7 @@ from hashlib import md5
 import time
 
 def tagcloud(db,limit=100):
-    tags = sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])
+    tags = sorted([ _ for _ in db.tags.find({},{'_id':0})].items(), key=lambda x: x[1])
     tags.reverse()
     tags = tags[:limit]
     html = []
