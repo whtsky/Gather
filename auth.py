@@ -6,7 +6,7 @@ from tornado.escape import json_encode
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
-    return sha1(username+password+username+password[1]+username[2]).hexdigest()
+    return sha1(username+password+username+password[1]).hexdigest()
 
 class AuthSignupHandler(BaseHandler):
     def get(self):
