@@ -4,6 +4,7 @@ import math
 from node import POST_PER_PAGE
 from common import BaseHandler,time_span
 from hashlib import md5
+import time
 
 tagcloud = lambda db,limit=100:''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,2),1)*14+8,x) for x,y in [_ for _ in reversed(sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])[:limit])]])
 
@@ -19,3 +20,8 @@ class TagViewHandler(BaseHandler):
 class TagCloudHandler(BaseHandler):
     def get(self):
         self.render('tagcloud.html',tagcloud=tagcloud(self.db))
+
+class TagFeedHandler(BaseHandler):
+    def get(self,tagname):
+        self.render('atom.xml',tagname=tagname,
+                    time=time)

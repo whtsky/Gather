@@ -38,6 +38,7 @@ class Application(tornado.web.Application):
             (r'/topics/(\d+)/comment', CommentHandler),
             (r'/tag', TagCloudHandler),
             (r'/tag/(.*?)', TagViewHandler),
+            (r'/tag/(.*?)/feed', TagFeedHandler),
 
             (r'/topics/add', PostHandler),
             
@@ -46,6 +47,7 @@ class Application(tornado.web.Application):
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
             bbs_title_e=xhtml_escape(u'Jybox'),
+            bbs_url=u'http://jybox.net/',
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             xsrf_cookies=True,
