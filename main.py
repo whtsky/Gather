@@ -37,8 +37,8 @@ class Application(tornado.web.Application):
             (r'/topics/(\d+)', PostViewHandler),
             (r'/topics/(\d+)/comment', CommentHandler),
             (r'/tag', TagCloudHandler),
-            (r'/tag/(.*?)', TagViewHandler),
-            (r'/tag/(.*?)/feed', TagFeedHandler),
+            (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
+            (r'/tag/([^ ,/]*?)', TagViewHandler),
 
             (r'/topics/add', PostHandler),
             
