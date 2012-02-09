@@ -2,6 +2,10 @@
 
 {% block title %}{{ tagname }} -- {{ handler.settings['bbs_title'] }}{% end %}
 
+{% block head %}
+<link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['bbs_title'] }}-{{ tagname }}" type="application/atom+xml"/>
+{% end %}
+
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
 <li><a href="/tag">标签</a> <span class="divider">/</span></li>
