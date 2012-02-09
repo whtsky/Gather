@@ -6,7 +6,6 @@ import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
 from hashlib import md5
-from node import POST_PER_PAGE
 
 class PostHandler(BaseHandler):
 
@@ -21,6 +20,7 @@ class PostHandler(BaseHandler):
     def post(self):
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
+        tags = self.get_argument('tags').split(',')
         posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
@@ -29,11 +29,12 @@ class PostHandler(BaseHandler):
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
                       'posttime':int(time()),
-                      'tags':self.get_argument('tags').split(','),
+                      'tags':tags,
                       })
         message = '发表成功'
         status = 'success'
         self.write(json_encode({'status':status,'message':message,'tid':tid}))
+        self.db.settings.update({'name':'tag-count'},{'$inc':dict(zip(tags,[1]*len(tags)))})
 
 class CommentHandler(BaseHandler):
 
@@ -87,12 +88,3 @@ class PostViewHandler(BaseHandler):
             i['posttime'] = time_span(i['posttime'])
             i['author_email'] = self.db.users.find_one({"username":i["author"]})["email"]
         self.write(json_encode(zip(range(1,len(comments)+1),comments)))
-
-class TagViewHandler(BaseHandler):
-    def get(self,tagname):
-        try:
-            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
-                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=int(self.get_argument('p')))
-        except:
-            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
-                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=1)

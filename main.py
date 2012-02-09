@@ -20,8 +20,9 @@ define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
-from post import PostHandler,PostViewHandler,CommentHandler,TagViewHandler
+from post import PostHandler,PostViewHandler,CommentHandler
 from node import NodeViewHandler
+from tag import TagViewHandler,tagcloud,TagCloudHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -35,6 +36,7 @@ class Application(tornado.web.Application):
             (r'/topics/node(\d+)', NodeViewHandler),
             (r'/topics/(\d+)', PostViewHandler),
             (r'/topics/(\d+)/comment', CommentHandler),
+            (r'/tag', TagCloudHandler),
             (r'/tag/(.*?)', TagViewHandler),
 
             (r'/topics/add', PostHandler),
@@ -58,7 +60,7 @@ class Application(tornado.web.Application):
 
 class HomeHandler(BaseHandler):
     def get(self):
-        self.render('index.html',db=self.db,md5=md5,time_span=time_span)
+        self.render('index.html',db=self.db,md5=md5,time_span=time_span,tagcloud=tagcloud(self.db,limit=10))
         
 if __name__ == '__main__':
     tornado.options.parse_command_line()

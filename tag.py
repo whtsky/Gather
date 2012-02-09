@@ -1,0 +1,21 @@
+#coding=utf-8
+
+import math
+from node import POST_PER_PAGE
+from common import BaseHandler,time_span
+from hashlib import md5
+
+tagcloud = lambda db,limit=100:''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,2),1)*14+8,x) for x,y in [_ for _ in reversed(sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])[:limit])]])
+
+class TagViewHandler(BaseHandler):
+    def get(self,tagname):
+        try:
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
+                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=int(self.get_argument('p')))
+        except:
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]),
+                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=1)
+
+class TagCloudHandler(BaseHandler):
+    def get(self):
+        self.render('tagcloud.html',tagcloud=tagcloud(self.db))
