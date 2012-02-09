@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"
       xml:lang="zh-CN"
       xml:base="{{ handler.settings['bbs_url'] }}">
-    <title>{{ handler.settings['bbs_title'] }}</title>
+    <title>{{ handler.settings['bbs_title'] }}-{{ tagname }}</title>
     <id>{{ handler.settings['bbs_url'] }}tag/{{ tagname }}/feed</id>
     <subtitle>这是{{ handler.settings['bbs_title'] }}上{{ tagname }}标签的ATOM供稿</subtitle>
     <link href="{{ handler.settings['bbs_url'] }}tag/{{ tagname }}" rel="alternate" type="text/html"/>
