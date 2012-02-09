@@ -1264,3 +1264,15 @@ footer {
     padding-top: 17px;
     border-top: 1px solid #eee;
 }
+
+.left {
+    float: left; }
+
+.right {
+    float: right; }
+
+.clearbox {
+    overflow: hidden; }
+
+.clearbox::after {
+    clear: both; }

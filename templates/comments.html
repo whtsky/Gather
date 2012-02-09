@@ -1,0 +1,20 @@
+{% for comment in comments %}
+<tr>
+  <td class='avatar'
+  <img src="http://gravatar.com/avatar/{{ comment['author_email'] }}.png?r=G&amp;s=48" /></td>
+  <td>
+    <article>
+      <header>
+        <div class='left'>
+          <a href="/user/{{ comment['author'] }}">{{ comment['author'] }}</a>
+          <span>{{ comment['author'] }}</span>
+        </div>
+        <div class='right'>
+          {{ comment['posttime'] }}
+        </div>
+      </header>
+      {{ comment['content'] }}
+    </article>
+  </td>
+</tr>
+{% end %}

@@ -84,9 +84,8 @@ class PostViewHandler(BaseHandler):
             comments = comments[start-1:start+9]
         for i in comments:
             i['posttime'] = time_span(i['posttime'])
-            i['author_email'] = self.db.users.find_one({"username":i["author"]})["email"]
-            del i['md']
-        self.write(json_encode(zip(range(1,len(comments)+1),comments)))
+            i['author_email'] = md5(self.db.users.find_one({"username":i["author"]})["email"]).hexdigest()
+        self.render('comments.html',comments=i)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
