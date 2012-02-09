@@ -1,5 +1,4 @@
 #coding=utf-8
-import new
 
 from common import BaseHandler,time_span,md_convert
 import tornado.web
@@ -25,7 +24,7 @@ class PostHandler(BaseHandler):
         for x in self.get_argument('tags').split(','):
             for x in x.split(' '):
                 for x in x.split('/'):
-                    tags.append(x)
+                    tags.append(xhtml_escape(x))
         posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),

@@ -29,8 +29,8 @@ class AuthSignupHandler(BaseHandler):
                         'password':hashpassword(username,password)})
             message = '注册成功'
             status = 'success'
+            self.set_secure_cookie('user',username)
         self.write(json_encode({'status':status,'message':message}))
-        self.set_secure_cookie('user',username)
 
 class AuthLogoutHandler(BaseHandler):
     def get(self):
