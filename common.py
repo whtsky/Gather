@@ -29,5 +29,5 @@ def time_span(t):
     else:
         return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
 
-def md_convert(md):
-    return md.convert(md)
+def md_convert(txt):
+    return md.convert(txt)
