@@ -33,6 +33,7 @@ class PostHandler(BaseHandler):
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
                       'posttime':int(time()),
+                      'changedtime':int(time()),
                       'tags':tags,
                       })
         message = '发表成功'
@@ -51,7 +52,8 @@ class CommentHandler(BaseHandler):
                              {'author':self.get_secure_cookie('user'),
                               'content':xhtml_escape(md_convert(md)),
                               'md':md,
-                              'posttime':int(time()),}}})
+                              'posttime':int(time()),}},
+                              '$set':{'changedtime':int(time())},})
         message = '发表成功'
         status = 'success'
         self.write(json_encode({'status':status,'message':message}))
