@@ -42,7 +42,7 @@ class PostHandler(BaseHandler):
         status = 'success'
         self.write(json_encode({'status':status,'message':message,'tid':tid}))
         for tag in tags:
-            self.db.tags.update({'name':tag,update={'$inc':{'count':1}},true)
+            self.db.tags.update({'name':tag},update={'$inc':{'count':1}},true)
 
 class CommentHandler(BaseHandler):
 
