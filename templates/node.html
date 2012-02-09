@@ -12,12 +12,12 @@
   <div class='row-fluid'>
    <div class='span8'>
        共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-     <table class='item-list'>
+     <table class='table item-list'>
        <tbody>
        {% for post in posts.skip((p-1)*limit).limit(limit) %}
          <tr>
            <td class='avatar'>
-               <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=48' /></a>
+             <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=48' /></a>
            </td>
            <td>
              <h3>

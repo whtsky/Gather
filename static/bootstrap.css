@@ -1259,3 +1259,8 @@ body
 {
     padding: 9px 0;
 }
+footer {
+    margin-top: 17px;
+    padding-top: 17px;
+    border-top: 1px solid #eee;
+}

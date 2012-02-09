@@ -19,7 +19,7 @@ class PostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         posts = self.db.posts
-        tid = posts.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
+        tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
         posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),

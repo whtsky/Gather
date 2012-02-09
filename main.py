@@ -10,7 +10,9 @@ import pymongo
 from tornado.options import define, options
 from tornado.escape import xhtml_escape
 
-from common import BaseHandler
+from common import BaseHandler,time_span
+from hashlib import md5
+
 
 define('port', default=8888, help='run on the given port', type=int)
 define('mongo_host', default='127.0.0.1', help='mongodb host')
@@ -20,7 +22,6 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
 from post import PostHandler,PostViewHandler,CommentHandler
 from node import NodeViewHandler
-
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -57,7 +58,7 @@ class Application(tornado.web.Application):
 
 class HomeHandler(BaseHandler):
     def get(self):
-        self.render('index.html',db=self.db)
+        self.render('index.html',db=self.db,md5=md5,time_span=time_span)
         
 if __name__ == '__main__':
     tornado.options.parse_command_line()
