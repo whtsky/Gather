@@ -44,7 +44,7 @@ class PostHandler(BaseHandler):
         for tag in tags:
             self.db.tags.update({'name':tag},
                                 {'$inc':{'count':1}},
-                                true)
+                                True)
 
 class CommentHandler(BaseHandler):
 

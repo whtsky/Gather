@@ -7,12 +7,13 @@ from hashlib import md5
 import time
 
 def tagcloud(db,limit=100):
-    tags = sorted([ _ for _ in db.tags.find({},{'_id':0})].items(), key=lambda x: x[1])
+    tags = sorted([ _ for _ in db.tags.find({},{'_id':0})], key=lambda x: x['count'])
+
     tags.reverse()
     tags = tags[:limit]
     html = []
-    for x,y in tags:
-        html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,tags[0][1]+1))*14+8,x))
+    for tag in tags:
+        html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
     return ' '.join(html)
 
 class TagViewHandler(BaseHandler):
