@@ -50,6 +50,30 @@
        <a href='node{{ node["_id"] }}?p={{ p+1 }}'>下一页</a>
      {% end %}
    </div>
+   <div class='span4'>
+      <section class='well'>
+        <button id='newPost' class='btn btn-info'>我要发贴</button>
+      </section>
+      <section class='well'>
+        <header>
+          统计信息
+        </header>
+        <ul>
+          <li>主题数：{{ posts.count() }}</li>
+        </ul>
+      </section>
+      <section class='well'>
+        <header>
+          标签云
+        </header>
+        {{ tagcloud }}
+      </section>
+    </div>
   </div>
 </div>
+<script type="text/javascript">
+  $("#newPost").click(function(){
+    location.href="/topics/add?node={{ node['_id'] }}";
+  });
+</script>
 {% end %}

@@ -52,11 +52,10 @@ class CommentHandler(BaseHandler):
                              {'author':self.get_secure_cookie('user'),
                               'content':md_convert(xhtml_escape(md)),
                               'md':md,
-                              'posttime':int(time()),
-                             }
-                             }
-                             }
-                            )
+                              'posttime':int(time()),}}})
+        message = '发表成功'
+        status = 'success'
+        self.write(json_encode({'status':status,'message':message}))
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
