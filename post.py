@@ -73,19 +73,8 @@ class PostViewHandler(BaseHandler):
         若无评论可获取则返回{}。
         '''
         start=int(self.get_argument('start_num'))
-        comments=self.db.posts.find_one({'_id':int(postid)})['comments']
-        count = len(comments)
-        if start>count:
-            self.write('{}')
-            return
-        elif start+9>count:
-            comments = comments[start-1:count]
-        else:
-            comments = comments[start-1:start+9]
-        for i in comments:
-            i['posttime'] = time_span(i['posttime'])
-            i['author_email'] = md5(self.db.users.find_one({"username":i["author"]})["email"]).hexdigest()
-        self.render('comments.html',comments=i)
+        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[postid-1,10]}})['comments']
+        self.render('comments.html',comments=i,md5=md5,time_span=time_span,db=self.db)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):

@@ -1,7 +1,7 @@
 {% for comment in comments %}
 <tr>
   <td class='avatar'>
-  <img src="http://gravatar.com/avatar/{{ comment['author_email'] }}.png?r=G&amp;s=48" /></td>
+  <img src="http://gravatar.com/avatar/{{ md5(self.db.users.find_one({'username':comment['author']})["email"]).hexdigest() }}.png?r=G&amp;s=48" /></td>
   <td>
     <article>
       <header>
@@ -10,7 +10,7 @@
           <span>{{ comment['author'] }}</span>
         </div>
         <div class='right'>
-          {{ comment['posttime'] }}
+          {{ time_span(comment['posttime']) }}
         </div>
       </header>
       {{ comment['content'] }}
