@@ -22,7 +22,7 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
 from post import PostHandler,PostViewHandler,CommentHandler
 from node import NodeViewHandler
-from tag import TagViewHandler,tagcloud,TagCloudHandler
+from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
