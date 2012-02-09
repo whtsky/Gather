@@ -20,7 +20,7 @@ define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
 from admin import AdminAddNodeHandler
-from post import PostHandler,PostViewHandler,CommentHandler
+from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler
 from node import NodeViewHandler
 from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
 
@@ -43,6 +43,8 @@ class Application(tornado.web.Application):
             (r'/topics/add', PostHandler),
             
             (r'/node/add/(.*)', AdminAddNodeHandler),
+
+            (r'/markdown',MarkDownPreViewHandler),
         ]
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
