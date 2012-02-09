@@ -72,7 +72,7 @@ class PostViewHandler(BaseHandler):
         '''
         start=int(self.get_argument('start_num'))
         comments=self.db.posts.find_one({'_id':int(postid)})['comments']
-        count = comments.count()
+        count = len(comments)
         if start>count:
             self.write('{}')
             return
