@@ -7,6 +7,7 @@
   <div class='row'>
     <div class='box container'>
       <form class='form-horizontal well span5 offset3'>
+        {{ xsrf_form_html() }}
         <fieldset>
           <header><h2>登录</h2></header>
           <div id="username-g" class="control-group">
@@ -47,7 +48,7 @@
     $("#password").blur();
     if(!readySubmit)
       return false;
-    $.post("/login",{_xsrf:getCookie("_xsrf"),
+    $.post("/login",{_xsrf:$("input[name='_xsrf']").val(),
                      username:$("#username").val(),
                      password:$("#password").val()},
     function(data){

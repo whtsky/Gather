@@ -23,7 +23,8 @@
 {% block body %}
 <div class='span10 offset1'>
   <div class='row-fluid'>
-    <form class='form-horizontal well' action='add' method='post'>
+    <form class='form-horizontal well'>
+    {{ xsrf_form_html() }}
       <fieldset>
         <header><h2>发表主题</h2></header>
         <div id='title-g' class='control-group nodeid-g'>
@@ -103,7 +104,7 @@
     $("#nodeid").blur();
     if(!readySubmit)
       return false;
-    $.post("/topics/add",{_xsrf:getCookie("_xsrf"),
+    $.post("/topics/add",{_xsrf:$("input[name='_xsrf']").val(),
                           title:$("#title").val(),
                           nodeid:$("#nodeid")[0].value,
                           markdown:$("#markdown").val(),
