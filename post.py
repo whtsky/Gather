@@ -1,7 +1,7 @@
 #coding=utf-8
 import new
 
-from common import BaseHandler,time_span
+from common import BaseHandler,time_span,md_convert
 import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
@@ -18,6 +18,7 @@ class PostHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self):
+        md = self.get_argument('markdown')
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
         tags = []
@@ -28,8 +29,8 @@ class PostHandler(BaseHandler):
         posts.insert({'_id':tid,
                       'title':xhtml_escape(self.get_argument('title')),
                       'author':self.get_secure_cookie('user'),
-                      'content':xhtml_escape(self.get_argument('html')),
-                      'md':self.get_argument('markdown'),
+                      'content':md_convert(xhtml_escape(md)),
+                      'md':md,
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
                       'posttime':int(time()),
@@ -44,12 +45,13 @@ class CommentHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self,postid):
+        md = self.get_argument('markdown')
         self.db.posts.update({'_id':postid},
                              {'$push':
                              {'comments':
                              {'author':self.get_secure_cookie('user'),
-                              'content':xhtml_escape(self.get_argument('html')),
-                              'md':self.get_argument('markdown'),
+                              'content':md_convert(xhtml_escape(md)),
+                              'md':md,
                               'posttime':int(time()),
                              }
                              }

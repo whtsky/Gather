@@ -2,6 +2,9 @@
 
 import tornado.web
 import time
+from markdown import Markdown
+
+md = Markdown(extensions=['fenced_code'])
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -25,3 +28,6 @@ def time_span(t):
         return str(timecha/86400)+u'天前'
     else:
         return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
+
+def md_convert(md):
+    return md.convert(md)
