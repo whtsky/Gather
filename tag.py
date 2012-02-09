@@ -6,8 +6,9 @@ from common import BaseHandler,time_span
 from hashlib import md5
 import time
 
-tagcloud = lambda db,limit=100:''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,2),1)*14+8,x) for x,y in [_ for _ in reversed(sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])[:limit])]])
-
+def tagcloud(db,limit=100):
+    tags =  [_ for _ in reversed(sorted(db.settings.find_one({'name':'tag-count'},{'_id':0,'name':0}).items(), key=lambda x: x[1])[:limit])]
+    return ''.join(['<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (x,round(math.log(y,tags[0][1]),1)*14+8,x)) for x,y in tags])
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
         try:
