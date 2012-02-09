@@ -3,7 +3,10 @@
 {% block title %}{{ post['title'] }} -- {{ handler.settings['bbs_title'] }}{% end %}
 
 {% block head %}
+<<<<<<< HEAD
 <script src='{{ static_url("highlight.pack.js") }}' type="text/javascript"></script>
+=======
+>>>>>>> 4216a1537133b236070352a1bdf4bc54196f4582
 <script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
 <script type="text/javascript">
     wmd_options = {
@@ -13,7 +16,28 @@
         autostart: true
     };
 </script>
+<<<<<<< HEAD
 <link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
+=======
+<style type="text/css">
+    header
+    {
+      margin-bottom: 17px;
+      padding-bottom: 17px;
+      border-bottom: 1px solid #EEE; 
+    }
+    header td.avatar
+    {
+      width: 72px; 
+    }
+    header td.avatar img
+    {
+      width: 72px;
+      height: 72px;
+    }
+    {% block style %}{% end %}
+</style>
+>>>>>>> 4216a1537133b236070352a1bdf4bc54196f4582
 {% end %}
 
 {% block breadcrumb %}
