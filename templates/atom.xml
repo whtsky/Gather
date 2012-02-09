@@ -21,7 +21,7 @@
             {{ post['html'] }}
         </content>
         <author>
-            <name>{{ post['author'] }}</name>
+            <name>{{ post['content'] }}</name>
         </author>
         <updated>{{ time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(post['posttime']+28800)) }}</updated>
     </entry>
