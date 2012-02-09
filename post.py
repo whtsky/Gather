@@ -17,6 +17,8 @@ class PostHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self):
+        title = xhtml_escape(self.get_argument('title'))
+        assert len(title)<50
         md = self.get_argument('markdown')
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
@@ -26,7 +28,7 @@ class PostHandler(BaseHandler):
                 for x in x.split('/'):
                     tags.append(xhtml_escape(x))
         posts.insert({'_id':tid,
-                      'title':xhtml_escape(self.get_argument('title')),
+                      'title':title,
                       'author':self.get_secure_cookie('user'),
                       'content':md_convert(xhtml_escape(md)),
                       'md':md,
@@ -83,6 +85,7 @@ class PostViewHandler(BaseHandler):
         for i in comments:
             i['posttime'] = time_span(i['posttime'])
             i['author_email'] = self.db.users.find_one({"username":i["author"]})["email"]
+            del i['md']
         self.write(json_encode(zip(range(1,len(comments)+1),comments)))
 
 class MarkDownPreViewHandler(BaseHandler):
