@@ -5,7 +5,6 @@
 {% block head %}
 <script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
-<script src='{{ static_url("md5.js") }}' type="text/javascript"></script>
 <script src='{{ static_url("highlight.pack.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("highlight.css") }}' type='text/css'/>
 <script type="text/javascript">
@@ -61,8 +60,17 @@
         </article>
       </section>
       <section class='box'>
-        <table id="comment" class='item-list'>
-          
+        <table class='item-list'>
+          <tr>
+            <td class='avatar'>
+              <a href="/user/jybox"><img src='http://gravatar.com/avatar/efcc15b92617a95a09f514a9bff9e6c3.png?r=G&amp;s=48' /></a>
+            </td>
+            <td>
+              <h3><a href="/user/jybox">jybox</a></h3>
+              <div></div>
+              <a href="/user/jybox">jybox</a>创建于x
+            </td>
+          </tr>
         </table>
       </section>
       <section class='box'>
@@ -94,15 +102,12 @@
     function(data){
       for(i=1;i<=10;i++)
       {
-        tHtml='<tr><td class="avatar"><a href="/user/'+data[i].author+'"><img src="http://gravatar.com/avatar/+hex_md5(data[i].author_email)+.png?r=G&amp;s=48" /></a>';
-        tHtml=tHtml+'</td><td><h3><a href="/user/'+data[i].author+'">'+data[i].author+'</a></h3><div></div><a href="/user/'+data[i].author+'">'+data[i].author+'</a>创建于';
-        tHtml=tHtml+data[i].posttime+'</td></tr>';
-        $("#comment").append(tHtml);
+        alert(data[i]);
       }
     },"json");
     ajaxNum=ajaxNum+10;
   }
-  ajaxComment(1);
+  ajaxComment(0);
   $("#markdown").blur(function(){
     checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
