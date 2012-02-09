@@ -6,6 +6,7 @@ import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
 from hashlib import md5
+from node import POST_PER_PAGE
 
 class PostHandler(BaseHandler):
 
@@ -86,3 +87,12 @@ class PostViewHandler(BaseHandler):
             i['posttime'] = time_span(i['posttime'])
             i['author_email'] = self.db.users.find_one({"username":i["author"]})["email"]
         self.write(json_encode(zip(range(1,len(comments)+1),comments)))
+
+class TagViewHandler(BaseHandler):
+    def get(self,tagname):
+        try:
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags'tag},sort=[('changedtime', 1)]),
+                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=int(self.get_argument('p')))
+        except:
+            self.render('tag.html',tagname=tagname,posts=self.db.posts.find({'tags'tag},sort=[('changedtime', 1)]),
+                db=self.db,limit=POST_PER_PAGE,md5=md5,time_span=time_span,p=1)
