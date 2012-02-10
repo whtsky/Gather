@@ -71,7 +71,10 @@ class PostViewHandler(BaseHandler):
     def post(self,postid):
         start=int(self.get_argument('start_num'))
         comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[start-1,10]}})['comments']
-        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db)
+        for comment in comments:
+            comment['location'] = '#%s' % start
+            start += 1
+        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db,start=start)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
