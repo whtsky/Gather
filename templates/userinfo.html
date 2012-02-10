@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ handler.settings['bbs_title'] }} > {{ username }}{% end %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/topics/node{{ post['node'] }}">{{ db.nodes.find_one({'_id':post['node']})['name'] }}</a> <span class="divider">/</span></li>
+<li class="active">{{ post['title'] }}</li>
+{% end %}
+
+{% block body %}
+{% end %}
+
+

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ tagname }} -- {{ handler.settings['bbs_title'] }}{% end %}
+{% block title %}{{ handler.settings['bbs_title'] }} > {{ tagname }}{% end %}
 
 {% block head %}
 <link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['bbs_title'] }}-{{ tagname }}" type="application/atom+xml"/>

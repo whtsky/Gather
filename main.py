@@ -23,6 +23,7 @@ from admin import AdminAddNodeHandler
 from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler
 from node import NodeViewHandler
 from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
+from user import UserInfoHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -41,7 +42,9 @@ class Application(tornado.web.Application):
             (r'/tag/([^ ,/]*?)', TagViewHandler),
 
             (r'/topics/add', PostHandler),
-            
+            (r'/user/(.*?)',UserInfoHandler),
+
+
             (r'/node/add/(.*)', AdminAddNodeHandler),
 
             (r'/markdown',MarkDownPreViewHandler),

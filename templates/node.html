@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ node['name'] }} -- {{ handler.settings['bbs_title'] }}{% end %}
+{% block title %}{{ handler.settings['bbs_title'] }} > {{ node['name'] }}{% end %}
 
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
