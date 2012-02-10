@@ -30,7 +30,7 @@ class PostHandler(BaseHandler):
         posts.insert({'_id':tid,
                       'title':title,
                       'author':self.get_secure_cookie('user'),
-                      'content':md_convert(xhtml_escape(md)),
+                      'content':md_convert(md),
                       'md':md,
                       'node':int(self.get_argument('nodeid')),
                       'comments':[],
@@ -55,7 +55,7 @@ class CommentHandler(BaseHandler):
                              {'$push':
                              {'comments':
                              {'author':self.get_secure_cookie('user'),
-                              'content':xhtml_escape(md_convert(md)),
+                              'content':md_convert(md),
                               'md':md,
                               'posttime':int(time()),}},
                               '$set':{'changedtime':int(time())},})
@@ -75,4 +75,4 @@ class PostViewHandler(BaseHandler):
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
-        self.write(md_convert(xhtml_escape(self.get_argument('md'))))
+        self.write(md_convert(self.get_argument('md')))

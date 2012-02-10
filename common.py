@@ -3,6 +3,10 @@
 import tornado.web
 import time
 from markdown import Markdown
+import re
+from tornado.escape import xhtml_escape
+
+html_killer = re.compile('<[^>]*>')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -30,4 +34,7 @@ def time_span(t):
         return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
 
 def md_convert(txt):
+    #滤去html标签
+    for x in tuple(set(html_killer.findall(txt))):
+        txt = txt.replace(x,xhtml_escape(x))
     return md.convert(txt)
