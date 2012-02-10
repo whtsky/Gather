@@ -97,7 +97,7 @@
   }
   ajaxComment(0);
   $("#markdown").blur(function(){
-    checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+    checkInput("#markdown",!$(this).val());
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
                         md:$("#markdown").val()},
     function(data){
