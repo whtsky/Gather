@@ -1,7 +1,7 @@
 {% for comment in comments %}
 <tr>
   <td class='avatar'>
-    <img src="http://gravatar.com/avatar/{{ md5(self.db.users.find_one({'username':comment['author']})["email"]).hexdigest() }}.png?r=G&amp;s=48" />
+    <img src="http://gravatar.com/avatar/{{ md5(db.users.find_one({'username':comment['author']})["email"]).hexdigest() }}.png?r=G&amp;s=48" />
   </td>
   <td>
     <article>
