@@ -70,6 +70,9 @@ class PostViewHandler(BaseHandler):
 
     def post(self,postid):
         start=int(self.get_argument('start_num'))
+        if start==-1:
+            self.write(str(len(self.db.posts.find_one({'_id':int(postid)})['comments'])))
+            return 
         comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[start-1,10]}})['comments']
         for comment in comments:
             comment['location'] = '#%s' % start
