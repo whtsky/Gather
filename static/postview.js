@@ -1,7 +1,7 @@
 ajaxNum=1;
 function ajaxComment()
 {
-    $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/topics/"+postID,{_xsrf:$("input[name='_xsrf']").val(),
             start_num:ajaxNum},
         function(data){
             $("#comments").append(data);
@@ -34,7 +34,7 @@ $("#submit").click(function(){
     $("#markdown").blur();
     if(!readySubmit)
         return false;
-    $.post("/topics/{{ post['_id'] }}/comment",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/topics/"+postID+"/comment",{_xsrf:$("input[name='_xsrf']").val(),
             markdown:$("#markdown").val(),
             html:$("#html").val()},
         function(data){
