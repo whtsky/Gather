@@ -7,7 +7,6 @@ function ajaxComment()
             $("#comments").append(data);
         },"html");
     ajaxNum=ajaxNum+10;
-    alert(ajaxNum+" "+commentNum);
     if(ajaxNum>commentNum)
     {
         $("#more").hide();
