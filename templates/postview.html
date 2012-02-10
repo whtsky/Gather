@@ -86,7 +86,13 @@
 </div>
 <script type="text/javascript">
   ajaxNum=1;
-  function ajaxComment(divid)
+  commentNum=0;
+  $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
+                                        start_num:"-1"},
+    function(data){
+      commentNum=data;
+    },"html");
+  function ajaxComment()
   {
     $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:ajaxNum},
@@ -94,8 +100,15 @@
       $("#comments").append(data);
     },"html");
     ajaxNum=ajaxNum+10;
+    if(ajaxNum>commentNum)
+    {
+      $("#more").hide();
+    }
   }
-  ajaxComment(0);
+  ajaxComment();
+  $("#more").click(function(){
+    ajaxComment();
+  });
   $("#markdown").blur(function(){
     checkInput("#markdown",!$(this).val());
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
