@@ -7,6 +7,7 @@
 <link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
 <script src='{{ static_url("highlight.pack.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("highlight.css") }}' type='text/css'/>
+<script src='{{ static_url("postview.js") }}' type="text/javascript"></script>
 <script type="text/javascript">
     wmd_options = {
         output: "Markdown",
@@ -67,9 +68,9 @@
       </section>
       <section class='box'>
         {{ xsrf_form_html() }}
-        <div id='markdown-g' class='control-group offset1'>
+        <div id='markdown-g' class='control-group'>
           <div class='controls'>
-            <textarea class="span6" style="height:200px;" id='markdown' name='markdown'></textarea>
+            <textarea class="span7" style="height:200px;" id='markdown' name='markdown'></textarea>
             <textarea style="display:none;" name="html" id="html" class="wmd-output"></textarea>
           </div>
           <div id="markdown-t" class="box controls">
@@ -94,62 +95,13 @@
           <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
           {% end %}
           {% else %}
-          看来楼主很寂寞，没有人和他有共同语言。。
+          没有相关的主题。。
           {% end %}
         </ul>
       </section>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  ajaxNum=1;
-  function ajaxComment()
-  {
-    $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
-                                        start_num:ajaxNum},
-    function(data){
-      $("#comments").append(data);
-    },"html");
-    ajaxNum=ajaxNum+10;
-    alert(ajaxNum+" "+commentNum);
-    if(ajaxNum>commentNum)
-    {
-      $("#more").hide();
-    }
-    else
-    {
-      $("#more").show();
-    }
-  }
-  ajaxComment();
-  $("#more").click(function(){
-    ajaxComment();
-  });
-  $("#markdown").blur(function(){
-    checkInput("#markdown",!$(this).val());
-    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
-                        md:$("#markdown").val()},
-    function(data){
-      $("#preview").html(data);
-    },"html");
-  });
-  $("#markdown-t").hide();
-  $("#submit").click(function(){
-    readySubmit=true;
-    $("#markdown").blur();
-    if(!readySubmit)
-      return false;
-    $.post("/topics/{{ post['_id'] }}/comment",{_xsrf:$("input[name='_xsrf']").val(),
-                                                markdown:$("#markdown").val(),
-                                                html:$("#html").val()},
-    function(data){
-      alert(data.message);
-      if(data.status=="success")
-        location.reload();
-    },"json");
-    return false;
-  });
-</script>
 {% end %}
 
 

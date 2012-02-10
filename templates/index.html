@@ -4,6 +4,7 @@
   <div class='row-fluid'>
     <div class='span7' style="margin-left: 72px;">
       <section class="box">
+        最近
         <table class='table item-list'>
           <tbody>
           {% for post in db.posts.find({},sort=[('changedtime', -1)],limit=15)%}
