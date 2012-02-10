@@ -10,7 +10,7 @@
 {% block body %}
 <div class='container'>
   <div class='row-fluid'>
-    <div class='span6' style="margin-left: 72px;">
+    <div class='span7' style="margin-left: 72px;">
       <section class="box">
         <form class='form-horizontal' action='/setting' method="post">
           {{ xsrf_form_html() }}
@@ -21,7 +21,7 @@
             <div id="username" class="control-group">
               <label class="control-label" for="email">用户名</label>
               <div class="controls">
-                <input class="input-xlarge disabled" id="disabledInput" type="text" placeholder="{{ user['username'] }}" disabled>
+                <input class=" disabled" id="disabledInput" type="text" placeholder="{{ user['username'] }}" disabled>
               </div>
             </div>
             <div id="email-g" class="control-group">
@@ -67,7 +67,7 @@
       </section>
     </div>
 
-    <div class='span4'>
+    <div class='span3'>
       <section class='box'>
         <form action='/setting/password' method="post">
           {{ xsrf_form_html() }}
@@ -75,23 +75,19 @@
             <header>
               <h3>更改密码</h3>
             </header>
-            <div id="old-g" class="control-group">
-              <label class="control-label" for="old">原密码</label>
-              <div class="controls">
-                <input type="password" id="old">
-              </div>
-            </div>
-            <div id="new-g" class="control-group">
-              <label class="control-label" for="new">新密码</label>
-              <div class="controls">
-                <input type="password" id="new">
-              </div>
-            </div>
-            <div class="form-actions">
-              <button id='submit' class='btn btn-info'>提交</button>
-            </div>
+            <p>原密码:<input type="password" id="old"></p>
+            <p>新密码:<input type="password" id="new"></p>
+            <button id='submit' class='btn btn-info'>提交</button>
           </fieldset>
         </form>
+      </section>
+
+      <section class="box">
+        <header>
+          <h3>头像</h3>
+        </header>
+        <p><img src="http://gravatar.com/avatar/{{ md5(user['email']).hexdigest() }}.png?r=G&s=250" /></p>
+        讨厌这个矮搓穷的头像？<a href="http://www.gravatar.com">去Gravatar换一个呗。</a>
       </section>
     </div>
   </div>

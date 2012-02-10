@@ -16,6 +16,7 @@
     };
     hljs.tabReplace = '    ';
     hljs.initHighlightingOnLoad();
+    commentNum={{ len(post['comments']) }};
 </script>
 {% end %}
 
@@ -27,7 +28,7 @@
 {% block body %}
 <div class='container'>
   <div class='row'>
-    <div class='span10'>
+    <div class='span8 offset1'>
       <section class='box'>
         <article id='topic-379'>
           <header>
@@ -62,7 +63,7 @@
         <table id="comments" class='table item-list'>
 
         </table>
-        <button id='more' class='btn btn-info'>管爷，我还要</button>
+        <button id='more' class='btn btn-info'>官人，论家还要嘛。</button>
       </section>
       <section class='box'>
         {{ xsrf_form_html() }}
@@ -80,6 +81,11 @@
           <div id="preview"></div>
         </div>
         <button id='submit' class='btn btn-primary'>很好，我要发表</button>.btn-info
+      </section>
+    </div>
+    <div class='span2'>
+      <section class="box">
+        我就是来卖萌的
       </section>
     </div>
   </div>

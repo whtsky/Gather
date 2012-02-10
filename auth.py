@@ -60,7 +60,7 @@ class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
-            getvalue=getvalue)
+            getvalue=getvalue,md5=md5)
 
     @authenticated
     def post(self):
