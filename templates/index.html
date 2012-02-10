@@ -64,4 +64,9 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $("#newPost").click(function(){
+    location.href="/topics/add?node={{ node['_id'] }}";
+  });
+</script>
 {% end %}
