@@ -18,10 +18,9 @@ define('port', default=8888, help='run on the given port', type=int)
 define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 
-from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler
+from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler
 from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler
 from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
-from user import UserInfoHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -31,15 +30,16 @@ class Application(tornado.web.Application):
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
+            (r'/user/(.*?)',AuthInfoHandler),
+            (r'/setting',AuthSettingHandler),
+            (r'/setting/password',AuthChangePasswordHandler),
 
             (r'/topics/(\d+)', PostViewHandler),
             (r'/topics/(\d+)/comment', CommentHandler),
+            (r'/topics/add', PostHandler),
             (r'/tag', TagCloudHandler),
             (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
             (r'/tag/([^ ,/]*?)', TagViewHandler),
-
-            (r'/topics/add', PostHandler),
-            (r'/user/(.*?)',UserInfoHandler),
 
             (r'/markdown',MarkDownPreViewHandler),
         ]

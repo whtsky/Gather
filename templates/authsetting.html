@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ handler.settings['bbs_title'] }} > 设置{% end %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li class="active">设置</li>
+{% end %}
+
+{% block body %}
+<div class='container'>
+  <div class='row-fluid'>
+    <div class='span6' style="margin-left: 72px;">
+      <section class="box">
+        <form class='form-horizontal' action='/setting' method="post">
+          {{ xsrf_form_html() }}
+          <fieldset>
+            <header>
+              <h3>设置</h3>
+            </header>
+            <div id="username" class="control-group">
+              <label class="control-label" for="email">用户名</label>
+              <div class="controls">
+                <input class="input-xlarge disabled" id="disabledInput" type="text" placeholder="{{ user['username'] }}" disabled>
+              </div>
+            </div>
+            <div id="email-g" class="control-group">
+              <label class="control-label" for="email">E-mail</label>
+              <div class="controls">
+                <input type="text" id="email" value="{{ user['email'] }}">
+                <span id="email-t" class="help-inline">请输入有效的邮箱地址</span>
+              </div>
+            </div>
+            <div id="website-g" class="control-group">
+              <label class="control-label" for="email">个人网址</label>
+              <div class="controls">
+                <input type="text" id="website" value="{{ getvalue(user,'website') }}">
+                <span id="website-t" class="help-inline">请输入有效的个人网址</span>
+              </div>
+            </div>
+            <div id="location-g" class="control-group">
+              <label class="control-label" for="email">所在地</label>
+              <div class="controls">
+                <input type="text" id="location" value="{{ getvalue(user,'location') }}">
+                <span id="location-t" class="help-inline">请输入有效的所在地</span>
+              </div>
+            </div>
+            <div id="twitter-g" class="control-group">
+              <label class="control-label" for="email">Twitter用户名</label>
+              <div class="controls">
+                <input type="text" id="twitter" value="{{ getvalue(user,'twitter') }}">
+                <span id="twitter-t" class="help-inline">请输入有效的Twitter用户名</span>
+              </div>
+            </div>
+            <div id="github-g" class="control-group">
+              <label class="control-label" for="email">Github用户名</label>
+              <div class="controls">
+                <input type="text" id="github" value="{{ getvalue(user,'github') }}">
+                <span id="github-t" class="help-inline">请输入有效的Github用户名</span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id='submit' class='btn btn-primary'>提交</button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </div>
+
+    <div class='span4'>
+      <section class='box'>
+        <form action='/setting/password' method="post">
+          {{ xsrf_form_html() }}
+          <fieldset>
+            <header>
+              <h3>更改密码</h3>
+            </header>
+            <div id="old-g" class="control-group">
+              <label class="control-label" for="old">原密码</label>
+              <div class="controls">
+                <input type="password" id="old">
+              </div>
+            </div>
+            <div id="new-g" class="control-group">
+              <label class="control-label" for="new">新密码</label>
+              <div class="controls">
+                <input type="password" id="new">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id='submit' class='btn btn-info'>提交</button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+{% end %}
+

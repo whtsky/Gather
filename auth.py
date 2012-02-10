@@ -1,8 +1,9 @@
 #coding=utf-8
 
-from common import BaseHandler
+from common import BaseHandler,getvalue
 from hashlib import sha1,md5
 from tornado.escape import json_encode
+from tornado.web import authenticated
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
@@ -50,3 +51,30 @@ class AuthLoginHandler(BaseHandler):
             self.write(json_encode({'status':'success','message':'登录成功'}))
         else:
             self.write(json_encode({'status':'error','message':'用户名或密码错误'}))
+
+class AuthInfoHandler(BaseHandler):
+    def get(self,username):
+        self.render('authinfo.html',db=self.db,username=username)
+
+class AuthSettingHandler(BaseHandler):
+    @authenticated
+    def get(self):
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
+            getvalue=getvalue)
+
+    @authenticated
+    def post(self):
+        setting = {}
+        for x in ('email','website','location','twitter','github'):
+            setting[x] = self.get_argument(x)
+        self.db.users.update({'name':self.get_secure_cookie('user')},{'$set':setting})
+        self.write(json_encode({'status':'success'}))
+
+class AuthChangePasswordHandler(BaseHandler):
+    @authenticated
+    def post(self):
+        username = self.get_secure_cookie('user')
+        if self.db.users.find_one({'name':username,'password':hashpassword(username,self.get_argument('old'))}) == None:
+            self.write(json_encode({'status':'fail',message:'原密码错误'}))
+        else:
+            self.db.users.update({'name':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
