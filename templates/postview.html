@@ -86,13 +86,17 @@
     <div class='span2'>
       <section class="box">
         <header>
-          <h3>相似文章</h3>
+          <h3>相关主题</h3>
         </header>
         <ul>
           {% for x in likely %}
           <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
           {% end %}
         </ul>
+      </section>
+      <section>
+        {% if current_user %}
+
       </section>
     </div>
   </div>

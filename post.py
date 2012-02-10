@@ -67,8 +67,9 @@ class PostViewHandler(BaseHandler):
         post = self.db.posts.find_one({'_id':int(postid)})
         likelylist = {}
         for tag in post['tags']:
-            for post in self.db.posts.find({'tags':tag}):
-                likelylist[post['_id']] =  likelylist.setdefault(post['_id'],1) + 1
+            for p in self.db.posts.find({'tags':tag}):
+                likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
+        del likelylist[post['_id']]
         likelys = sorted(likelylist.items(),key=lambda x: x[1])
         likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
         del likelys,likelylist
