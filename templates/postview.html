@@ -92,7 +92,6 @@
 </div>
 <script type="text/javascript">
   ajaxNum=1;
-  commentNum=0;
   $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:"-1"},
     function(data){
