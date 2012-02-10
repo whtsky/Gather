@@ -70,8 +70,8 @@ class PostViewHandler(BaseHandler):
 
     def post(self,postid):
         start=int(self.get_argument('start_num'))
-        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[int(postid)-1,10]}})['comments']
-        self.render('comments.html',comments=i,md5=md5,time_span=time_span,db=self.db)
+        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[start-1,10]}})['comments']
+        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
