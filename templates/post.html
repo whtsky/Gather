@@ -51,7 +51,7 @@
             <input class="span7" type='text' id='title' name='title'>
           </div>
           <div id="title-t" class="box controls">
-            <span class="help-inline">起码也要输入几个字嘛(五个字)~</span>
+            <span class="help-inline">起码也要输入几个字嘛(5-50个字)~</span>
           </div>
         </div>
         <div id='markdown-g' class='control-group'>
@@ -83,10 +83,10 @@
 </div>
 <script type="text/javascript">
   $("#title").blur(function(){
-    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,50}$/)));
   });
   $("#markdown").blur(function(){
-    checkInput("#markdown",(!$(this).val() || !$(this).val().match(/.{5,}$/)));
+    checkInput("#markdown",!$(this).val());
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
                         md:$("#markdown").val()},
     function(data){
