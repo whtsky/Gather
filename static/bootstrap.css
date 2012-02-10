@@ -1250,6 +1250,7 @@ body
 {
     padding-top: 60px;
     padding-bottom: 40px;
+    background-image: url(/static/backgroud.png);
 }
 #nav-in
 {
@@ -1276,3 +1277,28 @@ footer {
 
 .clearbox::after {
     clear: both; }
+.box {
+    background-color: white;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    -moz-box-shadow: 0 0 0 1px #DDD;
+    -webkit-box-shadow: 0 0 0 1px #DDD;
+    box-shadow: 0 0 0 1px #DDD; }
+
+section.box.span16 {
+    width: 910px; }
+section.box .span4 {
+    width: 205px; }
+section.box .span12 {
+    width: 685px; }
+section.box .span16 {
+    width: 910px; }
+section {
+    overflow: hidden;
+    padding: 14px; }
+section#notifications, section#resources, section#topics, section#replies {
+    padding: 0; }
+section footer {
+    margin: 0;
+    padding: 10px; }

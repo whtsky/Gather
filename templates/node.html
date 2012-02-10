@@ -10,9 +10,10 @@
 {% block body %}
 <div class='container'>
   <div class='row-fluid'>
-   <div class='span8'>
+    <div class='span7' style="margin-left: 72px;">
+      <section class='box'>
        共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-     <table class='table item-list'>
+      <table class='table item-list'>
        <tbody>
        {% for post in posts.skip((p-1)*limit).limit(limit) %}
          <tr>
@@ -49,9 +50,10 @@
      {% if p*limit < posts.count() %}
        <a href='node{{ node["_id"] }}?p={{ p+1 }}'>下一页</a>
      {% end %}
+   </section>
    </div>
-   <div class='span4'>
-      <section class='well'>
+   <div class='span3'>
+      <section class='box'>
         {% if current_user %}
         <button id='newPost' class='btn btn-info'>我也来一发</button>
         {% else %}
@@ -59,7 +61,7 @@
         <a href='/signup'class='btn btn-info'>注册</a> 或者 <a href='/login'class='btn'>登录</a>
         {% end %}
       </section>
-      <section class='well'>
+      <section class='box'>
         <header>
           统计信息
         </header>
@@ -67,7 +69,7 @@
           <li>主题数：{{ posts.count() }}</li>
         </ul>
       </section>
-      <section class='well'>
+      <section class='box'>
         <header>
           标签云
         </header>

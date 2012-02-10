@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class='container'>
-  <div class='row'>
-    <div class='span10'>
-      <div>
+  <div class='row-fluid'>
+    <div class='span7' style="margin-left: 72px;">
+      <section class="box">
         <table class='table item-list'>
           <tbody>
           {% for post in db.posts.find({},sort=[('changedtime', -1)],limit=15)%}
@@ -34,10 +34,10 @@
           {% end %}
           </tbody>
         </table>
-      </div>
+      </section>
     </div>
-    <div class='span2'>
-      <section class='well'>
+    <div class='span3'>
+      <section class='box'>
         <header>
           节点
         </header>
@@ -48,7 +48,7 @@
         </ul>
       </section>
 
-      <section class='well'>
+      <section class='box'>
         <header>
           统计信息
         </header>
@@ -59,7 +59,7 @@
         </ul>
       </section>
 
-      <section class='well'>
+      <section class='box'>
         <header>
           标签云
         </header>
