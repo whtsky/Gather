@@ -1,6 +1,6 @@
 #coding=utf-8
 
-from common import BaseHandler,getvalue
+from common import BaseHandler,getvalue,time_span
 from hashlib import sha1,md5
 from tornado.escape import json_encode
 from tornado.web import authenticated
@@ -54,7 +54,10 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        self.render('authinfo.html',db=self.db,username=username)
+        posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
+        comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
+        self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,
+                    comments=comments,user=self.db.users.find_one({'username':username}))
 
 class AuthSettingHandler(BaseHandler):
     @authenticated

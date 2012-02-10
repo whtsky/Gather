@@ -4,11 +4,77 @@
 
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
-<li><a href="/topics/node{{ post['node'] }}">{{ db.nodes.find_one({'_id':post['node']})['name'] }}</a> <span class="divider">/</span></li>
-<li class="active">{{ post['title'] }}</li>
+<li class="active">{{ username }}</li>
 {% end %}
 
 {% block body %}
+<div class='container'>
+    <div class='row-fluid'>
+      <div class='span7' style="margin-left: 72px;">
+        <section class="box">
+          <div id='profile'>
+            <div class='left-side'>
+              <div class='avatar'><img src="http://gravatar.com/avatar/{{ md5(user['email']).hexdigest() }}.png?r=G&amp;s=160" /></div>
+            </div>
+            <div class='right-side'>
+              <h1>
+                {{ username}}
+                {% if username == current_user %}
+                <small><a href="/setting" class="label label-success">编辑</a></small>
+                {% end %}
+              </h1>
+              <h3>用户名</h3>
+              <dd>{{ username }}</dd>
+              {% if hasattr(user,'website') and user['website']!='' %}
+              <h3>网站</h3>
+              <dd><a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a></dd>
+              {% end %}
+              {% if hasattr(user,'location') and user['location']!='' %}
+              <h3>所在地</h3>
+              <dd><a href="http://www.google.com/maps?q={{ user['location'] }}" rel="external nofollow">{{ user['location'] }}</a></dd>
+              {% end %}
+              {% if hasattr(user,'twitter') and user['twitter']!='' %}
+              <h3>Twitter</h3>
+              <dd><a href="http://twitter.com/{{ user['twitter'] }}" rel="external nofollow">{{ user['twitter'] }}</a></dd>
+              {% end %}
+              {% if hasattr(user,'github') and user['github']!='' %}
+              <h3>Github</h3>
+              <dd><a href="https://github.com/{{ user['github'] }}" rel="external nofollow">{{ user['github'] }}</a></dd>
+              {% end %}
+              <h2>主题<small>共{{ posts.count() }}条</small></h2>
+              <ul class='nice-list'>
+              {% for post in posts.limit(5) %}
+                <li>
+                <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>/ tags
+                <span class='tags'>
+                  {% for tag in post['tags'] %}
+                  <a href="/tag/{{ tag }}">{{ tag }}</a>
+                  {% end %}
+                </span>，
+                {{ time_span(post['posttime']) }}发表
+                </li>
+              {% end %}
+              </ul>
+              <h2>回复<small>共{{ comments.count() }}条</small></h2>
+              <ul class='nice-list'>
+                {% for comment in comments.limit(5) %}
+                <li>
+                <a href="/topics/{{ comment['_id'] }}">{{ comment['title'] }}</a>/ tags
+                <span class='tags'>
+                  {% for tag in comment['tags'] %}
+                  <a href="/tag/{{ tag }}">{{ tag }}</a>
+                  {% end %}
+                </span>，
+                {{ time_span(comment['comments'][-1]['posttime']) }}回复
+                </li>
+                {% end %}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+</div>
 {% end %}
 
 
