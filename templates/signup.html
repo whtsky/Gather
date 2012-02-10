@@ -9,9 +9,9 @@
 
 {% block body %}
 <div class='container'>
-  <div class='row'>
-    <div class='box container'>
-      <form class='form-horizontal well span7 offset2'>
+  <div class='row-fluid'>
+    <section class='box span6' style="margin-left: 206px;">
+      <form class='form-horizontal'>
       {{ xsrf_form_html() }}
         <fieldset>
           <header><h2>注册</h2></header>
@@ -49,7 +49,7 @@
           </div>
         </fieldset>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 <script type="text/javascript">
