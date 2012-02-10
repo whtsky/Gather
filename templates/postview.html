@@ -89,8 +89,12 @@
           <h3>相关主题</h3>
         </header>
         <ul>
+          {% if len(likely) > 0%}
           {% for x in likely %}
           <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
+          {% end %}
+          {% else %}
+          看来楼主很寂寞，没有人和他有共同语言。。
           {% end %}
         </ul>
       </section>
