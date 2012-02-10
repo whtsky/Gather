@@ -85,6 +85,9 @@
   </div>
 </div>
 <script type="text/javascript">
+  $("#newPost").click(function(){
+    location.href="/topics/add?node={{ node['_id'] }}";
+  });
   ajaxNum=1;
   commentNum=0;
   $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
