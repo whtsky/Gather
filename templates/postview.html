@@ -91,7 +91,7 @@
     $.post("/topics/{{ post['_id'] }}",{_xsrf:$("input[name='_xsrf']").val(),
                                         start_num:ajaxNum},
     function(data){
-      $("comments").append(data);
+      $("#comments").append(data);
     },"html");
     ajaxNum=ajaxNum+10;
   }
