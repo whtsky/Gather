@@ -1,10 +1,11 @@
 #coding=utf-8
 
 import math
-from node import POST_PER_PAGE
 from common import BaseHandler,time_span
 from hashlib import md5
 import time
+
+POST_PER_PAGE = 20
 
 def tagcloud(db,limit=100):
     tags = sorted([ _ for _ in db.tags.find({},{'_id':0})], key=lambda x: x['count'])

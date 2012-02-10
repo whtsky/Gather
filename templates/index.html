@@ -39,21 +39,9 @@
     <div class='span3'>
       <section class='box'>
         <header>
-          节点
-        </header>
-        <ul>
-          {% for node in db.nodes.find() %}
-          <li><a href="/topics/node{{ node['_id'] }}">{{ node['name'] }}</a></li>
-          {% end %}
-        </ul>
-      </section>
-
-      <section class='box'>
-        <header>
           统计信息
         </header>
         <ul>
-          <li>节点数：{{ db.nodes.count() }}</li>
           <li>用户数：{{ db.users.count() }}</li>
           <li>主题数：{{ db.posts.count() }}</li>
         </ul>

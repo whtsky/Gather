@@ -38,3 +38,8 @@ def md_convert(txt):
     for x in tuple(set(html_killer.findall(txt))):
         txt = txt.replace(x,xhtml_escape(x))
     return md.convert(txt)
+
+def getvalue(dict,keyname):
+    if hasattr(dict,keyname) and dict[keyname]!='':
+        return dict[keyname]
+    return ''

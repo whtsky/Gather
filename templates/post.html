@@ -33,23 +33,7 @@
       <fieldset>
         <header><h2>发表主题</h2></header>
         <div id='title-g' class='control-group nodeid-g'>
-          <div id="nodeid-t" class="box controls">
-            <span class="help-inline">你不选个节点人家怎么发嘛~</span>
-          </div>
           <label class='control-label' for='title'>标题</label>
-          <div class='controls'>
-            <select class="span3" id='nodeid' name='nodeid'>
-              <option value='-1'>选择节点</option>
-              {% for x in db.nodes.find().sort('_id',1) %}
-                {% if node==x["_id"] %}
-                  <option value='{{ x["_id"] }}' selected='selected'>{{ x["name"] }}</option>
-                {% else %}
-                  <option value='{{ x["_id"] }}'>{{ x["name"] }}</option>
-                {% end %}
-              {% end %}
-            </select>
-            <input class="span7" type='text' id='title' name='title'>
-          </div>
           <div id="title-t" class="box controls">
             <span class="help-inline">起码也要输入几个字嘛(5-50个字)~</span>
           </div>
