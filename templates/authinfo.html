@@ -45,7 +45,7 @@
               <ul class='nice-list'>
               {% for post in posts.limit(5) %}
                 <li>
-                <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a>/ tags
+                <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a> <<
                 <span class='tags'>
                   {% for tag in post['tags'] %}
                   <a href="/tag/{{ tag }}">{{ tag }}</a>
@@ -59,7 +59,7 @@
               <ul class='nice-list'>
                 {% for comment in comments.limit(5) %}
                 <li>
-                <a href="/topics/{{ comment['_id'] }}">{{ comment['title'] }}</a>/ tags
+                <a href="/topics/{{ comment['_id'] }}">{{ comment['title'] }}</a> <<
                 <span class='tags'>
                   {% for tag in comment['tags'] %}
                   <a href="/tag/{{ tag }}">{{ tag }}</a>
