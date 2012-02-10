@@ -4,7 +4,7 @@ import tornado.web
 import time
 from markdown import Markdown
 
-md = Markdown(extensions=['fenced_code'])
+md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
 class BaseHandler(tornado.web.RequestHandler):
 

@@ -25,9 +25,10 @@
 
 
 {% block body %}
-<div class='span10 offset1'>
-  <div class='row-fluid'>
-    <form class='form-horizontal box'>
+<div class='row-fluid'>
+  <div class='span10 offset1'>
+    <section class="box">
+    <form class='form-horizontal'>
     {{ xsrf_form_html() }}
       <fieldset>
         <header><h2>发表主题</h2></header>
@@ -77,9 +78,7 @@
         <button id='submit' class='btn btn-primary'>很好，我要发表</button>
       </fieldset>
     </form>
-    <div clss='span4'>
-
-    </div>
+    </section>
   </div>
 </div>
 <script type="text/javascript">
