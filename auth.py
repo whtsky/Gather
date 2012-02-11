@@ -70,8 +70,8 @@ class AuthSettingHandler(BaseHandler):
         setting = {}
         for x in ('email','website','location','twitter','github'):
             setting[x] = self.get_argument(x)
-        self.db.users.update({'name':self.get_secure_cookie('user')},{'$set':setting})
-        self.write(json_encode({'status':'success'}))
+        self.db.users.update({'username':self.get_secure_cookie('user')},{'$set':setting})
+        self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
 class AuthChangePasswordHandler(BaseHandler):
 

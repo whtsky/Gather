@@ -12,16 +12,16 @@
   <div class='row-fluid'>
     <div class='span7' style="margin-left: 72px;">
       <section class="box">
-        <form class='form-horizontal' action='/setting' method="post">
+        <form class='form-horizontal'>
           {{ xsrf_form_html() }}
           <fieldset>
             <header>
               <h3>设置</h3>
             </header>
-            <div id="username" class="control-group">
+            <div id="username-g" class="control-group">
               <label class="control-label" for="email">用户名</label>
               <div class="controls">
-                <input class=" disabled" id="disabledInput" type="text" placeholder="{{ user['username'] }}" disabled>
+                <input class=" disabled" id="username" type="text" placeholder="{{ user['username'] }}" disabled>
               </div>
             </div>
             <div id="email-g" class="control-group">
@@ -35,28 +35,24 @@
               <label class="control-label" for="email">个人网址</label>
               <div class="controls">
                 <input type="text" id="website" value="{{ getvalue(user,'website') }}">
-                <span id="website-t" class="help-inline">请输入有效的个人网址</span>
               </div>
             </div>
             <div id="location-g" class="control-group">
               <label class="control-label" for="email">所在地</label>
               <div class="controls">
                 <input type="text" id="location" value="{{ getvalue(user,'location') }}">
-                <span id="location-t" class="help-inline">请输入有效的所在地</span>
               </div>
             </div>
             <div id="twitter-g" class="control-group">
               <label class="control-label" for="email">Twitter用户名</label>
               <div class="controls">
                 <input type="text" id="twitter" value="{{ getvalue(user,'twitter') }}">
-                <span id="twitter-t" class="help-inline">请输入有效的Twitter用户名</span>
               </div>
             </div>
             <div id="github-g" class="control-group">
               <label class="control-label" for="email">Github用户名</label>
               <div class="controls">
                 <input type="text" id="github" value="{{ getvalue(user,'github') }}">
-                <span id="github-t" class="help-inline">请输入有效的Github用户名</span>
               </div>
             </div>
             <div class="form-actions">
@@ -66,7 +62,6 @@
         </form>
       </section>
     </div>
-
     <div class='span3'>
       <section class='box'>
         <form>

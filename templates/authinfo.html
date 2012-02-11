@@ -25,19 +25,19 @@
               </h1>
               <h3>用户名</h3>
               <dd>{{ username }}</dd>
-              {% if hasattr(user,'website') and user['website']!='' %}
+              {% if 'website' in user and user['website']!='' %}
               <h3>网站</h3>
               <dd><a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a></dd>
               {% end %}
-              {% if hasattr(user,'location') and user['location']!='' %}
+              {% if 'location' in user and user['location']!='' %}
               <h3>所在地</h3>
               <dd><a href="http://www.google.com/maps?q={{ user['location'] }}" rel="external nofollow">{{ user['location'] }}</a></dd>
               {% end %}
-              {% if hasattr(user,'twitter') and user['twitter']!='' %}
+              {% if 'twitter' in user and user['twitter']!='' %}
               <h3>Twitter</h3>
               <dd><a href="http://twitter.com/{{ user['twitter'] }}" rel="external nofollow">{{ user['twitter'] }}</a></dd>
               {% end %}
-              {% if hasattr(user,'github') and user['github']!='' %}
+              {% if 'github' in user and user['github']!='' %}
               <h3>Github</h3>
               <dd><a href="https://github.com/{{ user['github'] }}" rel="external nofollow">{{ user['github'] }}</a></dd>
               {% end %}

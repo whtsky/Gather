@@ -28,3 +28,27 @@ $("#changepassword").click(function(){
         },"json");
     return false;
 });
+
+//*****************
+
+$("#email").blur(function(){
+    checkInput("#email",(!$(this).val() || !$(this).val().match(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/)));
+});
+$("#submit").click(function(){
+    readySubmit=true;
+    $("#email").blur();
+    if(!readySubmit)
+        return false;
+    $.post("/setting",{_xsrf:$("input[name='_xsrf']").val(),
+            email:$("#email").val(),
+            website:$("#website").val(),
+            location:$("#location").val(),
+            twitter:$("#twitter").val(),
+            github:$("#github").val()},
+        function(data){
+            alert(data.message);
+            if(data.status=="success")
+                location.href="/user/"+$("#username").val();
+        },"json");
+    return false;
+});

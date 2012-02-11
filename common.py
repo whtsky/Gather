@@ -40,6 +40,7 @@ def md_convert(txt):
     return md.convert(txt)
 
 def getvalue(dict,keyname):
-    if hasattr(dict,keyname) and dict[keyname]!='':
+    try:
         return dict[keyname]
-    return ''
+    except:
+        return ''
