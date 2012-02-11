@@ -71,3 +71,11 @@ _a(f,false);
 Attacklab.wmd();
 }
 
+wmd_options = {
+    output: "Markdown",
+    lineLength: 80,
+    buttons: "bold italic | link blockquote code image | ol ul heading hr",
+    autostart: true
+};
+hljs.tabReplace = '    ';
+hljs.initHighlightingOnLoad();

@@ -3,19 +3,11 @@
 {% block title %}{{ handler.settings['bbs_title'] }} > {{ post['title'] }}{% end %}
 
 {% block head %}
-<script src='{{ static_url("wmd/wmd.js") }}' type="text/javascript"></script>
+<script src='{{ static_url("js/wmd/wmd.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
-<script src='{{ static_url("highlight.pack.js") }}' type="text/javascript"></script>
+<script src='{{ static_url("js/highlight.pack.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("highlight.css") }}' type='text/css'/>
 <script type="text/javascript">
-    wmd_options = {
-        output: "Markdown",
-        lineLength: 80,
-        buttons: "bold italic | link blockquote code image | ol ul heading hr",
-        autostart: true
-    };
-    hljs.tabReplace = '    ';
-    hljs.initHighlightingOnLoad();
     commentNum={{ len(post['comments']) }};
     postID="{{ post['_id'] }}";
 </script>
@@ -110,7 +102,7 @@
     </div>
   </div>
 </div>
-<script src='{{ static_url("postview.js") }}' type="text/javascript"></script>
+<script src='{{ static_url("js/postview.js") }}' type="text/javascript"></script>
 {% end %}
 
 
