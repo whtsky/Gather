@@ -65,7 +65,7 @@
                   <a href="/tag/{{ tag }}">{{ tag }}</a>
                   {% end %}
                 </span>，
-                最后更新于{{ time_span(comment['lasttime']) }}
+                最后更新于{{ time_span(comment['comments'][-1]['posttime']) }}
                 </li>
                 {% end %}
               </ul>
