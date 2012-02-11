@@ -48,6 +48,11 @@
           </header>
           {{ post['content'] }}
           <footer>
+            <div class="right">
+              <a href="#;" onclick="window.open('https://twitter.com/share?url='+window.location.href+'&related=v2ex&hashtags=share&text={{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tweet">Tweet</a>
+              <a href="#;" onclick="window.open('http://shuo.douban.com/!service/share?href='+window.location.href+'&name={{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'douban.com');" class="tweet">Douban</a>
+              <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tweet">Weibo</a>
+            </div>
             <!-- 打算放些用户打分什么的-->
           </footer>
         </article>
