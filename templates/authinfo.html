@@ -65,7 +65,7 @@
                   <a href="/tag/{{ tag }}">{{ tag }}</a>
                   {% end %}
                 </span>，
-                {{ time_span(comment['comments'][-1]['posttime']) }}回复
+                {{ time_span(comment['lasttime']) }}回复
                 </li>
                 {% end %}
               </ul>
