@@ -74,10 +74,12 @@ class AuthSettingHandler(BaseHandler):
         self.write(json_encode({'status':'success'}))
 
 class AuthChangePasswordHandler(BaseHandler):
+
     @authenticated
     def post(self):
         username = self.get_secure_cookie('user')
-        if self.db.users.find_one({'name':username,'password':hashpassword(username,self.get_argument('old'))}) == None:
-            self.write(json_encode({'status':'fail',message:'原密码错误'}))
+        if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}) == None:
+            self.write(json_encode({'status':'fail','message':'原密码错误'}))
         else:
-            self.db.users.update({'name':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
+            self.db.users.update({'username':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
+            self.write(json_encode({'status':'success','message':'修改密码成功'}))

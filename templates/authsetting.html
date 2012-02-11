@@ -69,15 +69,27 @@
 
     <div class='span3'>
       <section class='box'>
-        <form action='/setting/password' method="post">
+        <form>
           {{ xsrf_form_html() }}
           <fieldset>
             <header>
               <h3>更改密码</h3>
             </header>
-            <p>原密码:<input type="password" id="old"></p>
-            <p>新密码:<input type="password" id="new"></p>
-            <button id='submit' class='btn btn-info'>提交</button>
+            <div id="old-g" class="control-group">
+              <label class="control-label" for="old">原密码：</label>
+              <div class="controls">
+                <input type="password" id="old">
+                <span id="old-t" class="help-inline">请输入原密码</span>
+              </div>
+            </div>
+            <div id="new-g" class="control-group">
+              <label class="control-label" for="new">新密码：</label>
+              <div class="controls">
+                <input type="password" id="new">
+                <span id="new-t" class="help-inline">请输入有效的新密码</span>
+              </div>
+            </div>
+            <button id='changepassword' class='btn btn-info'>提交</button>
           </fieldset>
         </form>
       </section>
@@ -92,5 +104,37 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+    $("#old").blur(function(){
+        checkInput("#old",(!$(this).val() || !$(this).val().match(/.{6,}$/)));
+    });
+    $("#new").blur(function(){
+        checkInput("#new",(!$(this).val() || !$(this).val().match(/.{6,}$/)));
+    });
+    $("#old-t").hide();
+    $("#new-t").hide();
+    $("#changepassword").click(function(){
+        readySubmit=true;
+        $("#old").blur();
+        $("#new").blur();
+        if(!readySubmit)
+            return false;
+        if($("#old").val()==$("#new").val()){
+            alert('新旧密码一样你还改什么啊。。');
+            return false;
+        }
+        $.post("/setting/password",{_xsrf:$("input[name='_xsrf']").val(),
+                    old:$("#old").val(),
+                    new:$("#new").val()},
+                function(data){
+                    if(data.status=="success"){
+                        $("#old").val("");
+                        $("#new").val("");
+                    }
+                    alert(data.message);
+                },"json");
+        return false;
+    });
+</script>
 {% end %}
 
