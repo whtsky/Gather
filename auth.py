@@ -56,11 +56,6 @@ class AuthInfoHandler(BaseHandler):
     def get(self,username):
         posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
         comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
-        for comment in comments:
-            for x in reversed(comment['comments']):
-                if x['author'] == username:
-                    comment['lasttime'] = x['posttime']
-                    break
         self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,
                     comments=comments,user=self.db.users.find_one({'username':username}))
 
