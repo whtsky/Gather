@@ -50,7 +50,7 @@
           <footer>
             <div class="right">
               <a href="#;" onclick="window.open('https://twitter.com/share?url='+window.location.href+'&related=v2ex&hashtags=share&text={{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tweet">Tweet</a>
-              <a href="#;" onclick="window.open('http://shuo.douban.com/!service/share?href='+window.location.href+'&name={{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'douban.com');" class="tweet">Douban</a>
+              <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="tweet">Douban</a>
               <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tweet">Weibo</a>
             </div>
             <!-- 打算放些用户打分什么的-->
