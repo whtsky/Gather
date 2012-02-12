@@ -9,14 +9,14 @@
     {% block head %}{% end %}
   </head>
   <body>
-    <div class='navbar navbar-fixed-top'>
-      <div class='navbar-inner'>
-        <div class='container' id="nav-in">
+    <div class='navbar navbar-fixed-top' style="width: auto;">
+      <div class='navbar-inner' style="width: auto;">
+        <div class='container' id="nav-in" style="width: auto;">
           <ul class="nav">
             <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
             <li class='active'><a href='#'>论坛</a></li>
           </ul>
-          <ul class="nav secondary-nav">
+          <ul class="nav pull-right">
             {% if current_user %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user }}<b class="caret"></b></a>
