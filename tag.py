@@ -8,8 +8,7 @@ import time
 POST_PER_PAGE = 20
 
 def tagcloud(db,limit=100):
-    tags = sorted([ _ for _ in db.tags.find({},{'_id':0})], key=lambda x: x['count'])
-
+    tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
     tags.reverse()
     tags = tags[:limit]
     html = []

@@ -4,6 +4,7 @@ from common import BaseHandler,getvalue,time_span
 from hashlib import sha1,md5
 from tornado.escape import json_encode
 from tornado.web import authenticated
+from config import admin
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
@@ -57,7 +58,7 @@ class AuthInfoHandler(BaseHandler):
         posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
         comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
         self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,
-                    comments=comments,user=self.db.users.find_one({'username':username}))
+                    comments=comments,user=self.db.users.find_one({'username':username}),admin_list=admin)
 
 class AuthSettingHandler(BaseHandler):
     @authenticated

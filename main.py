@@ -41,6 +41,8 @@ class Application(tornado.web.Application):
             (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
             (r'/tag/([^ ,/]*?)', TagViewHandler),
 
+            (r'/admin/user/kill/(.*?)'),
+
             (r'/markdown',MarkDownPreViewHandler),
         ]
         settings = dict(

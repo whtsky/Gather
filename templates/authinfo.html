@@ -18,10 +18,12 @@
             </div>
             <div class='right-side'>
               <h1>
-                {{ username}}
+                {{ username }}<small>
                 {% if username == current_user %}
-                <small><a href="/setting" class="label label-success">编辑</a></small>
-                {% end %}
+                <a href="/setting" class="label label-success">编辑</a>
+                {% elif current_user in admin_list %}
+                <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
+                {% end %}</small>
               </h1>
               <h3>用户名</h3>
               <dd>{{ username }}</dd>
@@ -64,8 +66,7 @@
                   {% for tag in comment['tags'] %}
                   <a href="/tag/{{ tag }}">{{ tag }}</a>
                   {% end %}
-                </span>，
-                最后更新于{{ time_span(comment['comments'][-1]['posttime']) }}
+                </span>
                 </li>
                 {% end %}
               </ul>
