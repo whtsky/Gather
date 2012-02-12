@@ -49,6 +49,7 @@ def md_convert(txt):
     for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
 
+    '''
     t = pure_img.findall(txt)[0]
     if len(t)==1:
         t=t[0]
@@ -71,7 +72,8 @@ def md_convert(txt):
             for x in set(url_replace_2.findall(txt)):
                 txt = txt.replace(x,u'[%s](%s)' % (x,x))
 
-            return md.convert(txt)
+            return md.convert(txt)'''
+    return md.convert(txt)
 
 def getvalue(dict,keyname):
     try:
