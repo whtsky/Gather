@@ -8,7 +8,7 @@ from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5]+)[^\)]')
-img_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|http|https://[^\u4e00-\u9fa5]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG)[^\)]')
+img_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|http|https://[^\u4e00-\u9fa5]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))[^)])')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 

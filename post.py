@@ -32,7 +32,6 @@ class PostHandler(BaseHandler):
                       'title':title,
                       'author':self.get_secure_cookie('user'),
                       'content':md_convert(md),
-                      'md':md,
                       'comments':[],
                       'posttime':int(time()),
                       'changedtime':int(time()),
@@ -56,7 +55,6 @@ class CommentHandler(BaseHandler):
                              {'comments':
                              {'author':self.get_secure_cookie('user'),
                               'content':md_convert(md),
-                              'md':md,
                               'posttime':int(time()),}},
                               '$set':{'changedtime':int(time())},})
         message = '发表成功'
