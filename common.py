@@ -61,7 +61,7 @@ def md_convert(txt):
             if len(t) == len(txt):
                 return u'<a href="%s">%s</a>' % (t,t)
         else:
-            
+
             for x in set(img_replace.findall(txt)):
                 txt = txt.replace(x,u'![%s](%s)' % (x,x))
             for x in set(img_replace_2.findall(txt)):
