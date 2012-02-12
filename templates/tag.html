@@ -15,7 +15,7 @@
 {% block body %}
 <div class='container'>
   <div class='row-fluid'>
-    <div class='span7' style="margin-left: 72px;">
+    <div class='span7 offset1'>
       <section class='box'>
         共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
         <table class='table item-list'>
