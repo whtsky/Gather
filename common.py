@@ -7,7 +7,8 @@ import re
 from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
-url_replace = re.compile('[^!][^\[](\w+:\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)')
+url_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5]+)[^\)]')
+img_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|http|https://[^\u4e00-\u9fa5]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG)[^\)]')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -36,8 +37,12 @@ def time_span(t):
 
 def md_convert(txt):
     #滤去html标签
-    for x in tuple(set(html_killer.findall(txt))):
+    for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
+    for x in set(img_replace.findall(txt)):
+        txt = txt.replace(x,u'![%s](%s)' % (x,x))
+    for x in set(url_replace.findall(txt)):
+        txt = txt.replace(x,u'![%s](%s)' % (x,x))
     return md.convert(txt)
 
 def getvalue(dict,keyname):

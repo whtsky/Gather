@@ -7,10 +7,11 @@ import time
 
 POST_PER_PAGE = 20
 
-def tagcloud(db,limit=100):
+def tagcloud(db,limit=False):
     tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
     tags.reverse()
-    tags = tags[:limit]
+    if limit!=False:
+        tags = tags[:limit]
     html = []
     for tag in tags:
         html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
