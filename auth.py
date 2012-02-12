@@ -25,7 +25,7 @@ class AuthSignupHandler(BaseHandler):
             message = '用户名或邮箱地址重复'
             status = 'error'
         else:
-            account.insert({'_id':account.count(),
+            account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
                         'username':username,
                         'email':email,
                         'password':hashpassword(username,password)})
