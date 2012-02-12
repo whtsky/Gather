@@ -49,29 +49,29 @@ def md_convert(txt):
     for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
 
-    try:
-        t = pure_img.findall(txt)[0]
-        if t == txt:
-            return md.convert(u'![%s](%s)' % (t,t))
-    except:
-        try:
-            t = pure_url.findall(txt)[0]
-            if t == txt:
-                return md.convert(u'[%s](%s)' % (t,t))
-        except:
-            pass
+    t = pure_img.findall(txt)[0]
+    if len(t)==1:
+        t=t[0]
+        if len(t) == len(txt):
+            return u'<img src="%s"></img>' % (t,t)
+    else:
+        t = pure_url.findall(txt)[0]
+        if len(t)==1:
+            t=t[0]
+            if len(t) == len(txt):
+                return u'<a href="%s">%s</a>' % (t,t)
+        else:
+            
+            for x in set(img_replace.findall(txt)):
+                txt = txt.replace(x,u'![%s](%s)' % (x,x))
+            for x in set(img_replace_2.findall(txt)):
+                txt = txt.replace(x,u'![%s](%s)' % (x,x))
+            for x in set(url_replace.findall(txt)):
+                txt = txt.replace(x,u'[%s](%s)' % (x,x))
+            for x in set(url_replace_2.findall(txt)):
+                txt = txt.replace(x,u'[%s](%s)' % (x,x))
 
-
-    for x in set(img_replace.findall(txt)):
-        txt = txt.replace(x,u'![%s](%s)' % (x,x))
-    for x in set(img_replace_2.findall(txt)):
-        txt = txt.replace(x,u'![%s](%s)' % (x,x))
-    for x in set(url_replace.findall(txt)):
-        txt = txt.replace(x,u'[%s](%s)' % (x,x))
-    for x in set(url_replace_2.findall(txt)):
-        txt = txt.replace(x,u'[%s](%s)' % (x,x))
-
-    return md.convert(txt)
+            return md.convert(txt)
 
 def getvalue(dict,keyname):
     try:
