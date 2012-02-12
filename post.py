@@ -75,7 +75,7 @@ class PostViewHandler(BaseHandler):
         likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
         del likelys,likelylist
         self.render('postview.html',db=self.db,time_span=time_span,
-                    post=post,md5=md5,likely=likelyposts)
+                    post=post,md5=md5,admin_list=admin,likely=likelyposts)
 
     def post(self,postid):
         start=int(self.get_argument('start_num'))
