@@ -690,11 +690,6 @@ body
 {
     padding: 9px 0;
 }
-footer {
-    margin-top: 17px;
-    padding-top: 17px;
-    border-top: 1px solid #eee;
-}
 
 .left {
     float: left; }
@@ -732,19 +727,6 @@ section#notifications, section#resources, section#topics, section#replies {
 section footer {
     margin: 0;
     padding: 10px; }
-
-.navbar div > ul.secondary-nav, .nav.secondary-nav {
-    float: right;
-    margin-left: 10px;
-    margin-right: 0;
-}
-.navbar div > ul.secondary-nav .menu-dropdown,
-.nav.secondary-nav .menu-dropdown,
-.navbar div > ul.secondary-nav .dropdown-menu,
-.nav.secondary-nav .dropdown-menu {
-    right: 0;
-    border: 0;
-}
 
 #profile {
     overflow: hidden; }
