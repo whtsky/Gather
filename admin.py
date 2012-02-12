@@ -27,3 +27,14 @@ class RemovePostHandler(BaseHandler):
             for tag in post['tags']:
                 self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         self.db.posts.remove({'_id':postid})
+        self.write('done.')
+
+class RemoveCommentHandler(BaseHandler):
+    def get(self,postid,commentid):
+        assert self.get_current_user() in admin
+        postid = int(postid)
+        comments = self.db.posts.find({'_id':postid})
+        del comments[int(commentid)-1]
+        self.db.posts.update({'_id':postid},
+                            {'$set':{'comments':comments}})
+        self.write('done.')

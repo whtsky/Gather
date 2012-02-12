@@ -10,7 +10,10 @@
           <a href="/user/{{ comment['author'] }}">{{ comment['author'] }}</a>
         </div>
         <div class='right'>
-          {{comment['location']}}     发表于{{ time_span(comment['posttime']) }}
+            #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
+          {% if current_user in admin_list %}
+          <a href="/admin/post/kill/{{ id }}/{{ comment['location'] }}" class="label label-important">和谐</a>
+          {% end %}
         </div>
       </header>
       {{ comment['content'] }}

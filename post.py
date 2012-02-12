@@ -5,6 +5,7 @@ import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
 from hashlib import md5
+from config import admin
 
 class PostHandler(BaseHandler):
 
@@ -80,9 +81,10 @@ class PostViewHandler(BaseHandler):
         start=int(self.get_argument('start_num'))
         comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[start-1,10]}})['comments']
         for comment in comments:
-            comment['location'] = '#%s' % start
+            comment['location'] = '%s' % start
             start += 1
-        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db,start=start)
+        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db,start=start,
+                      admin_list=admin,id=postid)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
