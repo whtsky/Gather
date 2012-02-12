@@ -24,7 +24,12 @@ class BaseHandler(tornado.web.RequestHandler):
         self.db = self.application.db
 
     def get_current_user(self):
-        return self.get_secure_cookie('user')
+        user = self.get_secure_cookie('user')
+        if self.db.users.find_one({'username':user}) != None:
+            return self.get_secure_cookie('user')
+        else:
+            self.clear_cookie('user')
+            return None
 
 def time_span(t):
     timecha = int(time.time()) - t
@@ -66,7 +71,7 @@ def md_convert(txt):
     for x in set(url_replace_2.findall(txt)):
         txt = txt.replace(x,u'[%s](%s)' % (x,x))
 
-    return xhtml_escape(md.convert(txt))
+    return md.convert(txt)
 
 def getvalue(dict,keyname):
     try:
