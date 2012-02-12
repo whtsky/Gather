@@ -66,8 +66,6 @@ def md_convert(txt):
     for x in set(url_replace_2.findall(txt)):
         txt = txt.replace(x,u'[%s](%s)' % (x,x))
 
-    print txt
-
     return xhtml_escape(md.convert(txt))
 
 def getvalue(dict,keyname):
