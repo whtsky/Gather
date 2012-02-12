@@ -2,7 +2,7 @@
 
 from common import BaseHandler,getvalue,time_span
 from hashlib import sha1,md5
-from tornado.escape import json_encode
+from tornado.escape import json_encode,xhtml_escape
 from tornado.web import authenticated
 from config import admin
 
@@ -15,7 +15,7 @@ class AuthSignupHandler(BaseHandler):
         self.render('signup.html')
 
     def post(self):
-        password = self.get_argument('password')
+        password = xhtml_escape(self.get_argument('password'))
         username = self.get_argument('username')
         email = self.get_argument('email')
         account = self.db.users
@@ -44,7 +44,7 @@ class AuthLoginHandler(BaseHandler):
         self.render('login.html')
         
     def post(self):
-        username = self.get_argument('username')
+        username = xhtml_escape(self.get_argument('password'))
         password = self.get_argument('password')
         account = self.db.users
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
@@ -70,7 +70,13 @@ class AuthSettingHandler(BaseHandler):
     def post(self):
         setting = {}
         for x in ('email','website','location','twitter','github'):
-            setting[x] = self.get_argument(x)
+            try:
+              setting[x] = self.get_argument(x)
+            except:
+                pass
+        if self.db.users.find_one({'email':setting['email']})!=None:
+            self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
+            return
         self.db.users.update({'username':self.get_secure_cookie('user')},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 

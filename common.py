@@ -7,6 +7,7 @@ import re
 from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
+url_replace = re.compile('[^!][^\[](\w+:\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
