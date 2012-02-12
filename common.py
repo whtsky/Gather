@@ -7,12 +7,8 @@ import re
 from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
-url_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 ]+)')
-url_replace_2 = re.compile(u'((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 ]+)[^\)]')
-pure_url = re.compile(u'((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 ]+)')
-img_replace = re.compile(u'[^\(]((?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 ]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))')
-img_replace_2 = re.compile(u'((?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 ]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))[^)]')
-pure_img = re.compile(u'((?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 ]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))')
+url_replace = re.compile(u'[^" ]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 \r\n<]+)[^" ]')
+img_replace = re.compile(u'[^" ]((?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 \r\n]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))[^" ]')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -49,31 +45,16 @@ def md_convert(txt):
     for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
 
-    '''
-    t = pure_img.findall(txt)[0]
-    if len(t)==1:
-        t=t[0]
-        if len(t) == len(txt):
-            return u'<img src="%s"></img>' % (t,t)
-    else:
-        t = pure_url.findall(txt)[0]
-        if len(t)==1:
-            t=t[0]
-            if len(t) == len(txt):
-                return u'<a href="%s">%s</a>' % (t,t)
-        else:
+    txt = md.convert(txt)
 
-            for x in set(img_replace.findall(txt)):
-                txt = txt.replace(x,u'![%s](%s)' % (x,x))
-            for x in set(img_replace_2.findall(txt)):
-                txt = txt.replace(x,u'![%s](%s)' % (x,x))
-            for x in set(url_replace.findall(txt)):
-                txt = txt.replace(x,u'[%s](%s)' % (x,x))
-            for x in set(url_replace_2.findall(txt)):
-                txt = txt.replace(x,u'[%s](%s)' % (x,x))
+    for x in set(img_replace.findall(txt)):
+        txt = img_replace.sub(u'<img alt="%s" src="%s" /><' % (x,x),txt)
 
-            return md.convert(txt)'''
-    return md.convert(txt)
+    for x in set(url_replace.findall(txt)):
+        txt = url_replace.sub(u'<a href="%s">%s</a><' % (x,x),txt)
+
+    return txt
+
 
 def getvalue(dict,keyname):
     try:
