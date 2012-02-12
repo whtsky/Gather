@@ -1332,19 +1332,3 @@ section footer {
     margin-left: 9px; }
 #profile ul.nice-list ul.nice-list li {
     line-height: 22px; }
-a.tweet:link, a.op:visited, a.op:active {
-    background-color: #dde;
-    font-size: 10px;
-    line-height: 10px;
-    display: inline-block;
-    padding: 2px 4px 2px 4px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    text-decoration: none;
-}
-
-a.tweet:hover {
-    text-decoration: none;
-    background-color: #667;
-    color: #fff;
-}

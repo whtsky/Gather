@@ -18,3 +18,12 @@ class RemoveUserHandler(BaseHandler):
                     comments.append(comment)
             self.db.posts.update({'_id':post['_id']},{'$set':{'comments':comment}})
         self.write('done.')
+
+class RemovePostHandler(BaseHandler):
+    def get(self,postid):
+        assert self.get_current_user() in admin
+        postid = int(postid)
+        for post in self.db.posts.find({'_id':postid}):
+            for tag in post['tags']:
+                self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
+        self.db.posts.remove({'_id':postid})
