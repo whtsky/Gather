@@ -8,7 +8,7 @@ from config import admin
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
-    return sha1(username+password+username).hexdigest()
+    return sha1(username+password+username+password[1]).hexdigest()
 
 class AuthSignupHandler(BaseHandler):
     def get(self):

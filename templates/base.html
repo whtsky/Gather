@@ -26,7 +26,7 @@
                 <li><a href="/user/{{ current_user }}">个人资料</a></li>
                 <li><a href="/setting">设置</a></li>
                 <li class="divider"></li>
-                <li><a href="/logout">退出</a></li>
+                <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
               </ul>
             </li>
             {% else %}
