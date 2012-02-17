@@ -5,10 +5,11 @@ from hashlib import sha1,md5
 from tornado.escape import json_encode,xhtml_escape
 from tornado.web import authenticated
 from config import admin
+import time
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
-    return sha1(username+password+username+password[1]).hexdigest()
+    return sha1(username+password).hexdigest()
 
 class AuthSignupHandler(BaseHandler):
     def get(self):
@@ -28,7 +29,8 @@ class AuthSignupHandler(BaseHandler):
             account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
                         'username':username,
                         'email':email,
-                        'password':hashpassword(username,password)})
+                        'password':hashpassword(username,password),
+                        'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
             self.set_secure_cookie('user',username)

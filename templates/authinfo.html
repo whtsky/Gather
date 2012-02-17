@@ -36,6 +36,8 @@
               </h1>
               <h3>用户名</h3>
               <dd>{{ username }}</dd>
+              <h3>注册时间</h3>
+              <dd>{{ time_span(user['posttime']) }}</dd>
               {% if 'website' in user and user['website']!='' %}
               <h3>网站</h3>
               <dd><a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a></dd>
