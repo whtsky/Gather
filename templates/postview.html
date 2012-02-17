@@ -63,9 +63,30 @@
       </section>
       <section class='box'>
         <table id="comments" class='table item-list'>
-
+          {% for comment in comments %}
+          <tr>
+            <td class='avatar'>
+              <img src="http://gravatar.com/avatar/{{ md5(db.users.find_one({'username':comment['author']})["email"]).hexdigest() }}.png?r=G&amp;s=48" />
+            </td>
+            <td>
+            <article>
+              <header>
+                <div class='left'>
+                  <a href="/user/{{ comment['author'] }}">{{ comment['author'] }}</a>
+                </div>
+                <div class='right'>
+                  #{{ comment['location'] }}   发表于{{ time_span(comment['posttime']) }}
+                  {% if current_user in admin_list %}
+                    <a href="/admin/post/kill/{{ id }}/{{ comment['location'] }}" class="label label-important">和谐</a>
+                  {% end %}
+                </div>
+            </header>
+            {{ comment['content'] }}
+          </article>
+          </td>
+          </tr>
+          {% end %}
         </table>
-        <button id='more' class='btn btn-info'>官人，论家还要嘛。</button>
       </section>
       <section class='box'>
         {{ xsrf_form_html() }}

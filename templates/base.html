@@ -7,12 +7,13 @@
     <script src='{{ static_url("js/jquery.js") }}' type="text/javascript"></script>
     <script src='{{ static_url("js/bootstrap.js") }}' type="text/javascript"></script>
     <link rel='stylesheet' href='{{ static_url("bootstrap-responsive.min.css") }}' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% end %}
   </head>
   <body>
-    <div class='navbar navbar-fixed-top' style="width: auto;">
-      <div class='navbar-inner' style="width: auto;">
-        <div class='container' id="nav-in" style="width: auto;">
+    <div class='navbar navbar-fixed-top'>
+      <div class='navbar-inner'>
+        <div class='container' id="nav-in">
           <ul class="nav">
             <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
             <li class='active'><a href='#'>论坛</a></li>

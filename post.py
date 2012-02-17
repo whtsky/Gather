@@ -72,18 +72,16 @@ class PostViewHandler(BaseHandler):
         likelys = sorted(likelylist.items(),key=lambda x: x[1])
         likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
         del likelys,likelylist
+        comments = post['comments']
+        for i in range(len(comments)):
+            comments[i]['location'] =  str(i+1)
         self.render('postview.html',db=self.db,time_span=time_span,
-                    post=post,md5=md5,admin_list=admin,likely=likelyposts)
-
-    def post(self,postid):
-        start=int(self.get_argument('start_num'))
-        comments=self.db.posts.find_one({'_id':int(postid)},{'comments':{'$slice':[start-1,10]}})['comments']
-        for comment in comments:
-            comment['location'] = '%s' % start
-            start += 1
-        self.render('comments.html',comments=comments,md5=md5,time_span=time_span,db=self.db,start=start,
-                      admin_list=admin,id=postid)
+                    post=post,md5=md5,admin_list=admin,comments=comments,likely=likelyposts)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
         self.write(md_convert(self.get_argument('md')))
+
+class PostListModule(tornado.web.UIModule):
+    def render(self, db,posts):
+        return self.render_string("modules/postlist.html", db=db,posts=posts,md5=md5,time_span=time_span,admin_list=admin)

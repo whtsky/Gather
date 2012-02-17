@@ -1,25 +1,3 @@
-ajaxNum=1;
-function ajaxComment()
-{
-    $.post("/topics/"+postID,{_xsrf:$("input[name='_xsrf']").val(),
-            start_num:ajaxNum},
-        function(data){
-            $("#comments").append(data);
-        },"html");
-    ajaxNum=ajaxNum+10;
-    if(ajaxNum>commentNum)
-    {
-        $("#more").hide();
-    }
-    else
-    {
-        $("#more").show();
-    }
-}
-ajaxComment();
-$("#more").click(function(){
-    ajaxComment();
-});
 $("#markdown").blur(function(){
     checkInput("#markdown",!$(this).val());
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),

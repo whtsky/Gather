@@ -19,7 +19,7 @@ define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler
-from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler
+from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler,PostListModule
 from tag import TagViewHandler,tagcloud,TagCloudHandler,TagFeedHandler
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
 
@@ -55,6 +55,7 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             xsrf_cookies=True,
+            ui_modules={"Post": PostListModule},
             cookie_secret='89f3hneifu29IY(!H@@IUFY#(FCINepifu2iY!HU!(FU@H',
             login_url='/login',
             debug=True,

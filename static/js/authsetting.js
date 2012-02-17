@@ -6,6 +6,7 @@ $("#new").blur(function(){
 });
 $("#old-t").hide();
 $("#new-t").hide();
+$("#email-t").hide();
 $("#changepassword").click(function(){
     readySubmit=true;
     $("#old").blur();
@@ -34,25 +35,9 @@ $("#changepassword").click(function(){
 $("#email").blur(function(){
     checkInput("#email",(!$(this).val() || !$(this).val().match(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/)));
 });
-$("#website").blur(function(){
-    checkInput("#website",(!$(this).val()));
-});
-$("#location").blur(function(){
-    checkInput("#location",(!$(this).val()));
-});
-$("#twitter").blur(function(){
-    checkInput("#twitter",(!$(this).val()));
-});
-$("#github").blur(function(){
-    checkInput("#github",(!$(this).val()));
-});
 $("#submit").click(function(){
     readySubmit=true;
     $("#email").blur();
-    $("#website").blur();
-    $("#location").blur();
-    $("#twitter").blur();
-    $("#github").blur();
     if(!readySubmit)
         return false;
     $.post("/setting",{_xsrf:$("input[name='_xsrf']").val(),
