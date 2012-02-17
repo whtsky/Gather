@@ -13,9 +13,12 @@ def hashpassword(username,password):
 
 class AuthSignupHandler(BaseHandler):
     def get(self):
+        if self.get_current_user():
+            self.redirect(self.get_argument('next', '/'))
         self.render('signup.html')
 
     def post(self):
+        assert not self.get_current_user()
         password = self.get_argument('password')
         username = self.get_argument('username')
         email = self.get_argument('email')
@@ -44,9 +47,12 @@ class AuthLogoutHandler(BaseHandler):
         
 class AuthLoginHandler(BaseHandler):
     def get(self):
+        if self.get_current_user():
+            self.redirect(self.get_argument('next', '/'))
         self.render('login.html')
         
     def post(self):
+        assert not self.get_current_user()
         username = xhtml_escape(self.get_argument('username'))
         password = self.get_argument('password')
         account = self.db.users
