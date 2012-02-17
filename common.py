@@ -7,8 +7,8 @@ import re
 from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
-url_replace = re.compile(u'[^" ]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 \r\n<]+)[^" ]')
-img_replace = re.compile(u'[^" ]((?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 \r\n]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG))[^" ]')
+url_replace = re.compile(u'([^" ](?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^\u4e00-\u9fa5 \r\n<]+[^" ])')
+img_replace = re.compile(u'([^" ](?:HTTP|HTTPS|http|https)://[^\u4e00-\u9fa5 \r\n]+(?:.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.GIF|.PNG)[^" ])')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -48,10 +48,10 @@ def md_convert(txt):
     txt = md.convert(txt)
 
     for x in set(img_replace.findall(txt)):
-        txt = img_replace.sub(u'<img alt="%s" src="%s" /><' % (x,x),txt)
+        txt = txt.replace(x,u'%s<img alt="%s" src="%s" />%s' % (x[0],x[1:-1],x[1:-1],x[-1]))
 
     for x in set(url_replace.findall(txt)):
-        txt = url_replace.sub(u'<a href="%s">%s</a><' % (x,x),txt)
+        txt = txt.replace(x,u'%s<a href="%s">%s</a>%s' % (x[0],x[1:-1],x[1:-1],x[-1]))
 
     return txt
 
