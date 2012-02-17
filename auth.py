@@ -16,7 +16,7 @@ class AuthSignupHandler(BaseHandler):
         self.render('signup.html')
 
     def post(self):
-        password = xhtml_escape(self.get_argument('password'))
+        password = self.get_argument('password')
         username = self.get_argument('username')
         email = self.get_argument('email')
         account = self.db.users
@@ -24,6 +24,7 @@ class AuthSignupHandler(BaseHandler):
             return
         elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
             message = '用户名或邮箱地址重复'
+            message = username+password
             status = 'error'
         else:
             account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
@@ -46,7 +47,7 @@ class AuthLoginHandler(BaseHandler):
         self.render('login.html')
         
     def post(self):
-        username = xhtml_escape(self.get_argument('password'))
+        username = xhtml_escape(self.get_argument('username'))
         password = self.get_argument('password')
         account = self.db.users
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:

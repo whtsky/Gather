@@ -17,7 +17,10 @@ $("#login").click(function(){
             password:$("#password").val()},
         function(data){
             if(data.status=="success")
-                location.href="/";
+                if(args.next)
+                    location.href=args.next;
+                else
+                    location.href="/";
             else
                 alert(data.message);
         },"json");

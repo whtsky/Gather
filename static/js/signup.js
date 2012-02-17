@@ -28,8 +28,12 @@ $("#submit").click(function(){
             password:$("#password").val()},
         function(data){
             alert(data.message);
-            if(data.status=="success")
-                location.href="/";
+            if(data.status=="success"){
+                if(args.next)
+                    location.href=args.next;
+                else
+                    location.href="/";
+            }
         },"json");
     return false;
 });
