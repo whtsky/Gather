@@ -1,0 +1,27 @@
+<div class='span3'>
+  <section class='box'>
+    {% if current_user %}
+    <a href="/topics/add" class='btn btn-info'>发帖</a>
+    {% else %}
+    <p>想要融入社区？</p>
+    <a href='/signup' class='btn btn-info'>注册</a> 或者 <a href='/login' class='btn'>登录</a>
+    {% end %}
+  </section>
+
+  <section class='box'>
+    <header>
+      统计信息
+    </header>
+    <ul>
+      <li>用户数：{{ db.users.count() }}</li>
+      <li>主题数：{{ db.posts.count() }}</li>
+    </ul>
+  </section>
+
+  <section class='box'>
+    <header>
+      标签云
+    </header>
+    {{ tagcloud }}
+  </section>
+</div>
