@@ -32,3 +32,20 @@ for(var i = 0; i < pairs.length; i++) {
     args[argname] = value;
     // Store as a property
 }
+var sUrl = document.URL;
+var domain = sUrl.slice(sUrl.indexOf('://')+3, sUrl.indexOf('/', sUrl.indexOf('://')+3));
+
+$(document).ready(function(){
+    $('#search_form').submit(function(e){
+        e.preventDefault();
+        search();
+    });
+
+    function search(){
+        var q = document.getElementById('q');
+        if (q.value != '')
+            window.open('http://www.google.com/search?q=site:' + domain + ' ' + q.value, '_blank');
+        return false;
+    }
+
+});

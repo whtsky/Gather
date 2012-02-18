@@ -9,7 +9,6 @@
     <link rel='stylesheet' href='{{ static_url("css/bootstrap-responsive.min.css") }}' type='text/css'/>
     <link rel='stylesheet' href='{{ static_url("css/base.css") }}' type='text/css'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='{{ static_url("js/base.js") }}' type="text/javascript"></script>
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -20,8 +19,11 @@
       <div class='navbar-inner'>
         <div class='container' id="nav-in">
           <div class='nav-collapse'>
-            <ul class="nav">
-              <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
+            <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
+            <form id='search_form'class="navbar-search">
+              <input type='text' id='q' name='q' class='search-query span3'/>
+            </form>
+            <ul class="nav pull-right">
               {% block nav %}
               <li><a href='/'>主页</a></li>
               <li><a href='/topics'>主题</a></li>
@@ -102,5 +104,7 @@
         <p><a href="https://github.com/whtsky/PBB/">铅版(PBB)</a> by <a href="http://blog.whtsky.tk/">whtsky</a> JS by <a href="http://blog.whtsky.tk/">whtsky</a> & <a href="http://jyprince.me/">jybox</a></p>
       </div>
     </footer>
+    <script src='{{ static_url("js/base.js") }}' type="text/javascript"></script>
+    {% block foot %}{% end %}
   </body>
 </html>

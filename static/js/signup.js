@@ -23,13 +23,13 @@ $("#submit").click(function(){
             email:$("#email").val(),
             password:$("#password").val()},
         function(data){
-            alert(data.message);
             if(data.status=="success"){
                 if(args.next)
                     location.href=args.next;
                 else
                     location.href="/";
             }
+            alert(data.message);
         },"json");
     return false;
 });
