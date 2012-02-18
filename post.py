@@ -73,7 +73,7 @@ class PostViewHandler(BaseHandler):
             comments = post['comments']
             for i in range(len(comments)):
                 comments[i]['location'] =  str(i+1)
-            self.render('postview.html',db=self.db,time_span=time_span,
+            self.render('postview.html',time_span=time_span,db=self.db,
                         post=post,admin_list=admin,comments=comments,likely=likelyposts)
         else:
             raise tornado.web.HTTPError(404)
@@ -86,10 +86,10 @@ class TopicsViewHandler(BaseHandler):
     def get(self):
         try:
             self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-                db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
+                limit=POST_PER_PAGE,time_span=time_span,db=self.db,p=int(self.get_argument('p')))
         except:
             self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-                db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=1)
+                limit=POST_PER_PAGE,time_span=time_span,db=self.db,p=1)
 
 class PostListModule(tornado.web.UIModule):
     def render(self, db,posts):

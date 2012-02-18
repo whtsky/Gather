@@ -27,6 +27,13 @@ class BaseHandler(tornado.web.RequestHandler):
             self.clear_cookie('user')
             return None
 
+    def get_error_html(self,status_code, **kwargs):
+        if status_code==404:
+            return self.render_string('404.html')
+        else:
+            return ''
+
+
 def time_span(t):
     timecha = int(time.time()) - t
     if timecha < 60:

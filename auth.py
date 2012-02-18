@@ -2,10 +2,14 @@
 
 from common import BaseHandler,getvalue,time_span
 from hashlib import sha1,md5
-from tornado.escape import json_encode,xhtml_escape
+from tornado.escape import json_encode
+import tornado.web
 from tornado.web import authenticated
 from config import admin
 import time
+from re import compile
+
+username_check = compile(u'([\u4e00-\u9fa5A-Za-z])')
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
@@ -56,6 +60,7 @@ class AuthLoginHandler(BaseHandler):
         username = self.get_argument('username')
         password = self.get_argument('password')
         account = self.db.users
+        assert username_check.findall(username)[0] != username
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
             self.set_secure_cookie('user',username)
             self.write(json_encode({'status':'success','message':'登录成功'}))
@@ -76,8 +81,8 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
-            getvalue=getvalue,db=self.db)
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),db=self.db,
+            getvalue=getvalue)
 
     @authenticated
     def post(self):
