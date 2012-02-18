@@ -64,10 +64,14 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
-        comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
-        self.render('authinfo.html',username=username,time_span=time_span,posts=posts,db=self.db,
-                    comments=comments,user=self.db.users.find_one({'username':username}),admin_list=admin)
+        user = self.db.users.find_one({'username':username})
+        if user:
+            posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
+            comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
+            self.render('authinfo.html',username=username,time_span=time_span,posts=posts,db=self.db,
+                        comments=comments,user=user,admin_list=admin)
+        else:
+            raise tornado.web.HTTPError(404)
 
 class AuthSettingHandler(BaseHandler):
     @authenticated

@@ -11,10 +11,7 @@ class PostHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        try:
-            self.render('post.html',db=self.db,node=int(self.get_argument('node')))
-        except:
-            self.render('post.html',db=self.db,node=None)
+        self.render('post.html',db=self.db)
 
     @tornado.web.authenticated
     def post(self):
@@ -64,19 +61,22 @@ class CommentHandler(BaseHandler):
 class PostViewHandler(BaseHandler):
     def get(self,postid):
         post = self.db.posts.find_one({'_id':int(postid)})
-        likelylist = {}
-        for tag in post['tags']:
-            for p in self.db.posts.find({'tags':tag}):
-                likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
-        del likelylist[post['_id']]
-        likelys = sorted(likelylist.items(),key=lambda x: x[1])
-        likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
-        del likelys,likelylist
-        comments = post['comments']
-        for i in range(len(comments)):
-            comments[i]['location'] =  str(i+1)
-        self.render('postview.html',db=self.db,time_span=time_span,
-                    post=post,admin_list=admin,comments=comments,likely=likelyposts)
+        if post:
+            likelylist = {}
+            for tag in post['tags']:
+                for p in self.db.posts.find({'tags':tag}):
+                    likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
+            del likelylist[post['_id']]
+            likelys = sorted(likelylist.items(),key=lambda x: x[1])
+            likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
+            del likelys,likelylist
+            comments = post['comments']
+            for i in range(len(comments)):
+                comments[i]['location'] =  str(i+1)
+            self.render('postview.html',db=self.db,time_span=time_span,
+                        post=post,admin_list=admin,comments=comments,likely=likelyposts)
+        else:
+            raise tornado.web.HTTPError(404)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
