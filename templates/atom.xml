@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"
       xml:lang="zh-CN"
-      xml:base="{{ handler.settings['bbs_url'] }}">
-    <title>{{ handler.settings['bbs_title'] }}-{{ tagname }}</title>
-    <id>{{ handler.settings['bbs_url'] }}tag/{{ tagname }}/feed</id>
-    <subtitle>这是{{ handler.settings['bbs_title'] }}上{{ tagname }}标签的ATOM供稿</subtitle>
-    <link href="{{ handler.settings['bbs_url'] }}tag/{{ tagname }}" rel="alternate" type="text/html"/>
-    <link href="{{ handler.settings['bbs_url'] }}tag/{{ tagname }}/feed" rel="self"/>
+      xml:base="{{ handler.settings['bbs_url'] }}/">
+    <title>{{ handler.settings['bbs_title'] }}-{{ name }}</title>
+    <id>{{ handler.settings['bbs_url'] }}{{ url }}/feed</id>
+    <link href="{{ handler.settings['bbs_url'] }}{{ url }}" rel="alternate" type="text/html"/>
+    <link href="{{ handler.settings['bbs_url'] }}{{ url }}/feed" rel="self"/>
     <link rel="hub" href="http://pubsubhubbub.appspot.com/"/>
     <updated>{{ time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(int(time.time())+28800)) }}</updated>
     <author>

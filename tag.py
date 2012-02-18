@@ -38,5 +38,6 @@ class TagCloudHandler(BaseHandler):
 class TagFeedHandler(BaseHandler):
     def get(self,tagname):
         self.set_header("Content-Type", "application/atom+xml")
-        self.render('atom.xml',tagname=tagname,
+        url = '/tag/'+tagname
+        self.render('atom.xml',url=url,name=tagname,
                     time=time,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]))

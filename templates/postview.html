@@ -92,10 +92,11 @@
 </section>
 {% if current_user %}
 <section class='box'>
+  <form action="" method="post">
   {{ xsrf_form_html() }}
   {{ modules.Edit() }}
+  </form>
 </section>
-<script src='{{ static_url("js/postview.js") }}' type="text/javascript"></script>
 {% end %}
 {% end %}
 {% block sidebar %}

@@ -16,7 +16,7 @@ class PostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         title = xhtml_escape(self.get_argument('title'))
-        assert len(title)<50
+        assert len(title)<26
         md = self.get_argument('markdown')
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
@@ -34,32 +34,11 @@ class PostHandler(BaseHandler):
                       'changedtime':int(time()),
                       'tags':tags,
                       })
-        message = '发表成功'
-        status = 'success'
-        self.write(json_encode({'status':status,'message':message,'tid':tid}))
         for tag in tags:
             self.db.tags.update({'name':tag},
                                 {'$inc':{'count':1}},
                                 True)
-
-class CommentHandler(BaseHandler):
-
-    @tornado.web.authenticated
-    def post(self,postid):
-        message = '发表成功'
-        status = 'success'
-        self.write(json_encode({'status':status,'message':message}))
-        md = self.get_argument('markdown')
-        self.db.posts.update({'_id':int(postid)},
-                             {'$push':
-                             {'comments':
-                             {'author':self.get_secure_cookie('user'),
-                              'content':md_convert(md),
-                              'posttime':int(time()),}},
-                              '$set':{'changedtime':int(time())},})
-        message = '发表成功'
-        status = 'success'
-        self.write(json_encode({'status':status,'message':message}))
+        self.redirect('/topics/'+str(tid))
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
@@ -80,6 +59,18 @@ class PostViewHandler(BaseHandler):
                         post=post,admin_list=admin,comments=comments,likely=likelyposts)
         else:
             raise tornado.web.HTTPError(404)
+
+    @tornado.web.authenticated
+    def post(self,postid):
+        md = self.get_argument('markdown')
+        self.db.posts.update({'_id':int(postid)},
+                {'$push':
+                         {'comments':
+                                  {'author':self.get_secure_cookie('user'),
+                                   'content':md_convert(md),
+                                   'posttime':int(time()),}},
+                 '$set':{'changedtime':int(time())},})
+        self.redirect('/topics/'+str(postid))
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):

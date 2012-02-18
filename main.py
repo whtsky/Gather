@@ -9,6 +9,7 @@ import tornado.web
 import pymongo
 from tornado.options import define, options
 from tornado.escape import xhtml_escape
+import time
 
 from common import BaseHandler,time_span
 
@@ -18,7 +19,7 @@ define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler
-from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler
+from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
 
@@ -26,6 +27,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
+            (r'/feed', FeedHandler),
 
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
@@ -36,7 +38,6 @@ class Application(tornado.web.Application):
 
             (r'/topics',TopicsViewHandler),
             (r'/topics/(\d+)', PostViewHandler),
-            (r'/topics/(\d+)/comment', CommentHandler),
             (r'/topics/add', PostHandler),
             (r'/tag', TagCloudHandler),
             (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
@@ -51,7 +52,7 @@ class Application(tornado.web.Application):
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
             bbs_title_e=xhtml_escape(u'Jybox'),
-            bbs_url=u'http://jybox.net/',
+            bbs_url=u'http://bbs.jybox.net',
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             xsrf_cookies=True,
@@ -74,7 +75,14 @@ class HomeHandler(BaseHandler):
 class EditModule(tornado.web.UIModule):
     def render(self):
         return self.render_string('modules/markdown.html')
-        
+
+class FeedHandler(BaseHandler):
+    def get(self):
+        self.set_header("Content-Type", "application/atom+xml")
+        url = ''
+        self.render('atom.xml',url=url,name='全站',
+            time=time,posts=self.db.posts.find({},sort=[('changedtime', 1)]))
+
 if __name__ == '__main__':
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
