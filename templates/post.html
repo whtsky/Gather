@@ -14,49 +14,30 @@
 {% end %}
 
 
-{% block body %}
-<div class='row'>
-  <div class='span12'>
-    <section class="box">
-    <form class='form-horizontal'>
+{% block content %}
+<section class="box">
+  <form>
     {{ xsrf_form_html() }}
-      <fieldset>
-        <header><h2>发表主题</h2></header>
-        <div id='title-g' class='control-group nodeid-g'>
-          <label class='control-label' for='title'>标题</label>
-          <div class='controls'>
-            <input class="span7" type='text' id='title' name='title'>
-          </div>
-          <div id="title-t" class="box controls">
-            <span class="help-inline">起码也要输入几个字嘛(5-50个字)~</span>
-          </div>
+    <fieldset>
+      <header><h2>发表主题</h2></header>
+      <div id='title-g' class='control-group'>
+        <div class='controls'>
+          <input style='width:99%;' type='text' id='title' name='title' placeholder="请输入标题">
         </div>
-        <div id='markdown-g' class='control-group'>
-          <label class='control-label' for='content'>正文</label>
-          <div class='controls'>
-            <textarea class="span10" style="height:380px;" id='markdown' name='markdown'></textarea>
-          </div>
-          <div id="markdown-t" class="box controls">
-            <span class="help-inline">起码也要输入几个字嘛(五个字)~</span>
-          </div>
+      </div>
+      <div id='markdown-g' class='control-group'>
+        <div class='controls'>
+        {{ modules.Edit() }}
         </div>
-        <div id='tags-g' class='control-group'>
-          <label class='control-label' for='tags'>标签</label>
-          <div class='controls'>
-            <input class="span5" type='text' id='tags' name='tags'>
-            <span id="tags-t" class="help-inline">起码也要贴个标签嘛~</span>
-            <p class="help-block">给主题设置标签可以帮助他人更好的找到你的主题，标签间使用空格或英文逗号(,)或(/)分割</p>
-          </div>
+      </div>
+      <div id='tags-g' class='control-group'>
+        <div class='controls'>
+          <input style='width:99%;' type='text' id='tags' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割">
         </div>
-        <div class="well">
-          <h3>预览(焦点离开输入框后刷新)</h3>
-          <div id="preview"></div>
-        </div>
-        <button id='submit' class='btn btn-primary'>很好，我要发表</button>
-      </fieldset>
-    </form>
-    </section>
-  </div>
-</div>
+      </div>
+      <button id='submit' class='btn btn-primary'>很好，我要发表</button>
+    </fieldset>
+  </form>
+</section>
 <script src='{{ static_url("js/post.js") }}' type="text/javascript"></script>
 {% end %}

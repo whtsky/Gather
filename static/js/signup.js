@@ -10,10 +10,6 @@ $("#password").blur(function(){
 $("#password-ag").blur(function(){
     checkInput("#password-ag",($(this).val()!=$("#password").val()));
 });
-$("#username-t").hide();
-$("#email-t").hide();
-$("#password-t").hide();
-$("#password-ag-t").hide();
 $("#submit").click(function(){
     readySubmit=true;
     $("#username").blur();

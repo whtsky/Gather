@@ -12,40 +12,15 @@
 <li class="active">{{ tagname }}</li>
 {% end %}
 
-{% block body %}
-<div class='container'>
-  <div class='row'>
-    <div class='span7' style="margin-left: 72px;">
-      <section class='box'>
-        共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-        {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
-        {% if p!=1 %}
-        <a href='{{ tagname }}?p={{ p-1 }}'>上一页</a>
-        {% end %}
-        {% if p*limit < posts.count() %}
-        <a href='{{ tagname }}?p={{ p+1 }}'>下一页</a>
-        {% end %}
-        </section>
-      </div>
-      <div class='span3'>
-        <section class='box'>
-          {% if current_user %}
-          <a href="/topics/add" class='btn btn-info'>发帖</a>
-          {% else %}
-          <p>想要融入社区？</p>
-          <a href='/signup' class='btn btn-info'>注册</a> 或者 <a href='/login' class='btn'>登录</a>
-          {% end %}
-        </section>
-        <section class='box'>
-          <header>
-            统计信息
-          </header>
-          <ul>
-            <li>主题数：{{ posts.count() }}</li>
-          </ul>
-        </section>
-      </div>
-    </div>
-  </div>
-</div>
+{% block content %}
+<section class='box'>
+  共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
+  {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
+  {% if p!=1 %}
+  <a href='{{ tagname }}?p={{ p-1 }}'>上一页</a>
+  {% end %}
+  {% if p*limit < posts.count() %}
+  <a href='{{ tagname }}?p={{ p+1 }}'>下一页</a>
+  {% end %}
+</section>
 {% end %}

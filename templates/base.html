@@ -10,6 +10,9 @@
     <link rel='stylesheet' href='{{ static_url("css/base.css") }}' type='text/css'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='{{ static_url("js/base.js") }}' type="text/javascript"></script>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     {% block head %}{% end %}
   </head>
   <body>
@@ -39,13 +42,38 @@
         </div>
       </div>
     </div>
-    <div id="main" class="container span10 offset1">
-      <ul class="breadcrumb">
-        {% block breadcrumb %}
-          <li class="active">{{ handler.settings['bbs_title'] }}</li>
-        {% end %}
-      </ul>
-      {% block body %}{% end %}
+    <div id="main" class="container">
+      <div class='row'>
+        <div class="span10 offset1">
+          <ul class="breadcrumb">
+            {% block breadcrumb %}
+              <li class="active">{{ handler.settings['bbs_title'] }}</li>
+            {% end %}
+          </ul>
+        </div>
+        {% block body %}
+          <div class="span7 offset1">
+            {% block content %}{% end %}
+          </div>
+          <div class="span3">
+            <section class='box'>
+             {% if current_user %}
+               <a href="/topics/add" class='btn btn-info'>发帖</a>
+             {% else %}
+               <p>想要融入社区？</p>
+               <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>
+             {% end %}
+            </section>
+            {% block sidebar %}{% end %}
+            {% block tagcloud %}
+            <section class='box'>
+              <header>标签云</header>
+              {{ modules.TagCloud(db,limit=10) }}
+            </section>
+            {% end %}
+          </div>
+        </div>
+      {% end %}
     </div>
     <footer>
       <div class='span10 offset1'>

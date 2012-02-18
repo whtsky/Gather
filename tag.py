@@ -4,18 +4,20 @@ import math
 from common import BaseHandler,time_span
 from hashlib import md5
 import time
+import tornado.web
 
 POST_PER_PAGE = 20
 
-def tagcloud(db,limit=False):
-    tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
-    tags.reverse()
-    if limit!=False:
-        tags = tags[:limit]
-    html = []
-    for tag in tags:
-        html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
-    return ' '.join(html)
+class TagCloudModule(tornado.web.UIModule):
+    def render(self, db,limit=False):
+        tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
+        tags.reverse()
+        if limit!=False:
+            tags = tags[:limit]
+        html = []
+        for tag in tags:
+            html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
+        return ' '.join(html)
 
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
@@ -28,7 +30,7 @@ class TagViewHandler(BaseHandler):
 
 class TagCloudHandler(BaseHandler):
     def get(self):
-        self.render('tagcloud.html',tagcloud=tagcloud(self.db))
+        self.render('modules/tagcloud.html',db=self.db)
 
 class TagFeedHandler(BaseHandler):
     def get(self,tagname):

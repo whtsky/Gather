@@ -1,12 +1,3 @@
-$("#markdown").blur(function(){
-    checkInput("#markdown",!$(this).val());
-    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
-            md:$("#markdown").val()},
-        function(data){
-            $("#preview").html(data);
-        },"html");
-});
-$("#markdown-t").hide();
 $("#submit").click(function(){
     readySubmit=true;
     $("#markdown").blur();

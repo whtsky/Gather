@@ -27,7 +27,6 @@ class AuthSignupHandler(BaseHandler):
             return
         elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
             message = '用户名或邮箱地址重复'
-            message = username+password
             status = 'error'
         else:
             account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
@@ -53,7 +52,7 @@ class AuthLoginHandler(BaseHandler):
         
     def post(self):
         assert not self.get_current_user()
-        username = xhtml_escape(self.get_argument('username'))
+        username = self.get_argument('username')
         password = self.get_argument('password')
         account = self.db.users
         if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
@@ -66,14 +65,14 @@ class AuthInfoHandler(BaseHandler):
     def get(self,username):
         posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
         comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
-        self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,
+        self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,db=self.db,
                     comments=comments,user=self.db.users.find_one({'username':username}),admin_list=admin)
 
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
-            getvalue=getvalue,md5=md5)
+            getvalue=getvalue,md5=md5,db=self.db)
 
     @authenticated
     def post(self):

@@ -4,8 +4,6 @@ $("#username").blur(function(){
 $("#password").blur(function(){
     checkInput("#password",!$(this).val());
 });
-$("#username-t").hide();
-$("#password-t").hide();
 $("#login").click(function(){
     readySubmit=true;
     $("#username").blur();

@@ -4,9 +4,6 @@ $("#old").blur(function(){
 $("#new").blur(function(){
     checkInput("#new",(!$(this).val() || !$(this).val().match(/.{6,}$/)));
 });
-$("#old-t").hide();
-$("#new-t").hide();
-$("#email-t").hide();
 $("#changepassword").click(function(){
     readySubmit=true;
     $("#old").blur();

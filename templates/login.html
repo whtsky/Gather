@@ -2,35 +2,34 @@
 
 {% block title %}{{ handler.settings['bbs_title'] }} > 登录{% end %}
 
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li class="active">登录</li>
+{% end %}
+
 {% block body %}
-<div class='container'>
-  <div class='row'>
-    <section class='box span6 offset3'>
-      <form class='form-horizontal'>
-        {{ xsrf_form_html() }}
-        <fieldset>
-          <header><h2>登录</h2></header>
-          <div id="username-g" class="control-group">
-            <label class="control-label" for="username">用户名</label>
-            <div class="controls">
-              <input type="text" id="username">
-              <span id="username-t" class="help-inline">请输入用户名</span>
-            </div>
-          </div>
-          <div id="password-g" class="control-group">
-            <label class="control-label" for="password">密码</label>
-            <div class="controls">
-              <input type="password" id="password">
-              <span id="password-t" class="help-inline">请输入密码</span>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button id='login' class='btn btn-primary'>登录</button>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-</div>
+<section class='box span6 offset3'>
+  <form class='form-horizontal'>
+    {{ xsrf_form_html() }}
+    <fieldset>
+      <header><h2>登录</h2></header>
+      <div id="username-g" class="control-group">
+        <label class="control-label" for="username">用户名</label>
+        <div class="controls">
+          <input type="text" id="username" placeholder="请输入用户名">
+        </div>
+      </div>
+      <div id="password-g" class="control-group">
+        <label class="control-label" for="password">密码</label>
+        <div class="controls">
+          <input type="password" id="password" placeholder="请输入密码">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button id='login' class='btn btn-primary'>登录</button>
+      </div>
+    </fieldset>
+  </form>
+</section>
 <script src='{{ static_url("js/login.js") }}' type="text/javascript"></script>
 {% end %}

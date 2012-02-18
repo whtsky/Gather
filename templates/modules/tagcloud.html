@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ handler.settings['bbs_title'] }} > 标签云{% end %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li class="active">标签云</li>
+{% end %}
+
+{% block content %}
+<section class="box">
+  {{ modules.TagCloud(db) }}
+</section>
+{% end %}
+
+{% block tagcloud %}{% end %}

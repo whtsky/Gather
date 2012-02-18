@@ -1,20 +1,9 @@
 $("#title").blur(function(){
-    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{5,50}$/)));
-});
-$("#markdown").blur(function(){
-    checkInput("#markdown",!$(this).val());
-    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
-            md:$("#markdown").val()},
-        function(data){
-            $("#preview").html(data);
-        },"html");
+    checkInput("#title",(!$(this).val() || !$(this).val().match(/.{1,50}$/)));
 });
 $("#tags").blur(function(){
     checkInput("#tags",(!$(this).val() || !$(this).val().match(/.{1,}$/)));
 });
-$("#title-t").hide();
-$("#markdown-t").hide();
-$("#tags-t").hide();
 $("#submit").click(function(){
     readySubmit=true;
     $("#title").blur();

@@ -51,7 +51,6 @@ def md_convert(txt):
     for x in set(url_replace.findall(txt)):
         txt = txt.replace(x,u'<a href="%s">%s</a>' % (x,x))
 
-    return txt
     txt = md.convert(txt)
 
     return txt
