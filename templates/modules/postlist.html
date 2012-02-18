@@ -22,7 +22,7 @@
 
     </td>
     <td class='reply-count last'>
-      <a>{{ len(post['comments']) }}</a>
+      <a href="/topics/{{ post['_id'] }}#reply-{{ len(post['comments']) }}">{{ len(post['comments']) }}</a>
     </td>
     {% end %}
   </tbody>

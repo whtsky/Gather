@@ -88,3 +88,22 @@ class TopicsViewHandler(BaseHandler):
 class PostListModule(tornado.web.UIModule):
     def render(self, db,posts):
         return self.render_string("modules/postlist.html", db=db,posts=posts,time_span=time_span,admin_list=admin)
+
+class MarkPostHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self,postid):
+        post = int(postid)
+        username = self.get_secure_cookie('user')
+        user = self.db.users.find_one({'username':username})
+        if post in user['postmark']:
+            user['postmark'].remove(post)
+            self.db.users.save(user)
+        else:
+            self.db.users.update({'username':username},
+                    {'$push':{'postmark':post}})
+        self.write('done.')
+
+class MyMarkedPostHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('markedpost.html')

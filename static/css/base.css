@@ -171,3 +171,5 @@ a.dark:hover {
     padding: 4px 5px 4px 22px;
     color: #000;
 }
+a.mark:hover {
+    background-color: #F89406; }
