@@ -17,10 +17,10 @@
   共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
   {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
   {% if p!=1 %}
-  <a href='{{ tagname }}?p={{ p-1 }}'>上一页</a>
+  <a href='{{ tagname }}?p={{ p-1 }}' class="btn left">上一页</a>
   {% end %}
   {% if p*limit < posts.count() %}
-  <a href='{{ tagname }}?p={{ p+1 }}'>下一页</a>
+  <a href='{{ tagname }}?p={{ p+1 }}' class="btn right">下一页</a>
   {% end %}
 </section>
 {% end %}

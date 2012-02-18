@@ -2,15 +2,36 @@
   <ul class='nav nav-pills'>
     <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
     <li><a href='#preview' data-toggle='pill'>预览</a></li>
+    <li><a href='#markdownwiki' data-toggle='pill'>语法参考</a></li>
   </ul>
   <div class='tab-content'>
     <div class='tab-pane active' id='edit'>
       <textarea style='width:99%;' id='markdown' name='markdown' rows='8' placeholder="请输入内容"></textarea>
+      <button id='submit' class='btn btn-primary'>发表</button>
     </div>
     <div id='preview' class='tab-pane'>
       <div class="well">
         <div id='wmd-preview' class='wmd-preview reply-wmd-preview'></div>
       </div>
+    </div>
+    <div id='markdownwiki' class='tab-pane'>
+      <h3>Markdown语法</h3>
+      <ul>
+        <li>换行：两个空格</li>
+        <li>分段：一个空行</li>
+        <li>斜体：*斜体*</li>
+        <li>粗体：**粗体**</li>
+        <li>代码：行首四个空格</li>
+        <li>链接：[文字](url)</li>
+        <li>图片：![alt 文字](url)</li>
+      </ul>
+      详见<a href="http://wowubuntu.com/markdown/basic.html">Markdown快速入门</a>
+      <hr class="soften">
+      <h3>特色语法</h3>
+      <ul>
+        <li>在图片网址前后加空格可以自动转换为图片</li>
+        <li>在网址前后加空格可以自动转换为超链接</li>
+      </ul>
     </div>
   </div>
 </div>
