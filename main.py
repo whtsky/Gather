@@ -55,6 +55,8 @@ class Application(tornado.web.Application):
 
             (r'/markdown',MarkDownPreViewHandler),
 
+            (r'.*',ErrorHandler),
+
         ]
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
@@ -89,6 +91,10 @@ class FeedHandler(BaseHandler):
         url = ''
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
             time=time,posts=self.db.posts.find({},sort=[('changedtime', 1)]))
+
+class ErrorHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        self.render('404.html')
 
 if __name__ == '__main__':
     tornado.options.parse_command_line()
