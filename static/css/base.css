@@ -52,6 +52,9 @@ table.clear-table td {
     margin: 0;
     border: none;
     line-height: 20px; }
+table.clear-table td.avatar{
+    padding: 0 10px;
+}
 table.center-table td {
     text-align: center;
     margin:0 auto;}
