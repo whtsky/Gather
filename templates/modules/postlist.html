@@ -3,7 +3,7 @@
   {% for post in posts %}
   <tr>
     <td class='avatar'>
-      <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}.png?r=G&amp;s=48' /></a>
+      <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=48' /></a>
     </td>
     <td>
       <h3>

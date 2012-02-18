@@ -31,7 +31,7 @@
         <tbody>
         <tr>
           <td class='avatar'>
-            <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}.png?r=G&amp;s=72' /></a>
+            <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>
           </td>
           <td>
             <h1>{{ post['title'] }}</h1>
@@ -68,7 +68,7 @@
     {% for comment in comments %}
     <tr>
       <td class='avatar'>
-        <img src="http://gravatar.com/avatar/{{ db.users.find_one({'username':comment['author']})["hashed_email"] }}.png?r=G&amp;s=48" />
+        <img src="http://gravatar.com/avatar/{{ db.users.find_one({'username':comment['author']})["hashed_email"] }}?s=48" />
       </td>
       <td>
         <article>

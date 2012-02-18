@@ -48,6 +48,7 @@ class Application(tornado.web.Application):
             (r'/admin/post/kill/(\d+)/(\d+)',RemoveCommentHandler),
 
             (r'/markdown',MarkDownPreViewHandler),
+
         ]
         settings = dict(
             bbs_title=xhtml_escape(u'精英盒子'),
@@ -61,7 +62,7 @@ class Application(tornado.web.Application):
                         "Edit":EditModule},
             cookie_secret='89f3hneifu29IY(!H@@IUFY#(FCINepifu2iY!HU!(FU@H',
             login_url='/login',
-            debug=True,
+            debug=False,
             autoescape=None,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
