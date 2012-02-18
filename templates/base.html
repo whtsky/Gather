@@ -19,26 +19,24 @@
     <div class='navbar navbar-fixed-top'>
       <div class='navbar-inner'>
         <div class='container' id="nav-in">
-          <ul class="nav">
-            <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
-            <li class='active'><a href='#'>论坛</a></li>
-          </ul>
-          <ul class="nav pull-right">
-            {% if current_user %}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user }}<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/user/{{ current_user }}">个人资料</a></li>
-                <li><a href="/setting">设置</a></li>
-                <li class="divider"></li>
+          <div class='nav-collapse'>
+            <ul class="nav">
+              <a class='brand' href='#'>{{ handler.settings['bbs_title_e'] }}</a>
+              {% block nav %}
+              <li><a href='/'>主页</a></li>
+              <li><a href='/topics'>主题</a></li>
+              <li><a href='/tag'>标签</a></li>
+              {% end %}
+              <li class="divider-vertical"></li>
+              {% if current_user %}
+                <li><a href="/user/{{ current_user }}">{{ current_user }}</a></li>
                 <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
-              </ul>
-            </li>
-            {% else %}
-            <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
-            <li><a href="/login?next={{ url_escape(request.uri) }}">登录</a></li>
-            {% end %}
-          </ul>
+              {% else %}
+                <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
+                <li><a href="/login?next={{ url_escape(request.uri) }}">登录</a></li>
+              {% end %}
+            </ul>
+        </div>
         </div>
       </div>
     </div>
@@ -58,11 +56,31 @@
           <div class="span3">
             <section class='box'>
              {% if current_user %}
-               <div class='avatar'>
-                 <a href='/user/{{ current_user }}'><img src='http://www.gravatar.com/avatar/{{ db.users.find_one({"username":current_user})["hashed_email"] }}.png?r=G&amp;s=48'' title='{{ current_user }}' /></a>
-               </div>
-               <strong><a href='/user/{{ current_user }}' class='user_name dark'>{{ current_user }}</a></strong>
-               <a href="/topics/add" class='btn btn-info'>发帖</a>
+               <a href='/user/{{ current_user }}' class="dark">
+                 <img src='http://www.gravatar.com/avatar/{{ db.users.find_one({"username":current_user})["hashed_email"] }}.png?r=G&amp;s=48'' title='{{ current_user }}' />
+                 <span class="dark user_name">{{ current_user }}</span>
+               </a>
+               <a href="/setting" class="label label-success">编辑</a>
+               <table class="table clear-table center-table">
+                 <tbody>
+                   <tr>
+                     <td style="width:33%;">
+                       <h3>0</h3>
+                       Tag收藏
+                     </td>
+                     <td style="width:33%;">
+                       <h3>0</h3>
+                       主题收藏
+                     </td>
+                     <td style="width:33%;">
+                       <h3>0</h3>
+                       未读通知
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+               <hr>
+               <a href="/topics/add" class='btn btn-info'>发表话题</a>
              {% else %}
                <p>想要融入社区？</p>
                <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>

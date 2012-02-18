@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ handler.settings['bbs_title'] }} > 标签云{% end %}
+{% block title %}{{ handler.settings['bbs_title'] }} > 标签{% end %}
+
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li><a href='/topics'>主题</a></li>
+<li class='active'><a href='/tag'>标签</a></li>
+{% end %}
 
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
-<li class="active">标签云</li>
+<li class="active">标签</li>
 {% end %}
 
 {% block content %}

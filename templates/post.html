@@ -8,6 +8,12 @@
 <link rel='stylesheet' href='{{ static_url("css/highlight.css") }}' type='text/css'/>
 {% end %}
 
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li class='active'><a href='/topics'>主题</a></li>
+<li><a href='/tag'>标签</a></li>
+{% end %}
+
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
 <li class="active">发布主题</li>

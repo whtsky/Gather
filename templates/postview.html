@@ -12,8 +12,15 @@
 </script>
 {% end %}
 
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li class='active'><a href='/topics'>主题</a></li>
+<li><a href='/tag'>标签</a></li>
+{% end %}
+
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/topics">主题</a> <span class="divider">/</span></li>
 <li class="active">{{ post['title'] }}</li>
 {% end %}
 
@@ -25,7 +32,7 @@
         <tbody>
         <tr>
           <td class='avatar'>
-            <img src='http://gravatar.com/avatar/{{ md5(db.users.find_one({"username":post["author"]})["email"]).hexdigest() }}.png?r=G&amp;s=72' /></a>
+            <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}.png?r=G&amp;s=72' /></a>
           </td>
           <td>
             <h1>{{ post['title'] }}</h1>
@@ -62,7 +69,7 @@
     {% for comment in comments %}
     <tr>
       <td class='avatar'>
-        <img src="http://gravatar.com/avatar/{{ md5(db.users.find_one({'username':comment['author']})["email"]).hexdigest() }}.png?r=G&amp;s=48" />
+        <img src="http://gravatar.com/avatar/{{ db.users.find_one({'username':comment['author']})["hashed_email"] }}.png?r=G&amp;s=48" />
       </td>
       <td>
         <article>
@@ -101,7 +108,7 @@
     <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
     {% end %}
     {% else %}
-    没有相关的主题。。
+    没有相关主题
     {% end %}
   </ul>
 </section>

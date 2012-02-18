@@ -11,7 +11,6 @@ from tornado.options import define, options
 from tornado.escape import xhtml_escape
 
 from common import BaseHandler,time_span
-from hashlib import md5
 
 
 define('port', default=8888, help='run on the given port', type=int)
@@ -19,7 +18,7 @@ define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler
-from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler,PostListModule
+from post import PostHandler,PostViewHandler,CommentHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
 
@@ -35,6 +34,7 @@ class Application(tornado.web.Application):
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 
+            (r'/topics',TopicsViewHandler),
             (r'/topics/(\d+)', PostViewHandler),
             (r'/topics/(\d+)/comment', CommentHandler),
             (r'/topics/add', PostHandler),

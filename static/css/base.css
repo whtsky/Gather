@@ -52,6 +52,9 @@ table.clear-table td {
     margin: 0;
     border: none;
     line-height: 20px; }
+table.center-table td {
+    text-align: center;
+    margin:0 auto;}
 body
 {
     padding-top: 60px;
@@ -136,5 +139,7 @@ a.dark:hover {
     display: inline-block;
 }
 .user_name {
-    font-size: 16px;
+    font-size: 20px;
+    text-align: center;
+    margin:0 auto;
 }

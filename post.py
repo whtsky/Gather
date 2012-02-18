@@ -4,8 +4,8 @@ from common import BaseHandler,time_span,md_convert
 import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
-from hashlib import md5
 from config import admin
+from tag import POST_PER_PAGE
 
 class PostHandler(BaseHandler):
 
@@ -81,6 +81,15 @@ class PostViewHandler(BaseHandler):
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
         self.write(md_convert(self.get_argument('md')))
+
+class TopicsViewHandler(BaseHandler):
+    def get(self):
+        try:
+            self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
+                db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
+        except:
+            self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
+                db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=1)
 
 class PostListModule(tornado.web.UIModule):
     def render(self, db,posts):

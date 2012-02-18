@@ -6,6 +6,12 @@
 <link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['bbs_title'] }}-{{ tagname }}" type="application/atom+xml"/>
 {% end %}
 
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li><a href='/topics'>主题</a></li>
+<li class='active'><a href='/tag'>标签</a></li>
+{% end %}
+
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
 <li><a href="/tag">标签</a> <span class="divider">/</span></li>

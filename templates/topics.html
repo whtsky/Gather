@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ handler.settings['bbs_title'] }} > 主题{% end %}
+
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li class='active'><a href='/topics'>主题</a></li>
+<li><a href='/tag'>标签</a></li>
+{% end %}
+
+{% block breadcrumb %}
+<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li class="active">主题</li>
+{% end %}
+
+{% block content %}
+<section class='box'>
+    共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
+    {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
+    {% if p!=1 %}
+    <a href='/topics?p={{ p-1 }}' class="btn left">上一页</a>
+    {% end %}
+    {% if p*limit < posts.count() %}
+    <a href='/topics?p={{ p+1 }}' class="btn right">下一页</a>
+    {% end %}
+</section>
+{% end %}

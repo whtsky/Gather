@@ -2,7 +2,6 @@
 
 import math
 from common import BaseHandler,time_span
-from hashlib import md5
 import time
 import tornado.web
 
@@ -30,7 +29,7 @@ class TagViewHandler(BaseHandler):
 
 class TagCloudHandler(BaseHandler):
     def get(self):
-        self.render('modules/tagcloud.html',db=self.db)
+        self.render('tagcloud.html',db=self.db)
 
 class TagFeedHandler(BaseHandler):
     def get(self,tagname):
