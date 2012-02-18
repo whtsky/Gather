@@ -4,11 +4,10 @@
 
 {% block head %}
 <script src='{{ static_url("js/wmd/wmd.js") }}' type="text/javascript"></script>
-<link rel='stylesheet' href='{{ static_url("postview.css") }}' type='text/css'/>
+<link rel='stylesheet' href='{{ static_url("css/postview.css") }}' type='text/css'/>
 <script src='{{ static_url("js/highlight.pack.js") }}' type="text/javascript"></script>
-<link rel='stylesheet' href='{{ static_url("highlight.css") }}' type='text/css'/>
+<link rel='stylesheet' href='{{ static_url("css/highlight.css") }}' type='text/css'/>
 <script type="text/javascript">
-    commentNum={{ len(post['comments']) }};
     postID="{{ post['_id'] }}";
 </script>
 {% end %}
@@ -52,7 +51,7 @@
               <a href="#;" onclick="window.open('https://twitter.com/share?url='+window.location.href+'&related=v2ex&hashtags=share&text={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="label">Tweet</a>
               <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=700,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="label">Douban</a>
               <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="label">Weibo</a>
-              <a href="#;" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&a=index&url='+window.location.href+'&appkey=&site=&title={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 't.qq.com');" class="label">Tencent</a>
+              <a href="#;" onclick="window.open('http://www.instapaper.com/edit?url='+window.location.href+'&title={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'instapaper.com');" class="label">InstaPaper</a>
               {% if current_user in admin_list %}
                 <a href="/admin/post/kill/{{ post['_id'] }}" class='label label-important'>和谐</a>
               {% end %}
