@@ -41,3 +41,21 @@ class TagFeedHandler(BaseHandler):
         url = '/tag/'+tagname
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name=tagname,
                     time=time,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]))
+
+class MarkTagHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self,tagname):
+        username = self.get_secure_cookie('user')
+        user = self.db.users.find_one({'username':username})
+        if tagname in user['tagmark']:
+            user['tagmark'].remove(tagname)
+            self.db.users.save(user)
+        else:
+            self.db.users.update({'username':username},
+                    {'$push':{'tagmark':tagname}})
+        self.write('done.')
+
+class MyMarkedTagHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('markedtag.html')

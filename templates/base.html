@@ -71,8 +71,10 @@
                  <tbody>
                    <tr>
                      <td style="width:33%;">
-                       <h3>{{ len(user_info['tagmark']) }}</h3>
-                       Tag收藏
+                       <a href="/my/tag">
+                         <h3><span id="markedtag">{{ len(user_info['tagmark']) }}</span></h3>
+                           Tag收藏
+                       </a>
                      </td>
                      <td style="width:33%;">
                        <a href="/my/post">

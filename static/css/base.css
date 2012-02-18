@@ -173,3 +173,21 @@ a.dark:hover {
 }
 a.mark:hover {
     background-color: #F89406; }
+.howmany {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 3px 5px 3px 5px;
+    background-color: #f5f5ff;
+    border: 1px solid #f0f0ff;
+    color: #99a;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+table.tag-list td.count{
+    width: 10%;
+    text-align: center;
+}
+table.tag-list {
+    width: 100%;
+}
