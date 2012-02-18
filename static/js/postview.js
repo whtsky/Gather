@@ -1,15 +1,14 @@
 $("#submit").click(function(){
     readySubmit=true;
-    $("#markdown").blur();
+    $("#wmd-input").blur();
     if(!readySubmit)
         return false;
     $.post("/topics/"+postID+"/comment",{_xsrf:$("input[name='_xsrf']").val(),
-            markdown:$("#markdown").val(),
-            html:$("#html").val()},
+            markdown:$("#wmd-input").val()},
         function(data){
-            alert(data.message);
             if(data.status=="success")
                 location.reload();
+            alert(data.message);
         },"json");
     return false;
 });

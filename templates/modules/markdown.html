@@ -1,3 +1,6 @@
+<script src='/static/js/Markdown.Converter.js' type="text/javascript"></script>
+<script src='/static/js/Markdown.Sanitizer.js' type="text/javascript"></script>
+<link rel='stylesheet' href='{{ static_url("css/edit.css") }}' type='text/css'/>
 <div class='tabbable'>
   <ul class='nav nav-pills'>
     <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
@@ -6,7 +9,8 @@
   </ul>
   <div class='tab-content'>
     <div class='tab-pane active' id='edit'>
-      <textarea style='width:99%;' id='markdown' name='markdown' rows='8' placeholder="请输入内容"></textarea>
+      <div id="wmd-button-bar"></div>
+      <textarea style='width:99%;' class="wmd-input" id="wmd-input" rows='8' placeholder="请输入内容"></textarea>
       <button id='submit' class='btn btn-primary'>发表</button>
     </div>
     <div id='preview' class='tab-pane'>
@@ -35,4 +39,4 @@
     </div>
   </div>
 </div>
-<script src='{{ static_url("js/markdown.js") }}' type="text/javascript"></script>
+<script src='/static/js/Markdown.Editor.js' type="text/javascript"></script>

@@ -46,6 +46,9 @@ class CommentHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self,postid):
+        message = '发表成功'
+        status = 'success'
+        self.write(json_encode({'status':status,'message':message}))
         md = self.get_argument('markdown')
         self.db.posts.update({'_id':int(postid)},
                              {'$push':
