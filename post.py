@@ -76,7 +76,7 @@ class PostViewHandler(BaseHandler):
         for i in range(len(comments)):
             comments[i]['location'] =  str(i+1)
         self.render('postview.html',db=self.db,time_span=time_span,
-                    post=post,md5=md5,admin_list=admin,comments=comments,likely=likelyposts)
+                    post=post,admin_list=admin,comments=comments,likely=likelyposts)
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
@@ -84,4 +84,4 @@ class MarkDownPreViewHandler(BaseHandler):
 
 class PostListModule(tornado.web.UIModule):
     def render(self, db,posts):
-        return self.render_string("modules/postlist.html", db=db,posts=posts,md5=md5,time_span=time_span,admin_list=admin)
+        return self.render_string("modules/postlist.html", db=db,posts=posts,time_span=time_span,admin_list=admin)

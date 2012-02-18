@@ -58,6 +58,10 @@
           <div class="span3">
             <section class='box'>
              {% if current_user %}
+               <div class='avatar'>
+                 <a href='/user/{{ current_user }}'><img src='http://www.gravatar.com/avatar/{{ db.users.find_one({"username":current_user})["hashed_email"] }}.png?r=G&amp;s=48'' title='{{ current_user }}' /></a>
+               </div>
+               <strong><a href='/user/{{ current_user }}' class='user_name dark'>{{ current_user }}</a></strong>
                <a href="/topics/add" class='btn btn-info'>发帖</a>
              {% else %}
                <p>想要融入社区？</p>

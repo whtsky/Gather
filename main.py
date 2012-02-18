@@ -69,7 +69,7 @@ class Application(tornado.web.Application):
 
 class HomeHandler(BaseHandler):
     def get(self):
-        self.render('index.html',db=self.db,md5=md5,time_span=time_span)
+        self.render('index.html',db=self.db,time_span=time_span)
 
 class EditModule(tornado.web.UIModule):
     def render(self):

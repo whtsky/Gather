@@ -25,8 +25,7 @@
         <div id="email-g" class="control-group">
           <label class="control-label" for="email">E-mail</label>
           <div class="controls">
-            <input type="text" id="email" type="email" value="{{ user['email'] }}">
-            <span id="email-t" class="help-inline">请输入有效的邮箱地址</span>
+            <input type="text" id="email" type="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址">
           </div>
         </div>
         <div id="website-g" class="control-group">
@@ -50,7 +49,10 @@
         <div id="github-g" class="control-group">
           <label class="control-label" for="email">Github用户名</label>
           <div class="controls">
-            <input type="text" id="github" value="{{ getvalue(user,'github') }}">
+            <div class="input-prepend">
+              <span class="add-on"><img alt="github" src="{{ static_url("img/glyphicons_341_github.png") }}" /></span>
+                <input type="text" id="github" value="{{ getvalue(user,'github') }}">
+            </div>
           </div>
         </div>
         <div class="form-actions">
@@ -91,7 +93,7 @@
     <header>
       <h3>头像</h3>
     </header>
-    <p><img src="http://gravatar.com/avatar/{{ md5(user['email']).hexdigest() }}.png?r=G&s=250" /></p>
+    <p><img src="http://gravatar.com/avatar/{{ user['hashed_email'] }}.png?r=G&s=250" /></p>
     讨厌这个矮搓穷的头像？<a href="http://www.gravatar.com">去Gravatar换一个呗。</a>
   </section>
 </div>

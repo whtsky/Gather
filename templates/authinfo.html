@@ -21,7 +21,7 @@
   <section class="box">
     <div id='profile'>
       <div class='left-side'>
-        <div class='avatar'><img src="http://gravatar.com/avatar/{{ md5(user['email']).hexdigest() }}.png?r=G&amp;s=160" /></div>
+        <div class='avatar'><img src="http://gravatar.com/avatar/{{ user['hashed_email'] }}.png?r=G&amp;s=160" /></div>
       </div>
       <div class='right-side'>
         <h1>

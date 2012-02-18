@@ -32,6 +32,7 @@ class AuthSignupHandler(BaseHandler):
             account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
                         'username':username,
                         'email':email,
+                        'hashed_email':md5(email).hexdigest(),
                         'password':hashpassword(username,password),
                         'signtime':int(time.time())})
             message = '注册成功'
@@ -65,14 +66,14 @@ class AuthInfoHandler(BaseHandler):
     def get(self,username):
         posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
         comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
-        self.render('authinfo.html',username=username,time_span=time_span,md5=md5,posts=posts,db=self.db,
+        self.render('authinfo.html',username=username,time_span=time_span,posts=posts,db=self.db,
                     comments=comments,user=self.db.users.find_one({'username':username}),admin_list=admin)
 
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
-            getvalue=getvalue,md5=md5,db=self.db)
+            getvalue=getvalue,db=self.db)
 
     @authenticated
     def post(self):
@@ -85,6 +86,7 @@ class AuthSettingHandler(BaseHandler):
         if self.db.users.find_one({'email':setting['email']})!=None:
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
+        setting['hashed_email'] = md5(setting['email']).hexdigest(),
         self.db.users.update({'username':self.get_secure_cookie('user')},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
