@@ -38,6 +38,9 @@ class AuthSignupHandler(BaseHandler):
                         'email':email,
                         'hashed_email':md5(email).hexdigest(),
                         'password':hashpassword(username,password),
+                        'tagmark':[],
+                        'postmark':[],
+                        'notification':[],
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
@@ -73,7 +76,7 @@ class AuthInfoHandler(BaseHandler):
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
-            self.render('authinfo.html',username=username,time_span=time_span,posts=posts,db=self.db,
+            self.render('authinfo.html',username=username,time_span=time_span,posts=posts,
                         comments=comments,user=user,admin_list=admin)
         else:
             raise tornado.web.HTTPError(404)
@@ -81,7 +84,7 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),db=self.db,
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
             getvalue=getvalue)
 
     @authenticated
@@ -92,10 +95,10 @@ class AuthSettingHandler(BaseHandler):
               setting[x] = self.get_argument(x)
             except:
                 pass
-        if self.db.users.find_one({'email':setting['email']})!=None:
+        if self.db.users.find_one({'username':{'$ne':self.get_secure_cookie('user')},'email':setting['email']})!=None:
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
-        setting['hashed_email'] = md5(setting['email']).hexdigest(),
+        setting['hashed_email'] = md5(setting['email']).hexdigest()
         self.db.users.update({'username':self.get_secure_cookie('user')},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 

@@ -29,7 +29,8 @@ $("#submit").click(function(){
                 else
                     location.href="/";
             }
-            alert(data.message);
+            else
+                alert(data.message);
         },"json");
     return false;
 });

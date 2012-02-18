@@ -24,20 +24,20 @@ class TagViewHandler(BaseHandler):
         if posts:
             try:
                 self.render('tag.html',tagname=tagname,posts=posts,
-                    db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
+                    limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
             except:
                 self.render('tag.html',tagname=tagname,posts=posts,
-                    db=self.db,limit=POST_PER_PAGE,time_span=time_span,p=1)
+                    limit=POST_PER_PAGE,time_span=time_span,p=1)
         else:
             raise tornado.web.HTTPError(404)
 
 class TagCloudHandler(BaseHandler):
     def get(self):
-        self.render('tagcloud.html',db=self.db)
+        self.render('tagcloud.html')
 
 class TagFeedHandler(BaseHandler):
     def get(self,tagname):
         self.set_header("Content-Type", "application/atom+xml")
         url = '/tag/'+tagname
-        self.render('atom.xml',url=url,name=tagname,
+        tornado.web.RequestHandler.render(self,'atom.xml',url=url,name=tagname,
                     time=time,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]))

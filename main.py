@@ -70,7 +70,7 @@ class Application(tornado.web.Application):
 
 class HomeHandler(BaseHandler):
     def get(self):
-        self.render('index.html',db=self.db,time_span=time_span)
+        self.render('index.html',time_span=time_span)
 
 class EditModule(tornado.web.UIModule):
     def render(self):
@@ -80,7 +80,7 @@ class FeedHandler(BaseHandler):
     def get(self):
         self.set_header("Content-Type", "application/atom+xml")
         url = ''
-        self.render('atom.xml',url=url,name='全站',
+        tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
             time=time,posts=self.db.posts.find({},sort=[('changedtime', 1)]))
 
 if __name__ == '__main__':

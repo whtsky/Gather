@@ -33,6 +33,14 @@ class BaseHandler(tornado.web.RequestHandler):
         else:
             return ''
 
+    def render(self, template_name, **kwargs):
+        user = self.get_secure_cookie('user')
+        if user:
+            user_info = self.db.users.find_one({'username':user})
+        else:
+            user_info = None
+        tornado.web.RequestHandler.render(self, template_name=template_name,user_info = user_info,db=self.db,**kwargs)
+
 
 def time_span(t):
     timecha = int(time.time()) - t
