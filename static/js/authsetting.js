@@ -44,9 +44,10 @@ $("#submit").click(function(){
             twitter:$("#twitter").val(),
             github:$("#github").val()},
         function(data){
-            alert(data.message);
             if(data.status=="success")
                 location.href="/user/"+$("#username").val();
+            else
+                alert(data.message);
         },"json");
     return false;
 });

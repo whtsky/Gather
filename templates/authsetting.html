@@ -25,13 +25,13 @@
         <div id="email-g" class="control-group">
           <label class="control-label" for="email">E-mail</label>
           <div class="controls">
-            <input type="text" id="email" type="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址">
+            <input type="email" id="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址" required>
           </div>
         </div>
         <div id="website-g" class="control-group">
           <label class="control-label" for="email">个人网址</label>
           <div class="controls">
-            <input type="text" id="website" value="{{ getvalue(user,'website') }}">
+            <input type="url" id="website" value="{{ getvalue(user,'website') }}">
           </div>
         </div>
         <div id="location-g" class="control-group">
@@ -70,14 +70,14 @@
         <div id="old-g" class="control-group">
           <label class="control-label" for="old">原密码：</label>
           <div class="controls">
-            <input type="password" id="old">
+            <input type="password" id="old" required>
             <span id="old-t" class="help-inline">请输入原密码</span>
           </div>
         </div>
         <div id="new-g" class="control-group">
-          <label class="control-label" for="new">新密码：</label>
+          <label class="control-label" for="new" required>新密码：</label>
           <div class="controls">
-            <input type="password" id="new">
+            <input type="password" id="new" required>
             <span id="new-t" class="help-inline">请输入有效的新密码</span>
           </div>
         </div>
