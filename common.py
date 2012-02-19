@@ -81,7 +81,6 @@ def md_convert(txt):
             end = -4
         txt = txt.replace(x,u'<a href="%s">%s</a>' % (x[start:end],x[start:end]))
 
-    return xhtml_escape(txt)
     return txt
 
 
