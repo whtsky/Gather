@@ -72,6 +72,7 @@
     </footer>
   </article>
 </section>
+{% if len(comments) > 0 %}
 <section class='box'>
   <table id="comments" class='table item-list'>
     {% for comment in comments %}
@@ -99,6 +100,7 @@
     {% end %}
   </table>
 </section>
+{% end %}
 {% if current_user %}
 <section class='box'>
   <form action="" method="post">
