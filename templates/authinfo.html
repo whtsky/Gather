@@ -38,19 +38,19 @@
           　{{ time_span(user['signtime']) }}
         {% if 'website' in user and user['website']!='' %}
         <h3>网站</h3>
-          　<a href="{{ user['website'] }}" rel="external">{{ user['website'] }}</a>
+          　<a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a>
         {% end %}
         {% if 'location' in user and user['location']!='' %}
         <h3>所在地</h3>
-          　<a href="http://www.google.com/maps?q={{ user['location'] }}" rel="external">{{ user['location'] }}</a>
+          　<a href="http://www.google.com/maps?q={{ user['location'] }}">{{ user['location'] }}</a>
         {% end %}
         {% if 'twitter' in user and user['twitter']!='' %}
         <h3>Twitter</h3>
-          　<a href="http://twitter.com/{{ user['twitter'] }}" rel="external">{{ user['twitter'] }}</a>
+          　<a href="http://twitter.com/{{ user['twitter'] }}">{{ user['twitter'] }}</a>
         {% end %}
         {% if 'github' in user and user['github']!='' %}
         <h3>Github</h3>
-          　<a href="https://github.com/{{ user['github'] }}" rel="external">{{ user['github'] }}</a>
+          　<a href="https://github.com/{{ user['github'] }}">{{ user['github'] }}</a>
         {% end %}
         <h2>主题<small>共{{ posts.count() }}条</small></h2>
         <ul class='nice-list'>
