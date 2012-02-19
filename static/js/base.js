@@ -93,4 +93,4 @@ $.fn.focusEnd = function(){
     this.setCursorPosition(this.val().length);
 }
 
-var isChrome = navigator.userAgent.indexOf("Chrome") !== -1 
+var isChrome = navigator.userAgent.indexOf("Chrome") !== -1
