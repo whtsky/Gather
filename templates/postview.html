@@ -32,23 +32,15 @@
         <tr>
           <td>
             <h1>{{ post['title'] }}</h1>
+            <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}<br />
             <span class='tags'>
             {% for tag in post['tags'] %}
             <a href="/tag/{{ tag }}">{{ tag }}</a>
             {% end %}
             </span>
-            <br />
-              <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
-              {% if current_user %}
-                {% if post['_id'] in user_info['postmark'] %}
-                  <a class="label label-important mark" id="mark">取消收藏</a>
-                {% else %}
-                  <a class="label mark" id="mark">收藏</a>
-                {% end %}
-              {% end %}
           </td>
           <td class='avatar'>
-            <img class='reflect' src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>
+            <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>
           </td>
         </tr>
         </tbody>
@@ -56,6 +48,15 @@
     </header>
     {{ post['content'] }}
     <footer>
+      <div class="left">
+        {% if current_user %}
+        {% if post['_id'] in user_info['postmark'] %}
+        <a class="label label-important mark" id="mark">取消收藏</a>
+        {% else %}
+        <a class="label mark" id="mark">收藏</a>
+        {% end %}
+        {% end %}
+      </div>
       <div class="right">
         <a href="#;" onclick="window.open('https://twitter.com/share?url='+window.location.href+'&related=v2ex&hashtags=share&text={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="label">Tweet</a>
         <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=700,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="label">Douban</a>
