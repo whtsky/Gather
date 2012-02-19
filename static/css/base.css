@@ -146,27 +146,6 @@ a.dark:hover {
     text-align: center;
     margin:0 auto;
 }
-.navbar .navbar-search {
-    margin-top: 7px;
-}
-.navbar .search-query {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    background: #d0d6db url('/static/img/search.png') no-repeat 4px 4px;
-    padding: 4px 5px 4px 22px;
-    color: #666;
-    border: 0px;
-}
-.navbar .search-query:hover {
-    background-color: #fff;
-    color: #666;
-}
-.navbar .search-query:focus, .navbar .search-query.focused {
-    background-color: #fff;
-    padding: 4px 5px 4px 22px;
-    color: #000;
-}
 a.mark:hover {
     background-color: #F89406; }
 .howmany {

@@ -29,11 +29,10 @@
               <li><a href='/topics'>主题</a></li>
               <li><a href='/tag'>标签</a></li>
               {% end %}
-              <li class="divider-vertical"></li>
-              <form id='search_form'class="navbar-search">
-                <input type='text' id='q' name='q' x-webkit-speech class='search-query span2'/>
-              </form>
             </ul>
+            <form class="navbar-search pull-left" action="">
+              <input type='text' id='q' x-webkit-speech class='search-query span2' placeholder="搜索" />
+            </form>
             <ul class="nav pull-right">
               {% if current_user %}
                 <li><a href="/user/{{ current_user }}">{{ current_user }}</a></li>
