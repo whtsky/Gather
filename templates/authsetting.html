@@ -25,31 +25,31 @@
         <div id="email-g" class="control-group">
           <label class="control-label" for="email">E-mail</label>
           <div class="controls">
-            <input type="email" id="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址" required>
+            <input type="email" id="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
           </div>
         </div>
         <div id="website-g" class="control-group">
           <label class="control-label" for="email">个人网址</label>
           <div class="controls">
-            <input type="url" id="website" value="{{ getvalue(user,'website') }}">
+            <input type="url" id="website" x-webkit-speech value="{{ getvalue(user,'website') }}">
           </div>
         </div>
         <div id="location-g" class="control-group">
           <label class="control-label" for="email">所在地</label>
           <div class="controls">
-            <input type="text" id="location" value="{{ getvalue(user,'location') }}">
+            <input type="text" id="location" x-webkit-speech value="{{ getvalue(user,'location') }}">
           </div>
         </div>
         <div id="twitter-g" class="control-group">
           <label class="control-label" for="email">Twitter用户名</label>
           <div class="controls">
-            <input type="text" id="twitter" value="{{ getvalue(user,'twitter') }}">
+            <input type="text" id="twitter" x-webkit-speech value="{{ getvalue(user,'twitter') }}">
           </div>
         </div>
         <div id="github-g" class="control-group">
           <label class="control-label" for="email">Github用户名</label>
           <div class="controls">
-            <input type="text" id="github" value="{{ getvalue(user,'github') }}">
+            <input type="text" id="github" x-webkit-speech value="{{ getvalue(user,'github') }}">
           </div>
         </div>
         <div class="form-actions">
