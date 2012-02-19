@@ -193,4 +193,27 @@ table.tag-list td.count{
 }
 table.tag-list {
     width: 100%;
-}    min-width: 0;
+}
+#wmd-input_speech {
+    padding: 0 !important;
+    width: 25px !important;
+    height: 30px !important;
+    float: none !important;
+    border: none !important;
+    background: transparent !important;
+    font-size: 16px !important;
+    padding-right: 5px !important;
+}
+
+.toolbar_button {
+    width: 6px;
+    min-width: 0;
+    float: left;
+    border: none;
+    padding: 0 12px;
+    background-color: transparent;
+}
+
+.toolbar_button:hover {
+    background-color: #ccc !important;
+}
