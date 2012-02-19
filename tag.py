@@ -45,7 +45,7 @@ class TagFeedHandler(BaseHandler):
 class MarkTagHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,tagname):
-        username = self.get_secure_cookie('user')
+        username = self.get_current_user()
         user = self.db.users.find_one({'username':username})
         if tagname in user['tagmark']:
             user['tagmark'].remove(tagname)

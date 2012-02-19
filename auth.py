@@ -84,7 +84,7 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_secure_cookie('user')}),
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()}),
             getvalue=getvalue)
 
     @authenticated
@@ -95,18 +95,18 @@ class AuthSettingHandler(BaseHandler):
               setting[x] = self.get_argument(x)
             except:
                 pass
-        if self.db.users.find_one({'username':{'$ne':self.get_secure_cookie('user')},'email':setting['email']})!=None:
+        if self.db.users.find_one({'username':{'$ne':self.get_current_user()},'email':setting['email']})!=None:
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
         setting['hashed_email'] = md5(setting['email']).hexdigest()
-        self.db.users.update({'username':self.get_secure_cookie('user')},{'$set':setting})
+        self.db.users.update({'username':self.get_current_user()},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
 class AuthChangePasswordHandler(BaseHandler):
 
     @authenticated
     def post(self):
-        username = self.get_secure_cookie('user')
+        username = self.get_current_user()
         if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}) == None:
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
         else:

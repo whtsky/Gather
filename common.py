@@ -21,8 +21,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         user = self.get_secure_cookie('user')
-        if self.db.users.find_one({'username':user}) != None:
-            return self.get_secure_cookie('user')
+        if self.db.users.find_one({'username':user}):
+            return user
         else:
             self.clear_cookie('user')
             return None
@@ -31,7 +31,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.render_string('404.html')
 
     def render(self, template_name, **kwargs):
-        user = self.get_secure_cookie('user')
+        user = self.get_current_user()
         if user:
             user_info = self.db.users.find_one({'username':user})
         else:
