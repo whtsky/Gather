@@ -37,7 +37,7 @@
             <a href="/tag/{{ tag }}">{{ tag }}</a>
             {% end %}
             </span>
-            <div class="left">
+            <br />
               <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>创建于{{ time_span(post['posttime']) }}
               {% if current_user %}
                 {% if post['_id'] in user_info['postmark'] %}
@@ -46,7 +46,6 @@
                   <a class="label mark" id="mark">收藏</a>
                 {% end %}
               {% end %}
-            </div>
           </td>
           <td class='avatar'>
             <img class='reflect' src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>
