@@ -193,4 +193,4 @@ table.tag-list td.count{
 }
 table.tag-list {
     width: 100%;
-}
+}    min-width: 0;

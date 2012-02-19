@@ -11,6 +11,7 @@
     <div class='tab-pane active' id='edit'>
       <div id="wmd-button-bar"></div>
       <textarea style='width:99%;' class="wmd-input" id="wmd-input" name="markdown" rows='8' placeholder="请输入内容" x-webkit-speech required></textarea>
+      <input id="wmd-input_speech" class="btn toolbar_button" x-webkit-speech onwebkitspeechchange="var f=function(t) { var a=getElementById('wmd-input');a.value=a.value+t.value;getElementById('wmd-input_speech').value='';t.blur();a.focus();};f(this);" onclick="var f=function(t) {t.blur();};f(this);" lang="zh-CN"/>
       <button id='submit' class='btn btn-primary'>发表</button>
     </div>
     <div id='preview' class='tab-pane'>
