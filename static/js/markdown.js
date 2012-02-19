@@ -1,6 +1,17 @@
-if(isChrome)
-    $('#markdown-commands').html('<input id="wmd-input_speech" class="btn toolbar_button" x-webkit-speech onwebkitspeechchange="var f=function(t) {    var a=$(\'#wmd-input\');    a.val(a.val()+t.val());    $(\'#markdown-commands input\').val(\'\');    t.blur();    a.focusEnd();};f(this);" onclick="var f=function(t) {t.blur();};f(this);" lang="zh-CN"/>'+$('#markdown-commands').html());
+var speech_fake=function() {
+    var a=$('#wmd-input');
+    var t=$('#markdown-commands input')
+    a.val(a.val()+t.val());
+    t.blur();
+    a.focusEnd();
+};
 
+if(isChrome){
+    $('#markdown-commands').html('<input id="wmd-input_speech" class="btn toolbar_button" x-webkit-speech onwebkitspeechchange="speech_fake();" onclick="this.blur();" lang="zh-CN"/>'+$('#markdown-commands').html());
+    $('#markdown-commands input').blur(function(){
+      this.value="";
+    });
+}
 $("#wmd-input").blur(function(){
     $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
             md:$("#wmd-input").val()},
