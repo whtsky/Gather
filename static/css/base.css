@@ -65,10 +65,6 @@ body
     background-image: url(/static/img/backgroud.png);
     font-size: 13px;
 }
-#nav-in
-{
-    min-width:1000px;
-}
 .sidebar-nav
 {
     padding: 9px 0;
@@ -94,19 +90,9 @@ body
     -webkit-box-shadow: 0 0 0 1px #DDD;
     box-shadow: 0 0 0 1px #DDD; }
 
-section.box.span16 {
-    width: 910px; }
-section.box .span4 {
-    width: 205px; }
-section.box .span12 {
-    width: 685px; }
-section.box .span16 {
-    width: 910px; }
 section {
     overflow: hidden;
     padding: 14px; }
-section#notifications, section#resources, section#topics, section#replies {
-    padding: 0; }
 section footer {
     margin: 0;
     padding: 10px; }
