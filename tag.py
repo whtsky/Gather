@@ -11,7 +11,7 @@ class TagCloudModule(tornado.web.UIModule):
     def render(self, db,limit=False):
         tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
         tags.reverse()
-        if limit!=False:
+        if not limit:
             tags = tags[:limit]
         html = []
         for tag in tags:
@@ -45,7 +45,7 @@ class TagFeedHandler(BaseHandler):
 class MarkTagHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,tagname):
-        username = self.get_current_user()
+        username = self.get_current_user()['username']
         user = self.db.users.find_one({'username':username})
         if tagname in user['tagmark']:
             user['tagmark'].remove(tagname)

@@ -29,7 +29,7 @@ class AuthSignupHandler(BaseHandler):
         account = self.db.users
         if len(username)>30 or len(password)>30:
             return
-        elif account.find_one({'username':username})!=None or account.find_one({'email':email})!=None:
+        elif account.find_one({'username':username}) or account.find_one({'email':email}):
             message = '用户名或邮箱地址重复'
             status = 'error'
         else:
@@ -64,7 +64,7 @@ class AuthLoginHandler(BaseHandler):
         password = self.get_argument('password')
         account = self.db.users
         assert username_check.findall(username)[0] != username
-        if account.find_one({'username':username,'password':hashpassword(username,password)})!=None:
+        if account.find_one({'username':username,'password':hashpassword(username,password)}):
             self.set_secure_cookie('user',username)
             self.write(json_encode({'status':'success','message':'登录成功'}))
         else:
@@ -84,7 +84,7 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()}),
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()['username']}),
             getvalue=getvalue)
 
     @authenticated
@@ -95,20 +95,20 @@ class AuthSettingHandler(BaseHandler):
               setting[x] = self.get_argument(x)
             except:
                 pass
-        if self.db.users.find_one({'username':{'$ne':self.get_current_user()},'email':setting['email']})!=None:
+        if self.db.users.find_one({'username':{'$ne':self.get_current_user()['username']},'email':setting['email']}):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
         setting['hashed_email'] = md5(setting['email']).hexdigest()
-        self.db.users.update({'username':self.get_current_user()},{'$set':setting})
+        self.db.users.update({'username':self.get_current_user()['username']},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
 class AuthChangePasswordHandler(BaseHandler):
 
     @authenticated
     def post(self):
-        username = self.get_current_user()
-        if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}) == None:
-            self.write(json_encode({'status':'fail','message':'原密码错误'}))
-        else:
+        username = self.get_current_user()['username']
+        if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}):
             self.db.users.update({'username':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
             self.write(json_encode({'status':'success','message':'修改密码成功'}))
+        else:
+            self.write(json_encode({'status':'fail','message':'原密码错误'}))

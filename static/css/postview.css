@@ -1,9 +1,3 @@
-header
-{
-    margin-bottom: 17px;
-    padding-bottom: 17px;
-    border-bottom: 1px solid #EEE;
-}
 header td.avatar
 {
     width: 72px;
@@ -12,4 +6,10 @@ header td.avatar img
 {
     width: 72px;
     height: 72px;
+}
+table {
+    width:100%;
+}
+article img {
+    max-width:100%
 }

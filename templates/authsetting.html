@@ -19,13 +19,13 @@
         <div id="username-g" class="control-group">
           <label class="control-label" for="email">用户名</label>
           <div class="controls">
-            <input class=" disabled" id="username" type="text" value="{{ user['username'] }}" disabled>
+            <input class=" disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
           </div>
         </div>
         <div id="email-g" class="control-group">
           <label class="control-label" for="email">E-mail</label>
           <div class="controls">
-            <input type="email" id="email" value="{{ user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
+            <input type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
           </div>
         </div>
         <div id="website-g" class="control-group">
@@ -90,7 +90,7 @@
     <header>
       <h3>头像</h3>
     </header>
-    <p><img src="http://gravatar.com/avatar/{{ user['hashed_email'] }}?s=250" /></p>
+    <p><img src="http://gravatar.com/avatar/{{ current_user['hashed_email'] }}?s=250" /></p>
     讨厌这个矮搓穷的头像？<a href="http://www.gravatar.com">去Gravatar换一个呗。</a>
   </section>
 </div>

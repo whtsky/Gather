@@ -8,41 +8,49 @@
     border-radius: 3px;
     -moz-border-radius: 3px; }
 table.item-list {
-    border: none;
-    margin-bottom: 0; }
-table.item-list th, table.item-list table.item-list td {
-    padding: 12px 12px 11px;
-    line-height: 20px; }
-table.item-list td span.domain {
-    font-weight: bold; }
-table.item-list td h3 {
-    font-size: 14px;
-    padding-bottom: 10px;
-    line-height: 18px; }
+    width:100%
+}
+table.item-list tr {
+    border-top:1px solid #DDD
+}
+table.item-list tr:first-child {
+    border-top:none
+}
+table.item-list td {
+    padding:10px;
+    vertical-align:top
+}
 table.item-list td.avatar {
-    padding-right: 0;
-    width: 48px;
-    line-height: 0; }
-table.item-list td.avatar img {
-    height: 48px;
-    width: 48px; }
+    width:48px;
+    height:48px;
+    padding-right:0;
+    line-height:0
+}
+table.item-list td.reply-count {
+    text-align:right;
+    padding-left:0
+}
 table.item-list td.reply-count a {
-    color: #FFF;
-    background-color: #BFBFBF;
-    padding: 2px 9px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: bold;
-    text-decoration: none; }
+    color:#FFF;
+    background-color:#BFBFBF;
+    padding:2px 9px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:bold;
+    text-decoration:none
+}
 table.item-list td.reply-count a:visited {
-    background-color: #EEE; }
+    background-color:#EEE
+}
 table.item-list td.reply-count a:hover {
-    background-color: #AAA; }
-table.item-list th + th, table.item-list table.item-list td + td {
-    border-left: none; }
-table.item-list td.last {
-    text-align: right; }
+    background-color:#AAA
+}
+table.item-list h3 {
+    font-size:100%;
+    padding-bottom:10px;
+    line-height:18px
+}
 table.clear-table {
     padding: 0;
     margin: 0;

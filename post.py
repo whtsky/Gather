@@ -27,7 +27,7 @@ class PostHandler(BaseHandler):
                     tags.append(xhtml_escape(x))
         posts.insert({'_id':tid,
                       'title':title,
-                      'author':self.get_current_user(),
+                      'author':self.get_current_user()['username'],
                       'content':md_convert(md),
                       'comments':[],
                       'posttime':int(time()),
@@ -66,7 +66,7 @@ class PostViewHandler(BaseHandler):
         self.db.posts.update({'_id':int(postid)},
                 {'$push':
                          {'comments':
-                                  {'author':self.get_current_user(),
+                                  {'author':self.get_current_user()['username'],
                                    'content':md_convert(md),
                                    'posttime':int(time()),}},
                  '$set':{'changedtime':int(time())},})
@@ -93,7 +93,7 @@ class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,postid):
         post = int(postid)
-        username = self.get_current_user()
+        username = self.get_current_user()['username']
         user = self.db.users.find_one({'username':username})
         if post in user['postmark']:
             user['postmark'].remove(post)

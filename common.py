@@ -20,22 +20,14 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         user = self.get_secure_cookie('user')
-        if self.db.users.find_one({'username':user}):
-            return user
-        else:
-            self.clear_cookie('user')
-            return None
+        return self.db.users.find_one({'username':user})
 
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html')
 
     def render(self, template_name, **kwargs):
-        user = self.get_current_user()
-        if user:
-            user_info = self.db.users.find_one({'username':user})
-        else:
-            user_info = None
-        tornado.web.RequestHandler.render(self, template_name=template_name,user_info = user_info,db=self.db,**kwargs)
+        tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,**kwargs)
+
 
 
 def time_span(t):

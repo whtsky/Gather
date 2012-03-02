@@ -10,7 +10,7 @@
 {% block content %}
 <section class="box">
     <table class="clean-table tag-list">
-        {% for tag in reversed(user_info['tagmark']) %}
+        {% for tag in reversed(current_user['tagmark']) %}
         <tr>
             <td class="count">
                 <div class="howmany"><strong>{{ db.posts.find({'tags':tag}).count() }}</strong></div>

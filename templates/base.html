@@ -40,7 +40,7 @@
             </form>
             <ul class="nav pull-right">
               {% if current_user %}
-                <li><a href="/user/{{ current_user }}">{{ current_user }}</a></li>
+                <li><a href="/user/{{ current_user['username'] }}">{{ current_user['username'] }}</a></li>
                 <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
               {% else %}
                 <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
@@ -67,27 +67,27 @@
           <div class="span3">
             <section class='box'>
               {% if current_user %}
-                <a href='/user/{{ current_user }}' class="dark">
-                  <img src='http://www.gravatar.com/avatar/{{ user_info["hashed_email"] }}?s=48' title='{{ current_user }}' />
-                  <span class="dark user_name">{{ current_user }}</span>
+                <a href='/user/{{ current_user['username'] }}' class="dark">
+                  <img src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
+                  <span class="dark user_name">{{ current_user['username'] }}</span>
                 </a>
                 <a href="/setting" class="label label-success">编辑</a>
                 <div class="row-fluid center">
                   <div class='span4'>
                     <a href="/my/tag">
-                      <h3><span id="markedtag">{{ len(user_info['tagmark']) }}</span></h3>
+                      <h3><span id="markedtag">{{ len(current_user['tagmark']) }}</span></h3>
                       Tag收藏
                     </a>
                   </div>
                 <div class='span4'>
                   <a href="/my/post">
-                    <h3><span id="markedpost">{{ len(user_info['postmark']) }}</span></h3>
+                    <h3><span id="markedpost">{{ len(current_user['postmark']) }}</span></h3>
                     主题收藏
                   </a>
                 </div>
                 <div class='span4'>
                   <a href='/my/notificions'>
-                    <h3>{{ len(user_info['notification']) }}</h3>
+                    <h3>{{ len(current_user['notification']) }}</h3>
                     未读通知
                   </a>
                 </div>
