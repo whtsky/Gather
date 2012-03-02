@@ -38,6 +38,24 @@
             <a href="/tag/{{ tag }}">{{ tag }}</a>
             {% end %}
             </span>
+            {% if current_user and current_user['username'] in admin_list %}
+            <div id="changetag" class="modal hide fade">
+              <div class="modal-header">
+                <a class="close" data-dismiss="modal" >&times;</a>
+                <h3>修改Tags</h3>
+              </div>
+              <form action="/admin/post/changetag/{{ post['_id'] }}" method='post'>
+              <div class="modal-body">
+                <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech>
+              </div>
+              <div class="modal-footer">
+                {{ xsrf_form_html() }}
+                <button type='submit' class="btn btn-danger">更改Tags</button>
+              </div>
+              </form>
+            </div>
+            <a data-toggle="modal" href="#changetag" class="label label-important">修改Tags</a>
+            {% end %}
           </td>
           <td class='avatar'>
             <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>

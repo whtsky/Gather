@@ -20,7 +20,7 @@ define('mongo_port', default=27017, help='mongodb port')
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
-from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
+from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from config import config
 
 class Application(tornado.web.Application):
@@ -52,6 +52,7 @@ class Application(tornado.web.Application):
             (r'/admin/user/kill/(.*?)',RemoveUserHandler),
             (r'/admin/post/kill/(\d+)',RemovePostHandler),
             (r'/admin/post/kill/(\d+)/(\d+)',RemoveCommentHandler),
+            (r'/admin/post/changetag/(\d+)',ChangeTagHandler),
 
             (r'/markdown',MarkDownPreViewHandler),
 

@@ -25,6 +25,23 @@ class RemoveCommentHandler(BaseHandler):
         self.db.posts.update({'_id':int(postid)},
                             {'$pop':{'comments':int(commentid)-1}})
         self.write('done.')
+
+class ChangeTagHandler(BaseHandler):
+    def post(self,postid):
+        assert self.get_current_user()['username'] in admin
+        postid = int(postid)
+        for tag in self.db.posts.find_one({'_id':postid})['tags']:
+            self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
+        tags = []
+        for x in self.get_argument('tags').split(','):
+            for x in x.split(' '):
+                for x in x.split('/'):
+                    tags.append(x)
+        for tag in tags:
+            self.db.tags.update({'name':tag},
+                        {'$inc':{'count':1}},True)
+        self.db.posts.update({'_id':postid},{'$set':{'tags':tags}})
+        self.write('done.')
         
 def removepost(fliter,db):
     for post in db.posts.find(fliter):
