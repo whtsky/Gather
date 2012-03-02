@@ -33,7 +33,7 @@ class ChangeTagHandler(BaseHandler):
         for tag in self.db.posts.find_one({'_id':postid})['tags']:
             self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         tags = []
-        for x in self.get_argument('tags').split(','):
+        for x in self.get_argument('tags').lower().split(','):
             for x in x.split(' '):
                 for x in x.split('/'):
                     tags.append(x)
