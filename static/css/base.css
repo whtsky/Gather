@@ -55,7 +55,7 @@ table.clear-table td {
 table.clear-table td.avatar{
     padding: 0 10px;
 }
-table.center-table td {
+.center {
     text-align: center;
     margin:0 auto;}
 body

@@ -66,34 +66,32 @@
           </div>
           <div class="span3">
             <section class='box'>
-             {% if current_user %}
-               <a href='/user/{{ current_user }}' class="dark">
-                 <img src='http://www.gravatar.com/avatar/{{ user_info["hashed_email"] }}?s=48' title='{{ current_user }}' />
-                 <span class="dark user_name">{{ current_user }}</span>
-               </a>
-               <a href="/setting" class="label label-success">编辑</a>
-               <table class="table clear-table center-table">
-                 <tbody>
-                   <tr>
-                     <td style="width:33%;">
-                       <a href="/my/tag">
-                         <h3><span id="markedtag">{{ len(user_info['tagmark']) }}</span></h3>
-                           Tag收藏
-                       </a>
-                     </td>
-                     <td style="width:33%;">
-                       <a href="/my/post">
-                         <h3><span id="markedpost">{{ len(user_info['postmark']) }}</span></h3>
-                         主题收藏
-                       </a>
-                     </td>
-                     <td style="width:33%;">
-                       <h3>{{ len(user_info['notification']) }}</h3>
-                       未读通知
-                     </td>
-                   </tr>
-                 </tbody>
-               </table>
+              {% if current_user %}
+                <a href='/user/{{ current_user }}' class="dark">
+                  <img src='http://www.gravatar.com/avatar/{{ user_info["hashed_email"] }}?s=48' title='{{ current_user }}' />
+                  <span class="dark user_name">{{ current_user }}</span>
+                </a>
+                <a href="/setting" class="label label-success">编辑</a>
+                <div class="row-fluid center">
+                  <div class='span4'>
+                    <a href="/my/tag">
+                      <h3><span id="markedtag">{{ len(user_info['tagmark']) }}</span></h3>
+                      Tag收藏
+                    </a>
+                  </div>
+                <div class='span4'>
+                  <a href="/my/post">
+                    <h3><span id="markedpost">{{ len(user_info['postmark']) }}</span></h3>
+                    主题收藏
+                  </a>
+                </div>
+                <div class='span4'>
+                  <a href='/my/notificions'>
+                    <h3>{{ len(user_info['notification']) }}</h3>
+                    未读通知
+                  </a>
+                </div>
+               </div>
                <hr>
                <a href="/topics/add" class='btn btn-info'>发表话题</a>
              {% else %}
