@@ -96,11 +96,10 @@ class MarkPostHandler(BaseHandler):
         username = self.get_current_user()['username']
         user = self.db.users.find_one({'username':username})
         if post in user['postmark']:
-            user['postmark'].remove(post)
-            self.db.users.save(user)
+            self.db.users.update({'username':username},{'$pull':{'postmark':post}})
         else:
             self.db.users.update({'username':username},
-                    {'$push':{'postmark':post}})
+                    {'$addToSet':{'postmark':post}})
         self.write('done.')
 
 class MyMarkedPostHandler(BaseHandler):

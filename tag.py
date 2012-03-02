@@ -11,7 +11,7 @@ class TagCloudModule(tornado.web.UIModule):
     def render(self, db,limit=False):
         tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
         tags.reverse()
-        if not limit:
+        if limit:
             tags = tags[:limit]
         html = []
         for tag in tags:
@@ -52,7 +52,7 @@ class MarkTagHandler(BaseHandler):
             self.db.users.save(user)
         else:
             self.db.users.update({'username':username},
-                    {'$push':{'tagmark':tagname}})
+                    {'$addToSet':{'tagmark':tagname}})
         self.write('done.')
 
 class MyMarkedTagHandler(BaseHandler):
