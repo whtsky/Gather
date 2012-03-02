@@ -20,23 +20,23 @@
 
 {% block content %}
 <section class='box'>
-  共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-  {% if current_user %}
-  <div class="right">
-    {% if tagname in current_user['tagmark'] %}
-    <a class="label label-important mark" id="mark">取消收藏</a>
-    {% else %}
-    <a class="label mark" id="mark">收藏</a>
+    共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
+    {% if current_user %}
+    <div class="right">
+        {% if tagname in current_user['tagmark'] %}
+        <a class="label label-important mark" id="mark">取消收藏</a>
+        {% else %}
+        <a class="label mark" id="mark">收藏</a>
+        {% end %}
+    </div>
     {% end %}
-  </div>
-  {% end %}
-  {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
-  {% if p!=1 %}
-  <a href='{{ tagname }}?p={{ p-1 }}' class="btn left">上一页</a>
-  {% end %}
-  {% if p*limit < posts.count() %}
-  <a href='{{ tagname }}?p={{ p+1 }}' class="btn right">下一页</a>
-  {% end %}
+    {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
+    {% if p!=1 %}
+    <a href='{{ tagname }}?p={{ p-1 }}' class="btn left">上一页</a>
+    {% end %}
+    {% if p*limit < posts.count() %}
+    <a href='{{ tagname }}?p={{ p+1 }}' class="btn right">下一页</a>
+    {% end %}
 </section>
 <!-- 给蜘蛛爬 -->
 <div style="display: none;">

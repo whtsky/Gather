@@ -2,42 +2,42 @@
 <script src='/static/js/Markdown.Sanitizer.js' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("css/edit.css") }}' type='text/css'/>
 <div class='tabbable'>
-  <ul class='nav nav-pills'>
-    <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
-    <li><a href='#preview' data-toggle='pill'>预览</a></li>
-    <li><a href='#markdownwiki' data-toggle='pill'>语法参考</a></li>
-  </ul>
-  <div class='tab-content'>
-    <div class='tab-pane active' id='edit'>
-      <div id="wmd-button-bar"></div>
-      <textarea style='width:99%;' class="wmd-input" id="wmd-input" name="markdown" rows='8' placeholder="请输入内容" x-webkit-speech required></textarea>
-      <div id="markdown-commands">
-        <button id='submit' class='btn'>发表</button><small class="col_fade">Ctrl+Enter 快速发表</small>
-      </div>
+    <ul class='nav nav-pills'>
+        <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
+        <li><a href='#preview' data-toggle='pill'>预览</a></li>
+        <li><a href='#markdownwiki' data-toggle='pill'>语法参考</a></li>
+    </ul>
+    <div class='tab-content'>
+        <div class='tab-pane active' id='edit'>
+            <div id="wmd-button-bar"></div>
+            <textarea style='width:99%;' class="wmd-input" id="wmd-input" name="markdown" rows='8' placeholder="请输入内容" x-webkit-speech required></textarea>
+            <div id="markdown-commands">
+                <button id='submit' class='btn'>发表</button><small class="col_fade">Ctrl+Enter 快速发表</small>
+            </div>
+        </div>
+        <div id='preview' class='tab-pane'>
+            <div class="well">
+                <div id='md-preview'></div>
+            </div>
+        </div>
+        <div id='markdownwiki' class='tab-pane'>
+            <h3>Markdown语法</h3>
+            <ul>
+                <li>换行：两个空格</li>
+                <li>分段：一个空行</li>
+                <li>斜体：*斜体*</li>
+                <li>粗体：**粗体**</li>
+                <li>代码：行首四个空格</li>
+                <li>链接：[文字](url)</li>
+                <li>图片：![alt 文字](url)</li>
+            </ul>
+            详见<a href="http://wowubuntu.com/markdown/basic.html">Markdown快速入门</a>
+            <hr class="soften">
+            <h3>特色语法</h3>
+            <ul>
+                <li>http://blog.whtsky.tk自动变链接</li>
+            </ul>
+        </div>
     </div>
-    <div id='preview' class='tab-pane'>
-      <div class="well">
-        <div id='md-preview'></div>
-      </div>
-    </div>
-    <div id='markdownwiki' class='tab-pane'>
-      <h3>Markdown语法</h3>
-      <ul>
-        <li>换行：两个空格</li>
-        <li>分段：一个空行</li>
-        <li>斜体：*斜体*</li>
-        <li>粗体：**粗体**</li>
-        <li>代码：行首四个空格</li>
-        <li>链接：[文字](url)</li>
-        <li>图片：![alt 文字](url)</li>
-      </ul>
-      详见<a href="http://wowubuntu.com/markdown/basic.html">Markdown快速入门</a>
-      <hr class="soften">
-      <h3>特色语法</h3>
-      <ul>
-        <li>http://blog.whtsky.tk自动变链接</li>
-      </ul>
-    </div>
-  </div>
 </div>
 <script src='/static/js/markdown.js' type="text/javascript"></script>

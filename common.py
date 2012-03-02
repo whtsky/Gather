@@ -26,7 +26,14 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.render_string('404.html')
 
     def render(self, template_name, **kwargs):
-        tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,**kwargs)
+        unread = 0
+        try:
+            for x in self.get_current_user()['notification']:
+                if not x['read']:
+                    unread += 1
+        except:
+            pass
+        tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,unread=unread,**kwargs)
 
 
 

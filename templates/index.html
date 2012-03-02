@@ -8,7 +8,13 @@
 
 {% block content %}
 <section class="box">
-  最近
-  {{ modules.Post(db=db,posts=db.posts.find({},sort=[('changedtime', -1)],limit=15)) }}
+    {% if unread > 0 %}
+    <div class="alert fade in"  style="margin-top:10px;">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        您有<strong>{{ unread }}</strong>条未读提醒
+    </div>
+    {% end %}
+    最近
+    {{ modules.Post(db=db,posts=db.posts.find({},sort=[('changedtime', -1)],limit=15)) }}
 </section>
 {% end %}
