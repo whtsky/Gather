@@ -22,6 +22,7 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHa
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
+from config import settings
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -58,21 +59,6 @@ class Application(tornado.web.Application):
             (r'.*',ErrorHandler),
 
         ]
-        settings = dict(
-            bbs_title=xhtml_escape(u'精英盒子'),
-            bbs_title_e=xhtml_escape(u'Jybox'),
-            bbs_url=u'http://bbs.jybox.net',
-            template_path=os.path.join(os.path.dirname(__file__), 'templates'),
-            static_path=os.path.join(os.path.dirname(__file__), 'static'),
-            xsrf_cookies=True,
-            ui_modules={"Post": PostListModule,
-                        "TagCloud": TagCloudModule,
-                        "Edit":EditModule},
-            cookie_secret='89f3hneifu29IY(!H@@IUFY#(FCINepifu2iY!HU!(FU@H',
-            login_url='/login',
-            debug=False,
-            autoescape=None,
-        )
         tornado.web.Application.__init__(self, handlers, **settings)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
