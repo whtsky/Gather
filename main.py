@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-import os.path
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -59,7 +58,10 @@ class Application(tornado.web.Application):
             (r'.*',ErrorHandler),
 
         ]
-        tornado.web.Application.__init__(self, handlers, **settings)
+        tornado.web.Application.__init__(self, handlers,
+        ui_modules={"Post": PostListModule,
+            "TagCloud": TagCloudModule,
+            "Edit":EditModule},        **settings)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
 
