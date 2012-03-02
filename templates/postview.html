@@ -87,7 +87,7 @@
             <div class='right'>
               #{{ comment['location'] }}   发表于{{ time_span(comment['posttime']) }}
               {% if current_user and current_user['username'] in admin_list %}
-              <a href="/admin/post/kill/{{ id }}/{{ comment['location'] }}" class="label label-important">和谐</a>
+              <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
               {% end %}
             </div>
           </header><br />

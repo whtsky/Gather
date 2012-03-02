@@ -7,7 +7,7 @@ import tornado.options
 import tornado.web
 import pymongo
 from tornado.options import define, options
-from tornado.escape import xhtml_escape
+import os
 import time
 
 from common import BaseHandler,time_span
@@ -21,7 +21,7 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHa
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler
-from config import settings
+from config import config
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -58,10 +58,19 @@ class Application(tornado.web.Application):
             (r'.*',ErrorHandler),
 
         ]
-        tornado.web.Application.__init__(self, handlers,
-        ui_modules={"Post": PostListModule,
-            "TagCloud": TagCloudModule,
-            "Edit":EditModule},        **settings)
+
+        settings = dict(
+            ui_modules={"Post": PostListModule,
+                        "TagCloud": TagCloudModule,
+                        "Edit":EditModule},
+            autoescape=None,
+            login_url='/login',
+            template_path=os.path.join(os.path.dirname(__file__), 'templates'),
+            static_path=os.path.join(os.path.dirname(__file__), 'static'),
+            xsrf_cookies=True,
+        )
+
+        tornado.web.Application.__init__(self, handlers, **settings, **config)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
         

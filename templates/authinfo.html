@@ -26,9 +26,9 @@
       <div class='right-side'>
         <h1>
           {{ username }}<small>
-          {% if username == current_user %}
+          {% if username == current_user['username'] %}
           <a href="/setting" class="label label-success">编辑</a>
-          {% elif current_user in admin_list %}
+          {% elif current_user['username'] in admin_list %}
           <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
           {% end %}</small>
         </h1>
@@ -84,5 +84,3 @@
   </section>
 </div>
 {% end %}
-
-
