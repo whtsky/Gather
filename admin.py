@@ -11,12 +11,7 @@ class RemoveUserHandler(BaseHandler):
             for tag in post['tags']:
                self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         self.db.posts.remove({'author':username})
-        for post in self.db.posts.find({'comments.author':username}):
-            comments = []
-            for comment in post['comments']:
-                if comment['author']!=username:
-                    comments.append(comment)
-            self.db.posts.update({'_id':post['_id']},{'$set':{'comments':comments}})
+        self.db.posts.update({'comments.author':username},{'$pull':{'author':username}}):
         self.write('done.')
 
 class RemovePostHandler(BaseHandler):

@@ -64,6 +64,11 @@ class Application(tornado.web.Application):
             "Edit":EditModule},        **settings)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
+        
+        if not self.db.settings.find({'post_id':{'$lte':0}}):
+            self.db.settings.save({'post_id':1})
+            self.db.settings.save({'user_id':0})
+            self.db.posts.create_index([('changedtime',1)])
 
 class HomeHandler(BaseHandler):
     def get(self):
