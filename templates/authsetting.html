@@ -58,7 +58,7 @@
                     {% if current_user['twitter_bind'] %}
                         <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a>
                         <label class="checkbox">
-                            <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">发帖时同步到Twitter
+                            <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">同步发帖
                         </label>
                     {% else %}
                         <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>

@@ -41,6 +41,9 @@
             <ul class="nav pull-right">
               {% if current_user %}
                 <li><a href="/user/{{ current_user['username'] }}">{{ current_user['username'] }}</a></li>
+                {% if current_user['twitter_bind'] %}
+                <li><a data-toggle="modal" href="#tweet">Tweet</a></li>
+                {% end %}
                 <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
               {% else %}
                 <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
@@ -51,6 +54,22 @@
         </div>
       </div>
     </div>
+    <div id="tweet" class="modal hide fade">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal" >&times;</a>
+        <h3>发布新动态</h3>
+      </div>
+    <div class="modal-body">
+      <div class="row-fluid">
+          {{ xsrf_form_html() }}
+          <textarea class="span12" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="tweetsubmit" class="btn btn-success">Tweet!</button>
+      <a href="#" class="btn" data-dismiss="modal" >取消</a>
+    </div>
+  </div>
     <div id="main" class="container">
       <div class='row'>
         <div class="span12">

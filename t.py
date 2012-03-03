@@ -3,6 +3,7 @@
 from common import BaseHandler
 from tornado.web import authenticated
 import oauth2 as oauth
+import twitter_oauth
 
 class TwitterOauthHandler(BaseHandler):
 
@@ -64,3 +65,9 @@ class TwitterNotBindHandler(BaseHandler):
         user['twitter_bind'] = False
         self.db.users.save(user)
         self.redirect('/setting')
+
+class TweetHandler(BaseHandler):
+    def post(self):
+        user = self.get_current_user()
+        api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, user['oauth_token'], user['oauth_token_secret'])
+        api.post_update(tweet=self.get_argument('tweet'))
