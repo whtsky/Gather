@@ -13,10 +13,10 @@ class PostHandler(BaseHandler):
     def get(self):
         self.render('post.html')
 
-    @tornado.web.authenticated
     def post(self):
         title = xhtml_escape(self.get_argument('title'))
         assert len(title)<51
+        user = self.get_current_user()['username']
         md = self.get_argument('markdown')
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
@@ -25,10 +25,11 @@ class PostHandler(BaseHandler):
             for x in x.split(' '):
                 for x in x.split('/'):
                     tags.append(xhtml_escape(x))
+        time_now = int(time())
         posts.insert({'_id':tid,
                       'title':title,
-                      'author':self.get_current_user()['username'],
-                      'content':md_convert(md),
+                      'author':user,
+                      'content':md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=tid),
                       'comments':[],
                       'posttime':int(time()),
                       'changedtime':int(time()),
@@ -42,7 +43,12 @@ class PostHandler(BaseHandler):
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
-        post = self.db.posts.find_one({'_id':int(postid)})
+        postid = int(postid)
+        post = self.db.posts.find_one({'_id':postid})
+        try:
+            self.db.users.update({'username':self.get_current_user()['username'],'notification.postid':postid},{'$set':{'notification.$.read':True}})
+        except:
+            pass
         if post:
             likelylist = {}
             for tag in post['tags']:
@@ -60,15 +66,19 @@ class PostViewHandler(BaseHandler):
         else:
             raise tornado.web.HTTPError(404)
 
-    @tornado.web.authenticated
     def post(self,postid):
         md = self.get_argument('markdown')
-        self.db.posts.update({'_id':int(postid)},
+        time_now = int(time())
+        user = self.get_current_user()['username']
+        postid = int(postid)
+        self.db.posts.update({'_id':postid},
                 {'$push':
                          {'comments':
-                                  {'author':self.get_current_user()['username'],
-                                   'content':md_convert(md),
-                                   'posttime':int(time()),}},
+                                  {'author':user,
+                                   'content':md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=postid),
+                                   'posttime':int(time()),
+                                   }
+                         },
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
 

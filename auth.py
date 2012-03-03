@@ -112,3 +112,9 @@ class AuthChangePasswordHandler(BaseHandler):
             self.write(json_encode({'status':'success','message':'修改密码成功'}))
         else:
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
+
+class NotificationHandler(BaseHandler):
+
+    @authenticated
+    def get(self):
+        pass
