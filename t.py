@@ -34,6 +34,7 @@ class TwitterOauthHandler(BaseHandler):
             user['oauth_token'] = oauth_token
             user['oauth_token_secret'] = oauth_token_secret
             user['twitter_bind'] = True
+            user['twitter-sync'] = True
 
             self.db.users.save(user)
             self.redirect('/')

@@ -55,7 +55,7 @@
                 {% if current_user['twitter_bind'] %}
                 <div id="twitter-sync-g" class="control-group">
                     <label class="checkbox">
-                        <input type="checkbox" id="twitter-sync" checked value="yes">发帖时同步到Twitter
+                        <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">发帖时同步到Twitter
                     </label>
                 </div>
                 {% else %}

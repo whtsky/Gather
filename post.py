@@ -42,10 +42,11 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
-        if user['twitter_bind']:
+        if user['twitter-bind'] and user['twitter-sync']:
             self.title = title
             self.user = user
-            AsyncHTTPClient.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],tid), self.sync)
+            http_client = AsyncHTTPClient()
+            http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],tid), self.sync)
 
     def sync(self,request):
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
