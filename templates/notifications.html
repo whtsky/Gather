@@ -4,12 +4,12 @@
 
 {% block breadcrumb %}
 <li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
-<li class="active">我的提醒</li>
+<li class="active">我的通知</li>
 {% end %}
 
 {% block content %}
 <section class="box">
-    我的提醒
+    我的通知
     <table class="item-list">
         <tbody>
             {% for noti in reversed(current_user['notification']) %}

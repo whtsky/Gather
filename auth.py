@@ -117,3 +117,9 @@ class NotificationHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render('notifications.html',time_span=time_span)
+
+    def post(self):
+        u = self.get_current_user()
+        u['notification'] = []
+        self.db.users.save(u)
+        self.redirect(self.get_argument('next', '/'))

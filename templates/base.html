@@ -91,9 +91,15 @@
                     未读通知
                   </a>
                 </div>
-               </div>
-               <hr>
-               <a href="/topics/add" class='btn btn-info'>发表话题</a>
+              </div>
+              <hr>
+              <a href="/topics/add" class='btn btn-info'>发表话题</a>
+              <div class="right">
+                <form method="post" action="/my/notifications?next={{ url_escape(request.uri) }}">
+                  {{ xsrf_form_html() }}
+                  <button type="submit" class="btn btn-danger">清空通知</button>
+                </form>
+              </div>
              {% else %}
                <p>想要融入社区？</p>
                <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>
