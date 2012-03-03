@@ -50,11 +50,6 @@ def getoauth(consumer_key,consumer_secret):
     return request_token['oauth_token'],request_token['oauth_token_secret']
 
 def _parse_qsl(url):
-    '''
-    Parse_qsl method.
-
-    for python 2.5
-    '''
     param = {}
     for i in url.split('&'):
         p = i.split('=')

@@ -52,6 +52,17 @@
                         <input type="text" id="github" x-webkit-speech value="{{ getvalue(user,'github') }}">
                     </div>
                 </div>
+                {% if current_user['twitter_bind'] %}
+                <div id="twitter-sync-g" class="control-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="twitter-sync" checked value="yes">发帖时同步到Twitter
+                    </label>
+                </div>
+                {% else %}
+                <div class="hide">
+                    <input type="checkbox" id="twitter-sync">
+                </div>
+                {% end %}
                 <div class="form-actions">
                     <button id='submit' class='btn btn-primary'>提交</button>
                 </div>

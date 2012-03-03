@@ -42,6 +42,7 @@ class AuthSignupHandler(BaseHandler):
                         'tagmark':[],
                         'postmark':[],
                         'notification':[],
+                        'twitter_bind':False,
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
@@ -95,6 +96,7 @@ class AuthSettingHandler(BaseHandler):
               setting[x] = self.get_argument(x)
             except:
                 pass
+        setting['twitter-sync'] = self.get_argument('twitter_sync') == 'true'
         if self.db.users.find_one({'username':{'$ne':self.get_current_user()['username']},'email':setting['email']}):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return

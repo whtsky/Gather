@@ -42,6 +42,7 @@ $("#submit").click(function(){
             website:$("#website").val(),
             location:$("#location").val(),
             twitter:$("#twitter").val(),
+            twitter_sync:$("#twitter-sync").attr("checked") == "checked",
             github:$("#github").val()},
         function(data){
             if(data.status=="success")

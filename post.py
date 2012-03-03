@@ -6,6 +6,8 @@ from time import time
 from tornado.escape import json_encode,xhtml_escape
 from config import admin
 from tag import POST_PER_PAGE
+import twitter_oauth
+from tornado.httpclient import AsyncHTTPClient
 
 class PostHandler(BaseHandler):
 
@@ -16,7 +18,7 @@ class PostHandler(BaseHandler):
     def post(self):
         title = xhtml_escape(self.get_argument('title'))
         assert len(title)<51
-        user = self.get_current_user()['username']
+        user = self.get_current_user()
         md = self.get_argument('markdown')
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
@@ -28,8 +30,8 @@ class PostHandler(BaseHandler):
         time_now = int(time())
         posts.insert({'_id':tid,
                       'title':title,
-                      'author':user,
-                      'content':md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=tid),
+                      'author':user['username'],
+                      'content':md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=tid),
                       'comments':[],
                       'posttime':int(time()),
                       'changedtime':int(time()),
@@ -40,6 +42,14 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
+        if user['twitter_bind']:
+            self.title = title
+            self.user = user
+            AsyncHTTPClient.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],tid), self.sync)
+
+    def sync(self,request):
+        api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
+        api.post_update(tweet=u'%s : %s' % (self.title,request.body))
 
 class PostViewHandler(BaseHandler):
     def get(self,postid):
