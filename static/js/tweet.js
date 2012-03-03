@@ -9,3 +9,17 @@ $("#tweetsubmit").click(function(){
         },"json");
     return false;
 });
+document.onkeyup=function(event) {
+    if(window.ActiveXObject) {
+        var keydown = window.event.keyCode;
+        event=window.event;
+    }else{
+        var keydown = event.keyCode;
+        if(event.ctrlKey && keydown == 13){
+            if ($('body').hasClass('modal-open'))
+                $('#tweetsubmit').click();
+            else
+                $('#submit').click();
+        }
+    }
+};

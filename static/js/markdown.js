@@ -19,14 +19,3 @@ $("#wmd-input").blur(function(){
             $("#md-preview").html(data);
         });
 });
-document.onkeyup=function(event) {
-    if(window.ActiveXObject) {
-        var keydown = window.event.keyCode;
-        event=window.event;
-    }else{
-        var keydown = event.keyCode;
-        if(event.ctrlKey && keydown == 13){
-            $('#submit').click();
-        }
-    }
-};

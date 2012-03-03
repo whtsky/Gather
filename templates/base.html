@@ -64,11 +64,12 @@
       <textarea style="width: 99%" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
     </div>
     <div class="modal-footer">
-      <button id="tweetsubmit" class="btn btn-success" data-dismiss="modal">Tweet!</button>
       <a href="#" class="btn" data-dismiss="modal" >取消</a>
+      <div class="left">
+        <button id="tweetsubmit" class="btn btn-success" data-dismiss="modal">Tweet!</button><small class="col_fade">Ctrl+Enter 快速发表</small>
+      </div>
     </div>
   </div>
-    <script src='{{ static_url("js/tweet.js") }}'></script>
     <div id="main" class="container">
       <div class='row'>
         <div class="span12">
@@ -138,5 +139,6 @@
       <a href="https://github.com/whtsky/PBB/">PBB</a>
     </footer>
     {% block foot %}{% end %}
+    <script src='{{ static_url("js/tweet.js") }}'></script>
   </body>
 </html>
