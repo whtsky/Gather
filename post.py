@@ -42,7 +42,7 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
-        if user['twitter-bind'] and user['twitter-sync']:
+        if user['twitter_bind'] and user['twitter-sync']:
             self.title = title
             self.user = user
             http_client = AsyncHTTPClient()
