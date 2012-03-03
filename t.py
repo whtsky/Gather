@@ -57,7 +57,7 @@ def _parse_qsl(url):
         param.update({p[0]:p[1]})
     return param
 
-class TwitterNotBindHandler(BaseHandler)
+class TwitterNotBindHandler(BaseHandler):
     def post(self):
         user = self.get_current_user()
         del user['oauth_token'],user['oauth_token_secret'],user['twitter-sync']
