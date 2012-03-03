@@ -24,9 +24,9 @@
     {% if current_user %}
     <div class="right">
         {% if tagname in current_user['tagmark'] %}
-        <a class="label label-important mark" id="mark">取消收藏</a>
+        <a href="#" class="label label-important mark" id="mark">取消收藏</a>
         {% else %}
-        <a class="label mark" id="mark">收藏</a>
+        <a href="#" class="label mark" id="mark">收藏</a>
         {% end %}
     </div>
     {% end %}
