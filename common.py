@@ -8,7 +8,7 @@ from tornado.escape import xhtml_escape
 
 html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(u'((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])')
-username_finder = re.compile(u'(@[\u4e00-\u9fa5A-Za-z0-9]+)')
+username_finder = re.compile(u'@([\u4e00-\u9fa5A-Za-z0-9]+)')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -65,21 +65,21 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
 
     for u in set(username_finder.findall(txt)):
         mentions.append(u)
-        txt = txt.replace(u,u'<a href="/user/%s">%s</a>' % (u[1:],u))
+        txt = txt.replace(u'@'+u,u'<a href="/user/%s">@%s</a>' % (u,u))
 
     if notice:
         for u in mentions:
-            db.users.update({'username':u[1:]},
-                {'$push':
-                         {'notification':
-                                  {'from':user,
-                                   'content':txt,
-                                   'time':time,
-                                   'postid':postid,
-                                   'read':False,
-                                   }
-                         },
-                })
+            db.users.update({'username':u},
+            {'$push':
+                     {'notification':
+                              {'from':user,
+                               'content':txt,
+                               'time':time,
+                               'postid':postid,
+                               'read':False,
+                               }
+                     },
+            })
 
     return txt
 

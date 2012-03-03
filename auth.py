@@ -114,7 +114,6 @@ class AuthChangePasswordHandler(BaseHandler):
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
 
 class NotificationHandler(BaseHandler):
-
     @authenticated
     def get(self):
-        pass
+        self.render('notifications.html',time_span=time_span)

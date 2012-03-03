@@ -10,5 +10,25 @@
 {% block content %}
 <section class="box">
     我的提醒
+    <table class="item-list">
+        <tbody>
+            {% for noti in reversed(current_user['notification']) %}
+            <tr>
+                <td class='avatar'>
+                    <a href="/user/{{ noti['from'] }}"><img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":noti["from"]})["hashed_email"] }}?s=48' /></a>
+                </td>
+                <td>
+                    <a href="/user/{{ noti['from'] }}">{{ noti['from'] }}</a> 在 <a href="/topics/{{ noti['postid'] }}">{{ db.posts.find_one({'_id':noti['postid']})['title'] }}</a>
+                    中提到了你 <small class='snow'>{{ time_span(noti['time']) }}</small>
+                    {% if noti['read'] == False %}
+                    <span class='label label-important'>未读</span>
+                    {% end %}
+                    <br />
+                    <div class='well'>{{ noti['content'] }}</div>
+                </td>
+            </tr>
+            {% end %}
+        </tbody>
+    </table>
 </section>
 {% end %}

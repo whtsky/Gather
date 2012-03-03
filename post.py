@@ -45,26 +45,27 @@ class PostViewHandler(BaseHandler):
     def get(self,postid):
         postid = int(postid)
         post = self.db.posts.find_one({'_id':postid})
-        try:
-            self.db.users.update({'username':self.get_current_user()['username'],'notification.postid':postid},{'$set':{'notification.$.read':True}})
-        except:
-            pass
-        if post:
-            likelylist = {}
-            for tag in post['tags']:
-                for p in self.db.posts.find({'tags':tag}):
-                    likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
-            del likelylist[post['_id']]
-            likelys = sorted(likelylist.items(),key=lambda x: x[1])
-            likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
-            del likelys,likelylist
-            comments = post['comments']
-            for i in range(len(comments)):
-                comments[i]['location'] =  str(i+1)
-            self.render('postview.html',time_span=time_span,
-                        post=post,admin_list=admin,comments=comments,likely=likelyposts)
-        else:
-            raise tornado.web.HTTPError(404)
+        user = self.get_current_user()
+        if user:
+            change = False
+            for m in user['notification']:
+                if m['postid'] == postid and m['read'] == False:
+                    m['read'] = True
+                    change = True
+            self.db.users.save(user)
+        likelylist = {}
+        for tag in post['tags']:
+            for p in self.db.posts.find({'tags':tag}):
+                likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
+        del likelylist[post['_id']]
+        likelys = sorted(likelylist.items(),key=lambda x: x[1])
+        likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
+        del likelys,likelylist
+        comments = post['comments']
+        for i in range(len(comments)):
+            comments[i]['location'] =  str(i+1)
+        self.render('postview.html',time_span=time_span,
+                    post=post,admin_list=admin,comments=comments,likely=likelyposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
