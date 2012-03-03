@@ -37,7 +37,7 @@ class TwitterOauthHandler(BaseHandler):
             user['twitter-sync'] = True
 
             self.db.users.save(user)
-            self.redirect('/')
+            self.redirect('/setting')
 
 
 
@@ -56,3 +56,11 @@ def _parse_qsl(url):
         p = i.split('=')
         param.update({p[0]:p[1]})
     return param
+
+class TwitterNotBindHandler(BaseHandler)
+    def post(self):
+        user = self.get_current_user()
+        del user['oauth_token'],user['oauth_token_secret'],user['twitter-sync']
+        user['twitter_bind'] = False
+        self.db.users.save(user)
+        self.redirect('/setting')
