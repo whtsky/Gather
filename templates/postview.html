@@ -46,7 +46,7 @@
                             </div>
                             <form action="/admin/post/changetag/{{ post['_id'] }}" method='post'>
                             <div class="modal-body">
-                                <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech>
+                                <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
                             </div>
                             <div class="modal-footer">
                                 {{ xsrf_form_html() }}
