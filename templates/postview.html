@@ -107,6 +107,7 @@
                             {% if current_user and current_user['username'] in admin_list %}
                             <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
                             {% end %}
+                            <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
                         </div>
                     </header><br />
                     {{ comment['content'] }}
@@ -141,7 +142,7 @@
         {% end %}
     </ul>
 </section>
-<script src='{{ static_url("js/markpost.js") }}' type="text/javascript"></script>
+<script src='{{ static_url("js/postview.js") }}' type="text/javascript"></script>
 {% end %}
 
 

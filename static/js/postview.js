@@ -23,3 +23,21 @@ $("#mark").click(function(){
     }
     return false;
 });
+
+$(function() {
+    $("#new_reply").live("ajax:success",
+        function() {
+            $(this).find("textarea").val("")
+        }).live("ajax:error",
+        function(a, b, c) {
+            var d = $('<div class="alert-message error fade in"><a href="#" class="close">×</a><p></p></div>').alert();
+            d.find("p").text(b.responseText),
+                d.hide().prependTo($(this)).fadeIn("fast")
+        }),
+        $(".at").live("click",
+            function(a) {
+                var b = $("#wmd-input");
+                b.focus().val(b.val() + "@" + $(this).data("user-name") + " "),
+                    a.preventDefault()
+            })
+});
