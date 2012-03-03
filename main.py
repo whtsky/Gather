@@ -21,7 +21,8 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHa
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
-from config import config
+from t import TwitterOauthHandler
+from config import config,consumer_key,consumer_secret
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -55,6 +56,8 @@ class Application(tornado.web.Application):
             (r'/admin/post/kill/(\d+)/(\d+)',RemoveCommentHandler),
             (r'/admin/post/changetag/(\d+)',ChangeTagHandler),
 
+            (r'/twitter/oauth',TwitterOauthHandler),
+
             (r'/markdown',MarkDownPreViewHandler),
 
             (r'.*',ErrorHandler),
@@ -76,6 +79,9 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
+
+        self.consumer_key = consumer_key
+        self.consumer_secret = consumer_secret
         
         if not self.db.settings.find({'post_id':{'$lte':0}}):
             self.db.settings.save({'post_id':1})

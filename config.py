@@ -6,5 +6,9 @@ config = dict(
     bbs_title_e=u'Jybox',
     bbs_url=u'http://bbs.jybox.net',
     cookie_secret='89f3hneifu29IY(!H@@IUFY#(FCINepifu2iY!HU!(FU@H',
-    debug=False,
+    debug=True,
 )
+
+#twitter
+consumer_key = 'veWqoktpSJS9fMGh8er6Q'
+consumer_secret = 'JtBF5ThWDI7reUhN0gTOErlzmid1JanqnXqswuBBXAY'
