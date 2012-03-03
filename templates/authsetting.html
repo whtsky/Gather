@@ -56,7 +56,7 @@
                     <label class="control-label" for="twitterbind">Twitter绑定</label>
                     <div class="controls">
                     {% if current_user['twitter_bind'] %}
-                        <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a>
+                        <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
                         <label class="checkbox">
                             <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">同步发帖
                         </label>

@@ -60,16 +60,15 @@
         <h3>发布新动态</h3>
       </div>
     <div class="modal-body">
-      <div class="row-fluid">
-          {{ xsrf_form_html() }}
-          <textarea class="span12" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
-      </div>
+      {{ xsrf_form_html() }}
+      <textarea style="width: 99%" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
     </div>
     <div class="modal-footer">
-      <button id="tweetsubmit" class="btn btn-success">Tweet!</button>
+      <button id="tweetsubmit" class="btn btn-success" data-dismiss="modal">Tweet!</button>
       <a href="#" class="btn" data-dismiss="modal" >取消</a>
     </div>
   </div>
+    <script src='{{ static_url("js/tweet.js") }}'></script>
     <div id="main" class="container">
       <div class='row'>
         <div class="span12">
