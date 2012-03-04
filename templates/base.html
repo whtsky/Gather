@@ -33,6 +33,9 @@
               <li><a href='/'>主页</a></li>
               <li><a href='/topics'>主题</a></li>
               <li><a href='/tag'>标签</a></li>
+              {% if current_user %}
+                <li><a href="/my">个人信息流</a></li>
+              {% end %}
               {% end %}
             </ul>
             <form class="navbar-search pull-left" id='search_form'>

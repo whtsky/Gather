@@ -42,6 +42,8 @@ $("#submit").click(function(){
             website:$("#website").val(),
             location:$("#location").val(),
             twitter:$("#twitter").val(),
+            hatetag:$("#hatetag").val(),
+            lovetag:$("#lovetag").val(),
             twitter_sync:$("#twitter-sync").attr("checked") == "checked",
             github:$("#github").val()},
         function(data){

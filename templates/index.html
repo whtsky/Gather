@@ -4,6 +4,9 @@
 <li class='active'><a href='/'>主页</a></li>
 <li><a href='/topics'>主题</a></li>
 <li><a href='/tag'>标签</a></li>
+{% if current_user %}
+<li><a href="/my">个人信息流</a></li>
+{% end %}
 {% end %}
 
 {% block content %}
@@ -15,6 +18,6 @@
     </div>
     {% end %}
     最近
-    {{ modules.Post(db=db,posts=db.posts.find({},sort=[('changedtime', -1)],limit=15)) }}
+    {{ modules.Post(db=db,posts=posts) }}
 </section>
 {% end %}

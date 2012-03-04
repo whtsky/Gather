@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+<li><a href='/'>主页</a></li>
+<li><a href='/topics'>主题</a></li>
+<li><a href='/tag'>标签</a></li>
+<li class="active"><a href="#">个人信息流</a></li>
+{% end %}
+
+{% block content %}
+<section class="box">
+    {% if unread > 0 %}
+    <div class="alert fade in"  style="margin-top:10px;">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <a href='/my/notifications'>您有<strong>{{ unread }}</strong>条未读提醒</a>
+    </div>
+    {% end %}
+    最近
+    {{ modules.Post(db=db,posts=posts) }}
+</section>
+{% end %}

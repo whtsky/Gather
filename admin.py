@@ -1,4 +1,5 @@
 #coding=utf-8
+from tornado.escape import xhtml_escape
 
 from common import BaseHandler
 from config import admin
@@ -6,8 +7,8 @@ from config import admin
 class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
-        removepost(fliter={'author':username},db=self.db)
         self.db.users.remove({'username':username})
+        removepost(fliter={'author':username},db=self.db)
         self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)
         self.write('done.')
@@ -33,7 +34,7 @@ class ChangeTagHandler(BaseHandler):
         for tag in self.db.posts.find_one({'_id':postid})['tags']:
             self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         tags = []
-        for x in self.get_argument('tags').lower().split(','):
+        for x in xhtml_escape(self.get_argument('tags').lower()).split(','):
             for x in x.split(' '):
                 for x in x.split('/'):
                     tags.append(x)

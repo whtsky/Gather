@@ -2,7 +2,7 @@
 
 from common import BaseHandler,getvalue,time_span
 from hashlib import sha1,md5
-from tornado.escape import json_encode
+from tornado.escape import json_encode, xhtml_escape
 import tornado.web
 from tornado.web import authenticated
 from config import admin
@@ -43,6 +43,8 @@ class AuthSignupHandler(BaseHandler):
                         'postmark':[],
                         'notification':[],
                         'twitter_bind':False,
+                        'lovetag':[],
+                        'hatetag':[],
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
@@ -93,10 +95,20 @@ class AuthSettingHandler(BaseHandler):
         setting = {}
         for x in ('email','website','location','twitter','github'):
             try:
-              setting[x] = self.get_argument(x)
+              setting[x] = xhtml_escape(self.get_argument(x))
             except:
                 pass
         setting['twitter-sync'] = self.get_argument('twitter_sync') == 'true'
+        for x in ('lovetag','hatetag'):
+            tags = []
+            try:
+                for i in xhtml_escape(self.get_argument(x).lower()).split(','):
+                    for i in i.split(' '):
+                        for i in i.split('/'):
+                            tags.append(i)
+            except:
+                pass
+            setting[x] = tags
         if self.db.users.find_one({'username':{'$ne':self.get_current_user()['username']},'email':setting['email']}):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return

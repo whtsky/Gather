@@ -9,10 +9,7 @@ POST_PER_PAGE = 20
 
 class TagCloudModule(tornado.web.UIModule):
     def render(self, db,limit=False):
-        tags = sorted([ _ for _ in db.tags.find({'count':{'$gt':0}},{'_id':0})], key=lambda x: x['count'])
-        tags.reverse()
-        if limit:
-            tags = tags[:limit]
+        tags = [ tag for tag in db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)]
         html = []
         for tag in tags:
             html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
+from bsddb import db
 
 import tornado.httpserver
 import tornado.ioloop
@@ -37,6 +38,7 @@ class Application(tornado.web.Application):
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 
+            (r'/my',MyHomeHandler),
             (r'/my/post',MyMarkedPostHandler),
             (r'/my/tag',MyMarkedTagHandler),
             (r'/my/notifications',NotificationHandler),
@@ -92,7 +94,18 @@ class Application(tornado.web.Application):
 
 class HomeHandler(BaseHandler):
     def get(self):
-        self.render('index.html',time_span=time_span)
+        user = self.get_current_user()
+        if user:
+            posts = self.db.posts.find({'tags':{'$nin':user['hatetag']}},sort=[('changedtime', -1)],limit=15)
+        else:
+            posts = self.db.posts.find({},sort=[('changedtime', -1)],limit=15)
+        self.render('index.html',time_span=time_span,posts=posts)
+
+class MyHomeHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        user = self.get_current_user()
+        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':user['lovetag']},sort=[('changedtime', -1)],limit=15))
 
 class EditModule(tornado.web.UIModule):
     def render(self):
@@ -103,7 +116,7 @@ class FeedHandler(BaseHandler):
         self.set_header("Content-Type", "application/atom+xml")
         url = ''
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
-            time=time,posts=self.db.posts.find({},sort=[('changedtime', 1)]))
+            time=time,posts=self.db.posts.find({},sort=[('changedtime', -1)]))
 
 class ErrorHandler(BaseHandler):
     def get(self, *args, **kwargs):

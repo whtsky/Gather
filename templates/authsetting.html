@@ -52,6 +52,20 @@
                         <input type="text" id="github" x-webkit-speech value="{{ getvalue(user,'github') }}">
                     </div>
                 </div>
+                <div id="lovetag-g" class="control-group">
+                    <label class="control-label" for="email">喜爱标签</label>
+                    <div class="controls">
+                        <input type="text" id="lovetag" x-webkit-speech value="{{ ''.join(user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
+                    </div>
+                </div>
+                <div id="hatetag-g" class="control-group">
+                    <label class="control-label" for="email">厌恶标签</label>
+                    <div class="controls">
+                        <input type="text" id="hatetag" x-webkit-speech value="{{ ''.join(user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
+                    </div>
+                </div>
                 <div id="twitter-sync-g" class="control-group">
                     <label class="control-label" for="twitterbind">Twitter绑定</label>
                     <div class="controls">
