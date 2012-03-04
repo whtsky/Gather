@@ -105,7 +105,7 @@ class MyHomeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         user = self.get_current_user()
-        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':user['lovetag']},sort=[('changedtime', -1)],limit=15))
+        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
 
 class EditModule(tornado.web.UIModule):
     def render(self):
