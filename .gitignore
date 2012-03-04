@@ -2,3 +2,5 @@
 *.pyc
 .idea
 config.py
+*mobile*
+*-m/

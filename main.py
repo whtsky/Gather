@@ -9,10 +9,6 @@ import tornado.web
 import pymongo
 from tornado.options import define, options
 import os
-import time
-
-from common import BaseHandler,time_span
-
 
 define('port', default=8888, help='run on the given port', type=int)
 define('mongo_host', default='127.0.0.1', help='mongodb host')
@@ -23,6 +19,7 @@ from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModu
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
+from common import HomeHandler,MyHomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,consumer_key,consumer_secret
 
 class Application(tornado.web.Application):
@@ -91,36 +88,6 @@ class Application(tornado.web.Application):
             self.db.settings.save({'post_id':1})
             self.db.settings.save({'user_id':0})
             self.db.posts.create_index([('changedtime',1)])
-
-class HomeHandler(BaseHandler):
-    def get(self):
-        user = self.get_current_user()
-        if user:
-            posts = self.db.posts.find({'tags':{'$nin':user['hatetag']}},sort=[('changedtime', -1)],limit=15)
-        else:
-            posts = self.db.posts.find({},sort=[('changedtime', -1)],limit=15)
-        self.render('index.html',time_span=time_span,posts=posts)
-
-class MyHomeHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        user = self.get_current_user()
-        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
-
-class EditModule(tornado.web.UIModule):
-    def render(self):
-        return self.render_string('modules/markdown.html')
-
-class FeedHandler(BaseHandler):
-    def get(self):
-        self.set_header("Content-Type", "application/atom+xml")
-        url = ''
-        tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
-            time=time,posts=self.db.posts.find({},sort=[('changedtime', -1)]))
-
-class ErrorHandler(BaseHandler):
-    def get(self, *args, **kwargs):
-        self.render('404.html')
 
 if __name__ == '__main__':
     tornado.options.parse_command_line()

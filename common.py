@@ -36,7 +36,35 @@ class BaseHandler(tornado.web.RequestHandler):
             pass
         tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,unread=unread,**kwargs)
 
+class HomeHandler(BaseHandler):
+    def get(self):
+        user = self.get_current_user()
+        if user:
+            posts = self.db.posts.find({'tags':{'$nin':user['hatetag']}},sort=[('changedtime', -1)],limit=15)
+        else:
+            posts = self.db.posts.find({},sort=[('changedtime', -1)],limit=15)
+        self.render('index.html',time_span=time_span,posts=posts)
 
+class MyHomeHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        user = self.get_current_user()
+        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
+
+class EditModule(tornado.web.UIModule):
+    def render(self):
+        return self.render_string('modules/markdown.html')
+
+class FeedHandler(BaseHandler):
+    def get(self):
+        self.set_header("Content-Type", "application/atom+xml")
+        url = ''
+        tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
+            time=time,posts=self.db.posts.find({},sort=[('changedtime', -1)]))
+
+class ErrorHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        self.render('404.html')
 
 def time_span(t):
     timecha = int(time.time()) - t
