@@ -107,10 +107,12 @@
                         </div>
                         <div class='right'>
                             #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
-                            {% if current_user and current_user['username'] in admin_list %}
+                            {% if current_user %}
+                            {% if current_user['username'] in admin_list %}
                             <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
                             {% end %}
                             <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
+                            {% end %}
                         </div>
                     </header><br />
                     {{ comment['content'] }}
