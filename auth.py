@@ -45,6 +45,7 @@ class AuthSignupHandler(BaseHandler):
                         'twitter_bind':False,
                         'lovetag':[],
                         'hatetag':[],
+                        'css':'',
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
@@ -98,6 +99,10 @@ class AuthSettingHandler(BaseHandler):
               setting[x] = xhtml_escape(self.get_argument(x))
             except:
                 pass
+        try:
+            setting['css'] = self.get_argument('css')
+        except:
+            pass
         setting['twitter-sync'] = self.get_argument('twitter_sync') == 'true'
         for x in ('lovetag','hatetag'):
             tags = []

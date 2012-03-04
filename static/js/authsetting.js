@@ -45,6 +45,7 @@ $("#submit").click(function(){
             hatetag:$("#hatetag").val(),
             lovetag:$("#lovetag").val(),
             twitter_sync:$("#twitter-sync").attr("checked") == "checked",
+            css:$('#css').val(),
             github:$("#github").val()},
         function(data){
             if(data.status=="success")

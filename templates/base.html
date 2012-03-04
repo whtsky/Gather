@@ -16,6 +16,7 @@
     <script src='{{ static_url("js/base.js") }}'></script>
     <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['bbs_title'] }}" href="/feed" />
     {% block head %}{% end %}
+    {% if current_user %}<style title="text/css">  {{ current_user['css'] }}  </style>{% end %}
   </head>
   <body>
     <div class='navbar'>

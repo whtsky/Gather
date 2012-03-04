@@ -31,57 +31,72 @@
                 <div id="website-g" class="control-group">
                     <label class="control-label" for="email">个人网址</label>
                     <div class="controls">
-                        <input type="url" id="website" x-webkit-speech value="{{ getvalue(user,'website') }}">
+                        <input type="url" id="website" x-webkit-speech value="{{ getvalue(current_user,'website') }}">
                     </div>
                 </div>
                 <div id="location-g" class="control-group">
                     <label class="control-label" for="email">所在地</label>
                     <div class="controls">
-                        <input type="text" id="location" x-webkit-speech value="{{ getvalue(user,'location') }}">
+                        <input type="text" id="location" x-webkit-speech value="{{ getvalue(current_user,'location') }}">
                     </div>
                 </div>
                 <div id="twitter-g" class="control-group">
                     <label class="control-label" for="email">Twitter用户名</label>
                     <div class="controls">
-                        <input type="text" id="twitter" x-webkit-speech value="{{ getvalue(user,'twitter') }}">
+                        <input type="text" id="twitter" x-webkit-speech value="{{ getvalue(current_user,'twitter') }}">
                     </div>
                 </div>
                 <div id="github-g" class="control-group">
                     <label class="control-label" for="email">Github用户名</label>
                     <div class="controls">
-                        <input type="text" id="github" x-webkit-speech value="{{ getvalue(user,'github') }}">
+                        <input type="text" id="github" x-webkit-speech value="{{ getvalue(current_user,'github') }}">
                     </div>
                 </div>
                 <div id="lovetag-g" class="control-group">
                     <label class="control-label" for="email">喜爱标签</label>
                     <div class="controls">
-                        <input type="text" id="lovetag" x-webkit-speech value="{{ ''.join(user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <input type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
                         <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
                     </div>
                 </div>
                 <div id="hatetag-g" class="control-group">
                     <label class="control-label" for="email">厌恶标签</label>
                     <div class="controls">
-                        <input type="text" id="hatetag" x-webkit-speech value="{{ ''.join(user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <input type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
                         <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
                     </div>
                 </div>
-                <div id="twitter-sync-g" class="control-group">
+                <div id="css-g" class="control-group">
+                    <label class="control-label" for="email">自定义CSS</label>
+                    <div class="controls">
+                        <textarea id="css">{{ current_user['css'] }}</textarea>
+                        <p class="help-block">所有页面中都会加载你自定义的CSS</p>
+                    </div>
+                </div>
+                <div id="twitter-bind-g" class="control-group">
                     <label class="control-label" for="twitterbind">Twitter绑定</label>
                     <div class="controls">
                     {% if current_user['twitter_bind'] %}
                         <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
-                        <label class="checkbox">
-                            <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">同步发帖
-                        </label>
                     {% else %}
                         <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>
-                        <div class="hide">
-                            <input type="checkbox" id="twitter-sync">
-                        </div>
                     {% end %}
                     </div>
                 </div>
+                {% if current_user['twitter_bind'] %}
+                <div id="twitter-sync-g" class="control-group">
+                    <label class="control-label" for="twitter-sync">Twitter同步</label>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">
+                        </label>
+                    </div>
+                </div>
+                {% else %}
+                <div class="hide">
+                    <input type="checkbox" id="twitter-sync">
+                </div>
+                {% end %}
                 <div class="form-actions">
                     <button id='submit' class='btn btn-primary'>提交</button>
                 </div>
