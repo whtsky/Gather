@@ -194,6 +194,6 @@ table {
 .snow {
     color: rgba(0, 0, 0, 0.15);
 }
-.avatar {
+.avatar img{
     border-radius: 1em;
 }
