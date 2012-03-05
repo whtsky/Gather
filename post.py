@@ -8,8 +8,7 @@ from config import admin
 from tag import POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
-import re
-html_killer = re.compile('<[^>]+>')
+from common import html_killer
 
 class PostHandler(BaseHandler):
 
@@ -98,7 +97,9 @@ class PostViewHandler(BaseHandler):
         self.redirect('/topics/'+str(postid))
 
         if user['twitter_bind'] and user['twitter-sync']:
-            self.title = html_killer.sub(content,'')[:100]
+            for i in set(html_killer.findall(content)):
+                content = content.replace(i,'')#不知道为什么，直接用sub返回的是空字符串。
+            self.title = content[:100]
             self.user = user
             http_client = AsyncHTTPClient()
             http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],postid), self.sync)
