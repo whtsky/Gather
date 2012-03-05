@@ -115,14 +115,14 @@
                 <div id="old-g" class="control-group">
                     <label class="control-label" for="old">原密码：</label>
                     <div class="controls">
-                        <input type="password" id="old" required>
+                        <input type="password" id="old" required style="width: 98%">
                         <span id="old-t" class="help-inline">请输入原密码</span>
                     </div>
                 </div>
                 <div id="new-g" class="control-group">
                     <label class="control-label" for="new" required>新密码：</label>
                     <div class="controls">
-                        <input type="password" id="new" required>
+                        <input type="password" id="new" required style="width: 98%">
                         <span id="new-t" class="help-inline">请输入有效的新密码</span>
                     </div>
                 </div>
@@ -132,11 +132,9 @@
     </section>
 
     <section class="box">
-        <header>
-            <h3>头像</h3>
-        </header>
-        <p><img src="http://gravatar.com/avatar/{{ current_user['hashed_email'] }}?s=250" /></p>
-        讨厌这个矮搓穷的头像？<a href="http://www.gravatar.com">去Gravatar换一个呗。</a>
+        <header><h3>头像</h3></header>
+        <p class="avatar"><img src="http://gravatar.com/avatar/{{ current_user['hashed_email'] }}?s=250" /></p>
+        <a href="http://www.gravatar.com">去换头像</a>
     </section>
 </div>
 <script src='{{ static_url("js/authsetting.js") }}' type="text/javascript"></script>

@@ -3,12 +3,7 @@
 {% block title %}{{ handler.settings['bbs_title'] }} > {{ username }}{% end %}
 
 {% block head %}
-<style>
-    #profile h3,#profile h2
-    {
-        border-bottom:solid medium #dddddd;
-    }
-</style>
+<link rel='stylesheet' href='{{ static_url("css/authinfo.css") }}' type='text/css'/>
 {% end %}
 
 {% block breadcrumb %}
@@ -17,69 +12,67 @@
 {% end %}
 
 {% block body %}
-<div class='span8 offset2'>
+<div class='span10 offset1' id="profile">
     <section class="box">
-        <div id='profile'>
-            <div class='left-side'>
-                <div><img class='reflect' src="http://gravatar.com/avatar/{{ user['hashed_email'] }}?s=160" /></div>
-            </div>
-            <div class='right-side'>
-                <h1>
-                    {{ username }}<small>
-                    {% if username == current_user['username'] %}
-                    <a href="/setting" class="label label-success">编辑</a>
-                    {% elif current_user['username'] in admin_list %}
-                    <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
-                    {% end %}</small>
-                </h1>
-                <h3>用户名</h3>
-                    　{{ username }}
-                <h3>注册时间</h3>
-                    　{{ time_span(user['signtime']) }}
-                {% if 'website' in user and user['website']!='' %}
-                <h3>网站</h3>
-                    　<a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a>
-                {% end %}
-                {% if 'location' in user and user['location']!='' %}
-                <h3>所在地</h3>
-                    　<a href="http://www.google.com/maps?q={{ user['location'] }}">{{ user['location'] }}</a>
-                {% end %}
-                {% if 'twitter' in user and user['twitter']!='' %}
-                <h3>Twitter</h3>
-                    　<a href="http://twitter.com/{{ user['twitter'] }}">{{ user['twitter'] }}</a>
-                {% end %}
-                {% if 'github' in user and user['github']!='' %}
-                <h3>Github</h3>
-                    　<a href="https://github.com/{{ user['github'] }}">{{ user['github'] }}</a>
-                {% end %}
-                <h2>主题<small>共{{ posts.count() }}条</small></h2>
-                <ul class='nice-list'>
-                    {% for post in posts.limit(5) %}
-                    <li>
-                        <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a> <<
+        <div class='left-side'>
+            <div class="avatar"><img src="http://gravatar.com/avatar/{{ user['hashed_email'] }}?s=200" /></div>
+        </div>
+        <div class="right-side">
+            <h1>
+                {{ username }}<small>
+                {% if username == current_user['username'] %}
+                <a href="/setting" class="label label-success">编辑</a>
+                {% elif current_user['username'] in admin_list %}
+                <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
+                {% end %}</small>
+            </h1>
+            <h3>用户名</h3>
+            　{{ username }}
+            <h3>注册时间</h3>
+            　{{ time_span(user['signtime']) }}
+            {% if 'website' in user and user['website']!='' %}
+            <h3>网站</h3>
+            　<a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a>
+            {% end %}
+            {% if 'location' in user and user['location']!='' %}
+            <h3>所在地</h3>
+            　<a href="http://www.google.com/maps?q={{ user['location'] }}">{{ user['location'] }}</a>
+            {% end %}
+            {% if 'twitter' in user and user['twitter']!='' %}
+            <h3>Twitter</h3>
+            　<a href="http://twitter.com/{{ user['twitter'] }}">{{ user['twitter'] }}</a>
+            {% end %}
+            {% if 'github' in user and user['github']!='' %}
+            <h3>Github</h3>
+            　<a href="https://github.com/{{ user['github'] }}">{{ user['github'] }}</a>
+            {% end %}
+            <h2>主题<small>共{{ posts.count() }}条</small></h2>
+            <ul class='nice-list'>
+                {% for post in posts.limit(5) %}
+                <li>
+                    <a href="/topics/{{ post['_id'] }}">{{ post['title'] }}</a> <<
                 <span class='tags'>
                     {% for tag in post['tags'] %}
                     <a href="/tag/{{ tag }}">{{ tag }}</a>
                     {% end %}
                 </span>
-                        {{ time_span(post['posttime']) }}发表
-                    </li>
-                    {% end %}
-                </ul>
-                <h2>回复<small>共{{ comments.count() }}条</small></h2>
-                <ul class='nice-list'>
-                    {% for comment in comments.limit(5) %}
-                    <li>
-                        <a href="/topics/{{ comment['_id'] }}">{{ comment['title'] }}</a> <<
+                    {{ time_span(post['posttime']) }}发表
+                </li>
+                {% end %}
+            </ul>
+            <h2>回复<small>共{{ comments.count() }}条</small></h2>
+            <ul class='nice-list'>
+                {% for comment in comments.limit(5) %}
+                <li>
+                    <a href="/topics/{{ comment['_id'] }}">{{ comment['title'] }}</a> <<
                 <span class='tags'>
                     {% for tag in comment['tags'] %}
                     <a href="/tag/{{ tag }}">{{ tag }}</a>
                     {% end %}
                 </span>
-                    </li>
-                    {% end %}
-                </ul>
-            </div>
+                </li>
+                {% end %}
+            </ul>
         </div>
     </section>
 </div>
