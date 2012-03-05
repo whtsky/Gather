@@ -8,7 +8,7 @@ from config import admin
 from tag import POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
-from common import html_killer
+from common import html_killer,username_finder
 
 class PostHandler(BaseHandler):
 
@@ -97,16 +97,22 @@ class PostViewHandler(BaseHandler):
         self.redirect('/topics/'+str(postid))
 
         if user['twitter_bind'] and user['twitter-sync']:
-            for i in set(html_killer.findall(content)):
-                content = content.replace(i,'')#不知道为什么，直接用sub返回的是空字符串。
-            self.title = content[:100]
+            self.content = content
             self.user = user
             http_client = AsyncHTTPClient()
             http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],postid), self.sync)
 
     def sync(self,request):
+        for i in set(html_killer.findall(self.content)):
+            self.content = self.content.replace(i,'')#不知道为什么，直接用sub返回的是空字符串。
+        for i in set(username_finder.findall(self.content)):
+            user = self.db.users.find_one({'username':i})
+            if user and 'twitter' in user:
+                self.content = self.content.replace(u'@'+i,user['twitter'])
+            else:
+                self.content = self.content.replace(u'@'+i,'')
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
-        api.post_update(tweet=u'%s : %s' % (self.title,request.body))
+        api.post_update(tweet=u'%s : %s' % (self.content[:100],request.body))
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
