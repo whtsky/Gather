@@ -108,7 +108,7 @@ class PostViewHandler(BaseHandler):
         for i in set(username_finder.findall(self.content)):
             user = self.db.users.find_one({'username':i})
             if user and 'twitter' in user:
-                self.content = self.content.replace(u'@'+i,user['twitter'])
+                self.content = self.content.replace(u'@'+i,u'@'+user['twitter'])
             else:
                 self.content = self.content.replace(u'@'+i,'')
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
