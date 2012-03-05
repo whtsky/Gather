@@ -94,7 +94,7 @@
             <section class='box'>
               {% if current_user %}
                 <a href='/user/{{ current_user['username'] }}' class="dark">
-                  <img src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
+                  <img class='avatar' src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
                   <span class="dark user_name">{{ current_user['username'] }}</span>
                 </a>
                 <a href="/setting" class="label label-success">编辑</a>
