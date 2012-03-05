@@ -8,7 +8,7 @@
 {% end %}
 
 {% block body %}
-<div class='span7 offset1'>
+<div class='span8'>
     <section class="box">
         <form class='form-horizontal'>
             {{ xsrf_form_html() }}
@@ -19,57 +19,57 @@
                 <div id="username-g" class="control-group">
                     <label class="control-label" for="email">用户名</label>
                     <div class="controls">
-                        <input class=" disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
+                        <input class="span5 disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
                     </div>
                 </div>
                 <div id="email-g" class="control-group">
                     <label class="control-label" for="email">E-mail</label>
                     <div class="controls">
-                        <input type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
+                        <input class="span5  type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
                     </div>
                 </div>
                 <div id="website-g" class="control-group">
                     <label class="control-label" for="email">个人网址</label>
                     <div class="controls">
-                        <input type="url" id="website" x-webkit-speech value="{{ getvalue(current_user,'website') }}">
+                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ getvalue(current_user,'website') }}">
                     </div>
                 </div>
                 <div id="location-g" class="control-group">
                     <label class="control-label" for="email">所在地</label>
                     <div class="controls">
-                        <input type="text" id="location" x-webkit-speech value="{{ getvalue(current_user,'location') }}">
+                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ getvalue(current_user,'location') }}">
                     </div>
                 </div>
                 <div id="twitter-g" class="control-group">
                     <label class="control-label" for="email">Twitter用户名</label>
                     <div class="controls">
-                        <input type="text" id="twitter" x-webkit-speech value="{{ getvalue(current_user,'twitter') }}">
+                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ getvalue(current_user,'twitter') }}">
                     </div>
                 </div>
                 <div id="github-g" class="control-group">
                     <label class="control-label" for="email">Github用户名</label>
                     <div class="controls">
-                        <input type="text" id="github" x-webkit-speech value="{{ getvalue(current_user,'github') }}">
+                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ getvalue(current_user,'github') }}">
                     </div>
                 </div>
                 <div id="lovetag-g" class="control-group">
                     <label class="control-label" for="email">喜爱标签</label>
                     <div class="controls">
-                        <input type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <input class="span5  type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
                         <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
                     </div>
                 </div>
                 <div id="hatetag-g" class="control-group">
                     <label class="control-label" for="email">厌恶标签</label>
                     <div class="controls">
-                        <input type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                        <input class="span5  type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
                         <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
                     </div>
                 </div>
                 <div id="css-g" class="control-group">
                     <label class="control-label" for="email">自定义CSS</label>
                     <div class="controls">
-                        <textarea id="css">{{ current_user['css'] }}</textarea>
+                        <textarea class="span5"  id="css">{{ current_user['css'] }}</textarea>
                         <p class="help-block">所有页面中都会加载你自定义的CSS</p>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
         </form>
     </section>
 </div>
-<div class='span3'>
+<div class='span4'>
     <section class='box'>
         <form>
             {{ xsrf_form_html() }}
@@ -133,7 +133,7 @@
 
     <section class="box">
         <header><h3>头像</h3></header>
-        <p class="avatar"><img src="http://gravatar.com/avatar/{{ current_user['hashed_email'] }}?s=250" /></p>
+        <p class="avatar"><img src="http://gravatar.com/avatar/{{ current_user['hashed_email'] }}?s=300" /></p>
         <a href="http://www.gravatar.com">去换头像</a>
     </section>
 </div>
