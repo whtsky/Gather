@@ -8,6 +8,8 @@ from config import admin
 from tag import POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
+import re
+html_killer = re.compile('<[^>]+>')
 
 class PostHandler(BaseHandler):
 
@@ -81,18 +83,29 @@ class PostViewHandler(BaseHandler):
     def post(self,postid):
         md = self.get_argument('markdown')
         time_now = int(time())
-        user = self.get_current_user()['username']
+        user = self.get_current_user()
         postid = int(postid)
+        content = md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=postid)
         self.db.posts.update({'_id':postid},
                 {'$push':
                          {'comments':
-                                  {'author':user,
-                                   'content':md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=postid),
+                                  {'author':user['username'],
+                                   'content':content,
                                    'posttime':int(time()),
                                    }
                          },
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
+
+        if user['twitter_bind'] and user['twitter-sync']:
+            self.title = html_killer.sub(content,'')[:100]
+            self.user = user
+            http_client = AsyncHTTPClient()
+            http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],postid), self.sync)
+
+    def sync(self,request):
+        api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
+        api.post_update(tweet=u'%s : %s' % (self.title,request.body))
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
