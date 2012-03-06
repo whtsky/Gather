@@ -17,7 +17,7 @@ class TagCloudModule(tornado.web.UIModule):
 
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
-        posts = self.db.posts.find({'tags':tagname},sort=[('changedtime', -1)])
+        posts = self.db.posts.find({'tags':tagname.lower()},sort=[('changedtime', -1)])
         if posts:
             try:
                 self.render('tag.html',tagname=tagname,posts=posts,
