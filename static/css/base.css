@@ -16,6 +16,9 @@ table.item-list tr {
 table.item-list tr:first-child {
     border-top:none
 }
+table.item-list td {
+    padding:10px;
+}
 table.item-list td td.span{
     padding:10px;
     vertical-align:top
