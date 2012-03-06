@@ -17,5 +17,6 @@ $("#wmd-input").blur(function(){
             md:$("#wmd-input").val()},
         function(data){
             $("#md-preview").html(data);
+            $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
         });
 });
