@@ -103,7 +103,6 @@ class AuthSettingHandler(BaseHandler):
             setting['css'] = self.get_argument('css')
         except:
             pass
-        setting['twitter-sync'] = self.get_argument('twitter_sync') == 'true'
         for x in ('lovetag','hatetag'):
             tags = []
             try:
