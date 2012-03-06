@@ -132,20 +132,33 @@
 {% end %}
 {% end %}
 {% block sidebar %}
+
+{% if len(likely) > 0%}
 <section class="box">
     <header>
         <h3>相关主题</h3>
     </header>
     <ul>
-        {% if len(likely) > 0%}
         {% for x in likely %}
         <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
         {% end %}
-        {% else %}
-        没有相关主题
+    </ul>
+</section>
+{% end %}
+
+{% if authorposts %}
+<section class='box'>
+    <header>
+        <h3>作者其他主题</h3>
+    </header>
+    <ul>
+        {% for x in authorposts %}
+        <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
         {% end %}
     </ul>
 </section>
+{% end %}
+
 <script src='{{ static_url("js/highlight.pack.js") }}' type="text/javascript"></script>
 <script src='{{ static_url("js/postview.js") }}' type="text/javascript"></script>
 {% end %}

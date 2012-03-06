@@ -77,8 +77,9 @@ class PostViewHandler(BaseHandler):
         comments = post['comments']
         for i in range(len(comments)):
             comments[i]['location'] =  str(i+1)
+        authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
         self.render('postview.html',time_span=time_span,
-                    post=post,admin_list=admin,comments=comments,likely=likelyposts)
+                    post=post,admin_list=admin,comments=comments,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
