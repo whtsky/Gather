@@ -72,12 +72,13 @@ class PostViewHandler(BaseHandler):
                 likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
         del likelylist[post['_id']]
         likelys = sorted(likelylist.items(),key=lambda x: x[1])
-        likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys]
+        likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
         del likelys,likelylist
         comments = post['comments']
         for i in range(len(comments)):
             comments[i]['location'] =  str(i+1)
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
+        authorposts = [_ for _ in authorposts]
         self.render('postview.html',time_span=time_span,
                     post=post,admin_list=admin,comments=comments,likely=likelyposts,authorposts=authorposts)
 
