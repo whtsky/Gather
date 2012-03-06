@@ -7,7 +7,7 @@ var speech_fake=function() {
 };
 
 if(isChrome){
-    $('#markdown-commands').html($('#markdown-commands').html() + '<div class="left"><input id="wmd-input_speech" class="btn" x-webkit-speech onwebkitspeechchange="speech_fake();" onclick="this.blur();" lang="zh-CN"/></div>');
+    $('#markdown-commands').html('<div class="left"><input id="wmd-input_speech" class="btn" x-webkit-speech onwebkitspeechchange="speech_fake();" onclick="this.blur();" lang="zh-CN"/></div>'+$('#markdown-commands').html());
     $('#markdown-commands input').blur(function(){
       this.value="";
     });
