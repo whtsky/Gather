@@ -48,6 +48,7 @@ def removepost(fliter,db):
     for post in db.posts.find(fliter):
         db.users.update({'postmark':post['_id']},
                 {'$pull':{'postmark':post['_id']}},multi=True)
+        db.users.update({'notification.postid':post['_id']},{'$pull':{'notification':{'postid':post['_id']}}},multi=True)
         for tag in post['tags']:
             db.tags.update({'name':tag},{'$inc':{'count':-1}})
     db.posts.remove(fliter)

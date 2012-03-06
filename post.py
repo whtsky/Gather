@@ -64,7 +64,8 @@ class PostViewHandler(BaseHandler):
                 if m['postid'] == postid and m['read'] == False:
                     m['read'] = True
                     change = True
-            self.db.users.save(user)
+            if change:
+                self.db.users.update({'username':user['username']},{'$set':{'notification':user['notification']}})
         likelylist = {}
         for tag in post['tags']:
             for p in self.db.posts.find({'tags':tag}):
