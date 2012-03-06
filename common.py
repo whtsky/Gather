@@ -67,17 +67,20 @@ class ErrorHandler(BaseHandler):
         self.render('404.html')
 
 def time_span(t):
+    current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
     timecha = int(time.time()) - t
     if timecha < 60:
-        return str(timecha)+u'秒前'
+        describe_time = str(timecha)+u'秒前'
     elif timecha < 3600:
-        return str(timecha/60)+u'分钟前'
+        describe_time = str(timecha/60)+u'分钟前'
     elif timecha < 86400:
-        return str(timecha/3600)+u'小时前'
+        describe_time = str(timecha/3600)+u'小时前'
     elif timecha < 1296000:
-        return str(timecha/86400)+u'天前'
+        describe_time = str(timecha/86400)+u'天前'
     else:
-        return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
+        describe_time = current_time
+
+    return u'<span title="%s">%s</span>' % (current_time,describe_time)
 
 def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     #滤去html标签
