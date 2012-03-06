@@ -95,14 +95,15 @@
     <table id="comments" class='item-list'>
         {% for comment in comments %}
         <tr>
+            {% set replyuser = db.users.find_one({"username":comment["author"]}) %}
             <td class='avatar'>
-                <img src="http://gravatar.com/avatar/{{ db.users.find_one({'username':comment['author']})["hashed_email"] }}?s=48" /
+                <img src="http://gravatar.com/avatar/{{ replyuser["hashed_email"] }}?s=48" /
             </td>
             <td id="reply-{{ comment['location'] }}">
                 <article>
                     <header>
                         <div class='left'>
-                            <a href="/user/{{ comment['author'] }}">{{ comment['author'] }}</a>
+                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ getvalue(replyuser,'location') }}</div>" data-content="{{ getvalue(replyuser,'words') }}">{{ comment['author'] }}</a>
                         </div>
                         <div class='right'>
                             #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
@@ -119,6 +120,7 @@
             </td>
         </tr>
         {% end %}
+        <script src='{{ static_url("js/popover-run.js") }}'></script>
     </table>
 </section>
 {% end %}

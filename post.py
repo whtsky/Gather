@@ -1,6 +1,6 @@
 #coding=utf-8
 
-from common import BaseHandler,time_span,md_convert
+from common import BaseHandler,time_span,md_convert,getvalue
 import tornado.web
 from time import time
 from tornado.escape import json_encode,xhtml_escape
@@ -79,7 +79,7 @@ class PostViewHandler(BaseHandler):
             comments[i]['location'] =  str(i+1)
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
         authorposts = [_ for _ in authorposts]
-        self.render('postview.html',time_span=time_span,
+        self.render('postview.html',time_span=time_span,getvalue=getvalue,
                     post=post,admin_list=admin,comments=comments,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
