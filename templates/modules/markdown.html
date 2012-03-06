@@ -12,7 +12,13 @@
             <div id="wmd-button-bar"></div>
             <textarea style='width:98%;' class="wmd-input" id="wmd-input" name="markdown" rows='8' placeholder="请输入内容" x-webkit-speech required></textarea>
             <div id="markdown-commands">
-                <button id='submit' class='btn'>发表</button><small class="col_fade">Ctrl+Enter 快速发表</small>
+                <div class="right">
+                {% if current_user['twitter_bind'] %}
+                同步到Twitter<input type="checkbox" name="twitter-sync" checked value="yes">
+                {% end %}
+                <small class="col_fade">Ctrl+Enter 快速发表</small>
+                <button id='submit' class='btn'>发表</button>
+                </div>
             </div>
         </div>
         <div id='preview' class='tab-pane'>

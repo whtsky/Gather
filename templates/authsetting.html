@@ -83,20 +83,6 @@
                     {% end %}
                     </div>
                 </div>
-                {% if current_user['twitter_bind'] %}
-                <div id="twitter-sync-g" class="control-group">
-                    <label class="control-label" for="twitter-sync">Twitter同步</label>
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" id="twitter-sync" {% if current_user['twitter-sync'] %}checked {% end %}value="yes">
-                        </label>
-                    </div>
-                </div>
-                {% else %}
-                <div class="hide">
-                    <input type="checkbox" id="twitter-sync">
-                </div>
-                {% end %}
                 <div class="form-actions">
                     <button id='submit' class='btn btn-primary'>提交</button>
                 </div>

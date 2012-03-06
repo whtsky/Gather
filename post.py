@@ -43,7 +43,7 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
-        if user['twitter_bind'] and user['twitter-sync']:
+        if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.title = title
             self.user = user
             http_client = AsyncHTTPClient()
@@ -99,7 +99,7 @@ class PostViewHandler(BaseHandler):
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
 
-        if user['twitter_bind'] and user['twitter-sync']:
+        if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content
             self.user = user
             http_client = AsyncHTTPClient()
