@@ -76,7 +76,7 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        user = getuser(username)
+        user = getuser(username,self.db,self.mc)
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
