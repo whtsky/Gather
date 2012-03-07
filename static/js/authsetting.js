@@ -45,6 +45,7 @@ $("#submit").click(function(){
             hatetag:$("#hatetag").val(),
             lovetag:$("#lovetag").val(),
             css:$('#css').val(),
+            words:$("#words").val(),
             github:$("#github").val()},
         function(data){
             if(data.status=="success")

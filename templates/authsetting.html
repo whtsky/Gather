@@ -31,25 +31,25 @@
                 <div id="website-g" class="control-group">
                     <label class="control-label" for="email">个人网址</label>
                     <div class="controls">
-                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website') }}">
+                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
                     </div>
                 </div>
                 <div id="location-g" class="control-group">
                     <label class="control-label" for="email">所在地</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location') }}">
+                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
                     </div>
                 </div>
                 <div id="twitter-g" class="control-group">
                     <label class="control-label" for="email">Twitter用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter') }}">
+                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
                     </div>
                 </div>
                 <div id="github-g" class="control-group">
                     <label class="control-label" for="email">Github用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github') }}">
+                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
                     </div>
                 </div>
                 <div id="lovetag-g" class="control-group">
@@ -67,10 +67,17 @@
                     </div>
                 </div>
                 <div id="css-g" class="control-group">
-                    <label class="control-label" for="email">自定义CSS</label>
+                    <label class="control-label" for="css">自定义CSS</label>
                     <div class="controls">
                         <textarea class="span5"  id="css">{{ current_user['css'] }}</textarea>
                         <p class="help-block">所有页面中都会加载你自定义的CSS</p>
+                    </div>
+                </div>
+                <div id="words-g" class="control-group">
+                    <label class="control-label" for="words">自我介绍</label>
+                    <div class="controls">
+                        <textarea class="span5"  id="words">{{ current_user.setdefault('words','') }}</textarea>
+                        <p class="help-block">帖子或回复列表中鼠标悬停到用户名上时会显示自我介绍</p>
                     </div>
                 </div>
                 <div id="twitter-bind-g" class="control-group">

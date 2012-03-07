@@ -103,7 +103,7 @@
                 <article>
                     <header>
                         <div class='left'>
-                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location') }}</div>" data-content="{{ replyuser.setdefault('words') }}">{{ comment['author'] }}</a>
+                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ comment['author'] }}</a>
                         </div>
                         <div class='right'>
                             #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}

@@ -2,8 +2,9 @@
     <tbody>
     {% for post in posts %}
     <tr>
+        {% set replyuser = getuser(post["author"],db,mc) %}
         <td class='avatar'>
-            <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ getuser(post["author"],db,mc)["hashed_email"] }}?s=48' /></a>
+            <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ replyuser["hashed_email"] }}?s=48' /></a>
         </td>
         <td>
             <h3>
@@ -15,15 +16,20 @@
             <a href="/tag/{{ tag }}">{{ tag }}</a>
             {% end %}
             </span>
-            <a href="/user/{{ post['author'] }}">{{ post['author'] }}</a>于{{ time_span(post['posttime']) }}
+            <a href="/user/{{ post['author'] }}" rel="popover" title="{{ post['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ post['author'] }}</a>
+            于{{ time_span(post['posttime']) }}
             {% if len(post['comments']) > 0 %}
-            ,<a href="/user/{{ post['comments'][-1]['author'] }}">{{ post['comments'][-1]['author'] }}</a>回复于{{ time_span(post['comments'][-1]['posttime']) }}
+            {% set replyuser = getuser(post['comments'][-1]['author'],db,mc) %}
+            ,<a href="/user/{{ replyuser['username'] }}" rel="popover" title="{{ replyuser['username'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ replyuser['username'] }}</a>
+            回复于{{ time_span(post['comments'][-1]['posttime']) }}
             {% end %}
 
         </td>
         <td class='reply-count last'>
             <a href="/topics/{{ post['_id'] }}#reply-{{ len(post['comments']) }}">{{ len(post['comments']) }}</a>
         </td>
-        {% end %}
+    </tr>
+    {% end %}
+    <script src='{{ static_url("js/popover-run.js") }}'></script>
     </tbody>
 </table>

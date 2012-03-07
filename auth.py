@@ -93,7 +93,7 @@ class AuthSettingHandler(BaseHandler):
     @authenticated
     def post(self):
         setting = self.get_current_user()
-        for x in ('email','website','location','twitter','github'):
+        for x in ('email','website','location','twitter','github','words'):
             try:
                 setting[x] = xhtml_escape(self.get_argument(x))
             except:
