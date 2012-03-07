@@ -22,7 +22,10 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         user = self.get_secure_cookie('user')
-        return getuser(user,self.db,self.mc)
+        if user:
+            return getuser(user,self.db,self.mc)
+        else:
+            return None
 
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html')
