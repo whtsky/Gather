@@ -1,9 +1,9 @@
 #coding=utf-8
 
-from common import BaseHandler,time_span,md_convert,getvalue
+from common import BaseHandler,time_span,md_convert,getuser
 import tornado.web
 from time import time
-from tornado.escape import json_encode,xhtml_escape
+from tornado.escape import xhtml_escape
 from config import admin
 from tag import POST_PER_PAGE
 import twitter_oauth
@@ -65,29 +65,34 @@ class PostViewHandler(BaseHandler):
                     m['read'] = True
                     change = True
             if change:
+                self.mc['user:%s' % user['username']] = user
                 self.db.users.update({'username':user['username']},{'$set':{'notification':user['notification']}})
-        likelylist = {}
-        for tag in post['tags']:
-            for p in self.db.posts.find({'tags':tag}):
-                likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
-        del likelylist[post['_id']]
-        likelys = sorted(likelylist.items(),key=lambda x: x[1])
-        likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
-        del likelys,likelylist
+        try:
+            likelyposts = self.mc['likely:%s' % postid]
+        except KeyError:
+            likelylist = {}
+            for tag in post['tags']:
+                for p in self.db.posts.find({'tags':tag}):
+                    likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
+            del likelylist[post['_id']]
+            likelys = sorted(likelylist.items(),key=lambda x: x[1])
+            likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
+            del likelys,likelylist
+            self.mc.set('likely:%s' % postid,likelyposts,time=43200)
         comments = post['comments']
         for i in range(len(comments)):
             comments[i]['location'] =  str(i+1)
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
         authorposts = [_ for _ in authorposts]
-        self.render('postview.html',time_span=time_span,getvalue=getvalue,
-                    post=post,admin_list=admin,comments=comments,likely=likelyposts,authorposts=authorposts)
+        self.render('postview.html',time_span=time_span,
+                    post=post,admin_list=admin,comments=comments,getuser=getuser,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
         time_now = int(time())
         user = self.get_current_user()
         postid = int(postid)
-        content = md_convert(md,notice=True,time=time_now,user=user,db=self.db,postid=postid)
+        content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
         self.db.posts.update({'_id':postid},
                 {'$push':
                          {'comments':
@@ -111,7 +116,7 @@ class PostViewHandler(BaseHandler):
         for i in set(username_finder.findall(self.content)):
             user = self.db.users.find_one({'username':i})
             if user and 'twitter' in user:
-                self.content = self.content.replace(u'@'+i,u'@'+user['twitter'])
+                self.content = self.content.replace(u'@'+i,u' @'+user['twitter'])
             else:
                 self.content = self.content.replace(u'@'+i,'')
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
@@ -124,15 +129,15 @@ class MarkDownPreViewHandler(BaseHandler):
 class TopicsViewHandler(BaseHandler):
     def get(self):
         try:
-            self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-                limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
+            p = int(self.get_argument('p'))
         except:
-            self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-                limit=POST_PER_PAGE,time_span=time_span,p=1)
+            p = 1
+        self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
+            limit=POST_PER_PAGE,time_span=time_span,getuser=getuser,p=p)
 
 class PostListModule(tornado.web.UIModule):
-    def render(self, db,posts):
-        return self.render_string("modules/postlist.html", db=db,posts=posts,time_span=time_span,admin_list=admin)
+    def render(self, getuser, db, mc, posts):
+        return self.render_string("modules/postlist.html", getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin)
 
 class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
@@ -150,4 +155,4 @@ class MarkPostHandler(BaseHandler):
 class MyMarkedPostHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('markedpost.html')
+        self.render('markedpost.html',getuser=getuser)

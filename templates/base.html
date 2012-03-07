@@ -98,19 +98,13 @@
                 </a>
                 <a href="/setting" class="label label-success">编辑</a>
                 <div class="row-fluid center">
-                  <div class='span4'>
-                    <a href="/my/tag">
-                      <h3><span id="markedtag">{{ len(current_user['tagmark']) }}</span></h3>
-                      Tag收藏
-                    </a>
-                  </div>
-                <div class='span4'>
+                <div class='span6'>
                   <a href="/my/post">
                     <h3><span id="markedpost">{{ len(current_user['postmark']) }}</span></h3>
                     主题收藏
                   </a>
                 </div>
-                <div class='span4'>
+                <div class='span6'>
                   <a href='/my/notifications'>
                     <h3>{{ unread }}</h3>
                     未读通知
@@ -134,7 +128,7 @@
             {% block tagcloud %}
             <section class='box'>
               <header>标签云</header>
-              {{ modules.TagCloud(db,limit=10) }}
+              {{ modules.TagCloud(db,mc,limit=10) }}
             </section>
             {% end %}
           </div>

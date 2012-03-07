@@ -31,25 +31,25 @@
                 <div id="website-g" class="control-group">
                     <label class="control-label" for="email">个人网址</label>
                     <div class="controls">
-                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ getvalue(current_user,'website') }}">
+                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website') }}">
                     </div>
                 </div>
                 <div id="location-g" class="control-group">
                     <label class="control-label" for="email">所在地</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ getvalue(current_user,'location') }}">
+                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location') }}">
                     </div>
                 </div>
                 <div id="twitter-g" class="control-group">
                     <label class="control-label" for="email">Twitter用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ getvalue(current_user,'twitter') }}">
+                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter') }}">
                     </div>
                 </div>
                 <div id="github-g" class="control-group">
                     <label class="control-label" for="email">Github用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ getvalue(current_user,'github') }}">
+                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github') }}">
                     </div>
                 </div>
                 <div id="lovetag-g" class="control-group">

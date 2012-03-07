@@ -9,6 +9,6 @@
 
 {% block content %}
 <section class="box">
-    {{ modules.Post(db=db,posts=[db.posts.find_one({'_id':x}) for x in reversed(current_user['postmark'])]) }}
+    {{ modules.Post(getuser=getuser,db=db,mc=mc,posts=[db.posts.find_one({'_id':x}) for x in reversed(current_user['postmark'])]) }}
 </section>
 {% end %}

@@ -60,7 +60,7 @@
                         {% end %}
                     </td>
                     <td class='avatar'>
-                        <img src='http://gravatar.com/avatar/{{ db.users.find_one({"username":post["author"]})["hashed_email"] }}?s=72' /></a>
+                        <img src='http://gravatar.com/avatar/{{ getuser(post["author"],db,mc)["hashed_email"] }}?s=72' /></a>
                     </td>
                 </tr>
                 </tbody>
@@ -79,7 +79,7 @@
             </div>
             <div class="right">
                 <a href="#;" onclick="window.open('https://twitter.com/share?url='+window.location.href+'&related=v2ex&hashtags=share&text={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="label">Tweet</a>
-                <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=700,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="label">Douban</a>
+                <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban'setdefault('toolbar=0,resizable=1,scrollbars=yes,status=1,width=700,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="label">Douban</a>
                 <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="label">Weibo</a>
                 <a href="#;" onclick="window.open('http://www.instapaper.com/edit?url='+window.location.href+'&title={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'instapaper.com');" class="label">InstaPaper</a>
                 {% if current_user and current_user['username'] in admin_list %}
@@ -95,7 +95,7 @@
     <table id="comments" class='item-list'>
         {% for comment in comments %}
         <tr>
-            {% set replyuser = db.users.find_one({"username":comment["author"]}) %}
+            {% set replyuser = getuser(comment["author"],db,mc) %}
             <td class='avatar'>
                 <img src="http://gravatar.com/avatar/{{ replyuser["hashed_email"] }}?s=48" /
             </td>
@@ -103,7 +103,7 @@
                 <article>
                     <header>
                         <div class='left'>
-                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ getvalue(replyuser,'location') }}</div>" data-content="{{ getvalue(replyuser,'words') }}">{{ comment['author'] }}</a>
+                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location') }}</div>" data-content="{{ replyuser.setdefault('words') }}">{{ comment['author'] }}</a>
                         </div>
                         <div class='right'>
                             #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}

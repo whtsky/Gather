@@ -13,14 +13,16 @@ import os
 define('port', default=8888, help='run on the given port', type=int)
 define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
+define('memcached_host', default=['127.0.0.1'],help='memcached host')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler,NotificationHandler
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
-from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule,MarkTagHandler,MyMarkedTagHandler
+from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
 from common import HomeHandler,MyHomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,consumer_key,consumer_secret
+import pylibmc
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -37,7 +39,6 @@ class Application(tornado.web.Application):
 
             (r'/my',MyHomeHandler),
             (r'/my/post',MyMarkedPostHandler),
-            (r'/my/tag',MyMarkedTagHandler),
             (r'/my/notifications',NotificationHandler),
 
             (r'/topics',TopicsViewHandler),
@@ -48,7 +49,6 @@ class Application(tornado.web.Application):
             (r'/tag', TagCloudHandler),
             (r'/tag/([^ ,/]*?)', TagViewHandler),
             (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
-            (r'/tag/([^ ,/]*?)/mark', MarkTagHandler),
 
             (r'/admin/user/kill/(.*?)',RemoveUserHandler),
             (r'/admin/post/kill/(\d+)',RemovePostHandler),
@@ -83,6 +83,8 @@ class Application(tornado.web.Application):
 
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
+
+        self.mc = pylibmc.Client(options.memcached_host,binary=True)
         
         if not self.db.settings.find({'post_id':{'$lte':0}}):
             self.db.settings.save({'post_id':1})

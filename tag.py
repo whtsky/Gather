@@ -1,30 +1,36 @@
 #coding=utf-8
 
 import math
-from common import BaseHandler,time_span
+from common import BaseHandler,time_span,getuser
 import time
 import tornado.web
 
 POST_PER_PAGE = 20
 
 class TagCloudModule(tornado.web.UIModule):
-    def render(self, db,limit=False):
-        tags = [ tag for tag in db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)]
-        html = []
-        for tag in tags:
-            html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
-        return ' '.join(html)
+    def render(self, db, mc, limit=False):
+        try:
+            html = mc['tagcloud:%s' % limit]
+        except KeyError:
+            tags = [ tag for tag in db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)]
+            html = []
+            for tag in tags:
+                html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
+            html =  ' '.join(html)
+            mc.set('tagcloud:%s' % limit,html,time=1800)
+        return html
 
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
         posts = self.db.posts.find({'tags':tagname.lower()},sort=[('changedtime', -1)])
         if posts:
             try:
-                self.render('tag.html',tagname=tagname,posts=posts,
-                    limit=POST_PER_PAGE,time_span=time_span,p=int(self.get_argument('p')))
+                p = int(self.get_argument('p'))
             except:
-                self.render('tag.html',tagname=tagname,posts=posts,
-                    limit=POST_PER_PAGE,time_span=time_span,p=1)
+                p = 1
+            self.render('tag.html',tagname=tagname,posts=posts,
+                limit=POST_PER_PAGE,time_span=time_span,getuser=getuser,p=p)
+
         else:
             raise tornado.web.HTTPError(404)
 
@@ -38,21 +44,3 @@ class TagFeedHandler(BaseHandler):
         url = '/tag/'+tagname
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name=tagname,
                     time=time,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]))
-
-class MarkTagHandler(BaseHandler):
-    @tornado.web.authenticated
-    def post(self,tagname):
-        username = self.get_current_user()['username']
-        user = self.db.users.find_one({'username':username})
-        if tagname in user['tagmark']:
-            user['tagmark'].remove(tagname)
-            self.db.users.save(user)
-        else:
-            self.db.users.update({'username':username},
-                    {'$addToSet':{'tagmark':tagname}})
-        self.write('done.')
-
-class MyMarkedTagHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        self.render('markedtag.html')

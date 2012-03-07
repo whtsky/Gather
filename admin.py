@@ -8,6 +8,7 @@ class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
         self.db.users.remove({'username':username})
+        del self.mc['user:%s' % username.encode('utf-8')]
         removepost(fliter={'author':username},db=self.db)
         self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)

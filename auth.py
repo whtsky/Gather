@@ -1,6 +1,6 @@
 #coding=utf-8
 
-from common import BaseHandler,getvalue,time_span
+from common import BaseHandler,time_span,getuser
 from hashlib import sha1,md5
 from tornado.escape import json_encode, xhtml_escape
 import tornado.web
@@ -76,7 +76,7 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        user = self.db.users.find_one({'username':username})
+        user = getuser(username)
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
@@ -88,17 +88,16 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()['username']}),
-            getvalue=getvalue)
+        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()['username']}))
 
     @authenticated
     def post(self):
-        setting = {}
+        setting = self.get_current_user()
         for x in ('email','website','location','twitter','github'):
             try:
-              setting[x] = xhtml_escape(self.get_argument(x))
+                setting[x] = xhtml_escape(self.get_argument(x))
             except:
-                pass
+                setting[x] = ''
         try:
             setting['css'] = self.get_argument('css')
         except:
@@ -117,6 +116,7 @@ class AuthSettingHandler(BaseHandler):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
         setting['hashed_email'] = md5(setting['email']).hexdigest()
+        self.mc['user:%s' % setting['username'].encode('utf-8')] = setting
         self.db.users.update({'username':self.get_current_user()['username']},{'$set':setting})
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
@@ -128,6 +128,7 @@ class AuthChangePasswordHandler(BaseHandler):
         if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}):
             self.db.users.update({'username':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
             self.write(json_encode({'status':'success','message':'修改密码成功'}))
+            del self.mc['user:%s' % username.encode('utf-8')]
         else:
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
 
@@ -139,5 +140,6 @@ class NotificationHandler(BaseHandler):
     def post(self):
         u = self.get_current_user()
         u['notification'] = []
+        self.mc['user:%s' % u['username'].encode('utf-8')] = u
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))

@@ -19,7 +19,7 @@
 {% block content %}
 <section class='box'>
     共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-    {{ modules.Post(db=db,posts=posts.skip((p-1)*limit).limit(limit)) }}
+    {{ modules.Post(getuser=getuser,db=db,mc=mc,posts=posts.skip((p-1)*limit).limit(limit)) }}
     {% if p!=1 %}
     <a href='/topics?p={{ p-1 }}' class="btn left">上一页</a>
     {% end %}
@@ -28,7 +28,7 @@
     {% end %}
 </section>
 <!-- 给蜘蛛爬 -->
-<div style="display: none;">
+<div class="hide">
     {% for x in range(1,posts.count()/limit+1) %}
     <a href='/topics?p={{ x }}'>第{{ x }}页</a>
     {% end %}
