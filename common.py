@@ -8,7 +8,7 @@ from tornado.escape import xhtml_escape
 from emoji import emojis
 
 html_killer = re.compile('<[^>]*>')
-url_replace = re.compile(u'((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])')
+url_replace = re.compile(u'[^ "]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])[^ "]')
 username_finder = re.compile(u'@([\u4e00-\u9fa5A-Za-z0-9]+)')
 emoji_finder = re.compile(u'(:[^:]+:)')
 
@@ -101,7 +101,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     mentions = []
 
     for x in set(url_replace.findall(txt)):
-        txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
+        if '.png' in x or '.jpg' in x or '.gif' in x:
+            txt = txt.replace(x,u'<img src="%s">%s' % (x[:-1],x[-1]))
+        else:
+            txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
 
     for u in set(username_finder.findall(txt)):
         mentions.append(u)
