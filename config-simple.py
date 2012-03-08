@@ -12,3 +12,5 @@ config = dict(
 #twitter
 consumer_key = ''
 consumer_secret = ''
+
+google_analytics = ''
