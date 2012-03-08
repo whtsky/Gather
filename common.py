@@ -5,10 +5,12 @@ import time
 from markdown import Markdown
 import re
 from tornado.escape import xhtml_escape
+from emoji import emojis
 
 html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(u'((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])')
 username_finder = re.compile(u'@([\u4e00-\u9fa5A-Za-z0-9]+)')
+emoji_finder = re.compile(u'(:[^:]+:)')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
 
@@ -118,6 +120,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
                                }
                      },
             })
+
+    for emoji in set(emoji_finder.findall(txt)):
+        if emoji in emojis:
+            txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
     return txt
 

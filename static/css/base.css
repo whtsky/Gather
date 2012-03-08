@@ -184,3 +184,7 @@ table {
 .avatar img{
     border-radius: 1em;
 }
+.emoji{
+    width: 20px;
+    height: 20px;
+}
