@@ -26,8 +26,6 @@
                 <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
                 {% end %}</small>
             </h1>
-            <h3>用户名</h3>
-            　{{ username }}
             <h3>注册时间</h3>
             　{{ time_span(user['signtime']) }}
             {% if 'website' in user %}

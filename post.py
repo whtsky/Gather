@@ -143,13 +143,13 @@ class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,postid):
         post = int(postid)
-        username = self.get_current_user()['username']
-        user = self.db.users.find_one({'username':username})
+        user = self.get_current_user()
         if post in user['postmark']:
-            self.db.users.update({'username':username},{'$pull':{'postmark':post}})
+            user['postmark'].remove(post)
         else:
-            self.db.users.update({'username':username},
-                    {'$addToSet':{'postmark':post}})
+            user['postmark'].append(post)
+        self.db.users.save(user)
+        self.mc['user:%s' % user['username'].encode('utf-8')] = user
         self.write('done.')
 
 class MyMarkedPostHandler(BaseHandler):
