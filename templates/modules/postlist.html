@@ -46,9 +46,9 @@
 
 {% if p %}
 {% if p!=1 %}
-<a href='{{ tagname }}?p={{ p-1 }}' class="btn left">上一页</a>
+<a href='{{ "".join(url_escape(request.uri).split("?")[0:-1]) }}?p={{ p-1 }}' class="btn left">上一页</a>
 {% end %}
 {% if p*limit < count %}
-<a href='{{ tagname }}?p={{ p+1 }}' class="btn right">下一页</a>
+<a href='{{ "".join(url_escape(request.uri).split("?")[0:-1]) }}?p={{ p+1 }}' class="btn right">下一页</a>
 {% end %}
 {% end %}
