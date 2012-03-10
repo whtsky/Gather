@@ -31,7 +31,7 @@ class BaseHandler(tornado.web.RequestHandler):
             return None
 
     def get_error_html(self,status_code, **kwargs):
-        return self.render_string('404.html')
+        return self.render_string('404.html',google_analytics=google_analytics)
 
     def render(self, template_name, **kwargs):
         user = self.get_current_user()
