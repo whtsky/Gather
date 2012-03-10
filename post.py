@@ -65,7 +65,6 @@ class PostViewHandler(BaseHandler):
                     m['read'] = True
                     change = True
             if change:
-                self.mc['user:%s' % user['username']] = user
                 self.db.users.update({'username':user['username']},{'$set':{'notification':user['notification']}})
         try:
             likelyposts = self.mc['likely:%s' % postid]
