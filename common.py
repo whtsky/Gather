@@ -26,7 +26,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         user = self.get_secure_cookie('user')
         if user:
-            return getuser(user,self.db,self.mc)
+            return self.db.users.find_one({'username':user})
         else:
             return None
 
@@ -37,13 +37,10 @@ class BaseHandler(tornado.web.RequestHandler):
         user = self.get_current_user()
         unread = 0
         if user:
-            try:
-                unread = self.mc['unread:%s' % user['_id'] ]
-            except KeyError:
-                for x in user['notification']:
-                    if not x['read']:
-                        unread += 1
-                self.mc['unread:%s' % user['_id'] ] = unread
+            for x in user['notification']:
+                if not x['read']:
+                    unread += 1
+            self.mc['unread:%s' % user['_id'] ] = unread
         tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
 
 class HomeHandler(BaseHandler):

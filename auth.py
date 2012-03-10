@@ -141,6 +141,5 @@ class NotificationHandler(BaseHandler):
         u = self.get_current_user()
         u['notification'] = []
         self.mc['user:%s' % u['username'].encode('utf-8')] = u
-        self.mc['unread:%s' % u['_id'] ] = 0
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))
