@@ -15,7 +15,7 @@ class TagCloudModule(tornado.web.UIModule):
             tags = [ tag for tag in db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)]
             html = []
             for tag in tags:
-                html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']+1))*14+8,tag['name']))
+                html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']))*14+8,tag['name']))
             html =  ' '.join(html)
             mc.set('tagcloud:%s' % limit,html,time=1800)
         return html

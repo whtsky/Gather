@@ -117,7 +117,7 @@ class PostViewHandler(BaseHandler):
             if user and 'twitter' in user:
                 self.content = self.content.replace(u'@'+i,u' @'+user['twitter'])
             else:
-                self.content = self.content.replace(u'@'+i,'')
+                self.content = self.content.replace(u'@'+i,i)
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
         api.post_update(tweet=u'%s : %s' % (self.content[:100],request.body))
 
