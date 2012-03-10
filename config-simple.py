@@ -8,6 +8,7 @@ config = dict(
     cookie_secret='ooxx',
     debug=False,
 )
+POST_PER_PAGE = 20
 
 #twitter
 consumer_key = ''

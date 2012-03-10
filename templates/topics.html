@@ -18,19 +18,6 @@
 
 {% block content %}
 <section class='box'>
-    共{{ posts.count() }}条主题，当前显示{{ (p-1)*limit+1 }} - {{ p*limit < posts.count() and p*limit or posts.count() }}
-    {{ modules.Post(getuser=getuser,db=db,mc=mc,posts=posts.skip((p-1)*limit).limit(limit)) }}
-    {% if p!=1 %}
-    <a href='/topics?p={{ p-1 }}' class="btn left">上一页</a>
-    {% end %}
-    {% if p*limit < posts.count() %}
-    <a href='/topics?p={{ p+1 }}' class="btn right">下一页</a>
-    {% end %}
+    {{ modules.Post(getuser=getuser,db=db,mc=mc,posts=posts,p=p) }}
 </section>
-<!-- 给蜘蛛爬 -->
-<div class="hide">
-    {% for x in range(1,posts.count()/limit+1) %}
-    <a href='/topics?p={{ x }}'>第{{ x }}页</a>
-    {% end %}
-</div>
 {% end %}

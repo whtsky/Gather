@@ -4,8 +4,7 @@ from common import BaseHandler,time_span,md_convert,getuser
 import tornado.web
 from time import time
 from tornado.escape import xhtml_escape
-from config import admin
-from tag import POST_PER_PAGE
+from config import admin,POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
 from common import html_killer,username_finder
@@ -132,11 +131,16 @@ class TopicsViewHandler(BaseHandler):
         except:
             p = 1
         self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-            limit=POST_PER_PAGE,time_span=time_span,getuser=getuser,p=p)
+            time_span=time_span,getuser=getuser,p=p)
 
 class PostListModule(tornado.web.UIModule):
-    def render(self, getuser, db, mc, posts):
-        return self.render_string("modules/postlist.html", getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin)
+    def render(self, getuser, db, mc, posts,p=None):
+        args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin,p=p)
+        if p:
+            args['count'] = posts.count()
+            args['posts'] = args['posts'].skip((p-1)*POST_PER_PAGE).limit(POST_PER_PAGE)
+            args['limit'] = POST_PER_PAGE
+        return self.render_string("modules/postlist.html",**args)
 
 class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated

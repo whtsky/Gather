@@ -5,8 +5,6 @@ from common import BaseHandler,time_span,getuser
 import time
 import tornado.web
 
-POST_PER_PAGE = 20
-
 class TagCloudModule(tornado.web.UIModule):
     def render(self, db, mc, limit=False):
         try:
@@ -29,7 +27,7 @@ class TagViewHandler(BaseHandler):
             except:
                 p = 1
             self.render('tag.html',tagname=tagname,posts=posts,
-                limit=POST_PER_PAGE,time_span=time_span,getuser=getuser,p=p)
+                time_span=time_span,getuser=getuser,p=p)
 
         else:
             raise tornado.web.HTTPError(404)
