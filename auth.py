@@ -9,7 +9,7 @@ from config import admin
 import time
 from re import compile
 
-username_check = compile(u'([\u4e00-\u9fa5A-Za-z0-9]+)')
+username_check = compile(u'([\u4e00-\u9fa5A-Za-z0-9]{1,15})')
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
@@ -28,8 +28,7 @@ class AuthSignupHandler(BaseHandler):
         email = self.get_argument('email')
         account = self.db.users
         password = hashpassword(username,password)
-        assert len(username)<16
-        #assert username_check.findall(username)[0]==username
+        assert username_check.findall(username)[0]==username
         if account.find_one({'username':username}) or account.find_one({'email':email}):
             message = '用户名或邮箱地址重复'
             status = 'error'

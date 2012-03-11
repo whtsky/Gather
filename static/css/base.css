@@ -188,3 +188,6 @@ table {
     width: 20px;
     height: 20px;
 }
+img {
+    max-width:100%
+}

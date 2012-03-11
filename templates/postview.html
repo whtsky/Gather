@@ -47,13 +47,13 @@
                                 <h3>修改Tags</h3>
                             </div>
                             <form action="/admin/post/changetag/{{ post['_id'] }}" method='post'>
-                            <div class="modal-body">
-                                <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
-                            </div>
-                            <div class="modal-footer">
-                                {{ xsrf_form_html() }}
-                                <button type='submit' class="btn btn-danger">更改Tags</button>
-                            </div>
+                                <div class="modal-body">
+                                    <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
+                                </div>
+                                <div class="modal-footer">
+                                    {{ xsrf_form_html() }}
+                                    <button type='submit' class="btn btn-danger">更改Tags</button>
+                                </div>
                             </form>
                         </div>
                         <a data-toggle="modal" href="#changetag" class="label label-important">修改Tags</a>
@@ -97,26 +97,23 @@
         <tr>
             {% set replyuser = getuser(comment["author"],db,mc) %}
             <td class='avatar'>
-                <img src="http://gravatar.com/avatar/{{ replyuser["hashed_email"] }}?s=48" /
+                <img src="http://gravatar.com/avatar/{{ replyuser['hashed_email'] }}?s=48" />
             </td>
             <td id="reply-{{ comment['location'] }}">
-                <article>
-                    <header>
-                        <div class='left'>
-                            <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ comment['author'] }}</a>
-                        </div>
-                        <div class='right'>
-                            #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
-                            {% if current_user %}
-                            {% if current_user['username'] in admin_list %}
-                            <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
-                            {% end %}
-                            <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
-                            {% end %}
-                        </div>
-                    </header><br />
-                    {{ comment['content'] }}
-                </article>
+                <div class='left'>
+                    <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ comment['author'] }}</a>
+                </div>
+                <div class='right'>
+                    #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
+                    {% if current_user %}
+                    {% if current_user['username'] in admin_list %}
+                    <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
+                    {% end %}
+                    <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
+                    {% end %}
+                </div>
+                <br />
+                {{ comment['content'] }}
             </td>
         </tr>
         {% end %}
@@ -127,8 +124,8 @@
 {% if current_user %}
 <section class='box'>
     <form action="" method="post">
-    {{ xsrf_form_html() }}
-    {{ modules.Edit() }}
+        {{ xsrf_form_html() }}
+        {{ modules.Edit() }}
     </form>
 </section>
 {% end %}
