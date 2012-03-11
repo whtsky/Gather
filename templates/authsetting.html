@@ -19,51 +19,75 @@
                 <div id="username-g" class="control-group">
                     <label class="control-label" for="email">用户名</label>
                     <div class="controls">
-                        <input class="span5 disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-user"></i></span>
+                            <input class="span5 disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
+                        </div>
                     </div>
                 </div>
                 <div id="email-g" class="control-group">
                     <label class="control-label" for="email">E-mail</label>
                     <div class="controls">
-                        <input class="span5  type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-envelope"></i></span>
+                            <input class="span5  type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
+                        </div>
                     </div>
                 </div>
                 <div id="website-g" class="control-group">
                     <label class="control-label" for="email">个人网址</label>
                     <div class="controls">
-                        <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-lemon"></i></span>
+                            <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
+                        </div>
                     </div>
                 </div>
                 <div id="location-g" class="control-group">
                     <label class="control-label" for="email">所在地</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-home"></i></span>
+                            <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
+                        </div>
                     </div>
                 </div>
                 <div id="twitter-g" class="control-group">
                     <label class="control-label" for="email">Twitter用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-twitter-sign"></i></span>
+                            <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
+                        </div>
                     </div>
                 </div>
                 <div id="github-g" class="control-group">
                     <label class="control-label" for="email">Github用户名</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-github-sign"></i></span>
+                            <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
+                        </div>
                     </div>
                 </div>
                 <div id="lovetag-g" class="control-group">
                     <label class="control-label" for="email">喜爱标签</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
-                        <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-tags"></i></span>
+                            <input class="span5  type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                            <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
+                        </div>
                     </div>
                 </div>
                 <div id="hatetag-g" class="control-group">
                     <label class="control-label" for="email">厌恶标签</label>
                     <div class="controls">
-                        <input class="span5  type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
-                        <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-tags"></i></span>
+                            <input class="span5  type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
+                            <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
+                        </div>
                     </div>
                 </div>
                 <div id="css-g" class="control-group">
@@ -83,11 +107,11 @@
                 <div id="twitter-bind-g" class="control-group">
                     <label class="control-label" for="twitterbind">Twitter绑定</label>
                     <div class="controls">
-                    {% if current_user['twitter_bind'] %}
+                        {% if current_user['twitter_bind'] %}
                         <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
-                    {% else %}
+                        {% else %}
                         <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>
-                    {% end %}
+                        {% end %}
                     </div>
                 </div>
                 <div class="form-actions">
@@ -108,15 +132,19 @@
                 <div id="old-g" class="control-group">
                     <label class="control-label" for="old">原密码：</label>
                     <div class="controls">
-                        <input type="password" id="old" required style="width: 98%">
-                        <span id="old-t" class="help-inline">请输入原密码</span>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-key"></i></span>
+                            <input type="password" id="old" required class="span3" placeholder="请输入原密码">
+                        </div>
                     </div>
                 </div>
                 <div id="new-g" class="control-group">
                     <label class="control-label" for="new" required>新密码：</label>
                     <div class="controls">
-                        <input type="password" id="new" required style="width: 98%">
-                        <span id="new-t" class="help-inline">请输入有效的新密码</span>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-key"></i></span>
+                            <input type="password" id="new" class="span3" required placeholder="请输入有效的新密码">
+                        </div>
                     </div>
                 </div>
                 <button id='changepassword' class='btn btn-info'>提交</button>

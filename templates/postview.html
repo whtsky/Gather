@@ -70,11 +70,13 @@
         <footer>
             <div class="left">
                 {% if current_user %}
+                <a href="#" id="mark">
                 {% if post['_id'] in current_user['postmark'] %}
-                <a href="#" class="label label-important mark" id="mark">取消收藏</a>
+                <i id="mark-show" class="icon-heart">
                 {% else %}
-                <a href="#" class="label mark" id="mark">收藏</a>
+                <i id="mark-show" class="icon-heart-empty">
                 {% end %}
+                </i></a>
                 {% end %}
             </div>
             <div class="right">

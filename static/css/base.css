@@ -126,8 +126,6 @@ a.dark:hover {
     text-align: center;
     margin:0 auto;
 }
-a.mark:hover {
-    background-color: #F89406; }
 .howmany {
     display: inline-block;
     font-size: 14px;
@@ -190,4 +188,7 @@ table {
 }
 img {
     max-width:100%
+}
+#mark-show {
+    font-size: 17px;
 }

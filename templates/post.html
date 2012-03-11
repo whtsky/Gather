@@ -30,17 +30,24 @@
             <header><h2>发表主题</h2></header>
             <div id='title-g' class='control-group'>
                 <div class='controls'>
-                    <input style='width:99%;' type='text' id='title' name='title' placeholder="请输入标题" x-webkit-speech required maxlength="50">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-pencil"></i></span>
+                        <input style='width:95.5%;' type='text' id='title' name='title' placeholder="请输入标题" x-webkit-speech required maxlength="50">
+                    </div>
                 </div>
             </div>
             <div id='tags-g' class='control-group'>
                 <div class='controls'>
-                    <input style='width:99%;' type='text' id='tags' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech>
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-tags"></i></span>
+                        <input style="width: 95.5%" type='text' id='tags' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech>
+
+                    </div>
                 </div>
             </div>
             <div id='markdown-g' class='control-group'>
                 <div class='controls'>
-                {{ modules.Edit() }}
+                    {{ modules.Edit() }}
                 </div>
             </div>
         </fieldset>
