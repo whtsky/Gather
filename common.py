@@ -74,7 +74,7 @@ class ErrorHandler(BaseHandler):
         raise tornado.web.HTTPError(404)
 
 def time_span(t):
-    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(post['posttime']+28800))
+    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t+28800))
     '''
     current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
     timecha = int(time.time()) - t
