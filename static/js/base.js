@@ -97,7 +97,7 @@ $.fn.focusEnd = function(){
 var isChrome = navigator.userAgent.indexOf("Chrome") !== -1
 
 $(document).ready(function(){
-    $("a").attr('target','_blank');     //修改<a>的 href属性值为 #  这样状态栏不会显示链接地址
+    $(".item-list a").attr('target','_blank');
     $('.kill').click(
         function(event){
             return confirm("真的要和谐么");

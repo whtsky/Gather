@@ -23,7 +23,7 @@
                 {% if username == current_user['username'] %}
                 <a href="/setting" class="label label-success">编辑</a>
                 {% elif current_user['username'] in admin_list %}
-                <a href="/admin/user/kill/{{ username }}" class="label label-important">和谐</a>
+                <a href="/admin/user/kill/{{ username }}" class="label label-important kill">和谐</a>
                 {% end %}</small>
             </h1>
             <h3>注册时间</h3>
