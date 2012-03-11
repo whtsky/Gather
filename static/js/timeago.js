@@ -166,5 +166,4 @@ jQuery.timeago.settings.strings = {
     wordSeparator: ""
 };
 
-
 $('time').timeago();
