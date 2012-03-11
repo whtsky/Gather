@@ -10,7 +10,7 @@ $("#login").click(function(){
     $("#password").blur();
     if(!readySubmit)
         return false;
-    $.post("/login",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/login",{
             username:$("#username").val(),
             password:$("#password").val()},
         function(data){

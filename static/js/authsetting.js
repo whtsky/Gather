@@ -14,7 +14,7 @@ $("#changepassword").click(function(){
         alert('新旧密码一样你还改什么啊。。');
         return false;
     }
-    $.post("/setting/password",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/setting/password",{
             old:$("#old").val(),
             new:$("#new").val()},
         function(data){
@@ -37,7 +37,7 @@ $("#submit").click(function(){
     $("#email").blur();
     if(!readySubmit)
         return false;
-    $.post("/setting",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/setting",{
             email:$("#email").val(),
             website:$("#website").val(),
             location:$("#location").val(),

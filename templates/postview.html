@@ -51,12 +51,11 @@
                                     <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
                                 </div>
                                 <div class="modal-footer">
-                                    {{ xsrf_form_html() }}
                                     <button type='submit' class="btn btn-danger">更改Tags</button>
                                 </div>
                             </form>
                         </div>
-                        <a data-toggle="modal" href="#changetag" class="label label-important">修改Tags</a>
+                        <a data-toggle="modal" href="#changetag" class="label label-important hide">修改Tags</a>
                         {% end %}
                     </td>
                     <td class='avatar'>
@@ -123,7 +122,6 @@
 {% if current_user %}
 <section class='box'>
     <form action="" method="post">
-        {{ xsrf_form_html() }}
         {{ modules.Edit() }}
     </form>
 </section>

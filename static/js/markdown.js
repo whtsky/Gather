@@ -13,7 +13,7 @@ if(isChrome){
     });
 }
 $("#wmd-input").blur(function(){
-    $.post("/markdown",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/markdown",{
             md:$("#wmd-input").val()},
         function(data){
             $("#md-preview").html(data);

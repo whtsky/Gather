@@ -8,7 +8,7 @@ class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
         self.db.users.remove({'username':username})
-        del self.mc['user:%s' % username.encode('utf-8')]
+        del self.mc['index']
         removepost(fliter={'author':username},db=self.db)
         self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)
@@ -18,6 +18,7 @@ class RemovePostHandler(BaseHandler):
     def get(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
+        del self.mc['index']
         removepost(fliter={'_id':postid},db=self.db)
         self.write('done.')
 
@@ -27,6 +28,8 @@ class RemoveCommentHandler(BaseHandler):
         self.db.posts.update({'_id':int(postid)},
                             {'$pop':{'comments':int(commentid)-1}})
         self.write('done.')
+        del self.mc['index']
+        del self.mc[postid]
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
@@ -44,6 +47,7 @@ class ChangeTagHandler(BaseHandler):
                         {'$inc':{'count':1}},True)
         self.db.posts.update({'_id':postid},{'$set':{'tags':tags}})
         self.write('done.')
+        del self.mc['index']
         
 def removepost(fliter,db):
     for post in db.posts.find(fliter):

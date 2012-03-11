@@ -18,7 +18,7 @@ $("#submit").click(function(){
     $("#password-ag").blur();
     if(!readySubmit)
         return false;
-    $.post("/signup",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/signup",{
             username:$("#username").val(),
             email:$("#email").val(),
             password:$("#password").val()},

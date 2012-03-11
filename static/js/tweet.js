@@ -2,7 +2,7 @@ $("#tweetsubmit").click(function(){
     if ($("#tweetcontent").val() == "")
         return false;
     $("#tweet").modal('hide');
-    $.post("/twitter/tweet",{_xsrf:$("input[name='_xsrf']").val(),
+    $.post("/twitter/tweet",{
             tweet:$("#tweetcontent").val()},
         function(data){
             $("#tweetcontent").val("");
