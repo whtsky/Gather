@@ -42,6 +42,7 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
+        del self.mc['index']
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.title = title
             self.user = user
@@ -134,13 +135,20 @@ class TopicsViewHandler(BaseHandler):
             time_span=time_span,getuser=getuser,p=p)
 
 class PostListModule(tornado.web.UIModule):
-    def render(self, getuser, db, mc, posts,p=None):
+    def render(self, getuser, db, mc, posts,p=None,name=None):
+        if name:
+            p = mc[name]
+            if p:
+                return p
         args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin,p=p)
         if p:
             args['count'] = posts.count()
             args['posts'] = args['posts'].skip((p-1)*POST_PER_PAGE).limit(POST_PER_PAGE)
             args['limit'] = POST_PER_PAGE
-        return self.render_string("modules/postlist.html",**args)
+        p = self.render_string("modules/postlist.html",**args)
+        if name:
+            mc.set(name,p,time=3600)
+        return p
 
 class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
