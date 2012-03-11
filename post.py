@@ -102,6 +102,7 @@ class PostViewHandler(BaseHandler):
                          },
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
+        del self.mc['index']
 
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content

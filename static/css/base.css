@@ -19,7 +19,7 @@ table.item-list tr:first-child {
 table.item-list td {
     padding:10px;
 }
-table.item-list td td.span{
+table.item-list td td.time{
     padding:10px;
     vertical-align:top
 }
