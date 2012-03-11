@@ -29,7 +29,7 @@ class RemoveCommentHandler(BaseHandler):
                             {'$pop':{'comments':int(commentid)-1}})
         self.write('done.')
         del self.mc['index']
-        del self.mc[postid]
+        del self.mc[str(postid)]
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
