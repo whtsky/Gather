@@ -137,8 +137,11 @@ class TopicsViewHandler(BaseHandler):
 class PostListModule(tornado.web.UIModule):
     def render(self, getuser, db, mc, posts,p=None,name=None):
         if name:
-            p = mc[name]
-            if p:
+            try:
+                p = mc[name]
+            except KeyError:
+                pass
+            else:
                 return p
         args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin,p=p)
         if p:
