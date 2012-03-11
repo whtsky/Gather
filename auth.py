@@ -8,6 +8,7 @@ from tornado.web import authenticated
 from config import admin
 import time
 from re import compile
+from urlparse import urlparse
 
 username_check = compile(u'([\u4e00-\u9fa5A-Za-z0-9]{1,15})')
 
@@ -92,7 +93,7 @@ class AuthSettingHandler(BaseHandler):
     @authenticated
     def post(self):
         setting = self.get_current_user()
-        for x in ('email','website','location','twitter','github','words'):
+        for x in ('email','location','twitter','github','words'):
             try:
                 setting[x] = xhtml_escape(self.get_argument(x))
             except:
@@ -101,6 +102,13 @@ class AuthSettingHandler(BaseHandler):
             setting['css'] = self.get_argument('css')
         except:
             pass
+        try:
+            website = self.get_argument('website')
+            w = urlparse(website)
+            assert w[0] and w[1]
+            setting['website'] = website
+        except:
+            setting['website'] = ''
         for x in ('lovetag','hatetag'):
             tags = []
             try:

@@ -28,19 +28,19 @@
             </h1>
             <h3>注册时间</h3>
             　{{ time_span(user['signtime']) }}
-            {% if 'website' in user %}
+            {% if 'website' in user and user['website']%}
             <h3>网站</h3>
             　<a href="{{ user['website'] }}" rel="external nofollow">{{ user['website'] }}</a>
             {% end %}
-            {% if 'location' in user %}
+            {% if 'location' in user and user['location']%}
             <h3>所在地</h3>
             　<a href="http://www.google.com/maps?q={{ user['location'] }}">{{ user['location'] }}</a>
             {% end %}
-            {% if 'twitter' in user %}
+            {% if 'twitter' in user and user['twitter']%}
             <h3>Twitter</h3>
             　<a href="http://twitter.com/{{ user['twitter'] }}">{{ user['twitter'] }}</a>
             {% end %}
-            {% if 'github' in user %}
+            {% if 'github' in user and user['github']%}
             <h3>Github</h3>
             　<a href="https://github.com/{{ user['github'] }}">{{ user['github'] }}</a>
             {% end %}
