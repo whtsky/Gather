@@ -74,7 +74,7 @@ class ErrorHandler(BaseHandler):
         raise tornado.web.HTTPError(404)
 
 def time_span(t):
-    return '<time datetime="%s" ></time>' % time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t+57600))
+    return '<time datetime="%s" ></time>' % time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t))
 
 def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     #滤去html标签
