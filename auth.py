@@ -123,8 +123,8 @@ class AuthSettingHandler(BaseHandler):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
         setting['hashed_email'] = md5(setting['email']).hexdigest()
-        self.mc['user:%s' % setting['username'].encode('utf-8')] = setting
-        self.db.users.update({'username':self.get_current_user()['username']},{'$set':setting})
+        #self.mc['user:%s' % setting['username'].encode('utf-8')] = setting
+        self.db.users.save(setting)
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
 class AuthChangePasswordHandler(BaseHandler):
@@ -147,6 +147,6 @@ class NotificationHandler(BaseHandler):
     def post(self):
         u = self.get_current_user()
         u['notification'] = []
-        self.mc['user:%s' % u['username'].encode('utf-8')] = u
+        #self.mc['user:%s' % u['username'].encode('utf-8')] = u
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))
