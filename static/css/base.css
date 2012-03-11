@@ -179,8 +179,11 @@ table {
 .snow {
     color: rgba(0, 0, 0, 0.15);
 }
+.avatar {
+    vertical-align:top;
+}
 .avatar img{
-    border-radius: 5px;
+    border-radius: 2px;
 }
 .emoji{
     width: 20px;

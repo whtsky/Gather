@@ -129,10 +129,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     return txt
 
 def getuser(user,db,mc):
-    keyname = str('user:%s' % user.encode('utf-8'))
-    try:
-        u = mc[keyname]
-    except KeyError:
-        u = db.users.find_one({'username':user})
-        mc[keyname] = u
-    return u
+#    keyname = str('user:%s' % user.encode('utf-8'))
+#    try:
+#        u = mc[keyname]
+#    except KeyError:
+#        u = db.users.find_one({'username':user})
+#        mc[keyname] = u
+    return db.users.find_one({'username':user})
