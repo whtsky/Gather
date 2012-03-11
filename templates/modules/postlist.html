@@ -27,11 +27,11 @@
             {% end %}
             </span>
             <a href="/user/{{ post['author'] }}" rel="popover" title="{{ post['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ post['author'] }}</a>
-            于<time datetime="{{ time_span(post['posttime']) }}" >{{ time_span(post['posttime']) }}</time>
+            于{{ time_span(post['posttime']) }}
             {% if len(post['comments']) > 0 %}
             {% set replyuser = getuser(post['comments'][-1]['author'],db,mc) %}
             ,<a href="/user/{{ replyuser['username'] }}" rel="popover" title="{{ replyuser['username'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ replyuser['username'] }}</a>
-            回复于<time datetime="{{ time_span(post['comments'][-1]['posttime']) }}" >{{ time_span(post['comments'][-1]['posttime']) }}</time>
+            回复于{{ time_span(post['comments'][-1]['posttime']) }}
             {% end %}
 
         </td>
@@ -40,7 +40,7 @@
         </td>
     </tr>
     {% end %}
-    <script src='{{ static_url("js/popover-run.js") }}'></script>\
+    <script src='{{ static_url("js/popover-run.js") }}'></script>
     <script src='{{ static_url("js/timeago.js") }}'></script>
     </tbody>
 </table>

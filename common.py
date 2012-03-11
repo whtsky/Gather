@@ -74,22 +74,7 @@ class ErrorHandler(BaseHandler):
         raise tornado.web.HTTPError(404)
 
 def time_span(t):
-    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t+28800))
-    '''
-    current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t+28800))
-    timecha = int(time.time()) - t
-    if timecha < 60:
-        describe_time = str(timecha)+u'秒前'
-    elif timecha < 3600:
-        describe_time = str(timecha/60)+u'分钟前'
-    elif timecha < 86400:
-        describe_time = str(timecha/3600)+u'小时前'
-    elif timecha < 1296000:
-        describe_time = str(timecha/86400)+u'天前'
-    else:
-        describe_time = current_time
-
-    return u'<span title="%s">%s</span>' % (current_time,describe_time)'''
+    return '<time datetime="%s" ></time>' % time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t+28800))
 
 def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     #滤去html标签
