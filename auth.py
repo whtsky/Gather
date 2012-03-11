@@ -81,7 +81,7 @@ class AuthInfoHandler(BaseHandler):
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
             self.render('authinfo.html',username=username,time_span=time_span,posts=posts,
-                        comments=comments,user=user,admin_list=admin)
+                        comments=comments,user=user)
         else:
             raise tornado.web.HTTPError(404)
 
