@@ -16,7 +16,17 @@
     <script src='{{ static_url("js/base.js") }}'></script>
     <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['bbs_title'] }}" href="/feed" />
     {% block head %}{% end %}
-    {% if current_user %}<style title="text/css">  {{ current_user['css'] }}  </style>{% end %}
+    {% if current_user %}
+    <style title="text/css">  {{ current_user['css'] }}  </style>
+    <script>
+        {% if current_user['username'] in admin_list %}
+        var isadmin = true;
+        {% else %}
+        var isadmin = false;
+        {% end %}
+    </script>
+    {% end %}
+
 </head>
 <body>
 <div class='navbar'>

@@ -98,6 +98,8 @@ var isChrome = navigator.userAgent.indexOf("Chrome") !== -1
 
 $(document).ready(function(){
     $(".item-list a").attr('target','_blank');
+    if (isadmin)
+        $('.kill').removeClass('hide');
     $('.kill').click(
         function(event){
             return confirm("真的要和谐么");

@@ -84,9 +84,7 @@
                 <a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban'setdefault('toolbar=0,resizable=1,scrollbars=yes,status=1,width=700,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" class="label">Douban</a>
                 <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="label">Weibo</a>
                 <a href="#;" onclick="window.open('http://www.instapaper.com/edit?url='+window.location.href+'&title={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'instapaper.com');" class="label">InstaPaper</a>
-                {% if current_user and current_user['username'] in admin_list %}
-                <a href="/admin/post/kill/{{ post['_id'] }}" class='label label-important kill'>和谐</a>
-                {% end %}
+                <a href="/admin/post/kill/{{ post['_id'] }}" class='label label-important kill hide'>和谐</a>
             </div>
             <!-- 打算放些用户打分什么的-->
         </footer>
@@ -108,9 +106,7 @@
                 <div class='right'>
                     #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
                     {% if current_user %}
-                    {% if current_user['username'] in admin_list %}
-                    <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important kill">和谐</a>
-                    {% end %}
+                    <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important kill hide">和谐</a>
                     <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
                     {% end %}
                 </div>

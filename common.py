@@ -6,7 +6,7 @@ from markdown import Markdown
 import re
 from tornado.escape import xhtml_escape
 from emoji import emojis
-from config import google_analytics
+from config import google_analytics,admin
 
 html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(u'[^ "]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])[^ "]')
@@ -41,7 +41,7 @@ class BaseHandler(tornado.web.RequestHandler):
                 if not x['read']:
                     unread += 1
             self.mc['unread:%s' % user['_id'] ] = unread
-        tornado.web.RequestHandler.render(self,template_name=template_name,db=self.db,unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
+        tornado.web.RequestHandler.render(self,template_name=template_name,admin_list=admin,db=self.db,unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
 
 class HomeHandler(BaseHandler):
     def get(self):

@@ -4,7 +4,7 @@ from common import BaseHandler,time_span,md_convert,getuser
 import tornado.web
 from time import time
 from tornado.escape import xhtml_escape
-from config import admin,POST_PER_PAGE
+from config import POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
 from common import html_killer,username_finder
@@ -84,7 +84,7 @@ class PostViewHandler(BaseHandler):
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
         authorposts = [_ for _ in authorposts]
         self.render('postview.html',time_span=time_span,
-                    post=post,admin_list=admin,comments=comments,getuser=getuser,likely=likelyposts,authorposts=authorposts)
+                    post=post,comments=comments,getuser=getuser,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
@@ -144,7 +144,7 @@ class PostListModule(tornado.web.UIModule):
                 pass
             else:
                 return p
-        args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,admin_list=admin,p=p)
+        args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,p=p)
         if p:
             args['count'] = posts.count()
             args['posts'] = args['posts'].skip((p-1)*POST_PER_PAGE).limit(POST_PER_PAGE)
