@@ -85,7 +85,7 @@
                 <a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url='+window.location.href+'&title{{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="label">Weibo</a>
                 <a href="#;" onclick="window.open('http://www.instapaper.com/edit?url='+window.location.href+'&title={{ post["title"] }}', '_blank', 'width=700,height=370'); recordOutboundLink(this, 'Share', 'instapaper.com');" class="label">InstaPaper</a>
                 {% if current_user and current_user['username'] in admin_list %}
-                <a href="/admin/post/kill/{{ post['_id'] }}" class='label label-important'>和谐</a>
+                <a href="/admin/post/kill/{{ post['_id'] }}" class='label label-important kill'>和谐</a>
                 {% end %}
             </div>
             <!-- 打算放些用户打分什么的-->
@@ -109,7 +109,7 @@
                     #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
                     {% if current_user %}
                     {% if current_user['username'] in admin_list %}
-                    <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important">和谐</a>
+                    <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important kill">和谐</a>
                     {% end %}
                     <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
                     {% end %}

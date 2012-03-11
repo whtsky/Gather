@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <title>{% block title %}{{ handler.settings['bbs_title'] }}{% end %}</title>
     <link rel='stylesheet' href='{{ static_url("css/bootstrap.min.css") }}' type='text/css'/>
@@ -11,151 +11,163 @@
     <link rel='stylesheet' href='{{ static_url("css/font-awesome.css") }}' type='text/css'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src='{{ static_url("js/base.js") }}'></script>
     <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['bbs_title'] }}" href="/feed" />
     {% block head %}{% end %}
     {% if current_user %}<style title="text/css">  {{ current_user['css'] }}  </style>{% end %}
-  </head>
-  <body>
-    <div class='navbar'>
-      <div class='navbar-inner'>
+</head>
+<body>
+<div class='navbar'>
+    <div class='navbar-inner'>
         <div class='container'>
-          <a class='btn btn-navbar' data-target='.nav-collapse' data-toggle='collapse'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </a>
-          <a class='brand' href='/'>{{ handler.settings['bbs_title_e'] }}</a>
-          <div class='nav-collapse'>
-            <ul class="nav">
-              {% block nav %}
-              <li><a href='/'>主页</a></li>
-              <li><a href='/topics'>主题</a></li>
-              <li><a href='/tag'>标签</a></li>
-              {% if current_user and current_user['lovetag'] %}
-                <li><a href="/my">个人信息流</a></li>
-              {% end %}
-              {% end %}
-            </ul>
-            <form class="navbar-search pull-left" id='search_form'>
-              <input type='text' id='q' x-webkit-speech class='search-query span2' placeholder="搜索" />
-            </form>
-            <ul class="nav pull-right">
-              {% if current_user %}
-                <li><a href="/user/{{ current_user['username'] }}">{{ current_user['username'] }}</a></li>
-                {% if current_user['twitter_bind'] %}
-                <li><a data-toggle="modal" href="#tweet">Tweet</a></li>
-                {% end %}
-                <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
-              {% else %}
-                <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
-                <li><a href="/login?next={{ url_escape(request.uri) }}">登录</a></li>
-              {% end %}
-            </ul>
-          </div>
+            <a class='btn btn-navbar' data-target='.nav-collapse' data-toggle='collapse'>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+            </a>
+            <a class='brand' href='/'>{{ handler.settings['bbs_title_e'] }}</a>
+            <div class='nav-collapse'>
+                <ul class="nav">
+                    {% block nav %}
+                    <li><a href='/'>主页</a></li>
+                    <li><a href='/topics'>主题</a></li>
+                    <li><a href='/tag'>标签</a></li>
+                    {% if current_user and current_user['lovetag'] %}
+                    <li><a href="/my">个人信息流</a></li>
+                    {% end %}
+                    {% end %}
+                </ul>
+                <form class="navbar-search pull-left" id='search_form'>
+                    <input type='text' id='q' x-webkit-speech class='search-query span2' placeholder="搜索" />
+                </form>
+                <ul class="nav pull-right">
+                    {% if current_user %}
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                            {{ current_user['username'] }}
+                            <b class='caret'></b>
+                        </a>
+                        <ul class='dropdown-menu'>
+                            <li><a href="/user/{{ current_user['username'] }}">个人资料</a></li>
+                            <li><a href="/setting">设置</a></li>
+                            <li class='divider'></li>
+                            {% if current_user['twitter_bind'] %}
+                            <li><a data-toggle="modal" href="#tweet">Tweet</a></li>
+                            <li class="divider"></li>
+                            {% end %}
+
+                            <li><a href="/logout?next={{ url_escape(request.uri) }}">退出</a></li>
+                        </ul>
+                    </li>
+
+                    {% else %}
+                    <li><a href="/signup?next={{ url_escape(request.uri) }}">注册</a></li>
+                    <li><a href="/login?next={{ url_escape(request.uri) }}">登录</a></li>
+                    {% end %}
+                </ul>
+            </div>
         </div>
-      </div>
     </div>
-    <div id="tweet" class="modal hide fade">
-      <div class="modal-header">
+</div>
+<div id="tweet" class="modal hide fade">
+    <div class="modal-header">
         <a class="close" data-dismiss="modal" >&times;</a>
         <h3>发布新动态</h3>
-      </div>
+    </div>
     <div class="modal-body">
-      {{ xsrf_form_html() }}
-      <textarea style="width: 99%" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
+        {{ xsrf_form_html() }}
+        <textarea style="width: 99%" rows='3' placeholder="发生了什么新鲜事？" maxlength="140" id="tweetcontent" required></textarea>
     </div>
     <div class="modal-footer">
-      <a href="#" class="btn" data-dismiss="modal" >取消</a>
-      <div class="left">
-        <button id="tweetsubmit" class="btn btn-success" data-dismiss="modal">Tweet!</button>
-      </div>
-      <div class="left">
-        <small class="col_fade">Ctrl+Enter 快速发表</small>
-      </div>
+        <a href="#" class="btn" data-dismiss="modal" >取消</a>
+        <div class="left">
+            <button id="tweetsubmit" class="btn btn-success" data-dismiss="modal">Tweet!</button>
+        </div>
+        <div class="left">
+            <small class="col_fade">Ctrl+Enter 快速发表</small>
+        </div>
     </div>
-  </div>
-    <div id="main" class="container">
-      <div class='row'>
+</div>
+<div id="main" class="container">
+    <div class='row'>
         <div class="span12">
-          <ul class="breadcrumb">
-            {% block breadcrumb %}
-              <li class="active">{{ handler.settings['bbs_title'] }}</li>
-            {% end %}
-          </ul>
+            <ul class="breadcrumb">
+                {% block breadcrumb %}
+                <li class="active">{{ handler.settings['bbs_title'] }}</li>
+                {% end %}
+            </ul>
         </div>
         {% block body %}
-          <div class="span9">
+        <div class="span9">
             {% block content %}{% end %}
-          </div>
-          <div class="span3">
+        </div>
+        <div class="span3">
             <section class='box'>
-              {% if current_user %}
+                {% if current_user %}
                 <a class='avatar' href='/user/{{ current_user['username'] }}' class="dark">
-                  <img src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
-                  <span class="dark user_name">{{ current_user['username'] }}</span>
+                <img src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
+                <span class="dark user_name">{{ current_user['username'] }}</span>
                 </a>
-                <a href="/setting" class="label label-success">编辑</a>
                 <div class="row-fluid center">
-                <div class='span6'>
-                  <a href="/my/post">
-                    <h3><span id="markedpost">{{ len(current_user['postmark']) }}</span></h3>
-                    主题收藏
-                  </a>
+                    <div class='span6'>
+                        <a href="/my/post">
+                            <h3><span id="markedpost">{{ len(current_user['postmark']) }}</span></h3>
+                            主题收藏
+                        </a>
+                    </div>
+                    <div class='span6'>
+                        <a href='/my/notifications'>
+                            <h3>{{ unread }}</h3>
+                            未读通知
+                        </a>
+                    </div>
                 </div>
-                <div class='span6'>
-                  <a href='/my/notifications'>
-                    <h3>{{ unread }}</h3>
-                    未读通知
-                  </a>
+                <hr>
+                <a href="/topics/add" class='btn btn-info'>发表话题</a>
+                <div class="right">
+                    <form method="post" action="/my/notifications?next={{ url_escape(request.uri) }}">
+                        {{ xsrf_form_html() }}
+                        <button type="submit" class="btn btn-danger">清空通知</button>
+                    </form>
                 </div>
-              </div>
-              <hr>
-              <a href="/topics/add" class='btn btn-info'>发表话题</a>
-              <div class="right">
-                <form method="post" action="/my/notifications?next={{ url_escape(request.uri) }}">
-                  {{ xsrf_form_html() }}
-                  <button type="submit" class="btn btn-danger">清空通知</button>
-                </form>
-              </div>
-             {% else %}
-               <p>想要融入社区？</p>
-               <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>
-             {% end %}
+                {% else %}
+                <p>想要融入社区？</p>
+                <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>
+                {% end %}
             </section>
             {% block sidebar %}{% end %}
             {% block tagcloud %}
             <section class='box'>
-              <header>标签云</header>
-              {{ modules.TagCloud(db,mc,limit=10) }}
+                <header>标签云</header>
+                {{ modules.TagCloud(db,mc,limit=10) }}
             </section>
             {% end %}
-          </div>
+        </div>
         {% end %}
-      </div>
     </div>
-    <footer class='container'>
-      <a href="https://github.com/whtsky/PBB/">PBB</a>
-    </footer>
-    {% block foot %}{% end %}
-    <script src='{{ static_url("js/tweet.js") }}'></script>
-    {% if google_analytics %}
-    <script type="text/javascript">
+</div>
+<footer class='container'>
+    <a href="https://github.com/whtsky/PBB/">PBB</a>
+</footer>
+{% block foot %}{% end %}
+<script src='{{ static_url("js/tweet.js") }}'></script>
+{% if google_analytics %}
+<script type="text/javascript">
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '{{ google_analytics }}']);
-        _gaq.push(['_setDomainName', '{{ handler.settings["bbs_url"][7:] }}']);
-        _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '{{ google_analytics }}']);
+    _gaq.push(['_setDomainName', '{{ handler.settings["bbs_url"][7:] }}']);
+    _gaq.push(['_trackPageview']);
 
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 
-    </script>
-    {% end %}
-  </body>
+</script>
+{% end %}
+</body>
 </html>
