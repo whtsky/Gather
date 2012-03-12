@@ -90,7 +90,7 @@
     </article>
 </section>
 
-{{ modules.Comments(db=db,mc=mc,post=post) }}
+{{ comments }}
 
 <script src='{{ static_url("js/timeago.js") }}'></script>
 {% if current_user %}
@@ -116,7 +116,7 @@
 </section>
 {% end %}
 
-{% if authorposts.count() > 0 %}
+{% if len(authorposts) > 0 %}
 <section class='box'>
     <header>
         <h3>作者其他主题</h3>

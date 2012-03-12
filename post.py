@@ -42,7 +42,10 @@ class PostHandler(BaseHandler):
                                 {'$inc':{'count':1}},
                                 True)
         self.redirect('/topics/'+str(tid))
-        del self.mc['index']
+        try:
+            del self.mc['index']
+        except KeyError:
+            pass
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.title = title
             self.user = user
@@ -56,7 +59,6 @@ class PostHandler(BaseHandler):
 class PostViewHandler(BaseHandler):
     def get(self,postid):
         postid = int(postid)
-        post = self.db.posts.find_one({'_id':postid})
         user = self.get_current_user()
         if user:
             change = False
@@ -67,19 +69,34 @@ class PostViewHandler(BaseHandler):
             if change:
                 self.db.users.update({'username':user['username']},{'$set':{'notification':user['notification']}})
         try:
-            likelyposts = self.mc['likely:%s' % postid]
+            cache = self.mc['%s' % postid]
         except KeyError:
+            cache = [0,1,2,3]
+
+            cache[0] = post = self.db.posts.find_one({'_id':postid})
+
+            cache[1] = authorposts = [ _ for _ in self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)]
+
             likelylist = {}
             for tag in post['tags']:
                 for p in self.db.posts.find({'tags':tag}):
                     likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
             del likelylist[post['_id']]
             likelys = sorted(likelylist.items(),key=lambda x: x[1])
-            likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
-            del likelys,likelylist
-            self.mc.set('likely:%s' % postid,likelyposts,time=43200)
-        authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
-        self.render('postview.html',time_span=time_span,
+            cache[2] = likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
+
+            for i in range(len(post['comments'])):
+                post['comments'][i]['location'] =  str(i+1)
+
+            cache[3] = comments = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+
+            self.mc.set(str(postid),cache,time=43200)
+        else:
+            post = cache[0]
+            authorposts = cache[1]
+            likelyposts = cache[2]
+            comments = cache[3]
+        self.render('postview.html',time_span=time_span,comments=comments,
                     post=post,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
@@ -98,8 +115,11 @@ class PostViewHandler(BaseHandler):
                          },
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
-        del self.mc['index']
-        del self.mc['comments:%s' % post['_id']]
+        try:
+            del self.mc['index']
+            del self.mc[str(postid)]
+        except KeyError:
+            pass
 
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content
@@ -148,20 +168,8 @@ class PostListModule(tornado.web.UIModule):
             args['limit'] = POST_PER_PAGE
         p = self.render_string("modules/postlist.html",**args)
         if name:
-            mc.set(name,p)
+            mc[name] = p
         return p
-
-class CommentsModule(tornado.web.UIModule):
-    def render(self, db, mc, post):
-        try:
-            p = mc['comments:%s' % post['_id'] ]
-        except KeyError:
-            comments = post['comments']
-            for i in range(len(comments)):
-                comments[i]['location'] =  str(i+1)
-            p = self.render_string('modules/comments.html',db=db,comments=comments,time_span=time_span,post=post)
-        return p
-
 class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,postid):

@@ -8,9 +8,14 @@ class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
         self.db.users.remove({'username':username})
-        del self.mc['index']
+        try:
+            del self.mc['index']
+        except KeyError:
+            pass
         removepost(fliter={'author':username},db=self.db)
-        self.db.posts.update({'comments.author':username},
+        for post in self.db.posts.find({'comments.author':username}):
+            del self.mc['%s' % post]
+        posts = self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)
         self.write('done.')
 
@@ -18,7 +23,10 @@ class RemovePostHandler(BaseHandler):
     def get(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
-        del self.mc['index']
+        try:
+            del self.mc['index']
+        except KeyError:
+            pass
         removepost(fliter={'_id':postid},db=self.db)
         self.write('done.')
 
@@ -28,8 +36,11 @@ class RemoveCommentHandler(BaseHandler):
         self.db.posts.update({'_id':int(postid)},
                             {'$pop':{'comments':int(commentid)-1}})
         self.write('done.')
-        del self.mc['index']
-        del self.mc['comments:%s' % postid]
+        try:
+            del self.mc['index']
+        except KeyError:
+            pass
+        del self.mc['%s' % postid]
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
@@ -47,7 +58,10 @@ class ChangeTagHandler(BaseHandler):
                         {'$inc':{'count':1}},True)
         self.db.posts.update({'_id':postid},{'$set':{'tags':tags}})
         self.write('done.')
-        del self.mc['index']
+        try:
+            del self.mc['index']
+        except KeyError:
+            pass
         
 def removepost(fliter,db):
     for post in db.posts.find(fliter):

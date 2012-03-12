@@ -21,9 +21,9 @@
             <h1>
                 {{ username }}<small>
                 {% if username == current_user['username'] %}
-                <a href="/setting" class="label label-success">编辑</a>
+                <a href="/setting" class="label label-success">编辑</a>{% end %}
                 <a href="/admin/user/kill/{{ username }}" class="label label-important kill hide">和谐</a>
-                {% end %}</small>
+                </small>
             </h1>
             <h3>注册时间</h3>
             　{{ time_span(user['signtime']) }}

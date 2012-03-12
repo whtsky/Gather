@@ -40,7 +40,6 @@ class BaseHandler(tornado.web.RequestHandler):
             for x in user['notification']:
                 if not x['read']:
                     unread += 1
-            self.mc['unread:%s' % user['_id'] ] = unread
         tornado.web.RequestHandler.render(self,template_name=template_name,admin_list=admin,db=self.db,unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
 
 class HomeHandler(BaseHandler):

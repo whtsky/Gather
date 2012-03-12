@@ -16,7 +16,7 @@ define('mongo_port', default=27017, help='mongodb port')
 define('memcached_host', default=['127.0.0.1'],help='memcached host')
 
 from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler,NotificationHandler
-from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler,CommentsModule
+from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
@@ -68,7 +68,6 @@ class Application(tornado.web.Application):
         settings = dict(
             ui_modules={"Post": PostListModule,
                         "TagCloud": TagCloudModule,
-                        "Comments": CommentsModule,
                         "Edit":EditModule},
             autoescape=None,
             login_url='/login',

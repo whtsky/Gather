@@ -1,7 +1,7 @@
-{% if len(comments) > 0 %}
+{% if len(post['comments']) > 0 %}
 <section class='box'>
     <table id="comments" class='item-list'>
-        {% for comment in comments %}
+        {% for comment in post['comments'] %}
         <tr>
             {% set replyuser = db.users.find_one({'username':comment["author"]}) %}
             <td class='avatar'>
