@@ -12,7 +12,7 @@
     <tbody>
     {% for post in posts %}
     <tr>
-        {% set replyuser = getuser(post["author"],db,mc) %}
+        {% set replyuser = db.users.find_one({'username':post["author"]}) %}
         <td class='avatar'>
             <a href="/user/{{ post['author'] }}"><img src='http://gravatar.com/avatar/{{ replyuser["hashed_email"] }}?s=48' /></a>
         </td>
@@ -29,7 +29,7 @@
             <a href="/user/{{ post['author'] }}" rel="popover" title="{{ post['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ post['author'] }}</a>
             于{{ time_span(post['posttime']) }}
             {% if len(post['comments']) > 0 %}
-            {% set replyuser = getuser(post['comments'][-1]['author'],db,mc) %}
+            {% set replyuser = db.users.find_one({'username':post['comments'][-1]['author']}) %}
             ,<a href="/user/{{ replyuser['username'] }}" rel="popover" title="{{ replyuser['username'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ replyuser['username'] }}</a>
             回复于{{ time_span(post['comments'][-1]['posttime']) }}
             {% end %}

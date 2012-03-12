@@ -1,11 +1,10 @@
 #coding=utf-8
 
-from common import BaseHandler,time_span,getuser
+from common import BaseHandler,time_span
 from hashlib import sha1,md5
 from tornado.escape import json_encode, xhtml_escape
 import tornado.web
 from tornado.web import authenticated
-from config import admin
 import time
 from re import compile
 from urlparse import urlparse
@@ -76,7 +75,7 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        user = getuser(username,self.db,self.mc)
+        user = self.db.users.find_one({'username':username})
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
@@ -88,27 +87,27 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.db.users.find_one({'username':self.get_current_user()['username']}))
+        self.render('authsetting.html',user=self.get_current_user())
 
     @authenticated
     def post(self):
-        setting = self.get_current_user()
+        user = self.get_current_user()
         for x in ('email','location','twitter','github','words'):
             try:
-                setting[x] = xhtml_escape(self.get_argument(x))
+                user[x] = xhtml_escape(self.get_argument(x))
             except:
-                setting[x] = ''
+                user[x] = ''
         try:
-            setting['css'] = self.get_argument('css')
+            user['css'] = self.get_argument('css')
         except:
             pass
         try:
             website = self.get_argument('website')
             w = urlparse(website)
             assert w[0] and w[1]
-            setting['website'] = website
+            user['website'] = website
         except:
-            setting['website'] = ''
+            user['website'] = ''
         for x in ('lovetag','hatetag'):
             tags = []
             try:
@@ -118,24 +117,23 @@ class AuthSettingHandler(BaseHandler):
                             tags.append(i)
             except:
                 pass
-            setting[x] = tags
-        if self.db.users.find_one({'username':{'$ne':self.get_current_user()['username']},'email':setting['email']}):
+            user[x] = tags
+        if self.db.users.find_one({'username':{'$ne':user['username']},'email':user['email']}):
             self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
             return
-        setting['hashed_email'] = md5(setting['email']).hexdigest()
-        #self.mc['user:%s' % setting['username'].encode('utf-8')] = setting
-        self.db.users.save(setting)
+        user['hashed_email'] = md5(user['email']).hexdigest()
+        self.db.users.save(user)
         self.write(json_encode({'status':'success','message':'信息更新成功'}))
 
 class AuthChangePasswordHandler(BaseHandler):
 
     @authenticated
     def post(self):
-        username = self.get_current_user()['username']
-        if self.db.users.find_one({'username':username,'password':hashpassword(username,self.get_argument('old'))}):
-            self.db.users.update({'username':username},{'$set':{'password':hashpassword(username,self.get_argument('new'))}})
+        user = self.get_current_user()
+        if user['password'] == hashpassword(username,self.get_argument('old')):
+            user['password'] = hashpassword(username,self.get_argument('new'))
+            self.db.users.save(user)
             self.write(json_encode({'status':'success','message':'修改密码成功'}))
-            del self.mc['user:%s' % username.encode('utf-8')]
         else:
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
 
@@ -147,6 +145,5 @@ class NotificationHandler(BaseHandler):
     def post(self):
         u = self.get_current_user()
         u['notification'] = []
-        #self.mc['user:%s' % u['username'].encode('utf-8')] = u
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))

@@ -50,13 +50,13 @@ class HomeHandler(BaseHandler):
             posts = self.db.posts.find({'tags':{'$nin':user['hatetag']}},sort=[('changedtime', -1)],limit=15)
         else:
             posts = self.db.posts.find({},sort=[('changedtime', -1)],limit=15)
-        self.render('index.html',time_span=time_span,posts=posts,getuser=getuser)
+        self.render('index.html',time_span=time_span,posts=posts)
 
 class MyHomeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         user = self.get_current_user()
-        self.render('my.html',time_span=time_span,getuser=getuser,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
+        self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
 
 class EditModule(tornado.web.UIModule):
     def render(self):
@@ -114,12 +114,3 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
             txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
     return txt
-
-def getuser(user,db,mc):
-#    keyname = str('user:%s' % user.encode('utf-8'))
-#    try:
-#        u = mc[keyname]
-#    except KeyError:
-#        u = db.users.find_one({'username':user})
-#        mc[keyname] = u
-    return db.users.find_one({'username':user})

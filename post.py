@@ -1,6 +1,6 @@
 #coding=utf-8
 
-from common import BaseHandler,time_span,md_convert,getuser
+from common import BaseHandler,time_span,md_convert
 import tornado.web
 from time import time
 from tornado.escape import xhtml_escape
@@ -82,9 +82,8 @@ class PostViewHandler(BaseHandler):
         for i in range(len(comments)):
             comments[i]['location'] =  str(i+1)
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
-        authorposts = [_ for _ in authorposts]
         self.render('postview.html',time_span=time_span,
-                    post=post,comments=comments,getuser=getuser,likely=likelyposts,authorposts=authorposts)
+                    post=post,comments=comments,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
@@ -133,10 +132,10 @@ class TopicsViewHandler(BaseHandler):
         except:
             p = 1
         self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
-            time_span=time_span,getuser=getuser,p=p)
+            time_span=time_span,p=p)
 
 class PostListModule(tornado.web.UIModule):
-    def render(self, getuser, db, mc, posts,p=None,name=None):
+    def render(self, db, mc, posts,p=None,name=None):
         if name:
             try:
                 p = mc[name]
@@ -144,14 +143,14 @@ class PostListModule(tornado.web.UIModule):
                 pass
             else:
                 return p
-        args = dict(getuser=getuser,db=db,mc=mc,posts=posts,time_span=time_span,p=p)
+        args = dict(db=db,mc=mc,posts=posts,time_span=time_span,p=p)
         if p:
             args['count'] = posts.count()
             args['posts'] = args['posts'].skip((p-1)*POST_PER_PAGE).limit(POST_PER_PAGE)
             args['limit'] = POST_PER_PAGE
         p = self.render_string("modules/postlist.html",**args)
         if name:
-            mc.set(name,p,time=3600)
+            mc.set(name,p)
         return p
 
 class MarkPostHandler(BaseHandler):
@@ -170,4 +169,4 @@ class MarkPostHandler(BaseHandler):
 class MyMarkedPostHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('markedpost.html',getuser=getuser)
+        self.render('markedpost.html')

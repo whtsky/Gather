@@ -15,6 +15,6 @@
         <a href='/my/notifications'>您有<strong>{{ unread }}</strong>条未读提醒</a>
     </div>
     {% end %}
-    {{ modules.Post(getuser=getuser,db=db,mc=mc,posts=posts) }}
+    {{ modules.Post(db=db,mc=mc,posts=posts) }}
 </section>
 {% end %}

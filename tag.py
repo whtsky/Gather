@@ -1,7 +1,7 @@
 #coding=utf-8
 
 import math
-from common import BaseHandler,time_span,getuser
+from common import BaseHandler,time_span
 import time
 import tornado.web
 
@@ -27,7 +27,7 @@ class TagViewHandler(BaseHandler):
             except:
                 p = 1
             self.render('tag.html',tagname=tagname,posts=posts,
-                time_span=time_span,getuser=getuser,p=p)
+                time_span=time_span,p=p)
 
         else:
             raise tornado.web.HTTPError(404)
