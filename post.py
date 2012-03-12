@@ -78,12 +78,9 @@ class PostViewHandler(BaseHandler):
             likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
             del likelys,likelylist
             self.mc.set('likely:%s' % postid,likelyposts,time=43200)
-        comments = post['comments']
-        for i in range(len(comments)):
-            comments[i]['location'] =  str(i+1)
         authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
         self.render('postview.html',time_span=time_span,
-                    post=post,comments=comments,likely=likelyposts,authorposts=authorposts)
+                    post=post,likely=likelyposts,authorposts=authorposts)
 
     def post(self,postid):
         md = self.get_argument('markdown')
@@ -102,6 +99,7 @@ class PostViewHandler(BaseHandler):
                  '$set':{'changedtime':int(time())},})
         self.redirect('/topics/'+str(postid))
         del self.mc['index']
+        del self.mc['comments:%s' % post['_id']]
 
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content
@@ -151,6 +149,17 @@ class PostListModule(tornado.web.UIModule):
         p = self.render_string("modules/postlist.html",**args)
         if name:
             mc.set(name,p)
+        return p
+
+class CommentsModule(tornado.web.UIModule):
+    def render(self, db, mc, post):
+        try:
+            p = mc['comments:%s' % post['_id'] ]
+        except KeyError:
+            comments = post['comments']
+            for i in range(len(comments)):
+                comments[i]['location'] =  str(i+1)
+            p = self.render_string('modules/comments.html',db=db,comments=comments,time_span=time_span,post=post)
         return p
 
 class MarkPostHandler(BaseHandler):
