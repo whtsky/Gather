@@ -38,9 +38,9 @@ class RemoveCommentHandler(BaseHandler):
         self.write('done.')
         try:
             del self.mc['index']
+            del self.mc[str(postid)]
         except KeyError:
             pass
-        del self.mc['%s' % postid]
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
@@ -60,6 +60,7 @@ class ChangeTagHandler(BaseHandler):
         self.write('done.')
         try:
             del self.mc['index']
+            del self.mc[str(postid)]
         except KeyError:
             pass
         

@@ -69,7 +69,7 @@ class PostViewHandler(BaseHandler):
             if change:
                 self.db.users.update({'username':user['username']},{'$set':{'notification':user['notification']}})
         try:
-            cache = self.mc['%s' % postid]
+            cache = self.mc[str(postid)]
         except KeyError:
             cache = [0,1,2,3]
 

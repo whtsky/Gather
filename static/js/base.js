@@ -100,7 +100,7 @@ $(document).ready(function(){
     $(".item-list a").attr('target','_blank');
     if (isadmin){
         $('.kill').removeClass('hide');
-        $('#changetag').removeClass('hide');
+        $('#changetag-link').removeClass('hide');
     }
     $('.kill').click(
         function(event){
