@@ -10,10 +10,10 @@ class TagCloudModule(tornado.web.UIModule):
         try:
             html = mc['tagcloud:%s' % limit]
         except KeyError:
-            tags = [ tag for tag in db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)]
+            tags = db.tags.find({'count':{'$gt':0}},{'_id':0},sort=[('count', -1)],limit=limit)
             html = []
             for tag in tags:
-                html.append('<a href="/tag/%s" style="font-size:%spt;">%s</a>' % (tag['name'],round(math.log(tag['count'],tags[0]['count']))*14+8,tag['name']))
+                html.append(u'<a href="/tag/%s" style="font-size:%spt;" title="共%s条主题">%s</a>' % (tag['name'],int(3 * math.log(max(tag['count'] + 1, 1))) + 12,tag['count'],tag['name']))
             html =  ' '.join(html)
             mc.set('tagcloud:%s' % limit,html,time=1800)
         return html
