@@ -41,11 +41,11 @@ class PostHandler(BaseHandler):
             self.db.tags.update({'name':tag},
                                 {'$inc':{'count':1}},
                                 True)
-        self.redirect('/topics/'+str(tid))
         try:
             del self.mc['index']
         except KeyError:
             pass
+        self.redirect('/topics/'+str(tid))
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.title = title
             self.user = user
@@ -114,12 +114,12 @@ class PostViewHandler(BaseHandler):
                                    }
                          },
                  '$set':{'changedtime':int(time())},})
-        self.redirect('/topics/'+str(postid))
         try:
             del self.mc['index']
             del self.mc[str(postid)]
         except KeyError:
             pass
+        self.redirect('/topics/'+str(postid))
 
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content

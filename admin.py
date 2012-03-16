@@ -8,27 +8,30 @@ class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
         self.db.users.remove({'username':username})
-        try:
-            del self.mc['index']
-        except KeyError:
-            pass
         removepost(fliter={'author':username},db=self.db)
+        postids = []
         for post in self.db.posts.find({'comments.author':username}):
-            del self.mc['%s' % post]
-        posts = self.db.posts.update({'comments.author':username},
+            postids.append(post['_id'])
+        self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)
         self.write('done.')
+        try:
+            del self.mc['index']
+            for postid in postids:
+                del self.mc[str(postid)]
+        except KeyError:
+            pass
 
 class RemovePostHandler(BaseHandler):
     def get(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
+        removepost(fliter={'_id':postid},db=self.db)
+        self.write('done.')
         try:
             del self.mc['index']
         except KeyError:
             pass
-        removepost(fliter={'_id':postid},db=self.db)
-        self.write('done.')
 
 class RemoveCommentHandler(BaseHandler):
     def get(self,postid,commentid):
