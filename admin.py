@@ -1,7 +1,7 @@
 #coding=utf-8
 from tornado.escape import xhtml_escape
 
-from common import BaseHandler
+from common import BaseHandler,time_span
 from config import admin
 
 class RemoveUserHandler(BaseHandler):
@@ -36,14 +36,22 @@ class RemovePostHandler(BaseHandler):
 class RemoveCommentHandler(BaseHandler):
     def get(self,postid,commentid):
         assert self.get_current_user()['username'] in admin
-        self.db.posts.update({'_id':int(postid)},
-                            {'$pop':{'comments':int(commentid)-1}})
+        self.write(commentid)
+        post = self.db.posts.find_one({'_id':int(postid)})
+        del post['comments'][int(commentid)-1]
+        self.db.posts.save(post)
         self.write('done.')
         try:
             del self.mc['index']
-            del self.mc[str(postid)]
         except KeyError:
             pass
+        try:
+            cache = self.mc[str(postid)]
+        except KeyError:
+            pass
+        else:
+            cache[3] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+            self.mc[str(postid)] = cache
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):

@@ -104,20 +104,25 @@ class PostViewHandler(BaseHandler):
         user = self.get_current_user()
         postid = int(postid)
         content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
-        self.db.posts.update({'_id':postid},
-                {'$push':
-                         {'comments':
-                                  {'author':user['username'],
-                                   'content':content,
-                                   'posttime':int(time()),
-                                   }
-                         },
-                 '$set':{'changedtime':int(time())},})
+        post = self.db.posts.fine_one({'_id':postid})
+        post['comments'].append({'author':user['username'],
+                                 'content':content,
+                                 'posttime':int(time()),
+                                 })
+        post['changedtime'] = int(time())
+        self.db.posts.save(post)
         try:
             del self.mc['index']
-            del self.mc[str(postid)]
         except KeyError:
             pass
+        try:
+            cache = self.mc[str(postid)]
+        except KeyError:
+            pass
+        else:
+            cache[3] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+            self.mc[str(postid)] = cache
+
         self.redirect('/topics/'+str(postid))
 
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
