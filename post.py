@@ -104,12 +104,12 @@ class PostViewHandler(BaseHandler):
         user = self.get_current_user()
         postid = int(postid)
         content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
-        post = self.db.posts.fine_one({'_id':postid})
+        post = self.db.posts.find_one({'_id':postid})
         post['comments'].append({'author':user['username'],
                                  'content':content,
-                                 'posttime':int(time()),
+                                 'posttime':time_now,
                                  })
-        post['changedtime'] = int(time())
+        post['changedtime'] = time_now
         self.db.posts.save(post)
         try:
             del self.mc['index']
