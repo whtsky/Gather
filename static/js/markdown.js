@@ -13,10 +13,19 @@ if(isChrome){
     });
 }
 $("#wmd-input").blur(function(){
+    window.onbeforeunload = function(){
+        if ($("#wmd-input").val().length > 0)
+            return "离开本页面会导致编辑的内容丢失！";
+    }
     $.post("/markdown",{
             md:$("#wmd-input").val()},
         function(data){
             $("#md-preview").html(data);
             $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
         });
+});
+$(document).ready(function(){
+    $('#submit').click(function(){
+        window.onbeforeunload = null;
+    });
 });
