@@ -103,8 +103,10 @@ $(document).ready(function(){
         $('#changetag-link').removeClass('hide');
     }
     $('.kill').click(
-        function(event){
-            return confirm("真的要和谐么");
+        function(){
+            if (confirm("真的要和谐么"))
+                $.get($(this).attr('href')).success(function(){location.reload();}).error(function() { alert("和谐中出现错误，重试一下呗？"); });
+            return false;
         }
     );
 });

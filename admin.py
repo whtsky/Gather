@@ -8,7 +8,7 @@ class RemoveUserHandler(BaseHandler):
     def get(self,username):
         assert self.get_current_user()['username'] in admin
         self.db.users.remove({'username':username})
-        removepost(fliter={'author':username},db=self.db)
+        removepost(fliter={'author':username},db=self.db,mc=self.mc)
         postids = []
         for post in self.db.posts.find({'comments.author':username}):
             postids.append(post['_id'])
@@ -26,7 +26,7 @@ class RemovePostHandler(BaseHandler):
     def get(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
-        removepost(fliter={'_id':postid},db=self.db)
+        removepost(fliter={'_id':postid},db=self.db,mc=self.mc)
         self.write('done.')
         try:
             del self.mc['index']
@@ -36,7 +36,6 @@ class RemovePostHandler(BaseHandler):
 class RemoveCommentHandler(BaseHandler):
     def get(self,postid,commentid):
         assert self.get_current_user()['username'] in admin
-        self.write(commentid)
         post = self.db.posts.find_one({'_id':int(postid)})
         del post['comments'][int(commentid)-1]
         self.db.posts.save(post)
@@ -73,15 +72,18 @@ class ChangeTagHandler(BaseHandler):
         self.write('done.')
         try:
             del self.mc['index']
-            del self.mc[str(postid)]
         except KeyError:
             pass
         
-def removepost(fliter,db):
+def removepost(fliter,db,mc):
     for post in db.posts.find(fliter):
         db.users.update({'postmark':post['_id']},
                 {'$pull':{'postmark':post['_id']}},multi=True)
         db.users.update({'notification.postid':post['_id']},{'$pull':{'notification':{'postid':post['_id']}}},multi=True)
         for tag in post['tags']:
             db.tags.update({'name':tag},{'$inc':{'count':-1}})
+        try:
+            del mc[str(post['_id'])]
+        except KeyError:
+            pass
     db.posts.remove(fliter)
