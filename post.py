@@ -70,7 +70,7 @@ class PostViewHandler(BaseHandler):
         try:
             cache = self.mc[str(postid)]
         except KeyError:
-            cache = [0,1,2,3]
+            cache = [0,1,2]
 
             cache[0] = post = self.db.posts.find_one({'_id':postid})
             if not post:
@@ -125,7 +125,7 @@ class PostViewHandler(BaseHandler):
         else:
             for i in range(len(post['comments'])):
                 post['comments'][i]['location'] =  str(i+1)
-            cache[3] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+            cache[2] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
             self.mc[str(postid)] = cache
 
         self.redirect('/topics/'+str(postid))

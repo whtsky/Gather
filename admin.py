@@ -51,7 +51,7 @@ class RemoveCommentHandler(BaseHandler):
         else:
             for i in range(len(post['comments'])):
                 post['comments'][i]['location'] =  str(i+1)
-            cache[3] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+            cache[2] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
             self.mc[str(postid)] = cache
 
 class ChangeTagHandler(BaseHandler):
