@@ -1,0 +1,25 @@
+{% if len(likely) %}
+<section class="box">
+    <header>
+        <h3>相关主题</h3>
+    </header>
+    <ul>
+        {% for x in likely %}
+        <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
+        {% end %}
+    </ul>
+</section>
+{% end %}
+
+{% if authorposts.count() %}
+<section class='box'>
+    <header>
+        <h3>作者其他主题</h3>
+    </header>
+    <ul>
+        {% for x in authorposts %}
+        <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
+        {% end %}
+    </ul>
+</section>
+{% end %}

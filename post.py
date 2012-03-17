@@ -73,8 +73,10 @@ class PostViewHandler(BaseHandler):
             cache = [0,1,2,3]
 
             cache[0] = post = self.db.posts.find_one({'_id':postid})
+            if not post:
+                raise tornado.web.HTTPError(404)
 
-            cache[1] = authorposts = [ _ for _ in self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)]
+            authorposts = self.db.posts.find({'author':post["author"],'_id':{'$ne':postid}},sort=[('changedtime', -1)],limit=5)
 
             likelylist = {}
             for tag in post['tags']:
@@ -82,21 +84,22 @@ class PostViewHandler(BaseHandler):
                     likelylist[p['_id']] =  likelylist.setdefault(p['_id'],1) + 1
             del likelylist[post['_id']]
             likelys = sorted(likelylist.items(),key=lambda x: x[1])
-            cache[2] = likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
+            likelyposts = [self.db.posts.find_one({'_id':x[0]}) for x in likelys[:5]]
+
+            cache[1] = sidebar = self.render_string('modules/postview-sidebar.html',likely=likelyposts,authorposts=authorposts)
 
             for i in range(len(post['comments'])):
                 post['comments'][i]['location'] =  str(i+1)
 
-            cache[3] = comments = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
+            cache[2] = comments = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
 
             self.mc.set(str(postid),cache,time=43200)
         else:
             post = cache[0]
-            authorposts = cache[1]
-            likelyposts = cache[2]
-            comments = cache[3]
+            sidebar = cache[1]
+            comments = cache[2]
         self.render('postview.html',time_span=time_span,comments=comments,
-                    post=post,likely=likelyposts,authorposts=authorposts)
+                    post=post,sidebar=sidebar)
 
     def post(self,postid):
         md = self.get_argument('markdown')

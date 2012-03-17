@@ -34,17 +34,28 @@
                     </div>
                 </div>
             </div>
-            <div id='tags-g' class='control-group'>
-                <div class='controls'>
-                    <div class="input-prepend">
-                        <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" x-webkit-speech />
-                        <script src='{{ static_url("js/tageditor.js") }}' type="text/javascript"></script>
-                    </div>
-                </div>
-            </div>
             <div id='markdown-g' class='control-group'>
                 <div class='controls'>
                     {{ modules.Edit() }}
+                    <div id='tags-g' class='control-group'>
+                        <div class='controls'>
+                            <div class="input-prepend">
+                                <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" x-webkit-speech />
+                                <script src='{{ static_url("js/tageditor.js") }}' type="text/javascript"></script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="markdown-commands">
+                    <div class="left">
+                        {% if current_user['twitter_bind'] %}
+                        同步到Twitter<input type="checkbox" name="twitter-sync" checked value="yes">
+                        {% end %}
+                    </div>
+                    <div class="right">
+                        <small class="col_fade">Ctrl+Enter 快速发表</small>
+                        <button id='submit' class='btn'>发表</button>
+                    </div>
                 </div>
             </div>
         </fieldset>

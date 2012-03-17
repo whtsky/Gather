@@ -21,7 +21,7 @@ class TagCloudModule(tornado.web.UIModule):
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
         posts = self.db.posts.find({'tags':tagname.lower()},sort=[('changedtime', -1)])
-        if posts:
+        if posts.count():
             try:
                 p = int(self.get_argument('p'))
             except:

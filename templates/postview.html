@@ -70,12 +70,12 @@
             <div class="left">
                 {% if current_user %}
                 <a href="#" id="mark">
-                {% if post['_id'] in current_user['postmark'] %}
-                <i id="mark-show" class="icon-heart">
-                {% else %}
-                <i id="mark-show" class="icon-heart-empty">
-                {% end %}
-                </i></a>
+                    {% if post['_id'] in current_user['postmark'] %}
+                    <i id="mark-show" class="icon-heart">
+                        {% else %}
+                        <i id="mark-show" class="icon-heart-empty">
+                            {% end %}
+                        </i></a>
                 {% end %}
             </div>
             <div class="right">
@@ -97,37 +97,24 @@
 <section class='box'>
     <form action="" method="post">
         {{ modules.Edit() }}
+        <div id="markdown-commands">
+            <div class="left">
+                {% if current_user['twitter_bind'] %}
+                同步到Twitter<input type="checkbox" name="twitter-sync" checked value="yes">
+                {% end %}
+            </div>
+            <div class="right">
+                <small class="col_fade">Ctrl+Enter 快速发表</small>
+                <button id='submit' class='btn'>发表</button>
+            </div>
+        </div>
     </form>
 </section>
 {% end %}
 {% end %}
 {% block sidebar %}
 
-{% if len(likely) > 0%}
-<section class="box">
-    <header>
-        <h3>相关主题</h3>
-    </header>
-    <ul>
-        {% for x in likely %}
-        <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
-        {% end %}
-    </ul>
-</section>
-{% end %}
-
-{% if len(authorposts) > 0 %}
-<section class='box'>
-    <header>
-        <h3>作者其他主题</h3>
-    </header>
-    <ul>
-        {% for x in authorposts %}
-        <li><a href="/topics/{{ x['_id'] }}">{{ x['title'] }}</a></li>
-        {% end %}
-    </ul>
-</section>
-{% end %}
+{{ sidebar }}
 
 <script src='{{ static_url("js/highlight.pack.js") }}' type="text/javascript"></script>
 <script src='{{ static_url("js/postview.js") }}' type="text/javascript"></script>
