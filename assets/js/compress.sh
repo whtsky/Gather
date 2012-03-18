@@ -18,8 +18,8 @@ cat jquery.js > lib.js
 cat bootstrap.js >> lib.js
 cat base.js >> lib.js
 cat timeago.js >> lib.js
-cat hightlight.pack.js >> lib.js
-rm jquery.js bootstrap.js base.js timeago.js hightlight.pack.js
+cat highlight.pack.js >> lib.js
+rm jquery.js bootstrap.js base.js timeago.js highlight.pack.js
 
 cat Markdown.Converter.js > editor.js
 cat Markdown.Sanitizer.js >> editor.js
