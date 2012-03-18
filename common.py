@@ -77,7 +77,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
 
     for x in set(url_replace.findall(txt)):
         if '.png' in x or '.jpg' in x or '.gif' in x:
-            txt = txt.replace(x,u'<a href="%s"><img src="%s">%s</img>%s</a>' % (x[:-1],x[:-1],x[:-1],x[-1]))
+            txt = txt.replace(x,u'<a href="%s"><img src="%s" /></a>%s' % (x[:-1],x[:-1],x[-1]))
         else:
             txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
 
