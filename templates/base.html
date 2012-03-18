@@ -4,9 +4,7 @@
     <meta charset='utf-8'>
     <title>{% block title %}{{ handler.settings['bbs_title'] }}{% end %}</title>
     <link rel='stylesheet' href='{{ static_url("css/bootstrap.min.css") }}' type='text/css'/>
-    <script src='{{ static_url("js/jquery.js") }}'></script>
     <meta name="keywords" content="{{ handler.settings['bbs_title_e'] }},{{ handler.settings['bbs_title'] }},{% block keywords %}{% end %}"/>
-    <script src='{{ static_url("js/bootstrap.js") }}'></script>
     <link rel='stylesheet' href='{{ static_url("css/bootstrap-responsive.min.css") }}' type='text/css'/>
     <link rel='stylesheet' href='{{ static_url("css/base.css") }}' type='text/css'/>
     <link rel='stylesheet' href='{{ static_url("css/font-awesome.css") }}' type='text/css'/>
@@ -14,7 +12,7 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <script src='{{ static_url("js/base.js") }}'></script>
+    <script src='{{ static_url("js/lib.js") }}'></script>
     <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['bbs_title'] }}" href="/feed" />
     {% block head %}{% end %}
     {% if current_user %}
@@ -161,7 +159,6 @@
     <a href="https://github.com/whtsky/PBB/">PBB</a>
 </footer>
 {% block foot %}{% end %}
-<script src='{{ static_url("js/tweet.js") }}'></script>
 {% if google_analytics %}
 <script type="text/javascript">
 
@@ -175,7 +172,6 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-
 </script>
 {% end %}
 </body>

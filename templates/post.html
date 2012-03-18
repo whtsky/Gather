@@ -41,7 +41,6 @@
                         <div class='controls'>
                             <div class="input-prepend">
                                 <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" x-webkit-speech />
-                                <script src='{{ static_url("js/tageditor.js") }}' type="text/javascript"></script>
                             </div>
                         </div>
                     </div>

@@ -1,1 +1,0 @@
-$("a[rel=popover]").popover()

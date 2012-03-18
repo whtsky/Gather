@@ -120,15 +120,3 @@
         });
     };
 })( jQuery );
-
-$(function(){
-    $('#tags').tagEditor();
-
-    var $form = $('#editor');
-    if ($form.length > 0) {
-        var setting = window.ClientSideValidations.forms[$form.attr('id')];
-        $('#tags').change(function(){
-            $(this).isValid(setting.validators);
-        });
-    };
-})

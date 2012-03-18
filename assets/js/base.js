@@ -97,6 +97,8 @@ $.fn.focusEnd = function(){
 var isChrome = navigator.userAgent.indexOf("Chrome") !== -1
 
 $(document).ready(function(){
+    $('time').timeago();
+    $("a[rel=popover]").popover()
     $(".item-list a").attr('target','_blank');
     if (isadmin){
         $('.kill').removeClass('hide');
@@ -116,4 +118,29 @@ $(document).ready(function(){
             return false;
         }
     );
+    $("#tweetsubmit").click(function(){
+        if ($("#tweetcontent").val() == "")
+            return false;
+        $("#tweet").modal('hide');
+        $.post("/twitter/tweet",{
+                tweet:$("#tweetcontent").val()},
+            function(data){
+                $("#tweetcontent").val("");
+            },"json");
+        return false;
+    });
+    document.onkeyup=function(event) {
+        if(window.ActiveXObject) {
+            var keydown = window.event.keyCode;
+            event=window.event;
+        }else{
+            var keydown = event.keyCode;
+            if(event.ctrlKey && keydown == 13){
+                if ($('body').hasClass('modal-open'))
+                    $('#tweetsubmit').click();
+                else
+                    $('#submit').click();
+            }
+        }
+    };
 });

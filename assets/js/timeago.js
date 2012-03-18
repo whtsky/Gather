@@ -165,5 +165,3 @@ jQuery.timeago.settings.strings = {
     numbers: [],
     wordSeparator: ""
 };
-
-$('time').timeago();

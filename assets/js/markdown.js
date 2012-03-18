@@ -5,28 +5,6 @@ var speech_fake=function() {
     t.blur();
     a.focusEnd();
 };
-
-if(isChrome){
-    $('#markdown-commands').html('<div class="left"><input id="wmd-input_speech" class="btn" x-webkit-speech onwebkitspeechchange="speech_fake();" onclick="this.blur();" lang="zh-CN"/></div>'+$('#markdown-commands').html());
-    $('#markdown-commands input').blur(function(){
-      this.value="";
-    });
-}
-$("#wmd-input").blur(function(){
-    window.onbeforeunload = function(){
-        if ($("#wmd-input").val().length > 0)
-            return "离开本页面会导致编辑的内容丢失！";
-    }
-    $.post("/markdown",{
-            md:$("#wmd-input").val()},
-        function(data){
-            $("#md-preview").html(data);
-            $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
-        });
-});
-data = $.map(users,function(value,i) {
-    return {'id':i,'name':value};
-});
 emoji_list = [
     "-1", "0", "1", "109", "2", "3", "4", "5", "6", "7", "8", "8ball", "9",
     "a", "ab", "airplane", "alien", "ambulance", "angel", "anger", "angry",
@@ -113,17 +91,49 @@ var emojis = $.map(emoji_list,function(value,i) {
     return {'id':i,'key':value+":",'name':value};
 });
 
-$("#wmd-input").atWho("@",{
-    'tpl': "<li id='${id}' data-keyname='${name}'>${name}</li>",
-    'debug':false,
-    'data':data
-})
-    .atWho(":",{
-        debug:false,
-        'data':emojis,
-        'tpl':"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png'  height='20' width='20' /></li>"
-    });
 $(document).ready(function(){
+    data = $.map(users,function(value,i) {
+        return {'id':i,'name':value};
+    });
+    if(isChrome){
+        $('#markdown-commands').html('<div class="left"><input id="wmd-input_speech" class="btn" x-webkit-speech onwebkitspeechchange="speech_fake();" onclick="this.blur();" lang="zh-CN"/></div>'+$('#markdown-commands').html());
+        $('#markdown-commands input').blur(function(){
+            this.value="";
+        });
+    }
+    $("#wmd-input").blur(function(){
+        window.onbeforeunload = function(){
+            if ($("#wmd-input").val().length > 0)
+                return "离开本页面会导致编辑的内容丢失！";
+        }
+        $.post("/markdown",{
+                md:$("#wmd-input").val()},
+            function(data){
+                $("#md-preview").html(data);
+                $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
+            });
+    });
+    $("#wmd-input").atWho("@",{
+        'tpl': "<li id='${id}' data-keyname='${name}'>${name}</li>",
+        'debug':false,
+        'data':data
+    })
+        .atWho(":",{
+            debug:false,
+            'data':emojis,
+            'tpl':"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png'  height='20' width='20' /></li>"
+        });
+    $(function(){
+        $('#tags').tagEditor();
+
+        var $form = $('#editor');
+        if ($form.length > 0) {
+            var setting = window.ClientSideValidations.forms[$form.attr('id')];
+            $('#tags').change(function(){
+                $(this).isValid(setting.validators);
+            });
+        };
+    })
     $('#submit').click(function(){
         window.onbeforeunload = null;
     });
