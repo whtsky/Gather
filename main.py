@@ -73,6 +73,7 @@ class Application(tornado.web.Application):
             login_url='/login',
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
+            gzip=True,
             **config
         )
 
