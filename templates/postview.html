@@ -15,9 +15,6 @@
 <li><a href='/'>主页</a></li>
 <li class='active'><a href='/topics'>主题</a></li>
 <li><a href='/tag'>标签</a></li>
-{% if current_user and current_user['lovetag'] %}
-<li><a href="/my">个人信息流</a></li>
-{% end %}
 {% end %}
 
 {% block breadcrumb %}
@@ -49,14 +46,14 @@
                             </div>
                             <form action="/admin/post/changetag/{{ post['_id'] }}" method='post'>
                                 <div class="modal-body">
-                                    <input style='width:99%;' type='text' name='tags' placeholder="请输入标签。标签间使用空格或英文逗号(,)或(/)分割" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
+                                    <input style='width:99%;' type='text' id='tags' name='tags' data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
                                 </div>
                                 <div class="modal-footer">
                                     <button type='submit' class="btn btn-danger">更改Tags</button>
                                 </div>
                             </form>
                         </div>
-                        <a data-toggle="modal" href="#changetag" id='changetag-link' class="label label-important hide">修改Tags</a>
+                        <a data-toggle="modal" href="#changetag" id='changetag-link' class="label label-important">修改Tags</a>
                         {% end %}
                     </td>
                     <td class='avatar'>

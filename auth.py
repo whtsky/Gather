@@ -1,4 +1,5 @@
 #coding=utf-8
+import user
 
 from common import BaseHandler,time_span
 from hashlib import sha1,md5
@@ -38,12 +39,9 @@ class AuthSignupHandler(BaseHandler):
                         'email':email,
                         'hashed_email':md5(email).hexdigest(),
                         'password':password,
-                        'tagmark':[],
                         'postmark':[],
                         'notification':[],
                         'twitter_bind':False,
-                        'lovetag':[],
-                        'hatetag':[],
                         'css':'',
                         'signtime':int(time.time())})
             message = '注册成功'
@@ -108,22 +106,8 @@ class AuthSettingHandler(BaseHandler):
             user['website'] = website
         except:
             user['website'] = ''
-        for x in ('lovetag','hatetag'):
-            tags = []
-            try:
-                for i in xhtml_escape(self.get_argument(x).lower()).split(','):
-                    for i in i.split(' '):
-                        for i in i.split('/'):
-                            tags.append(i)
-            except:
-                pass
-            user[x] = tags
-        if self.db.users.find_one({'username':{'$ne':user['username']},'email':user['email']}):
-            self.write(json_encode({'status':'fail','message':'邮箱已有人使用。'}))
-            return
-        user['hashed_email'] = md5(user['email']).hexdigest()
         self.db.users.save(user)
-        self.write(json_encode({'status':'success','message':'信息更新成功'}))
+        self.redirect('/user/%s' % user['username'] )
 
 class AuthChangePasswordHandler(BaseHandler):
 

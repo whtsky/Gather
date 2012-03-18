@@ -58,22 +58,31 @@ class ChangeTagHandler(BaseHandler):
     def post(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
-        for tag in self.db.posts.find_one({'_id':postid})['tags']:
+        post = self.db.posts.find_one({'_id':postid})
+        for tag in post['tags']:
             self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         tags = []
-        for x in xhtml_escape(self.get_argument('tags').lower()).split(','):
-            for x in x.split(' '):
-                for x in x.split('/'):
-                    tags.append(x)
+        for x in xhtml_escape(self.get_argument('tags').lower()).replace(',',' ').replace('/',' ').split(' '):
+            if x:
+                tags.append(x)
+        assert tags
         for tag in tags:
             self.db.tags.update({'name':tag},
                         {'$inc':{'count':1}},True)
-        self.db.posts.update({'_id':postid},{'$set':{'tags':tags}})
-        self.write('done.')
+        post['tags'] = tags
+        self.db.posts.save(post)
         try:
             del self.mc['index']
         except KeyError:
             pass
+        try:
+            cache = self.mc[str(postid)]
+        except KeyError:
+            pass
+        else:
+            cache[0] = post
+            self.mc[str(postid)] = cache
+        self.redirect('/topics/'+str(postid))
         
 def removepost(fliter,db,mc):
     for post in db.posts.find(fliter):

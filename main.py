@@ -20,7 +20,7 @@ from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModu
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
-from common import HomeHandler,MyHomeHandler,FeedHandler,EditModule,ErrorHandler
+from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,consumer_key,consumer_secret
 import pylibmc
 
@@ -37,7 +37,6 @@ class Application(tornado.web.Application):
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 
-            (r'/my',MyHomeHandler),
             (r'/my/post',MyMarkedPostHandler),
             (r'/my/notifications',NotificationHandler),
 

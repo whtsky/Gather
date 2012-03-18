@@ -10,7 +10,7 @@
 {% block body %}
 <div class='span8'>
     <section class="box">
-        <form class='form-horizontal'>
+        <form class='form-horizontal' action="/setting" method="post">
             <fieldset>
                 <header>
                     <h3>设置</h3>
@@ -20,16 +20,7 @@
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-user"></i></span>
-                            <input class="span5 disabled" id="username" type="text" value="{{ current_user['username'] }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div id="email-g" class="control-group">
-                    <label class="control-label" for="email">E-mail</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-envelope"></i></span>
-                            <input class="span5  type="email" id="email" value="{{ current_user['email'] }}" placeholder="请输入有效的邮箱地址" x-webkit-speech required>
+                            <input class="span5 disabled" name="username" type="text" value="{{ current_user['username'] }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -38,7 +29,7 @@
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-lemon"></i></span>
-                            <input class="span5  type="url" id="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
+                            <input class="span5  type="url" name="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
                         </div>
                     </div>
                 </div>
@@ -47,7 +38,7 @@
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-home"></i></span>
-                            <input class="span5  type="text" id="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
+                            <input class="span5  type="text" name="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
                         </div>
                     </div>
                 </div>
@@ -56,7 +47,7 @@
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-twitter-sign"></i></span>
-                            <input class="span5  type="text" id="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
+                            <input class="span5  type="text" name="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
                         </div>
                     </div>
                 </div>
@@ -65,41 +56,21 @@
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-github-sign"></i></span>
-                            <input class="span5  type="text" id="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
-                        </div>
-                    </div>
-                </div>
-                <div id="lovetag-g" class="control-group">
-                    <label class="control-label" for="email">喜爱标签</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-tags"></i></span>
-                            <input class="span5  type="text" id="lovetag" x-webkit-speech value="{{ ''.join(current_user['lovetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
-                            <p class="help-block">在您的<a href="/my">个人信息流</a>中，只会显示有您喜爱标签的帖子</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="hatetag-g" class="control-group">
-                    <label class="control-label" for="email">厌恶标签</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-tags"></i></span>
-                            <input class="span5  type="text" id="hatetag" x-webkit-speech value="{{ ''.join(current_user['hatetag']) }}" placeholder="标签间使用空格 , 或 / 分割">
-                            <p class="help-block">所有有您厌恶标签的帖子都不会显示在您的首页信息流上。</p>
+                            <input class="span5  type="text" name="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
                         </div>
                     </div>
                 </div>
                 <div id="css-g" class="control-group">
                     <label class="control-label" for="css">自定义CSS</label>
                     <div class="controls">
-                        <textarea class="span5"  id="css">{{ current_user['css'] }}</textarea>
+                        <textarea class="span5"  name="css">{{ current_user['css'] }}</textarea>
                         <p class="help-block">所有页面中都会加载你自定义的CSS</p>
                     </div>
                 </div>
                 <div id="words-g" class="control-group">
                     <label class="control-label" for="words">自我介绍</label>
                     <div class="controls">
-                        <textarea class="span5"  id="words">{{ current_user.setdefault('words','') }}</textarea>
+                        <textarea class="span5"  name="words">{{ current_user.setdefault('words','') }}</textarea>
                         <p class="help-block">帖子或回复列表中鼠标悬停到用户名上时会显示自我介绍</p>
                     </div>
                 </div>
@@ -114,7 +85,7 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button id='submit' class='btn btn-primary'>提交</button>
+                    <button type='submit' class='btn btn-primary'>提交</button>
                 </div>
             </fieldset>
         </form>

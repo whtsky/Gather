@@ -11,9 +11,6 @@
 <li><a href='/'>主页</a></li>
 <li class='active'><a href='/topics'>主题</a></li>
 <li><a href='/tag'>标签</a></li>
-{% if current_user and current_user['lovetag'] %}
-<li><a href="/my">个人信息流</a></li>
-{% end %}
 {% end %}
 
 {% block breadcrumb %}
@@ -40,7 +37,7 @@
                     <div id='tags-g' class='control-group'>
                         <div class='controls'>
                             <div class="input-prepend">
-                                <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" x-webkit-speech />
+                                <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" />
                             </div>
                         </div>
                     </div>
