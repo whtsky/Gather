@@ -85,7 +85,7 @@ class Application(tornado.web.Application):
 
         self.mc = pylibmc.Client(options.memcached_host,binary=True)
         
-        if not self.db.settings.find({'post_id':{'$lte':0}}):
+        if not self.db.settings.find_one({'post_id':{'$lte':0}}):
             self.db.settings.save({'post_id':1})
             self.db.settings.save({'user_id':0})
             self.db.posts.create_index([('changedtime',1)])
