@@ -44,7 +44,7 @@
                                 <a class="close" data-dismiss="modal" >&times;</a>
                                 <h3>修改Tags</h3>
                             </div>
-                            <form action="/admin/post/changetag/{{ post['_id'] }}" method='post'>
+                            <form action="/admin/post/changetag/{{ post['_id'] }}" method='post' id='editor'>
                                 <div class="modal-body">
                                     <input style='width:99%;' type='text' id='tags' name='tags' data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" required x-webkit-speech value="{{ ' '.join(post['tags']) }}">
                                 </div>

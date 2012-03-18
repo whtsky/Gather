@@ -3,7 +3,6 @@
 {% block title %}{{ handler.settings['bbs_title'] }} > 发布主题{% end %}
 
 {% block head %}
-<script src='{{ static_url("js/highlight.pack.js") }}' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("css/highlight.css") }}' type='text/css'/>
 {% end %}
 
@@ -21,40 +20,32 @@
 
 {% block content %}
 <section class="box">
-    <form action="/topics/add" method="post">
-        <fieldset>
-            <header><h2>发表主题</h2></header>
-            <div id='title-g' class='control-group'>
-                <div class='controls'>
-                    <div class="input-prepend">
-                        <input style="width: 99%" type='text' id='title' name='title' x-webkit-speech required maxlength="50" />
-                    </div>
+    <form action="/topics/add" method="post" id='editor'>
+        <header><h2>发表主题</h2></header>
+        <div id='title-g' class='control-group'>
+            <div class='controls'>
+                <div class="input-prepend">
+                    <input style="width: 99%" type='text' id='title' name='title' x-webkit-speech required maxlength="50" />
                 </div>
             </div>
-            <div id='markdown-g' class='control-group'>
-                <div class='controls'>
-                    {{ modules.Edit(db=db) }}
-                    <div id='tags-g' class='control-group'>
-                        <div class='controls'>
-                            <div class="input-prepend">
-                                <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="markdown-commands">
-                    <div class="left">
-                        {% if current_user['twitter_bind'] %}
-                        同步到Twitter<input type="checkbox" name="twitter-sync" checked value="yes">
-                        {% end %}
-                    </div>
-                    <div class="right">
-                        <small class="col_fade">Ctrl+Enter 快速发表</small>
-                        <button id='submit' class='btn'>发表</button>
-                    </div>
-                </div>
+        </div>
+        <div id='markdown-g' class='control-group'>
+            <div class='controls'>
+                {{ modules.Edit(db=db) }}
             </div>
-        </fieldset>
+        </div>
+        <input style="width: 100%" type='text' id='tags' name='tags' required data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" />
+        <div id="markdown-commands">
+            <div class="left">
+                {% if current_user['twitter_bind'] %}
+                同步到Twitter<input type="checkbox" name="twitter-sync" checked value="yes">
+                {% end %}
+            </div>
+            <div class="right">
+                <small class="col_fade">Ctrl+Enter 快速发表</small>
+                <button id='submit' type="submit" class='btn'>发表</button>
+            </div>
+        </div>
     </form>
 </section>
 {% end %}
