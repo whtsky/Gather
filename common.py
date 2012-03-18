@@ -90,12 +90,15 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
             txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
     if notice:
+        txt_notice = txt
+        if len(txt_notice) > 50:
+            txt_notice = txt_notice[:40] + u'...'
         for u in mentions:
             db.users.update({'username':u},
             {'$push':
                      {'notification':
                               {'from':user,
-                               'content':txt,
+                               'content':txt_notice,
                                'time':time,
                                'postid':postid,
                                'read':False,
