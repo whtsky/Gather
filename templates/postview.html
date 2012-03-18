@@ -96,7 +96,7 @@
 {% if current_user %}
 <section class='box'>
     <form action="" method="post">
-        {{ modules.Edit() }}
+        {{ modules.Edit(db=db) }}
         <div id="markdown-commands">
             <div class="left">
                 {% if current_user['twitter_bind'] %}

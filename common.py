@@ -58,8 +58,8 @@ class MyHomeHandler(BaseHandler):
         self.render('my.html',time_span=time_span,posts = self.db.posts.find({'tags':{'$nin':user['hatetag']},'tags':{'$in':user['lovetag']}},sort=[('changedtime', -1)],limit=15))
 
 class EditModule(tornado.web.UIModule):
-    def render(self):
-        return self.render_string('modules/markdown.html')
+    def render(self,db):
+        return self.render_string('modules/markdown.html',db=db)
 
 class FeedHandler(BaseHandler):
     def get(self):
