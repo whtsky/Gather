@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ handler.settings['bbs_title'] }} > {{ post['title'] }}{% end %}
+{% block keywords %}{{ ','.join(post['tags']) }}{% end %}
 
 {% block head %}
 <link rel='stylesheet' href='{{ static_url("css/postview.css") }}' type='text/css'/>
@@ -72,10 +73,11 @@
                 <a href="#" id="mark">
                     {% if post['_id'] in current_user['postmark'] %}
                     <i id="mark-show" class="icon-heart">
-                        {% else %}
-                        <i id="mark-show" class="icon-heart-empty">
-                            {% end %}
-                        </i></a>
+                    {% else %}
+                    <i id="mark-show" class="icon-heart-empty">
+                    {% end %}
+                    </i>
+                </a>
                 {% end %}
             </div>
             <div class="right">

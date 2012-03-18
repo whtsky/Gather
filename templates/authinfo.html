@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ handler.settings['bbs_title'] }} > {{ username }}{% end %}
+{% block keywords %}{{ username }}{% end %}
 
 {% block head %}
 <link rel='stylesheet' href='{{ static_url("css/authinfo.css") }}' type='text/css'/>

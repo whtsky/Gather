@@ -43,7 +43,7 @@
     </div>
 </div>
 <script>
-    users = ['{{ "','".join([ u['username'] for u in db.users.find()]) }}'] ;
+    users = ['{{ "','".join([ u['username'].encode('utf-8') for u in db.users.find()]) }}'] ;
 </script>
 <script src='/static/js/jquery.caret.js' type="text/javascript"></script>
 <script src='/static/js/jquery.atwho.js' type="text/javascript"></script>
