@@ -85,6 +85,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
         mentions.append(u)
         txt = txt.replace(u'@'+u,u'<a href="/user/%s">@%s</a>' % (u,u))
 
+    for emoji in set(emoji_finder.findall(txt)):
+        if emoji in emojis:
+            txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
+
     if notice:
         for u in mentions:
             db.users.update({'username':u},
@@ -98,9 +102,5 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
                                }
                      },
             })
-
-    for emoji in set(emoji_finder.findall(txt)):
-        if emoji in emojis:
-            txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
     return txt
