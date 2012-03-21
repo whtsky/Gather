@@ -101,6 +101,16 @@ $(document).ready(function(){
     $("a[rel=popover]").popover()
     $(".item-list a").attr('target','_blank');
     $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
+    all_link = $('article a');
+    for(var i=0;all_link[i];i++){
+        link = all_link[i];
+        link_url = link.href;
+        if (link_url.indexOf(".png") !== -1 || link_url.indexOf(".jpg") !== -1 || link_url.indexOf(".gif") !== -1){
+            var img = $('<img src="'+all_link[i].href+'" />');
+            img.insertBefore(all_link[i]);
+            link.hidden = true;
+        }
+    }
     var doing = false;
     $("#mark").click(function(){
         if(doing)
