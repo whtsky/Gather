@@ -103,7 +103,7 @@ $(document).ready(function(){
     $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
     var doing = false;
     $("#mark").click(function(){
-        if(doing==true)
+        if(doing)
             return false;
         if($("#mark-show").hasClass('icon-heart-empty')){
             doing=true;

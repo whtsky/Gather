@@ -1,15 +1,4 @@
-$("#username").blur(function(){
-    checkInput("#username",!$(this).val());
-});
-$("#password").blur(function(){
-    checkInput("#password",!$(this).val());
-});
 $("#login").click(function(){
-    readySubmit=true;
-    $("#username").blur();
-    $("#password").blur();
-    if(!readySubmit)
-        return false;
     $.post("/login",{
             username:$("#username").val(),
             password:$("#password").val()},
