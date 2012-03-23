@@ -3,3 +3,4 @@
 .idea
 config.py
 static/js
+*.zip
