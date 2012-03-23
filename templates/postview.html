@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ handler.settings['bbs_title'] }} > {{ post['title'] }}{% end %}
+{% block title %}{{ handler.settings['forum_title'] }} > {{ post['title'] }}{% end %}
 {% block keywords %}{{ ','.join(post['tags']) }}{% end %}
 
 {% block head %}
@@ -18,7 +18,7 @@
 {% end %}
 
 {% block breadcrumb %}
-<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/">{{ handler.settings['forum_title'] }}</a> <span class="divider">/</span></li>
 <li><a href="/topics">主题</a> <span class="divider">/</span></li>
 <li class="active">{{ post['title'] }}</li>
 {% end %}

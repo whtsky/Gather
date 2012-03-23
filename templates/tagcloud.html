@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block nofollow %}{% end %}
-{% block title %}{{ handler.settings['bbs_title'] }} > 标签{% end %}
+{% block title %}{{ handler.settings['forum_title'] }} > 标签{% end %}
 
 {% block nav %}
 <li><a href='/'>主页</a></li>
@@ -10,7 +10,7 @@
 {% end %}
 
 {% block breadcrumb %}
-<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/">{{ handler.settings['forum_title'] }}</a> <span class="divider">/</span></li>
 <li class="active">标签</li>
 {% end %}
 

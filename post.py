@@ -8,6 +8,7 @@ from config import POST_PER_PAGE
 import twitter_oauth
 from tornado.httpclient import AsyncHTTPClient
 from common import html_killer,username_finder
+from ping import ping
 
 class PostHandler(BaseHandler):
 
@@ -45,11 +46,13 @@ class PostHandler(BaseHandler):
         except KeyError:
             pass
         self.redirect('/topics/'+str(tid))
+        url = '%s/topics/%s' % (self.application.settings['forum_url'],tid)
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.title = title
             self.user = user
             http_client = AsyncHTTPClient()
-            http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],tid), self.sync)
+            http_client.fetch('http://is.gd/create.php?format=simple&url=%s' % url, self.sync)
+        ping(self.application.settings['forum_title_e'],self.application.settings['forum_url'],url)
 
     def sync(self,request):
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
@@ -129,12 +132,13 @@ class PostViewHandler(BaseHandler):
             self.mc[str(postid)] = cache
 
         self.redirect('/topics/'+str(postid))
-
+        url = '%s/topics/%s' % (self.application.settings['forum_url'],postid)
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
             self.content = content
             self.user = user
             http_client = AsyncHTTPClient()
-            http_client.fetch('http://is.gd/create.php?format=simple&url=%s/topics/%s' % (self.application.settings['bbs_url'],postid), self.sync)
+            http_client.fetch('http://is.gd/create.php?format=simple&url=%s' % url, self.sync)
+        ping(self.application.settings['forum_title_e'],self.application.settings['forum_url'],url)
 
     def sync(self,request):
         for i in set(html_killer.findall(self.content)):

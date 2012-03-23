@@ -21,7 +21,7 @@ from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
-from config import config,consumer_key,consumer_secret
+from config import config,consumer_key,consumer_secret,database_name
 import pylibmc
 
 class Application(tornado.web.Application):
@@ -78,7 +78,7 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self, handlers, **settings)
 
-        self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port).bbs
+        self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port)[database_name]
 
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret

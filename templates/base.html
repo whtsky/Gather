@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>{% block title %}{{ handler.settings['bbs_title'] }}{% end %}</title>
+    <title>{% block title %}{{ handler.settings['forum_title'] }}{% end %}</title>
     <link rel='stylesheet' href='{{ static_url("css/bootstrap.min.css") }}' type='text/css'/>
-    <meta name="keywords" content="{{ handler.settings['bbs_title_e'] }},{{ handler.settings['bbs_title'] }},{% block keywords %}{% end %}"/>
+    <meta name="keywords" content="{{ handler.settings['forum_title_e'] }},{{ handler.settings['forum_title'] }},{% block keywords %}{% end %}"/>
     <link rel='stylesheet' href='{{ static_url("css/bootstrap-responsive.min.css") }}' type='text/css'/>
     <link rel='stylesheet' href='{{ static_url("css/base.css") }}' type='text/css'/>
     <link rel='stylesheet' href='{{ static_url("css/font-awesome.css") }}' type='text/css'/>
@@ -13,7 +13,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src='{{ static_url("js/lib.js") }}'></script>
-    <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['bbs_title'] }}" href="/feed" />
+    <link rel="alternate" type="application/rss+xml" title="{{ handler.settings['forum_title'] }}" href="/feed" />
     {% block head %}{% end %}
     {% if current_user %}
     <style title="text/css">  {{ current_user['css'] }}  </style>
@@ -36,7 +36,7 @@
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </a>
-            <a class='brand' href='/'>{{ handler.settings['bbs_title_e'] }}</a>
+            <a class='brand' href='/'>{{ handler.settings['forum_title_e'] }}</a>
             <div class='nav-collapse'>
                 <ul class="nav">
                     {% block nav %}
@@ -100,7 +100,7 @@
         <div class="span12">
             <ul class="breadcrumb">
                 {% block breadcrumb %}
-                <li class="active">{{ handler.settings['bbs_title'] }}</li>
+                <li class="active">{{ handler.settings['forum_title'] }}</li>
                 {% end %}
             </ul>
         </div>
@@ -161,7 +161,7 @@
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '{{ google_analytics }}']);
-    _gaq.push(['_setDomainName', '{{ handler.settings["bbs_url"][7:] }}']);
+    _gaq.push(['_setDomainName', '{{ handler.settings["forum_url"][7:] }}']);
     _gaq.push(['_trackPageview']);
 
     (function() {

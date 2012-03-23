@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ handler.settings['bbs_title'] }} > {{ tagname }}{% end %}
+{% block title %}{{ handler.settings['forum_title'] }} > {{ tagname }}{% end %}
 {% block keywords %}{{ tagname }}{% end %}
 
 {% block head %}
-<link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['bbs_title'] }}-{{ tagname }}" type="application/atom+xml"/>
+<link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['forum_title'] }}-{{ tagname }}" type="application/atom+xml"/>
 {% end %}
 
 {% block nav %}
@@ -14,7 +14,7 @@
 {% end %}
 
 {% block breadcrumb %}
-<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/">{{ handler.settings['forum_title'] }}</a> <span class="divider">/</span></li>
 <li><a href="/tag">标签</a> <span class="divider">/</span></li>
 <li class="active" id="tagname">{{ tagname }}</li>
 {% end %}

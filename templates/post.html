@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ handler.settings['bbs_title'] }} > 发布主题{% end %}
+{% block title %}{{ handler.settings['forum_title'] }} > 发布主题{% end %}
 
 {% block head %}
 <link rel='stylesheet' href='{{ static_url("css/highlight.css") }}' type='text/css'/>
@@ -13,7 +13,7 @@
 {% end %}
 
 {% block breadcrumb %}
-<li><a href="/">{{ handler.settings['bbs_title'] }}</a> <span class="divider">/</span></li>
+<li><a href="/">{{ handler.settings['forum_title'] }}</a> <span class="divider">/</span></li>
 <li class="active">发布主题</li>
 {% end %}
 

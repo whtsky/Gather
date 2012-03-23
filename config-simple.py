@@ -2,12 +2,13 @@
 
 admin = ('admin')
 config = dict(
-    bbs_title=u'中文名',
-    bbs_title_e=u'英文名',
-    bbs_url=u'http://xxx.com',
+    forum_title=u'中文名',
+    forum_title_e=u'English Name',
+    forum_url=u'http://xxx.com',
     cookie_secret='ooxx',
     debug=False,
 )
+database_name = 'forum'
 POST_PER_PAGE = 20
 
 #twitter
