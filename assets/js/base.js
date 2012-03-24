@@ -96,10 +96,7 @@ $.fn.focusEnd = function(){
 
 var isChrome = navigator.userAgent.indexOf("Chrome") !== -1
 
-$(document).ready(function(){
-    $('time').timeago();
-    $("a[rel=popover]").popover()
-    $(".item-list a").attr('target','_blank');
+var init_article = function(){
     $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
     all_link = $('article a');
     for(var i=0;all_link[i];i++){
@@ -107,10 +104,17 @@ $(document).ready(function(){
         link_url = link.href;
         if (link_url.indexOf(".png") !== -1 || link_url.indexOf(".jpg") !== -1 || link_url.indexOf(".gif") !== -1){
             var img = $('<img src="'+all_link[i].href+'" />');
-            img.insertBefore(all_link[i]);
-            link.hidden = true;
+            img.insertBefore(link);
+            link.parentNode.removeChild(link);
         }
     }
+}
+
+$(document).ready(function(){
+    $('time').timeago();
+    $("a[rel=popover]").popover()
+    $(".item-list a").attr('target','_blank');
+    init_article();
     var doing = false;
     $("#mark").click(function(){
         if(doing)

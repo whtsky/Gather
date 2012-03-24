@@ -76,7 +76,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     mentions = []
 
     for x in set(url_replace.findall(txt)):
-        txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
+        if x.startswith('https://gist.github.com/'):
+            txt = txt.replace(x,u'<script src="%s.js"></script>%s' % (x[:-1],x[-1]))
+        else:
+            txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
 
     for u in set(username_finder.findall(txt)):
         mentions.append(u)
