@@ -42,8 +42,12 @@
             </ul>
         </div>
         <div id='imageupload' class="tab-pane">
+            {% if 'bind_imgur' in current_user and current_user['bind_imgur'] %}
             <div id="image_queue"></div>
             <input id="image_file" type="file" name="Filedata" />
+            {% else %}
+            你需要在<a href='/setting' target="_blank">个人设置页面</a>中绑定imgur之后才可以上传图片。
+            {% end %}
         </div>
     </div>
 </div>
