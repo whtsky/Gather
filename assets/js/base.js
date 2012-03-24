@@ -113,7 +113,8 @@ var init_article = function(){
 $(document).ready(function(){
     $('time').timeago();
     $("a[rel=popover]").popover()
-    $(".item-list a").attr('target','_blank');
+    if (navigator.userAgent.indexOf("Kindle") == -1)
+        $(".item-list a").attr('target','_blank');
     init_article();
     var doing = false;
     $("#mark").click(function(){
