@@ -92,6 +92,16 @@
     </section>
 </div>
 <div class='span4'>
+    {% if not 'bind_imgur' in current_user %}
+    <section class='box'>
+        <header><h3>Imgur账号绑定</h3></header>
+        <form id='imgur_form'>
+            <input id='imgur' placeholder='绑定imgur之后，你可以随时贴图。' required />
+            <button type='submit' class="btn btn-success">绑定Imgur</button>
+            <a href="/imgur/oauth" class="btn btn-warning" target="_blank">获取 Imgur verification</a>
+        </form>
+    </section>
+    {% end %}
     <section class='box'>
         <form>
             <fieldset>

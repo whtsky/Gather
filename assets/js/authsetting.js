@@ -1,3 +1,10 @@
+$('#imgur_form').submit(function(e){
+    e.preventDefault();
+    $.post('/imgur/oauth',{
+        imgur:$('#imgur').val()
+    }).success(function(){location.reload();}).error(function() { alert("绑定失败，请检查verification"); });
+});
+
 $("#old").blur(function(){
     checkInput("#old",(!$(this).val() || !$(this).val().match(/.{6,}$/)));
 });

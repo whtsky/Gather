@@ -15,4 +15,8 @@ POST_PER_PAGE = 20
 consumer_key = ''
 consumer_secret = ''
 
+#imgur
+i_consumer_key = ''
+i_consumer_secret = ''
+
 google_analytics = ''
