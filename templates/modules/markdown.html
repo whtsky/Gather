@@ -1,11 +1,13 @@
 <script src='/static/js/editor.js' type="text/javascript"></script>
 <link rel='stylesheet' href='{{ static_url("css/edit.css") }}' type='text/css'/>
+<link rel='stylesheet' href='{{ static_url("css/uploadify.css") }}' type='text/css'/>
 <link rel='stylesheet' href='{{ static_url("css/jquery.atwho.css") }}' type='text/css'/>
 <div class='tabbable'>
     <ul class='nav nav-pills'>
         <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
         <li><a href='#preview' data-toggle='pill'>预览</a></li>
         <li><a href='#markdownwiki' data-toggle='pill'>语法参考</a></li>
+        <li><a href="#imageupload" data-toggle='pill'>图片上传</a></li>
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active' id='edit'>
@@ -38,6 +40,10 @@
                 <li>http://blog.whtsky.tk自动变链接</li>
                 <li>http://aaa.com/b.jpg自动变图片</li>
             </ul>
+        </div>
+        <div id='imageupload' class="tab-pane">
+            <div id="image_queue"></div>
+            <input id="image_file" type="file" name="Filedata" />
         </div>
     </div>
 </div>

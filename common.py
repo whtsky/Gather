@@ -24,9 +24,9 @@ class BaseHandler(tornado.web.RequestHandler):
         self.mc = self.application.mc
 
     def get_current_user(self):
-        user = self.get_secure_cookie('user')
-        if user:
-            return self.db.users.find_one({'username':user})
+        password = self.get_cookie('user')
+        if password:
+            return self.db.users.find_one({'password':password})
         else:
             return None
 

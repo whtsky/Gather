@@ -25,3 +25,17 @@ class ImgurOauthHandler(BaseHandler):
         user['bind_imgur'] = True
         self.db.users.save(user)
         self.write('{"message":done}')
+
+class ImgurUploadHandler(BaseHandler):
+    def post(self):
+        user = self.db.users.find_one({'password':self.get_argument('user')})
+        #FUCK FUCK FUCK FUCK FUCK FUCKING FLASK
+        api = imguring(i_consumer_key,i_consumer_secret,user['i_oauth_token'],user['i_oauth_token_secret'])
+        for f in self.request.files['Filedata']:
+            back = api.upload(f['body'])
+            self.write(back['images']['links']['original'])
+
+class ImgurCheckHandler(BaseHandler):
+    def post(self):
+        self.write('0')
+

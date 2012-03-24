@@ -46,7 +46,7 @@ class AuthSignupHandler(BaseHandler):
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
-            self.set_secure_cookie('user',username)
+            self.set_cookie('user',password)
         self.write(json_encode({'status':status,'message':message}))
 
 class AuthLogoutHandler(BaseHandler):
@@ -65,8 +65,9 @@ class AuthLoginHandler(BaseHandler):
         username = self.get_argument('username')
         password = self.get_argument('password')
         account = self.db.users
-        if account.find_one({'username':username,'password':hashpassword(username,password)}):
-            self.set_secure_cookie('user',username)
+        password = hashpassword(username,password)
+        if account.find_one({'username':username,'password':password}):
+            self.set_cookie('user',password)
             self.write(json_encode({'status':'success','message':'登录成功'}))
         else:
             self.write(json_encode({'status':'error','message':'用户名或密码错误'}))

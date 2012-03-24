@@ -27,4 +27,5 @@ cat tageditor.js >> editor.js
 cat jquery.caret.js >> editor.js
 cat jquery.atwho.js >> editor.js
 cat markdown.js >> editor.js
-rm Markdown.Converter.js Markdown.Sanitizer.js tageditor.js jquery.caret.js jquery.atwho.js markdown.js
+cat jquery.uploadify.min.js >> editor.js
+rm Markdown.Converter.js Markdown.Sanitizer.js tageditor.js jquery.caret.js jquery.atwho.js markdown.js jquery.uploadify.min.js

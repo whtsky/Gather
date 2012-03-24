@@ -129,5 +129,21 @@ $(document).ready(function(){
     $('#submit').click(function(){
         window.onbeforeunload = null;
     });
+    $('#image_file').uploadify ({
+        'swf'		: '/static/uploadify.swf',
+        'cancelImage' : '/static/img/uploadify-cancel.png',
+        'uploader' : '/imgur/upload',
+        'postData' : {'user':getCookie('user')},
+        'checkExisting' : '/imgur/check',
+        'buttonClass' : 'btn',
+        'removeCompleted': true,
+        'fileTypeExts'   : '*.jpg;*.gif;*.png',
+        'multi'		: true,
+        'auto'    : true,
+        'buttonText': '添加图片',
+        'onUploadSuccess' : function (file, data) {
+            $("#wmd-input").val($("#wmd-input").val()+'\n'+data+'\n');
+        }
+    });
 });
 
