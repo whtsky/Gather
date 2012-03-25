@@ -15,7 +15,7 @@ class TagCloudModule(tornado.web.UIModule):
             for tag in tags:
                 html.append(u'<a href="/tag/%s" style="font-size:%spt;" title="共%s条主题">%s</a>' % (tag['name'],int(3 * math.log(max(tag['count'] + 1, 1))) + 12,tag['count'],tag['name']))
             html =  ' '.join(html)
-            mc.set('tagcloud:%s' % limit,html,time=1800)
+            mc.set('tagcloud:%s' % limit,html,time=18000)
         return html
 
 class TagViewHandler(BaseHandler):

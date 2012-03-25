@@ -73,6 +73,8 @@ class ChangeTagHandler(BaseHandler):
         self.db.posts.save(post)
         try:
             del self.mc['index']
+            del mc['tagcloud:10']
+            del mc['tagcloud:False']
         except KeyError:
             pass
         try:
@@ -96,3 +98,8 @@ def removepost(fliter,db,mc):
         except KeyError:
             pass
     db.posts.remove(fliter)
+    try:
+        del mc['tagcloud:10']
+        del mc['tagcloud:False']
+    except KeyError:
+        pass

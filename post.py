@@ -43,6 +43,8 @@ class PostHandler(BaseHandler):
                                 True)
         try:
             del self.mc['index']
+            del mc['tagcloud:10']
+            del mc['tagcloud:False']
         except KeyError:
             pass
         self.redirect('/topics/'+str(tid))
