@@ -41,6 +41,7 @@ class AuthSignupHandler(BaseHandler):
                         'password':password,
                         'postmark':[],
                         'notification':[],
+                        'block_user':[],
                         'twitter_bind':False,
                         'css':'',
                         'signtime':int(time.time())})
