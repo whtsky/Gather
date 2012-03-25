@@ -15,7 +15,7 @@ define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 define('memcached_host', default=['127.0.0.1'],help='memcached host')
 
-from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler,NotificationHandler
+from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler,NotificationHandler,BlockUserHandler
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
@@ -34,7 +34,8 @@ class Application(tornado.web.Application):
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
-            (r'/user/(.*?)',AuthInfoHandler),
+            (r'/user/([\u4e00-\u9fa5A-Za-z0-9]{1,15})',AuthInfoHandler),
+            (r'/user/([\u4e00-\u9fa5A-Za-z0-9]{1,15})/block',BlockUserHandler),
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 

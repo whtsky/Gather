@@ -18,12 +18,15 @@
     {% if current_user %}
     <style title="text/css">  {{ current_user['css'] }}  </style>
     <script>
+        var islogin = true;
         {% if current_user['username'] in admin_list %}
         var isadmin = true;
         {% else %}
         var isadmin = false;
         {% end %}
     </script>
+    {% else %}
+    <script>var islogin=false;</script>
     {% end %}
 
 </head>

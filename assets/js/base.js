@@ -36,21 +36,6 @@ for(var i = 0; i < pairs.length; i++) {
 var sUrl = document.URL;
 var domain = sUrl.slice(sUrl.indexOf('://')+3, sUrl.indexOf('/', sUrl.indexOf('://')+3));
 
-$(document).ready(function(){
-    $('#search_form').submit(function(e){
-        e.preventDefault();
-        search();
-    });
-
-    function search(){
-        var q = document.getElementById('q');
-        if (q.value != '')
-            window.open('http://www.google.com/search?q=site:' + domain + ' ' + q.value, '_blank');
-        return false;
-    }
-
-});
-
 function adjustOffset(el, offset) {
     /* From http://stackoverflow.com/a/8928945/611741 */
     var val = el.value, newOffset = offset;
@@ -109,8 +94,22 @@ var init_article = function(){
         }
     }
 }
-
-$(document).ready(function(){
+$(function() {
+    $("#new_reply").live("ajax:success",
+        function() {
+            $(this).find("textarea").val("")
+        }).live("ajax:error",
+        function(a, b, c) {
+            var d = $('<div class="alert-message error fade in"><a href="#" class="close">×</a><p></p></div>').alert();
+            d.find("p").text(b.responseText),
+                d.hide().prependTo($(this)).fadeIn("fast")
+        }),
+        $(".at").live("click",
+            function(a) {
+                var b = $("#wmd-input");
+                b.focus().val(b.val() + "@" + $(this).data("user-name") + " "),
+                    a.preventDefault()
+            })
     $('time').timeago();
     $("a[rel=popover]").popover()
     if (navigator.userAgent.indexOf("Kindle") == -1)
@@ -142,26 +141,18 @@ $(document).ready(function(){
         return false;
     });
 
-    $(function() {
-        $("#new_reply").live("ajax:success",
-            function() {
-                $(this).find("textarea").val("")
-            }).live("ajax:error",
-            function(a, b, c) {
-                var d = $('<div class="alert-message error fade in"><a href="#" class="close">×</a><p></p></div>').alert();
-                d.find("p").text(b.responseText),
-                    d.hide().prependTo($(this)).fadeIn("fast")
-            }),
-            $(".at").live("click",
-                function(a) {
-                    var b = $("#wmd-input");
-                    b.focus().val(b.val() + "@" + $(this).data("user-name") + " "),
-                        a.preventDefault()
-                })
-    });
-    if (isadmin){
-        $('.kill').removeClass('hide');
-        $('#changetag-link').removeClass('hide');
+    if (islogin){
+        if (isadmin){
+            $('.kill').removeClass('hide');
+            $('#changetag-link').removeClass('hide');
+
+        }
+        all_user = $('#comments a[rel=popover]');
+        for(var i=0;all_user[i];i++){
+            user = $(all_user[i]);
+            if (block_user.indexOf('.'+user.html()+'.') !== -1)
+                user.parents('tr').hide();
+        }
     }
     $('.kill').click(
         function(){
@@ -202,4 +193,15 @@ $(document).ready(function(){
             }
         }
     };
+    $('#search_form').submit(function(e){
+        e.preventDefault();
+        search();
+    });
+
+    function search(){
+        var q = document.getElementById('q');
+        if (q.value != '')
+            window.open('http://www.google.com/search?q=site:' + domain + ' ' + q.value, '_blank');
+        return false;
+    }
 });

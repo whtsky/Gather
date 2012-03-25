@@ -21,8 +21,13 @@
         <div class="right-side">
             <h1>
                 {{ username }}<small>
+                {% if current_user %}
                 {% if username == current_user['username'] %}
-                <a href="/setting" class="label label-success">编辑</a>{% end %}
+                <a href="/setting" class="label label-success">编辑</a>
+                {% else %}
+                <a href='/user/{{ username }}/block' class="label label-important">{% if username in current_user['block_user'] %}解除屏蔽{%else%}屏蔽此人{%end%}</a>
+                {% end %}
+                {% end %}
                 <a href="/admin/user/kill/{{ username }}" class="label label-important kill hide">和谐</a>
                 </small>
             </h1>

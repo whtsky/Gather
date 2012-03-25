@@ -122,6 +122,17 @@ class AuthChangePasswordHandler(BaseHandler):
         else:
             self.write(json_encode({'status':'fail','message':'原密码错误'}))
 
+class BlockUserHandler(BaseHandler):
+    @authenticated
+    def get(self,username):
+        user = self.get_current_user()
+        if username in user['block_user']:
+            user['block_user'].remove(username)
+        else:
+            user['block_user'].append(username)
+        self.db.users.save(user)
+        self.redirect('/user/'+username)
+
 class NotificationHandler(BaseHandler):
     @authenticated
     def get(self):
