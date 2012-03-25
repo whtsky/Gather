@@ -73,8 +73,8 @@ class ChangeTagHandler(BaseHandler):
         self.db.posts.save(post)
         try:
             del self.mc['index']
-            del mc['tagcloud:10']
-            del mc['tagcloud:False']
+            del self.mc['tagcloud:10']
+            del self.mc['tagcloud:False']
         except KeyError:
             pass
         try:

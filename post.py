@@ -43,8 +43,8 @@ class PostHandler(BaseHandler):
                                 True)
         try:
             del self.mc['index']
-            del mc['tagcloud:10']
-            del mc['tagcloud:False']
+            del self.mc['tagcloud:10']
+            del self.mc['tagcloud:False']
         except KeyError:
             pass
         self.redirect('/topics/'+str(tid))
