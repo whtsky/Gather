@@ -9,6 +9,7 @@ from tornado.web import authenticated
 import time
 from re import compile
 from urlparse import urlparse
+from urllib import unquote
 
 username_check = compile(u'([\u4e00-\u9fa5A-Za-z0-9]{1,15})')
 
@@ -58,7 +59,8 @@ class AuthLoginHandler(BaseHandler):
     def get(self):
         if self.get_current_user():
             self.redirect(self.get_argument('next', '/'))
-        self.render('login.html')
+        else:
+            self.render('login.html')
         
     def post(self):
         assert not self.get_current_user()
@@ -74,6 +76,7 @@ class AuthLoginHandler(BaseHandler):
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
+        username = unquote(username).decode('utf-8')
         user = self.db.users.find_one({'username':username})
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
@@ -125,6 +128,7 @@ class AuthChangePasswordHandler(BaseHandler):
 class BlockUserHandler(BaseHandler):
     @authenticated
     def get(self,username):
+        username = unquote(username).decode('utf-8')
         user = self.get_current_user()
         if username in user['block_user']:
             user['block_user'].remove(username)
