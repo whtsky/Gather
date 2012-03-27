@@ -8,3 +8,5 @@ Disallow: /my/
 Disallow: /topics/add
 Disallow: /admin/
 Disallow: /markdown
+Disallow: /imgur/
+Disallow: /twitter/
