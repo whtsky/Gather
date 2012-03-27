@@ -10,11 +10,11 @@ import time
 from re import compile
 from urlparse import urlparse
 
-username_check = compile(u'([\u4e00-\u9fa5A-Za-z0-9]{1,15})')
+username_check = compile(u'([A-Za-z0-9]{1,25})')
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
-    return sha1(username.encode('utf-8')+password).hexdigest()
+    return sha1(username+password).hexdigest()
 
 class AuthSignupHandler(BaseHandler):
     def get(self):

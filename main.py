@@ -33,8 +33,8 @@ class Application(tornado.web.Application):
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
-            (r'/user/([%A-Za-z0-9]+)',AuthInfoHandler),
-            (r'/user/([%A-Za-z0-9]+)/block',BlockUserHandler),
+            (r'/user/([A-Za-z0-9]+)',AuthInfoHandler),
+            (r'/user/([A-Za-z0-9]+)/block',BlockUserHandler),
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 
