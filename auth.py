@@ -66,9 +66,8 @@ class AuthLoginHandler(BaseHandler):
         assert not self.get_current_user()
         username = self.get_argument('username')
         password = self.get_argument('password')
-        account = self.db.users
         password = hashpassword(username,password)
-        if account.find_one({'username':username,'password':password}):
+        if self.db.users.find_one({'username':username,'password':password}):
             self.set_cookie('user',password)
             self.write(json_encode({'status':'success','message':'登录成功'}))
         else:

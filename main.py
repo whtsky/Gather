@@ -18,7 +18,7 @@ from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHa
 from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
-from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
+from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler,TwitterProxyHandler
 from g import ImgurOauthHandler,ImgurUploadHandler,ImgurCheckHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,consumer_key,consumer_secret,database_name
@@ -58,6 +58,7 @@ class Application(tornado.web.Application):
             (r'/twitter/oauth',TwitterOauthHandler),
             (r'/twitter/unbind',TwitterNotBindHandler),
             (r'/twitter/tweet',TweetHandler),
+            (r'/twitter/api/(.*?)',TwitterProxyHandler),
 
             (r'/imgur/oauth',ImgurOauthHandler),
             (r'/imgur/upload',ImgurUploadHandler),

@@ -1,6 +1,8 @@
 #coding=utf-8
 
 from common import BaseHandler
+from auth import hashpassword
+import urlparse, base64
 from tornado.web import authenticated
 import oauth2 as oauth
 import twitter_oauth
@@ -71,3 +73,58 @@ class TweetHandler(BaseHandler):
         user = self.get_current_user()
         api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, user['oauth_token'], user['oauth_token_secret'])
         api.post_update(tweet=self.get_argument('tweet'))
+
+class TwitterProxyHandler(BaseHandler):
+
+    def get(self,path):
+        self.do_proxy('GET',path)
+
+    def post(self,path):
+        self.do_proxy('POST',path)
+
+    def do_proxy(self,method,path):
+        username,password = self.parse_auth_header(self.request.headers)
+        password = hashpassword(username,password)
+        user = self.db.users.find_one({'username':username,'password':password,'twitter_bind':True})
+        client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret),
+            oauth.Token(user['oauth_token'], user['oauth_token_secret']))
+        new_url,new_path = self.conver_url(path)
+        if new_path == '/' or new_path == '':
+            self.write('')
+            return
+        _,content = client.request(new_url,method,body=self.request.body,headers=self.request.headers)
+        self.write(content)
+
+    def conver_url(self, orig_url):
+        (scm, netloc, path, params, query, _) = urlparse.urlparse(orig_url)
+
+        path_parts = path.split('/')
+
+        if path_parts[1] == 'api' or path_parts[1] == 'search':
+            sub_head = path_parts[1]
+            path_parts = path_parts[2:]
+            path_parts.insert(0,'')
+            new_path = '/'.join(path_parts).replace('//','/')
+            new_netloc = sub_head + '.twitter.com'
+        elif path_parts[1].startswith('search'):
+            new_path = path
+            new_netloc = 'search.twitter.com'
+        else:
+            new_path = path
+            new_netloc = 'twitter.com'
+
+        new_url = urlparse.urlunparse(('https', new_netloc, new_path.replace('//','/'), params, query, ''))
+        return new_url, new_path
+
+    def parse_auth_header(self, headers):
+        username = None
+        password = None
+
+        if 'Authorization' in headers :
+            auth_header = headers['Authorization']
+            auth_parts = auth_header.split(' ')
+            user_pass_parts = base64.b64decode(auth_parts[1]).split(':')
+            username = user_pass_parts[0]
+            password = user_pass_parts[1]
+
+        return username, password
