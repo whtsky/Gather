@@ -1,5 +1,4 @@
 #coding=utf-8
-import user
 
 from common import BaseHandler,time_span
 from hashlib import sha1,md5

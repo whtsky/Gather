@@ -9,7 +9,11 @@ from emoji import emojis
 from config import google_analytics,admin
 
 html_killer = re.compile('<[^>]*>')
-url_replace = re.compile(u'[^ "]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])[^ "]')
+
+#https://github.com/lepture/june/blob/master/june/lib/filters.py
+url_replace = re.compile(r'(?m)^((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}'
+                         r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
+                         r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))')
 username_finder = re.compile(u'@([A-Za-z0-9]+)')
 emoji_finder = re.compile(u'(:[^:]+:)')
 
@@ -71,15 +75,18 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
 
-    txt = md.convert(txt).replace('\n','<br />')
+    txt = url_replace.sub(make_link,txt)
+
+    pattern = re.compile(
+        r'(?i)(?:&lt;)((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}'
+        r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
+        r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))(?:&gt;)')
+
+    txt = pattern.sub(make_link, txt)
 
     mentions = []
 
-    for x in set(url_replace.findall(txt)):
-        if x.startswith('https://gist.github.com/'):
-            txt = txt.replace(x,u'<script src="%s.js"></script>%s' % (x[:-1],x[-1]))
-        else:
-            txt = txt.replace(x,u'<a href="%s">%s</a>%s' % (x[:-1],x[:-1],x[-1]))
+    txt = md.convert(txt).replace('\n','<br />')
 
     for u in set(username_finder.findall(txt)):
         mentions.append(u)
@@ -107,3 +114,11 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
             })
 
     return txt
+
+def make_link(m):
+    link = m.group(1)
+    if link.startswith('http://') or link.startswith('https://'):
+        if link.startswith('https://gist.github.com/'):
+            return '<script src="%s.js"></script>' % link
+        return '<a href="%s" rel="nofollow">%s</a>' % (link, link)
+    return '<a href="http://%s" rel="nofollow">%s</a>' % (link, link)
