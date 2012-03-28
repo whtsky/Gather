@@ -22,10 +22,7 @@ class TagViewHandler(BaseHandler):
     def get(self,tagname):
         posts = self.db.posts.find({'tags':tagname.lower()},sort=[('changedtime', -1)])
         if posts.count():
-            try:
-                p = int(self.get_argument('p'))
-            except:
-                p = 1
+            p = int(self.get_argument('p',1))
             self.render('tag.html',tagname=tagname,posts=posts,
                 time_span=time_span,p=p)
 

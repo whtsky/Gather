@@ -160,10 +160,7 @@ class MarkDownPreViewHandler(BaseHandler):
 
 class TopicsViewHandler(BaseHandler):
     def get(self):
-        try:
-            p = int(self.get_argument('p'))
-        except:
-            p = 1
+        p = int(self.get_argument('p',1))
         self.render('topics.html',posts=self.db.posts.find({},sort=[('changedtime', -1)]),
             time_span=time_span,p=p)
 

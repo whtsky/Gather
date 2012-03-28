@@ -43,15 +43,13 @@ class TwitterOauthHandler(BaseHandler):
             self.db.users.save(user)
             self.redirect('/setting')
 
-
-
 def getoauth(consumer_key,consumer_secret):
     consumer = oauth.Consumer(consumer_key, consumer_secret)
     client = oauth.Client(consumer)
     resp, content = client.request('http://twitter.com/oauth/request_token')
     if resp['status'] != '200':
         raise Exception('Invalid response %s' % resp['status'])
-    request_token = dict(_parse_qsl(content))
+    request_token = dict(urlparse.parse_qsl(content))
     return request_token['oauth_token'],request_token['oauth_token_secret']
 
 class TwitterNotBindHandler(BaseHandler):
@@ -83,13 +81,16 @@ class TwitterProxyHandler(BaseHandler):
         client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret),
             oauth.Token(user['oauth_token'], user['oauth_token_secret']))
         new_url,new_path = conver_url(path)
-        body = self.request.body
-        if '?' in new_url:
-            body += '&'
-            body += urlencode(urlparse.parse_qsl(new_url.split('?')[0]))
         if new_path == '/' or new_path == '':
             self.write('')
             return
+        body = self.request.body
+        args = []
+        for k,v in self.request.arguments.items():
+            args.append((k,v[0]))
+        if args:
+            new_url += '?'
+            new_url += urlencode(args)
         _,content = client.request(new_url,method,body=body,headers={"Authorization": "OAuth"})
         self.write(content)
 
