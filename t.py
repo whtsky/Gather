@@ -3,6 +3,7 @@
 from common import BaseHandler
 from auth import hashpassword
 import urlparse, base64
+from urllib import urlencode
 from tornado.web import authenticated
 import oauth2 as oauth
 import twitter_oauth
@@ -29,7 +30,7 @@ class TwitterOauthHandler(BaseHandler):
             client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret), token)
 
             resp, content = client.request('http://twitter.com/oauth/access_token', "POST")
-            access_token = dict(_parse_qsl(content))
+            access_token = dict(urlparse.parse_qsl(content))
 
             oauth_token = access_token['oauth_token']
             oauth_token_secret = access_token['oauth_token_secret']
@@ -47,18 +48,11 @@ class TwitterOauthHandler(BaseHandler):
 def getoauth(consumer_key,consumer_secret):
     consumer = oauth.Consumer(consumer_key, consumer_secret)
     client = oauth.Client(consumer)
-    resp, content = client.request('http://twitter.com/oauth/request_token', "GET")
+    resp, content = client.request('http://twitter.com/oauth/request_token')
     if resp['status'] != '200':
         raise Exception('Invalid response %s' % resp['status'])
     request_token = dict(_parse_qsl(content))
     return request_token['oauth_token'],request_token['oauth_token_secret']
-
-def _parse_qsl(url):
-    param = {}
-    for i in url.split('&'):
-        p = i.split('=')
-        param.update({p[0]:p[1]})
-    return param
 
 class TwitterNotBindHandler(BaseHandler):
     def get(self):
@@ -89,10 +83,14 @@ class TwitterProxyHandler(BaseHandler):
         client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret),
             oauth.Token(user['oauth_token'], user['oauth_token_secret']))
         new_url,new_path = conver_url(path)
+        body = self.request.body
+        if '?' in new_url:
+            body += '&'
+            body += urlencode(urlparse.parse_qsl(new_url.split('?')[0]))
         if new_path == '/' or new_path == '':
             self.write('')
             return
-        _,content = client.request(new_url,method,body=self.request.body,headers=self.request.headers)
+        _,content = client.request(new_url,method,body=body,headers={"Authorization": "OAuth"})
         self.write(content)
 
 def parse_auth_header(headers):

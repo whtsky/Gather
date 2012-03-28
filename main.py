@@ -59,9 +59,8 @@ class Application(tornado.web.Application):
             (r'/twitter/unbind',TwitterNotBindHandler),
             (r'/twitter/tweet',TweetHandler),
 
-            #如果不希望开启twitter api功能，注释这两条。
+            #如果不希望开启twitter api功能，注释这条。
             (r'/twitter/api/(.*?)',TwitterProxyHandler),
-            (r'/twitter/api(.*?)',TwitterProxyHandler),
 
             (r'/imgur/oauth',ImgurOauthHandler),
             (r'/imgur/upload',ImgurUploadHandler),

@@ -10,7 +10,7 @@ from config import google_analytics,admin
 
 html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(u'[^ "]((?:HTTP|HTTPS|FTP|ED2K|THUNDER|FLASHGETX|http|https|ftp|ed2k|thunder|flashgetx)://[^ <"]+(?!</a>)[^ "])[^ "]')
-username_finder = re.compile(u'@([\u4e00-\u9fa5A-Za-z0-9]+)')
+username_finder = re.compile(u'@([A-Za-z0-9]+)')
 emoji_finder = re.compile(u'(:[^:]+:)')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
