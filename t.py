@@ -75,7 +75,6 @@ class TwitterProxyHandler(BaseHandler):
         self.do_proxy('POST',path)
 
     def do_proxy(self,method,path):
-        import logging
         username,password = parse_auth_header(self.request.headers)
         user = (username and password) and self.db.users.find_one({'username':username,'password':hashpassword(username,password),'twitter_bind':True}) or None
         if username and password and not user:
@@ -94,7 +93,6 @@ class TwitterProxyHandler(BaseHandler):
         if 'search' in new_url and not user:
             client = oauth.Client(consumer)
             _,content = client.request(new_url,method,body=body)
-            logging.info(content)
         else:
             client = oauth.Client(consumer,
                 oauth.Token(user['oauth_token'], user['oauth_token_secret']))
