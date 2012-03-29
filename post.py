@@ -24,7 +24,7 @@ class PostHandler(BaseHandler):
         posts = self.db.posts
         tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
         tags = []
-        for x in xhtml_escape(self.get_argument('tags').lower()).replace(',',' ').replace('/',' ').split(' '):
+        for x in xhtml_escape(self.get_argument('tags').lower()).split(' '):
             if x:
                 tags.append(x)
         time_now = int(time())

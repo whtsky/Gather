@@ -62,7 +62,7 @@ class ChangeTagHandler(BaseHandler):
         for tag in post['tags']:
             self.db.tags.update({'name':tag},{'$inc':{'count':-1}})
         tags = []
-        for x in xhtml_escape(self.get_argument('tags').lower()).replace(',',' ').replace('/',' ').split(' '):
+        for x in xhtml_escape(self.get_argument('tags').lower()).split(' '):
             if x:
                 tags.append(x)
         assert tags

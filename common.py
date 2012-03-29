@@ -37,6 +37,13 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin)
 
+    def set_cookie(self, name, value, domain=None, expires=None, path="/",
+                   expires_days=None, **kwargs):
+        if not expires_days:
+            expires_days = 365
+        tornado.web.RequestHandler.set_cookie(self, name, value, domain, expires, path,
+            expires_days, **kwargs)
+
     def render(self, template_name, **kwargs):
         user = self.get_current_user()
         unread = 0

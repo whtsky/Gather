@@ -4,7 +4,7 @@
 {% block keywords %}{{ tagname }}{% end %}
 
 {% block head %}
-<link href="/tag/{{ tagname }}/feed" rel="alternate" title="{{ handler.settings['forum_title'] }}-{{ tagname }}" type="application/atom+xml"/>
+<link href="/feed/{{ tagname }}" rel="alternate" title="{{ handler.settings['forum_title'] }}-{{ tagname }}" type="application/atom+xml"/>
 {% end %}
 
 {% block nav %}

@@ -61,10 +61,12 @@
         },
 
         keyup_handle: function(event) {
-            if (event.which === 188 || event.which === 32) {
-                if (/[,\s]$/.test(this.tag_input.val())) {
-                    this.extract_tags();
-                }
+            switch(event.which){
+                case 188: case 32:
+                    if (/[,\s]$/.test(this.tag_input.val())) {
+                        this.extract_tags();
+                    }
+                    break;
             }
         },
 
@@ -104,7 +106,7 @@
         },
 
         update_input: function() {
-            this._input.val(this.tags.join(', ')).change();
+            this._input.val(this.tags.join(' ')).change();
         },
 
         delete_tag: function(delete_tag) {

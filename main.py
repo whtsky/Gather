@@ -47,8 +47,8 @@ class Application(tornado.web.Application):
             (r'/topics/add', PostHandler),
 
             (r'/tag', TagCloudHandler),
-            (r'/tag/([^ ,/]*?)', TagViewHandler),
-            (r'/tag/([^ ,/]*?)/feed', TagFeedHandler),
+            (r'/tag/(.+)', TagViewHandler),
+            (r'/feed/(.+)', TagFeedHandler),
 
             (r'/admin/user/kill/(.*?)',RemoveUserHandler),
             (r'/admin/post/kill/(\d+)',RemovePostHandler),

@@ -75,15 +75,13 @@ class TwitterProxyHandler(BaseHandler):
         self.do_proxy('POST',path)
 
     def do_proxy(self,method,path):
+        import logging
         username,password = parse_auth_header(self.request.headers)
-        password = hashpassword(username,password)
-        user = self.db.users.find_one({'username':username,'password':password,'twitter_bind':True})
-        client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret),
-            oauth.Token(user['oauth_token'], user['oauth_token_secret']))
+        user = (username and password) and self.db.users.find_one({'username':username,'password':hashpassword(username,password),'twitter_bind':True}) or None
+        if username and password and not user:
+                user = self.db.users.find_one({'twitter':username,'twitter_bind':True})
+                user = (user['password'] != hashpassword(user['username'],password)) and user or None
         new_url,new_path = conver_url(path)
-        if new_path == '/' or new_path == '':
-            self.write('')
-            return
         body = self.request.body
         args = []
         for k,v in self.request.arguments.items():
@@ -91,8 +89,18 @@ class TwitterProxyHandler(BaseHandler):
         if args:
             new_url += '?'
             new_url += urlencode(args)
-        _,content = client.request(new_url,method,body=body,headers={"Authorization": "OAuth"})
+        consumer = oauth.Consumer(self.application.consumer_key,self.application.consumer_secret)
+        client = oauth.Client(consumer)
+        if 'search' in new_url and not user:
+            client = oauth.Client(consumer)
+            _,content = client.request(new_url,method,body=body)
+            logging.info(content)
+        else:
+            client = oauth.Client(consumer,
+                oauth.Token(user['oauth_token'], user['oauth_token_secret']))
+            _,content = client.request(new_url,method,body=body,headers={"Authorization": "OAuth"})
         self.write(content)
+
 
 def parse_auth_header(headers):
     username = None
@@ -112,13 +120,16 @@ def conver_url(orig_url):
 
     path_parts = path.split('/')
 
-    if path_parts[1] == 'api' or path_parts[1] == 'search':
+    if not path_parts[0]:
+        new_path = 'search.json'
+        new_netloc = 'search.twitter.com'
+    elif path_parts[0] == 'api' or path_parts[0] == 'search':
         sub_head = path_parts[1]
         path_parts = path_parts[2:]
         path_parts.insert(0,'')
         new_path = '/'.join(path_parts).replace('//','/')
         new_netloc = sub_head + '.twitter.com'
-    elif path_parts[1].startswith('search'):
+    elif path_parts[0].startswith('search'):
         new_path = path
         new_netloc = 'search.twitter.com'
     else:

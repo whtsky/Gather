@@ -79,7 +79,7 @@
                     <div class="controls">
                         {% if current_user['twitter_bind'] %}
                         <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
-                        <p class="help-block">您可以使用{{ handler.settings['forum_url'] }}/twitter/api/ 这一{{ handler.settings['forum_title'] }}提供的Twitter Api.</p>
+                        <p class="help-block">您可以使用{{ handler.settings['forum_url'] }}/twitter/api/ 这个Api.</p>
                         {% else %}
                         <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>
                         {% end %}
