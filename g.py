@@ -37,5 +37,5 @@ class ImgurUnbindHandler(BaseHandler):
         user = self.get_current_user()
         del user['i_oauth_token'] ,user['i_oauth_token_secret'] ,user['bind_imgur']
         self.db.users.save(user)
-        self.redirect('setting')
+        self.redirect('/setting')
 
