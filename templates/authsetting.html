@@ -92,16 +92,25 @@
     </section>
 </div>
 <div class='span4'>
-    {% if not 'bind_imgur' in current_user %}
     <section class='box'>
-        <header><h3>Imgur账号绑定</h3></header>
+        <header><h3>imgur账号绑定</h3></header>
+        {% if not 'bind_imgur' in current_user %}
         <form id='imgur_form'>
-            <input id='imgur' placeholder='绑定imgur之后，你可以随时贴图。' required /><br />
-            <button type='submit' class="btn btn-success">绑定Imgur</button>
-            <a href="/imgur/oauth" class="btn btn-warning" target="_blank">获取 Imgur verification</a>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-user"></i></span>
+                <input type="text" id="imgur_username" placeholder="imgur用户名" />
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-key"></i></span>
+                <input type="password" id="imgur_password" placeholder="imgur密码" />
+            </div>
+            <button type='submit' class="btn btn-success">绑定imgur</button>
         </form>
+        {% else %}
+        <p>您已绑定imgur账号。</p>
+        <a href='/imgur/unbind' class="btn btn-danger">解除绑定</a>
+        {% end %}
     </section>
-    {% end %}
     <section class='box'>
         <form>
             <fieldset>

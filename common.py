@@ -127,5 +127,9 @@ def make_link(m):
     if link.startswith('http://') or link.startswith('https://'):
         if link.startswith('https://gist.github.com/'):
             return '<script src="%s.js"></script>' % link
+    elif '://' not in link:
+        link = 'http://%s' % link
+    if '.jpg' in link or '.jpeg' in link or '.gif' in link or '.png' in link:
+        return '<img src="%s" />' % link
+    else:
         return '<a href="%s" rel="nofollow">%s</a>' % (link, link)
-    return '<a href="http://%s" rel="nofollow">%s</a>' % (link, link)

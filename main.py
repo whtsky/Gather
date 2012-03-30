@@ -19,7 +19,7 @@ from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModu
 from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
-from g import ImgurOauthHandler,ImgurUploadHandler,ImgurCheckHandler
+from g import ImgurOauthHandler,ImgurUploadHandler,ImgurCheckHandler,ImgurUnbindHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,consumer_key,consumer_secret,database_name
 import pylibmc
@@ -60,6 +60,7 @@ class Application(tornado.web.Application):
             (r'/twitter/tweet',TweetHandler),
 
             (r'/imgur/oauth',ImgurOauthHandler),
+            (r'/imgur/unbind',ImgurUnbindHandler),
             (r'/imgur/upload',ImgurUploadHandler),
             (r'/imgur/check',ImgurCheckHandler),
 

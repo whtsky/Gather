@@ -1,8 +1,17 @@
 $('#imgur_form').submit(function(e){
     e.preventDefault();
+    $('#imgur_form button').html('正在绑定...');
+    $('#imgur_form button').attr("disabled","disabled");
     $.post('/imgur/oauth',{
-        imgur:$('#imgur').val()
-    }).success(function(){location.reload();}).error(function() { alert("绑定失败，请检查verification"); });
+        username:$('#imgur_username').val(),
+        password:$('#imgur_password').val()
+    }).success(function(){location.reload();}).error(
+        function() {
+            alert("绑定失败，请检查用户名或密码是否正确");
+            $('#imgur_form button').removeAttr("disabled");
+            $('#imgur_form button').html('绑定imgur');
+        }
+    );
 });
 
 $("#old").blur(function(){
