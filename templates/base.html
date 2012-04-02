@@ -18,11 +18,11 @@
     {% if current_user %}
     <style title="text/css">  {{ current_user['css'] }}  </style>
     <script>
-        var islogin = true;
+        islogin = true;
         {% if current_user['username'] in admin_list %}
-        var isadmin = true;
+        isadmin = true;
         {% else %}
-        var isadmin = false;
+        isadmin = false;
         {% end %}
     </script>
     {% else %}
@@ -49,7 +49,7 @@
                     {% end %}
                 </ul>
                 <form class="navbar-search pull-left" id='search_form'>
-                    <input type='text' id='q' x-webkit-speech class='search-query span2' placeholder="搜索" />
+                    <input type='text' id='q' x-webkit-speech required class='search-query span2' placeholder="搜索" />
                 </form>
                 <ul class="nav pull-right">
                     {% if current_user %}

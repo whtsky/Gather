@@ -1,19 +1,10 @@
-mkdir ../../static/js
-mkdir ../../static/js/languages
 for i in *.js
 do
     echo "Compressing $i"
     uglifyjs -nc $i > ../../static/js/$i
 done
 
-cd languages
-for i in *.js
-do
-    echo "Compressing $i"
-    uglifyjs -nc $i > ../../../static/js/languages/$i
-done
-
-cd ../../../static/js
+cd ../../static/js
 cat jquery.js > lib.js
 cat bootstrap.js >> lib.js
 cat base.js >> lib.js
