@@ -13,7 +13,7 @@
     </author>
     {% for post in posts %}
     <entry>
-        <link href="{{ handler.settings['forum_url'] }}topics/{{ post['_id'] }}"/>
+        <link href="{{ handler.settings['forum_url'] }}/topics/{{ post['_id'] }}"/>
         <id>{{ handler.settings['forum_url'] }}/topics/{{ post['_id'] }}</id>
         <title>{{ post['title'] }}</title>
         <content type="html">
