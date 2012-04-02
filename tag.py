@@ -37,5 +37,6 @@ class TagFeedHandler(BaseHandler):
     def get(self,tagname):
         self.set_header("Content-Type", "application/atom+xml")
         url = '/tag/'+tagname
+        posts = [_ for _ in self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)],limit=20)]
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name=tagname,
-                    time=time,posts=self.db.posts.find({'tags':tagname},sort=[('changedtime', 1)]))
+                    time=time,posts=posts)

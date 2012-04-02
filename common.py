@@ -66,8 +66,9 @@ class FeedHandler(BaseHandler):
     def get(self):
         self.set_header("Content-Type", "application/atom+xml")
         url = ''
+        posts = [_ for _ in self.db.posts.find({},sort=[('changedtime', -1)],limit=20)]
         tornado.web.RequestHandler.render(self,'atom.xml',url=url,name='全站',
-            time=time,posts=self.db.posts.find({},sort=[('changedtime', -1)]))
+            time=time,posts=posts)
 
 class ErrorHandler(BaseHandler):
     def get(self, *args, **kwargs):

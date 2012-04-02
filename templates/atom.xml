@@ -7,7 +7,7 @@
     <link href="{{ handler.settings['forum_url'] }}{{ url }}" rel="alternate" type="text/html"/>
     <link href="{{ handler.settings['forum_url'] }}{{ url }}/feed" rel="self"/>
     <link rel="hub" href="http://pubsubhubbub.appspot.com/"/>
-    <updated>{{ time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(int(time.time())+28800)) }}</updated>
+    <updated>{{ time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(posts[1]['posttime']+28800)) }}</updated>
     <author>
         <name>whtsky</name>
     </author>
