@@ -7,7 +7,7 @@
         <li class='active'><a href='#edit' data-toggle='pill'>markdown</a></li>
         <li><a href='#preview' data-toggle='pill'>预览</a></li>
         <li><a href='#markdownwiki' data-toggle='pill'>语法参考</a></li>
-        <li><a href="#imageupload" data-toggle='pill'>图片上传</a></li>
+        <li><input type="file" name="image" accept="image/*" /></li>
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active' id='edit'>
@@ -34,14 +34,6 @@
             <ul>
                 <li>参见：<a href="http://www.emoji-cheat-sheet.com/" target="_blank">http://www.emoji-cheat-sheet.com/</a></li>
             </ul>
-        </div>
-        <div id='imageupload' class="tab-pane">
-            {% if 'bind_imgur' in current_user and current_user['bind_imgur'] %}
-            <div id="image_queue"></div>
-            <input id="image_file" type="file" name="Filedata" />
-            {% else %}
-            你需要在<a href='/setting' target="_blank">个人设置页面</a>中绑定imgur之后才可以上传图片。
-            {% end %}
         </div>
     </div>
 </div>
