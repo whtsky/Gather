@@ -6,7 +6,8 @@
     padding: 1px 4px;
     background-color: #BFBFBF;
     border-radius: 3px;
-    -moz-border-radius: 3px; }
+    -moz-border-radius: 3px;
+}
 table.item-list {
     width:100%
 }
@@ -194,4 +195,9 @@ img {
 }
 #mark-show {
     font-size: 17px;
+}
+#tagcloud a {
+    padding: 3px;
+    line-height: 28px;
+    border-radius: 5px;
 }

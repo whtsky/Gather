@@ -146,8 +146,10 @@
             </section>
             {% block sidebar %}{% end %}
             {% block tagcloud %}
-            <section class='box'>
-                <header>标签云</header><br />
+            <section class='box' id="tagcloud">
+                <header>
+                    <h3>标签云</h3>
+                </header>
                 {{ modules.TagCloud(db,mc,limit=10) }}
             </section>
             {% end %}
