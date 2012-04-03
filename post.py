@@ -22,12 +22,16 @@ class PostHandler(BaseHandler):
         user = self.get_current_user()
         md = self.get_argument('markdown')
         posts = self.db.posts
-        tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
         tags = []
         for x in xhtml_escape(self.get_argument('tags').lower()).split(' '):
             if x:
                 tags.append(x)
+        post = self.db.posts.find_one({'title':title,'author':user['username'],'tags':tags})
+        if post:#Topic has already been posted.
+            self.redirect('/topics/'+str(post['_id']))
+            return
         time_now = int(time())
+        tid = self.db.settings.find_and_modify(update={'$inc':{'post_id':1}}, new=True)['post_id']
         posts.insert({'_id':tid,
                       'title':title,
                       'author':user['username'],
@@ -113,6 +117,14 @@ class PostViewHandler(BaseHandler):
         postid = int(postid)
         content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
         post = self.db.posts.find_one({'_id':postid})
+
+        comment_reversed = reversed(post['comments'])
+        for _ in range(min(len(post['comments']),5)):#look up in the recently 5 comment
+            comment = comment_reversed.next()
+            if comment['author'] == user['username'] and comment['content'] == content:#Reply has already been posted.
+                self.redirect('/topics/'+str(postid))
+                return
+
         post['comments'].append({'author':user['username'],
                                  'content':content,
                                  'posttime':time_now,

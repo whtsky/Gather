@@ -31,7 +31,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def __init__(self,*args,**kwargs):
         tornado.web.RequestHandler.__init__(self,*args,**kwargs)
-        #方便调用
         self.db = self.application.db
         self.mc = self.application.mc
 
@@ -83,16 +82,18 @@ class ErrorHandler(BaseHandler):
         raise tornado.web.HTTPError(404)
 
 def time_span(t):
+    '''convert timestamp to readable string.'''
     t=time.gmtime(t)
-    return '<time datetime="%s" title="%s"></time>' % (time.strftime('%Y-%m-%dT%H:%M:%SZ',t),time.strftime('%Y年%m月%d日%H点%M分',t))
+    return '<time datetime="%s" title="%s">%s</time>' % (time.strftime('%Y-%m-%dT%H:%M:%SZ',t),time.strftime('%Y年%m月%d日%H点%M分',t),time.strftime('%Y年%m月%d日%H点%M分',t))
 
 def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
-    #滤去html标签
+    '''convert md to html'''
+    #escape html
     for x in set(html_killer.findall(txt)):
         txt = txt.replace(x,xhtml_escape(x))
 
     #https://github.com/livid/v2ex/blob/master/v2ex/templatetags/filters.py
-    #视频支持
+    #support video
     for video_id in set(youtube.findall(txt)):
         txt = txt.replace('http://youtu.be/' + video_id,'<object><param name="movie" value="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="620" height="500"></embed></object>')
     for video_id in set(youku.findall(txt)):
