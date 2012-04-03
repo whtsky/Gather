@@ -1,9 +1,9 @@
 function checkInput(id,bool){
     if(bool){
+        $(id+"-g").removeClass("error");
+    }else
         readySubmit=false;
         $(id+"-g").addClass("error");
-    }else
-        $(id+"-g").removeClass("error");
 }
 jQuery.timeago.settings.strings = {
     prefixAgo: null,

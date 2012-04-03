@@ -8,7 +8,7 @@ $("#password").blur(function(){
     checkInput("#password",$(this).val().match(/.{6,}$/));
 });
 $("#password-ag").blur(function(){
-    checkInput("#password-ag",$(this).val()!=$("#password").val());
+    checkInput("#password-ag",$(this).val()==$("#password").val());
 });
 $("#submit").click(function(){
     readySubmit=true;
