@@ -19,7 +19,7 @@ pattern = re.compile(
     r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
     r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))(?:&gt;)')
 
-youtube = re.compile('http://youtu.be/([a-zA-Z0-9\-\_]+)')
+youtube = re.compile('http://youtu.be/(.+)')
 youku = re.compile('http://v.youku.com/v_show/id_([a-zA-Z0-9\=]+).html')
 yinyuetai = re.compile('http://www.yinyuetai.com/video/(\d+)')
 username_finder = re.compile(u'@(\w{1,25})\s')
@@ -94,7 +94,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     #https://github.com/livid/v2ex/blob/master/v2ex/templatetags/filters.py
     #视频支持
     for video_id in set(youtube.findall(txt)):
-        txt = txt.replace('http://www.youtube.com/watch?v=' + video_id,'<object width="620" height="500"><param name="movie" value="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="620" height="500"></embed></object>')
+        txt = txt.replace('http://youtu.be/' + video_id,'<object width="620" height="500"><param name="movie" value="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' + video_id + '?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="620" height="500"></embed></object>')
     for video_id in set(youku.findall(txt)):
         txt = txt.replace('http://v.youku.com/v_show/id_' + video_id + '.html', '<embed src="http://player.youku.com/player.php/sid/' + video_id + '/v.swf" quality="high" width="620" height="500" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>')
     for video_id in set(yinyuetai.findall(txt)):
