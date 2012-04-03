@@ -1,8 +1,8 @@
 #coding=utf-8
 
-from common import BaseHandler,time_span
+from common import BaseHandler,time_span,html_killer
 from hashlib import sha1,md5
-from tornado.escape import json_encode, xhtml_escape
+from tornado.escape import json_encode, xhtml_escape, xhtml_unescape
 import tornado.web
 from tornado.web import authenticated
 import time
@@ -91,21 +91,15 @@ class AuthSettingHandler(BaseHandler):
     @authenticated
     def post(self):
         user = self.get_current_user()
-        for x in ('email','location','twitter','github','words'):
-            try:
-                user[x] = xhtml_escape(self.get_argument(x))
-            except:
-                user[x] = ''
-        try:
-            user['css'] = self.get_argument('css')
-        except:
-            pass
-        try:
-            website = self.get_argument('website')
-            w = urlparse(website)
-            assert w[0] and w[1]
+        for x in ('email','location','twitter','github','css'):
+            user[x] = xhtml_unescape(self.get_argument(x,''))
+            for x in set(html_killer.findall(user[x])):
+                user[x] = user[x].replace(x,'')
+        website = self.get_argument('website','')
+        w = urlparse(website)
+        if w[0] and w[1]:
             user['website'] = website
-        except:
+        else:
             user['website'] = ''
         self.db.users.save(user)
         self.redirect('/user/%s' % user['username'] )
