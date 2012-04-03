@@ -1,22 +1,10 @@
-for i in *.js
-do
-    echo "Compressing $i"
-    uglifyjs -nc $i > ../../static/js/$i
-done
+cp -f lib.js ../../static/js
+uglifyjs -nc base.js >> ../../static/js/lib.js
 
-cd ../../static/js
-cat jquery.js > lib.js
-cat bootstrap.js >> lib.js
-cat base.js >> lib.js
-cat timeago.js >> lib.js
-cat highlight.pack.js >> lib.js
-rm jquery.js bootstrap.js base.js timeago.js highlight.pack.js
+cp -f editor.js ../../static/js
+uglifyjs -nc markdown.js >> ../../static/js/editor.js
 
-cat Markdown.Converter.js > editor.js
-cat Markdown.Sanitizer.js >> editor.js
-cat tageditor.js >> editor.js
-cat jquery.caret.js >> editor.js
-cat jquery.atwho.js >> editor.js
-cat markdown.js >> editor.js
-cat jquery.uploader.js >> editor.js
-rm Markdown.Converter.js Markdown.Sanitizer.js tageditor.js jquery.caret.js jquery.atwho.js markdown.js jquery.uploader.js
+uglifyjs -nc authsetting.js > ../../static/js/authsetting.js
+uglifyjs -nc signup.js > ../../static/js/signup.js
+uglifyjs -nc login.js > ../../static/js/login.js
+
