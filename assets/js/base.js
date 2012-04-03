@@ -1,5 +1,3 @@
-readySubmit=false;
-
 function checkInput(id,bool){
     if(bool){
         readySubmit=false;

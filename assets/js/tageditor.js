@@ -3,7 +3,7 @@
         this._input = $(input);
         this.tag_editor = $('<div class="tag-editor"></div>');
         this.tag_preview = $('<span class="tag-preview"></span>');
-        this.tag_input = $('<input class="tag-input" type="text" />');
+        this.tag_input = $('<input class="tag-input" type="text" placeholder="请输入标签"/>');
         this.tag_editor.append(this.tag_preview).append(this.tag_input);
         this.tag_editor.insertBefore(this._input);
         this._input.hide();
@@ -30,7 +30,7 @@
 
         lisent: function() {
             var that = this;
-            this.tag_editor.click(function(event){
+            this.tag_editor.click(function(){
                 that.focus_input();
             });
 
@@ -42,16 +42,16 @@
                 that.keydown_handle(event);
             });
 
-            this.tag_input.focus(function(event){
+            this.tag_input.focus(function(){
                 that.tag_editor.addClass('focus');
             });
 
-            this.tag_input.focusout(function(event){
+            this.tag_input.focusout(function(){
                 //that.extract_tags();
                 that.tag_editor.removeClass('focus');
             });
 
-            this._input.parents('form').submit(function(event){
+            $('#submit').click(function(){
                 that.extract_tags();
             });
         },
@@ -63,9 +63,8 @@
         keyup_handle: function(event) {
             switch(event.which){
                 case 188: case 32:
-                    if (/[,\s]$/.test(this.tag_input.val())) {
+                    if (/[,\s]$/.test(this.tag_input.val()))
                         this.extract_tags();
-                    }
                     break;
             }
         },

@@ -3,6 +3,7 @@
 from common import BaseHandler
 import urlparse
 from tornado.web import authenticated
+from tornado.escape import json_decode
 import oauth2 as oauth
 import twitter_oauth
 
@@ -25,7 +26,9 @@ class TwitterOauthHandler(BaseHandler):
                             user['oauth_token_secret'])
             token.set_verifier(verifier)
 
-            client = oauth.Client(oauth.Consumer(self.application.consumer_key,self.application.consumer_secret), token)
+            consumer = oauth.Consumer(self.application.consumer_key,self.application.consumer_secret)
+
+            client = oauth.Client(consumer, token)
 
             resp, content = client.request('http://twitter.com/oauth/access_token', "POST")
             access_token = dict(urlparse.parse_qsl(content))
@@ -33,8 +36,14 @@ class TwitterOauthHandler(BaseHandler):
             oauth_token = access_token['oauth_token']
             oauth_token_secret = access_token['oauth_token_secret']
 
+            token = oauth.Token(oauth_token,oauth_token_secret)
+            client = oauth.Client(consumer, token)
+            _,content = client.request('http://twitter.com/account/verify_credentials.json')
+            content = json_decode(content)
+
             user['oauth_token'] = oauth_token
             user['oauth_token_secret'] = oauth_token_secret
+            user['twitter'] = content['screen_name']
             user['twitter_bind'] = True
             user['twitter-sync'] = True
 
