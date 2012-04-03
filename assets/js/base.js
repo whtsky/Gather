@@ -81,20 +81,10 @@ $(function() {
             },"json");
         return false;
     });
-    document.onkeyup=function(event) {
-        if(window.ActiveXObject) {
-            var keydown = window.event.keyCode;
-            event=window.event;
-        }else{
-            var keydown = event.keyCode;
-            if(event.ctrlKey && keydown == 13){
-                if ($('body').hasClass('modal-open'))
-                    $('#tweetsubmit').click();
-                else
-                    $('#submit').click();
-            }
-        }
-    };
+    $('#tweetcontent').keypress(function(event) {
+        if(event.ctrlKey && event.keyCode == 13)
+            $('#tweetsubmit').click();
+    });
     $('#search_form').submit(function(e){
         e.preventDefault();
         search();
@@ -104,3 +94,22 @@ $(function() {
         return false;
     }
 });
+jQuery.timeago.settings.strings = {
+    prefixAgo: null,
+    prefixFromNow: "从现在开始",
+    suffixAgo: "之前",
+    suffixFromNow: null,
+    seconds: "不到 1 分钟",
+    minute: "大约 1 分钟",
+    minutes: "%d 分钟",
+    hour: "大约 1 小时",
+    hours: "大约 %d 小时",
+    day: "1 天",
+    days: "%d 天",
+    month: "大约 1 个月",
+    months: "%d 月",
+    year: "大约 1 年",
+    years: "%d 年",
+    numbers: [],
+    wordSeparator: ""
+};
