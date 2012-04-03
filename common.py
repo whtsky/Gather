@@ -98,7 +98,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     for video_id in set(youku.findall(txt)):
         txt = txt.replace('http://v.youku.com/v_show/id_' + video_id + '.html', '<embed src="http://player.youku.com/player.php/sid/' + video_id + '/v.swf" quality="high" width="620" height="500" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>')
     for video_id in set(yinyuetai.findall(txt)):
-        txt = txt.replace('http://www.yinyuetai.com/video/' + video_id,'<embed src="http://player.yinyuetai.com/video/player/354677/v_0.swf" quality="high" width="620" height="500" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>')
+        txt = txt.replace('http://www.yinyuetai.com/video/' + video_id,'<embed src="http://player.yinyuetai.com/video/player/'+ video_id + '/v_0.swf" quality="high" width="620" height="500" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>')
 
     txt = url_replace.sub(make_link,txt)
     txt = pattern.sub(make_link, txt)
