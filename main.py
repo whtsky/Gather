@@ -33,8 +33,8 @@ class Application(tornado.web.Application):
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
             (r'/logout', AuthLogoutHandler),
-            (r'/user/([A-Za-z0-9]+)',AuthInfoHandler),
-            (r'/user/([A-Za-z0-9]+)/block',BlockUserHandler),
+            (r'/user/(\w+)',AuthInfoHandler),
+            (r'/user/(\w+)/block',BlockUserHandler),
             (r'/setting',AuthSettingHandler),
             (r'/setting/password',AuthChangePasswordHandler),
 
@@ -50,7 +50,7 @@ class Application(tornado.web.Application):
             (r'/tag/(.+)', TagViewHandler),
             (r'/feed/(.+)', TagFeedHandler),
 
-            (r'/admin/user/kill/(.*?)',RemoveUserHandler),
+            (r'/admin/user/kill/(\w+)',RemoveUserHandler),
             (r'/admin/post/kill/(\d+)',RemovePostHandler),
             (r'/admin/post/kill/(\d+)/(\d+)',RemoveCommentHandler),
             (r'/admin/post/changetag/(\d+)',ChangeTagHandler),

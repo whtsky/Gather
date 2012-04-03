@@ -14,7 +14,11 @@ html_killer = re.compile('<[^>]*>')
 url_replace = re.compile(r'(?m)^((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}'
                          r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
                          r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))')
-username_finder = re.compile(u'@([A-Za-z0-9]+)')
+pattern = re.compile(
+    r'(?i)(?:&lt;)((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}'
+    r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
+    r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))(?:&gt;)')
+username_finder = re.compile(u'@(\w{1,25})\s')
 emoji_finder = re.compile(u'(:[^:]+:)')
 
 md = Markdown(extensions=['fenced_code','smart_strong','tables'])
@@ -84,19 +88,10 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
         txt = txt.replace(x,xhtml_escape(x))
 
     txt = url_replace.sub(make_link,txt)
-
-    pattern = re.compile(
-        r'(?i)(?:&lt;)((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}'
-        r'/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+'
-        r'|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))(?:&gt;)')
-
     txt = pattern.sub(make_link, txt)
 
     mentions = []
-
-    txt = md.convert(txt).replace('\n','<br />')
-
-    for u in set(username_finder.findall(txt)):
+    for u in set(username_finder.findall(txt + ' ')):
         mentions.append(u)
         txt = txt.replace(u'@'+u,u'<a href="/user/%s">@%s</a>' % (u,u))
 
@@ -104,10 +99,12 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
         if emoji in emojis:
             txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
+    txt = md.convert(txt).replace('\n','<br />')
+
     if notice:
         txt_notice = txt
-        if len(txt_notice) > 50:
-            txt_notice = txt_notice[:40] + u'...'
+        if len(txt_notice) > 150:
+            txt_notice = txt_notice[:140] + u'...'
         for u in mentions:
             db.users.update({'username':u},
             {'$push':
@@ -125,12 +122,9 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
 
 def make_link(m):
     link = m.group(1)
-    if link.startswith('http://') or link.startswith('https://'):
-        if link.startswith('https://gist.github.com/'):
-            return '<script src="%s.js"></script>' % link
-    elif '://' not in link:
-        link = 'http://%s' % link
+    if link.startswith('https://gist.github.com/') or link.startswith('http://gist.github.com/'):
+        return '<script src="%s.js"></script>' % link.replace('https','http')
     if '.jpg' in link or '.jpeg' in link or '.gif' in link or '.png' in link:
         return '<img src="%s" />' % link
     else:
-        return '<a href="%s" rel="nofollow">%s</a>' % (link, link)
+        return '<a href="%s" rel="nofollow" target="_blank">%s</a>' % (link, link)

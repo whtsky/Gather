@@ -9,7 +9,7 @@ import time
 from re import compile
 from urlparse import urlparse
 
-username_check = compile(u'([A-Za-z0-9]{1,25})')
+username_check = compile(u'(\w{1,25})')
 
 def hashpassword(username,password):
     password = md5(password).hexdigest()
