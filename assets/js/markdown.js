@@ -110,6 +110,9 @@ $(document).ready(function(){
             debug:false,
             data:emojis,
             tpl:"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png'  height='20' width='20' /></li>"
+        }).keypress(function(event) {
+            if(event.ctrlKey && event.keyCode == 13)
+                $('#submit').click();
         });
     $('#tags').tagEditor();
     $('#submit').click(function(){
