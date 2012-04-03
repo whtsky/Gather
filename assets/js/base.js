@@ -69,16 +69,7 @@ $(function() {
     }
     $('.kill').click(
         function(){
-            if (confirm("真的要和谐么"))
-                $.get($(this).attr('href')).success(function(){location.href="/";}).error(function() { alert("和谐中出现错误，重试一下呗？"); });
-            return false;
-        }
-    );
-    $('#comments .kill').click(
-        function(){
-            if (confirm("真的要和谐么"))
-                $.get($(this).attr('href')).success(function(){location.reload();}).error(function() { alert("和谐中出现错误，重试一下呗？"); });
-            return false;
+            return confirm("真的要和谐么")
         }
     );
     $("#tweetsubmit").click(function(){

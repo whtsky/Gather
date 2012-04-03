@@ -14,24 +14,24 @@ class RemoveUserHandler(BaseHandler):
             postids.append(post['_id'])
         self.db.posts.update({'comments.author':username},
                 {'$pull':{'comments':{'author':username}}},multi=True)
-        self.write('done.')
         try:
             del self.mc['index']
             for postid in postids:
                 del self.mc[str(postid)]
         except KeyError:
             pass
+        self.redirect('/')
 
 class RemovePostHandler(BaseHandler):
     def get(self,postid):
         assert self.get_current_user()['username'] in admin
         postid = int(postid)
         removepost(fliter={'_id':postid},db=self.db,mc=self.mc)
-        self.write('done.')
         try:
             del self.mc['index']
         except KeyError:
             pass
+        self.redirect('/')
 
 class RemoveCommentHandler(BaseHandler):
     def get(self,postid,commentid):
@@ -39,7 +39,6 @@ class RemoveCommentHandler(BaseHandler):
         post = self.db.posts.find_one({'_id':int(postid)})
         del post['comments'][int(commentid)-1]
         self.db.posts.save(post)
-        self.write('done.')
         try:
             del self.mc['index']
         except KeyError:
@@ -53,6 +52,8 @@ class RemoveCommentHandler(BaseHandler):
                 post['comments'][i]['location'] =  str(i+1)
             cache[2] = self.render_string('modules/comments.html',db=self.db,time_span=time_span,post=post)
             self.mc[str(postid)] = cache
+        self.redirect('/topics/%s' % postid)
+
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
