@@ -35,7 +35,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.mc = self.application.mc
 
     def get_current_user(self):
-        password = self.get_cookie('user')
+        password = self.get_secure_cookie('user')
         if password:
             return self.db.users.find_one({'password':password})
         else:
@@ -43,13 +43,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin)
-
-    def set_cookie(self, name, value, domain=None, expires=None, path="/",
-                   expires_days=None, **kwargs):
-        if not expires_days:
-            expires_days = 365
-        tornado.web.RequestHandler.set_cookie(self, name, value, domain, expires, path,
-            expires_days, **kwargs)
 
     def render(self, template_name, **kwargs):
         user = self.get_current_user()
@@ -117,7 +110,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
 
     if notice:
         for u in mentions:
-            db.users.update({'username':u},
+            db.users.update({'username_lower':u.lower()},
             {'$push':
                      {'notification':
                               {'from':user,

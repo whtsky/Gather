@@ -29,12 +29,13 @@ class AuthSignupHandler(BaseHandler):
         account = self.db.users
         password = hashpassword(username,password)
         assert username_check.findall(username)[0]==username
-        if account.find_one({'username':username}) or account.find_one({'email':email}):
+        if account.find_one({'username_lower':username.lower()}) or account.find_one({'email':email}):
             message = '用户名或邮箱地址重复'
             status = 'error'
         else:
             account.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
                         'username':username,
+                        'username_lower':username.lower(),
                         'email':email,
                         'hashed_email':md5(email).hexdigest(),
                         'password':password,
@@ -46,7 +47,7 @@ class AuthSignupHandler(BaseHandler):
                         'signtime':int(time.time())})
             message = '注册成功'
             status = 'success'
-            self.set_cookie('user',password)
+            self.set_secure_cookie('user',password)
         self.write(json_encode({'status':status,'message':message}))
 
 class AuthLogoutHandler(BaseHandler):
@@ -66,15 +67,15 @@ class AuthLoginHandler(BaseHandler):
         username = self.get_argument('username')
         password = self.get_argument('password')
         password = hashpassword(username,password)
-        if self.db.users.find_one({'username':username,'password':password}):
-            self.set_cookie('user',password)
+        if self.db.users.find_one({'username_lower':username.lower(),'password':password}):
+            self.set_secure_cookie('user',password)
             self.write(json_encode({'status':'success','message':'登录成功'}))
         else:
             self.write(json_encode({'status':'error','message':'用户名或密码错误'}))
 
 class AuthInfoHandler(BaseHandler):
     def get(self,username):
-        user = self.db.users.find_one({'username':username})
+        user = self.db.users.find_one({'username_lower':username.lower()})
         if user:
             posts = self.db.posts.find({'author':username},sort=[('changedtime', -1)])
             comments = self.db.posts.find({'comments.author':username},sort=[('changedtime', -1)])
