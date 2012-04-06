@@ -84,7 +84,7 @@ var emojis = $.map(emoji_list,function(value,i) {
     return {'id':i,'key':value+":",'name':value};
 });
 
-$(document).ready(function(){
+$(function() {
     data = $.map(users,function(value,i) {
         return {'id':i,'name':value};
     });
@@ -110,9 +110,6 @@ $(document).ready(function(){
             debug:false,
             data:emojis,
             tpl:"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png'  height='20' width='20' /></li>"
-        }).keypress(function(event) {
-            if(event.ctrlKey && event.keyCode == 13)
-                $('#submit').click();
         });
     $('#tags').tagEditor();
     $('#submit').click(function(){
@@ -120,13 +117,13 @@ $(document).ready(function(){
     });
 
     var uploadImage = function(response) {
-        var response = $.parseJSON(response);
-        if (response.stat == 'fail') {
+        response = $.parseJSON(response);
+        if (response.stat == 'fail')
             alert(response.msg);
-            return
+        else{
+            var text = '\n![alt](' + response.url + ')';
+            $('#wmd-input').val($('#wmd-input').val() + text).focus();
         }
-        var text = '\n![alt](' + response.url + ')'
-        $('#wmd-input').val($('#wmd-input').val() + text).focus();
     }
 
     $('input[type="file"]').uploader({buttonText: '上传图片',action: '/imgur/upload', callback: uploadImage});
