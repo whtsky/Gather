@@ -14,47 +14,53 @@
             <header>
                 <h3>设置</h3>
             </header>
-            <div id="username-g" class="control-group">
+            <div class="control-group">
                 <label class="control-label">用户名</label>
                 <div class="controls">
-                    <input class="span5" disabled name="username" type="text" value="{{ current_user['username'] }}" disabled>
+                    <input class="span5" disabled value="{{ current_user['username'] }}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">E-Mail</label>
+                <div class="controls">
+                    <input class="span5" disabled value="{{ current_user['email'] }}" />
                 </div>
             </div>
             <div id="website-g" class="control-group">
                 <label class="control-label">个人网址</label>
                 <div class="controls">
-                    <input class="span5" name="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
+                    <input class="span5" name="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}"/>
                 </div>
             </div>
             <div id="location-g" class="control-group">
                 <label class="control-label">所在地</label>
                 <div class="controls">
-                    <input class="span5" name="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
+                    <input class="span5" name="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}"/>
                 </div>
             </div>
             <div id="twitter-g" class="control-group">
                 <label class="control-label">Twitter用户名</label>
                 <div class="controls">
-                    <input class="span5" name="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
+                    <input class="span5" name="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}"/>
                 </div>
             </div>
             <div id="github-g" class="control-group">
                 <label class="control-label">Github用户名</label>
                 <div class="controls">
-                    <input class="span5" name="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
+                    <input class="span5" name="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}"/>
                 </div>
             </div>
             <div id="css-g" class="control-group">
                 <label class="control-label">自定义CSS</label>
                 <div class="controls">
-                    <textarea class="span5"  name="css">{{ current_user['css'] }}</textarea>
+                    <textarea class="span5" name="css">{{ current_user['css'] }}</textarea>
                     <p class="help-block">所有页面中都会加载你自定义的CSS</p>
                 </div>
             </div>
             <div id="words-g" class="control-group">
                 <label class="control-label">自我介绍</label>
                 <div class="controls">
-                    <textarea class="span5"  name="words">{{ current_user.setdefault('words','') }}</textarea>
+                    <textarea class="span5" name="words">{{ current_user.setdefault('words','') }}</textarea>
                     <p class="help-block">帖子或回复列表中鼠标悬停到用户名上时会显示自我介绍</p>
                 </div>
             </div>
