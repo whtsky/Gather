@@ -8,9 +8,6 @@
     border-radius: 3px;
     -moz-border-radius: 3px;
 }
-table.item-list {
-    width:100%
-}
 table.item-list tr {
     border-top:1px solid #DDD
 }
@@ -69,14 +66,13 @@ table.clear-table td.avatar{
 }
 .center {
     text-align: center;
-    margin:0 auto;}
-body
-{
+    margin:0 auto;
+}
+body{
     background-image: url(/static/img/backgroud.png);
     font-size: 13px;
 }
-.sidebar-nav
-{
+.sidebar-nav{
     padding: 9px 0;
 }
 
@@ -98,7 +94,8 @@ body
     margin-bottom: 10px;
     -moz-box-shadow: 0 0 0 1px #DDD;
     -webkit-box-shadow: 0 0 0 1px #DDD;
-    box-shadow: 0 0 0 1px #DDD; }
+    box-shadow: 0 0 0 1px #DDD;
+}
 
 section {
     overflow: hidden;
@@ -200,4 +197,14 @@ img {
     padding: 3px;
     line-height: 28px;
     border-radius: 5px;
+}
+@media (max-width: 979px){
+    #sidebar{
+        display: none
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    #main{
+        width: 724px
+    }
 }

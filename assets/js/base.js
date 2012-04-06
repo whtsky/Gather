@@ -27,6 +27,10 @@ jQuery.timeago.settings.strings = {
 var init_article = function(){
     $('pre>code').each(function(i, e) {hljs.highlightBlock(e, '    ')});
 }
+function search(){
+    window.open('http://www.google.com/search?q=site:' + location.href.split('/')[2] + ' ' + $('#q').val(), '_blank');
+    return false;
+}
 $(function() {
     $("#new_reply").live("ajax:success",
         function() {
@@ -110,8 +114,4 @@ $(function() {
         e.preventDefault();
         search();
     });
-    function search(){
-        window.open('http://www.google.com/search?q=site:' + location.href.split('/')[2] + ' ' + $('#q').val(), '_blank');
-        return false;
-    }
 });
