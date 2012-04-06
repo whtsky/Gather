@@ -95,8 +95,11 @@ $(function() {
         $.post("/twitter/tweet",{
                 tweet:$("#tweetcontent").val()},
             function(data){
-                $("#tweetcontent").val("");
-            },"json");
+                if (data=="fail")
+                    alert('发推失败。。重试？');
+                else
+                    $("#tweetcontent").val("");
+            });
         return false;
     });
     $('#tweetcontent').keypress(function(event) {

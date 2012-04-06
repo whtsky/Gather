@@ -6,14 +6,12 @@ config = dict(
     forum_title_e=u'English Name',
     forum_url=u'http://xxx.com',
     cookie_secret='ooxx',
+    twitter_consumer_key = '',
+    twitter_consumer_secret = '',
     debug=False,
 )
 database_name = 'forum'
 POST_PER_PAGE = 20
-
-#twitter
-consumer_key = ''
-consumer_secret = ''
 
 #imgur
 i_consumer_key = ''

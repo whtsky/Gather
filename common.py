@@ -36,10 +36,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         password = self.get_secure_cookie('user')
-        if password:
-            return self.db.users.find_one({'password':password})
-        else:
-            return None
+        return password and self.db.users.find_one({'password':password}) or None
 
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin)

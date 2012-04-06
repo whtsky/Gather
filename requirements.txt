@@ -1,6 +1,5 @@
 tornado
 markdown
-twitter_oauth
 pymongo
 pylibmc
 imguring

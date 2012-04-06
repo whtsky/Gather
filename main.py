@@ -21,7 +21,7 @@ from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,Chang
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
 from g import ImgurOauthHandler,ImgurUploadHandler,ImgurUnbindHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
-from config import config,consumer_key,consumer_secret,database_name
+from config import config,database_name
 import pylibmc
 
 class Application(tornado.web.Application):
@@ -84,9 +84,6 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
         self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port)[database_name]
-
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
 
         self.mc = pylibmc.Client(options.memcached_host,binary=True)
         

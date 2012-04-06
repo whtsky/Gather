@@ -2,16 +2,14 @@
 
 from common import BaseHandler,time_span,md_convert
 import tornado.web
-from time import time
 from tornado.escape import xhtml_escape
+from tornado.auth import TwitterMixin
+from time import time
 from config import POST_PER_PAGE
-import twitter_oauth
-from tornado.httpclient import AsyncHTTPClient
 from common import html_killer,username_finder
 from ping import ping
 
-class PostHandler(BaseHandler):
-
+class PostHandler(BaseHandler, TwitterMixin):
     @tornado.web.authenticated
     def get(self):
         self.render('post.html')
@@ -54,17 +52,16 @@ class PostHandler(BaseHandler):
         self.redirect('/topics/'+str(tid))
         url = '%s/topics/%s' % (self.application.settings['forum_url'],tid)
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
-            self.title = title
-            self.user = user
-            http_client = AsyncHTTPClient()
-            http_client.fetch('http://is.gd/create.php?format=simple&url=%s' % url, self.sync)
+            self.twitter_request(
+                '/statuses/update',
+                post_args={'status': u'%s %s' % (title,url)},
+                access_token=user['access_token'],callback=self._on_post)
         ping(self.application.settings['forum_title_e'],self.application.settings['forum_url'],url)
 
-    def sync(self,request):
-        api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
-        api.post_update(tweet=u'%s : %s' % (self.title,request.body))
+    def _on_post(self,entry):
+        pass
 
-class PostViewHandler(BaseHandler):
+class PostViewHandler(BaseHandler, TwitterMixin):
     def get(self,postid):
         postid = int(postid)
         user = self.get_current_user()
@@ -146,25 +143,22 @@ class PostViewHandler(BaseHandler):
             self.mc[str(postid)] = cache
 
         self.redirect('/topics/'+str(postid))
-        url = '%s/topics/%s' % (self.application.settings['forum_url'],postid)
+        url = '%s/topics/%s#reply-%s' % (self.application.settings['forum_url'],postid,len(post['comments']))
         if user['twitter_bind'] and self.get_argument('twitter-sync') == 'yes':
-            self.content = content
-            self.user = user
-            http_client = AsyncHTTPClient()
-            http_client.fetch('http://is.gd/create.php?format=simple&url=%s' % url, self.sync)
+            for i in set(html_killer.findall(content)):
+                content = content.replace(i,'')#不知道为什么，直接用sub返回的是空字符串。
+            for i in set(username_finder.findall(content)):
+                u = self.db.users.find_one({'username':i})
+                if u and 'twitter' in u:
+                    content = content.replace(u'@'+i,u' @'+user['twitter'])
+            self.twitter_request(
+                '/statuses/update',
+                post_args={'status': u'%s %s' % (content,url)},
+                access_token=user['access_token'],callback=self._on_post)
         ping(self.application.settings['forum_title_e'],self.application.settings['forum_url'],url)
 
-    def sync(self,request):
-        for i in set(html_killer.findall(self.content)):
-            self.content = self.content.replace(i,'')#不知道为什么，直接用sub返回的是空字符串。
-        for i in set(username_finder.findall(self.content)):
-            user = self.db.users.find_one({'username':i})
-            if user and 'twitter' in user:
-                self.content = self.content.replace(u'@'+i,u' @'+user['twitter'])
-            else:
-                self.content = self.content.replace(u'@'+i,i)
-        api = twitter_oauth.Api(self.application.consumer_key,self.application.consumer_secret, self.user['oauth_token'], self.user['oauth_token_secret'])
-        api.post_update(tweet=u'%s : %s' % (self.content[:100],request.body))
+    def _on_post(self,entry):
+        pass
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
