@@ -53,14 +53,21 @@
                 </form>
                 <ul class="nav pull-right">
                     {% if current_user %}
+                    <li><a href="/topics/add">发布主题</a></li>
+                    <li class='notifications'>
+                        <a href="/my/notifications"><span class='count'>{{ unread }}</span>
+                        </a></li>
                     <li class='dropdown'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                             {{ current_user['username'] }}
                             <b class='caret'></b>
                         </a>
                         <ul class='dropdown-menu'>
+                            <li><a href="/my/post">我的收藏</a></li>
+                            <li class="divider"></li>
                             <li><a href="/user/{{ current_user['username'] }}">个人资料</a></li>
                             <li><a href="/setting">设置</a></li>
+                            <li><a href="#" id="notifications_clean">清空通知</a></li>
                             <li class='divider'></li>
                             {% if current_user['twitter_bind'] %}
                             <li><a data-toggle="modal" href="#tweet">Tweet</a></li>
@@ -112,38 +119,6 @@
             {% block content %}{% end %}
         </div>
         <div class="span3" id="sidebar">
-            <section class='box'>
-                {% if current_user %}
-                <a class='avatar' href='/user/{{ current_user['username'] }}' class="dark">
-                <img src='http://www.gravatar.com/avatar/{{ current_user["hashed_email"] }}?s=48' title='{{ current_user['username'] }}' />
-                <span class="dark user_name">{{ current_user['username'] }}</span>
-                </a>
-                <div class="row-fluid center">
-                    <div class='span6'>
-                        <a href="/my/post">
-                            <h3><span id="markedpost">{{ len(current_user['postmark']) }}</span></h3>
-                            主题收藏
-                        </a>
-                    </div>
-                    <div class='span6'>
-                        <a href='/my/notifications'>
-                            <h3>{{ unread }}</h3>
-                            未读通知
-                        </a>
-                    </div>
-                </div>
-                <hr>
-                <a href="/topics/add" class='btn btn-info'>发表话题</a>
-                <div class="right">
-                    <form method="post" action="/my/notifications?next={{ url_escape(request.uri) }}">
-                        <button type="submit" class="btn btn-danger">清空通知</button>
-                    </form>
-                </div>
-                {% else %}
-                <p>想要融入社区？</p>
-                <a href='/signup?next={{ url_escape(request.uri) }}' class='btn btn-info'>注册</a> 或者 <a href='/login?next={{ url_escape(request.uri) }}' class='btn'>登录</a>
-                {% end %}
-            </section>
             {% block sidebar %}{% end %}
             {% block tagcloud %}
             <section class='box' id="tagcloud">

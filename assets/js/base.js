@@ -1,9 +1,10 @@
 function checkInput(id,bool){
-    if(bool){
+    if(bool)
         $(id+"-g").removeClass("error");
-    }else
+    else{
         readySubmit=false;
         $(id+"-g").addClass("error");
+    }
 }
 jQuery.timeago.settings.strings = {
     prefixAgo: null,
@@ -92,6 +93,10 @@ $(function() {
             return confirm("真的要和谐么")
         }
     );
+    $('#notifications_clean').click(function(){
+        if (confirm("真的要清空么？"))
+            $.post('/my/notifications?',{},function(){location.reload();})
+    });
     $("#tweetsubmit").click(function(){
         if ($("#tweetcontent").val() == "")
             return false;
