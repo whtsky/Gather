@@ -214,6 +214,9 @@ img {
     color: #999;
     -moz-border-radius: 2px;
 }
+.full-input{
+    width: 99%
+}
 
 @media (max-width: 979px){
     #sidebar{

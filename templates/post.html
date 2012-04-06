@@ -25,7 +25,7 @@
         <div id='title-g' class='control-group'>
             <div class='controls'>
                 <div class="input-prepend">
-                    <input style="width: 99%" type='text' id='title' name='title' x-webkit-speech required maxlength="50" />
+                    <input class="full-input" type='text' id='title' name='title' x-webkit-speech required maxlength="50" placeholder='请输入标题'/>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 {{ modules.Edit(db=db) }}
             </div>
         </div>
-        <input style="width: 100%" type='text' id='tags' name='tags' required='required' data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" />
+        <input class="full-input" type='text' id='tags' name='tags' required='required' data-suggest="[{{ ','.join(['&quot;%s&quot;' % tag['name'].encode('unicode-escape') for tag in db.tags.find()]) }}]" />
         <div id="markdown-commands">
             <div class="left">
                 {% if current_user['twitter_bind'] %}

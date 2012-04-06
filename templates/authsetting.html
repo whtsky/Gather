@@ -11,83 +11,66 @@
 <div class='span8'>
     <section class="box">
         <form class='form-horizontal' action="/setting" method="post">
-            <fieldset>
-                <header>
-                    <h3>设置</h3>
-                </header>
-                <div id="username-g" class="control-group">
-                    <label class="control-label" for="email">用户名</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-user"></i></span>
-                            <input class="span5 disabled" name="username" type="text" value="{{ current_user['username'] }}" disabled>
-                        </div>
-                    </div>
+            <header>
+                <h3>设置</h3>
+            </header>
+            <div id="username-g" class="control-group">
+                <label class="control-label">用户名</label>
+                <div class="controls">
+                    <input class="span5" disabled name="username" type="text" value="{{ current_user['username'] }}" disabled>
                 </div>
-                <div id="website-g" class="control-group">
-                    <label class="control-label" for="email">个人网址</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-lemon"></i></span>
-                            <input class="span5  type="url" name="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
-                        </div>
-                    </div>
+            </div>
+            <div id="website-g" class="control-group">
+                <label class="control-label">个人网址</label>
+                <div class="controls">
+                    <input class="span5" name="website" x-webkit-speech value="{{ current_user.setdefault('website','') }}">
                 </div>
-                <div id="location-g" class="control-group">
-                    <label class="control-label" for="email">所在地</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-home"></i></span>
-                            <input class="span5  type="text" name="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
-                        </div>
-                    </div>
+            </div>
+            <div id="location-g" class="control-group">
+                <label class="control-label">所在地</label>
+                <div class="controls">
+                    <input class="span5" name="location" x-webkit-speech value="{{ current_user.setdefault('location','') }}">
                 </div>
-                <div id="twitter-g" class="control-group">
-                    <label class="control-label" for="email">Twitter用户名</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-twitter-sign"></i></span>
-                            <input class="span5  type="text" name="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
-                        </div>
-                    </div>
+            </div>
+            <div id="twitter-g" class="control-group">
+                <label class="control-label">Twitter用户名</label>
+                <div class="controls">
+                    <input class="span5" name="twitter" x-webkit-speech value="{{ current_user.setdefault('twitter','') }}">
                 </div>
-                <div id="github-g" class="control-group">
-                    <label class="control-label" for="email">Github用户名</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-github-sign"></i></span>
-                            <input class="span5  type="text" name="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
-                        </div>
-                    </div>
+            </div>
+            <div id="github-g" class="control-group">
+                <label class="control-label">Github用户名</label>
+                <div class="controls">
+                    <input class="span5" name="github" x-webkit-speech value="{{ current_user.setdefault('github','') }}">
                 </div>
-                <div id="css-g" class="control-group">
-                    <label class="control-label" for="css">自定义CSS</label>
-                    <div class="controls">
-                        <textarea class="span5"  name="css">{{ current_user['css'] }}</textarea>
-                        <p class="help-block">所有页面中都会加载你自定义的CSS</p>
-                    </div>
+            </div>
+            <div id="css-g" class="control-group">
+                <label class="control-label">自定义CSS</label>
+                <div class="controls">
+                    <textarea class="span5"  name="css">{{ current_user['css'] }}</textarea>
+                    <p class="help-block">所有页面中都会加载你自定义的CSS</p>
                 </div>
-                <div id="words-g" class="control-group">
-                    <label class="control-label" for="words">自我介绍</label>
-                    <div class="controls">
-                        <textarea class="span5"  name="words">{{ current_user.setdefault('words','') }}</textarea>
-                        <p class="help-block">帖子或回复列表中鼠标悬停到用户名上时会显示自我介绍</p>
-                    </div>
+            </div>
+            <div id="words-g" class="control-group">
+                <label class="control-label">自我介绍</label>
+                <div class="controls">
+                    <textarea class="span5"  name="words">{{ current_user.setdefault('words','') }}</textarea>
+                    <p class="help-block">帖子或回复列表中鼠标悬停到用户名上时会显示自我介绍</p>
                 </div>
-                <div id="twitter-bind-g" class="control-group">
-                    <label class="control-label" for="twitterbind">Twitter绑定</label>
-                    <div class="controls">
-                        {% if current_user['twitter_bind'] %}
-                        <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
-                        {% else %}
-                        <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>
-                        {% end %}
-                    </div>
+            </div>
+            <div id="twitter-bind-g" class="control-group">
+                <label class="control-label">Twitter绑定</label>
+                <div class="controls">
+                    {% if current_user['twitter_bind'] %}
+                    <a href="/twitter/unbind" class="btn btn-danger">解除Twitter绑定</a><br />
+                    {% else %}
+                    <a href="/twitter/oauth" class="btn btn-warning">绑定Twitter账号</a>
+                    {% end %}
                 </div>
-                <div class="form-actions">
-                    <button type='submit' class='btn btn-primary'>提交</button>
-                </div>
-            </fieldset>
+            </div>
+            <div class="form-actions">
+                <button type='submit' class='btn btn-primary'>提交</button>
+            </div>
         </form>
     </section>
 </div>
@@ -97,11 +80,11 @@
         {% if not 'bind_imgur' in current_user %}
         <form id='imgur_form'>
             <div class="input-prepend">
-                <span class="add-on"><i class="icon-user"></i></span>
+
                 <input type="text" id="imgur_username" placeholder="imgur用户名" />
             </div>
             <div class="input-prepend">
-                <span class="add-on"><i class="icon-key"></i></span>
+
                 <input type="password" id="imgur_password" placeholder="imgur密码" />
             </div>
             <button type='submit' class="btn btn-success">绑定imgur</button>
@@ -111,32 +94,26 @@
         <a href='/imgur/unbind' class="btn btn-danger">解除绑定</a>
         {% end %}
     </section>
+
     <section class='box'>
         <form>
-            <fieldset>
-                <header>
-                    <h3>更改密码</h3>
-                </header>
-                <div id="old-g" class="control-group">
-                    <label class="control-label" for="old">原密码：</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-key"></i></span>
-                            <input type="password" id="old" required class="span3" placeholder="请输入原密码">
-                        </div>
-                    </div>
+            <header>
+                <h3>更改密码</h3>
+            </header>
+            <div id="old-g" class="control-group">
+                <label class="control-label">原密码：</label>
+                <div class="controls">
+                    <input type="password" id="old" required class="span3" placeholder="请输入原密码">
                 </div>
-                <div id="new-g" class="control-group">
-                    <label class="control-label" for="new">新密码：</label>
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-key"></i></span>
-                            <input type="password" id="new" class="span3" required placeholder="请输入有效的新密码">
-                        </div>
-                    </div>
+            </div>
+            <div id="new-g" class="control-group">
+                <label class="control-label">新密码：</label>
+                <div class="controls">
+                    <input type="password" id="new" class="span3" required placeholder="请输入有效的新密码">
                 </div>
-                <button id='changepassword' class='btn btn-info'>提交</button>
-            </fieldset>
+            </div>
+            <button id='changepassword' class='btn btn-info'>提交</button>
+
         </form>
     </section>
 

@@ -93,7 +93,8 @@ $(function() {
             return confirm("真的要和谐么")
         }
     );
-    $('#notifications_clean').click(function(){
+    $('#notifications_clean').click(function(e){
+        e.preventDefault();
         if (confirm("真的要清空么？"))
             $.post('/my/notifications?',{},function(){location.reload();})
     });
