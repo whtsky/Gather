@@ -2,7 +2,6 @@
 
 from common import BaseHandler
 from tornado.web import authenticated,asynchronous
-from tornado import escape
 from tornado.auth import TwitterMixin
 
 class TwitterOauthHandler(BaseHandler, TwitterMixin):
@@ -19,14 +18,14 @@ class TwitterOauthHandler(BaseHandler, TwitterMixin):
         if not twitter_user:
             self.write('Twitter auth failed')
             self.finish()
-            return
-        user = self.current_user
-        user['access_token'] = escape.json_encode(twitter_user['access_token'])
-        user['twitter'] = escape.json_encode(twitter_user['username'])
-        user['twitter_bind'] = True
+        else:
+            user = self.current_user
+            user['access_token'] = twitter_user['access_token']
+            user['twitter'] = twitter_user['username']
+            user['twitter_bind'] = True
 
-        self.db.users.save(user)
-        self.redirect('/setting')
+            self.db.users.save(user)
+            self.redirect('/setting')
 
 class TwitterNotBindHandler(BaseHandler):
     def get(self):
@@ -44,8 +43,6 @@ class TweetHandler(BaseHandler, TwitterMixin):
             post_args={'status': self.get_argument('tweet','')},
             access_token=user['access_token'],
             callback=self._on_post)
+
     def _on_post(self, entry):
-        if not entry:
-            self.finish('fail')
-        else:
-            self.finish('ok')
+        pass
