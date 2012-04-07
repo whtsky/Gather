@@ -114,6 +114,7 @@ class PostViewHandler(BaseHandler, TwitterMixin):
         postid = int(postid)
         content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
         post = self.db.posts.find_one({'_id':postid})
+        source = self.parse_user_agent()
 
         comment_reversed = reversed(post['comments'])
         for _ in range(min(len(post['comments']),5)):#look up in the recently 5 comment
@@ -127,6 +128,8 @@ class PostViewHandler(BaseHandler, TwitterMixin):
                                  'posttime':time_now,
                                  })
         post['changedtime'] = time_now
+        if source:
+            post['comments'][-1]['source'] = source
         self.db.posts.save(post)
         try:
             del self.mc['index']

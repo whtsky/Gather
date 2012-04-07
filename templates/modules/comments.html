@@ -11,6 +11,9 @@
                 <td id="reply-{{ comment['location'] }}">
                     <div class='left'>
                         <a href="/user/{{ comment['author'] }}" rel="popover" title="{{ comment['author'] }}<div class='right'>{{ replyuser.setdefault('location','') }}</div>" data-content="{{ replyuser.setdefault('words','') }}">{{ comment['author'] }}</a>
+                        {% if 'source' in comment %}
+                        <span class="snow">via {{comment['source']}}</span>
+                        {% end %}
                     </div>
                     <div class='right'>
                         #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}

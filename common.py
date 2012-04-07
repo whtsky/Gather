@@ -41,6 +41,15 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_error_html(self,status_code, **kwargs):
         return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin,unread=0)
 
+    def parse_user_agent(self):
+        ua = self.request.headers.get("User-Agent", "bot").lower()
+        sources = ('iPod','iPhone','Android','Kindle')
+        source = None
+        for type in sources:
+            if type.lower() in ua:
+                source = type
+        return source
+
     def render(self, template_name, **kwargs):
         user = self.current_user
         unread = 0
@@ -48,7 +57,8 @@ class BaseHandler(tornado.web.RequestHandler):
             for x in user['notification']:
                 if not x['read']:
                     unread += 1
-        tornado.web.RequestHandler.render(self,template_name=template_name,admin_list=admin,db=self.db,unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
+        tornado.web.RequestHandler.render(self,template_name=template_name,admin_list=admin,db=self.db,
+            unread=unread,mc=self.mc,google_analytics=google_analytics,**kwargs)
 
 class HomeHandler(BaseHandler):
     def get(self):
