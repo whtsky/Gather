@@ -58,3 +58,12 @@ class NoteRenameHandler(BaseHandler):
             note['title'] = title
             self.db.notes.save(note)
         self.redirect('/notes')
+
+class NotePublishHandler(BaseHandler):
+    @authenticated
+    def get(self,key):
+        note = self.db.notes.find_one({'posttime':int(key),'author':self.current_user['username']})
+        if note:
+            self.render('note_publish.html',title=note['title'],content=note['md'])
+        else:
+            raise HTTPError(404)

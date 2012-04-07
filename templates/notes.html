@@ -14,6 +14,7 @@
         <strong><h2><a href="/notes/edit/{{note['posttime']}}">{{note['title']}}</a></h2></strong>
         创建于{{ time_span(note['posttime']) }}，修改于{{ time_span(note['changedtime']) }}
         <div class="right">
+            <a href="/notes/publish/{{note['posttime']}}" class="btn btn-primary">发布</a>
             <a href="#{{note['posttime']}}" data-toggle="modal" class="btn">改名</a>
             <a href="/notes/remove/{{note['posttime']}}" class="kill btn btn-danger">删除</a>
         </div>

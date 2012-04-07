@@ -20,7 +20,7 @@ from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
 from g import ImgurOauthHandler,ImgurUploadHandler,ImgurUnbindHandler
-from note import NoteHandler,NoteEditHandler,NoteRawHandler,NoteAddHandler,NoteRemoveHandler,NoteRenameHandler
+from note import NoteHandler,NoteEditHandler,NoteRawHandler,NoteAddHandler,NoteRemoveHandler,NoteRenameHandler,NotePublishHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,database_name
 import pylibmc
@@ -70,6 +70,7 @@ class Application(tornado.web.Application):
             (r'/notes/edit/(.*)',NoteEditHandler),
             (r'/notes/rename/(.*)',NoteRenameHandler),
             (r'/notes/raw/(.*)',NoteRawHandler),
+            (r'/notes/publish/(.*)',NotePublishHandler),
 
             (r'/markdown',MarkDownPreViewHandler),
 
