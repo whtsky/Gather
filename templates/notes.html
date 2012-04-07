@@ -39,8 +39,7 @@
 {% block sidebar %}
 <section class='box'>
     <form action="/notes/add" method="get">
-        <label class="control-label" for='title'>标题:</label>
-        <input id="title" name='title' />
+        <input id="title" name='title' placeholder='请输入标题' required='required'/>
         <button class="btn btn-success" type="submit">创建笔记</button>
     </form>
 </section>
