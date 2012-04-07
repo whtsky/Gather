@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>{{ handler.settings['forum_title'] }} > 记事本 > {{ title }}</title>
+    <link rel='stylesheet' href='{{ static_url("css/made.css") }}' type='text/css'/>
+    <script src='{{ static_url("js/lib.js") }}'></script>
+    <script>
+        note_id = {{note_id}};
+        islogin = true;
+        isadmin = false;
+    </script>
+</head>
+<body>
+<div id="bar">
+    <h1 id="title">{{ title }} <span class="desc">Editor from <a href="https://github.com/shellex/MaDe" >Made</a></span></h1>
+    <div id="control">
+        <a href="#" class="button" id="import_button">
+            <span class="label">Import</span>
+        </a>
+        <a href="/notes" class="button">
+            <span class="label">Back</span>
+        </a>
+        <input type="file" id="import_file_button"/>
+    </div>
+    <div id="color_scheme"><label>Color Scheme</label>
+        <a href="dark" id="color_scheme_dark" class="selected"><span/></a>
+        <a href="light" id="color_scheme_light"><span/></a>
+    </div>
+</div>
+<div id="container">
+    <div class="pane" id="input" placeholder="type some markdown code or drag & drop a .md file here"></div>
+    <div id="preview_pane" class="pane">
+        <div id="preview"></div>
+    </div>
+</div>
+<script type="text/javascript" src='{{ static_url("js/made.js") }}'></script>
+</body>
+</html>
+

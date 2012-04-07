@@ -20,7 +20,7 @@ class TwitterOauthHandler(BaseHandler, TwitterMixin):
             self.write('Twitter auth failed')
             self.finish()
             return
-        user = self.get_current_user()
+        user = self.current_user
         user['access_token'] = escape.json_encode(twitter_user['access_token'])
         user['twitter'] = escape.json_encode(twitter_user['username'])
         user['twitter_bind'] = True
@@ -30,7 +30,7 @@ class TwitterOauthHandler(BaseHandler, TwitterMixin):
 
 class TwitterNotBindHandler(BaseHandler):
     def get(self):
-        user = self.get_current_user()
+        user = self.current_user
         user['twitter_bind'] = False
         self.db.users.save(user)
         self.redirect('/setting')
@@ -38,7 +38,7 @@ class TwitterNotBindHandler(BaseHandler):
 class TweetHandler(BaseHandler, TwitterMixin):
     @authenticated
     def post(self):
-        user = self.get_current_user()
+        user = self.current_user
         self.twitter_request(
             '/statuses/update',
             post_args={'status': self.get_argument('tweet','')},

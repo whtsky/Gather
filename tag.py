@@ -25,7 +25,6 @@ class TagViewHandler(BaseHandler):
             p = int(self.get_argument('p',1))
             self.render('tag.html',tagname=tagname,posts=posts,
                 time_span=time_span,p=p)
-
         else:
             raise tornado.web.HTTPError(404)
 

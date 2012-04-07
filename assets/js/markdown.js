@@ -109,7 +109,7 @@ $(function() {
     }).atWho(":",{
             debug:false,
             data:emojis,
-            tpl:"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png'  height='20' width='20' /></li>"
+            tpl:"<li data-keyname='${key}'>${name} <img src='/static/img/emojis/${name}.png' class='emoji' /></li>"
         });
     $('#tags').tagEditor();
     $('#submit').click(function(){

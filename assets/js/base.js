@@ -1,5 +1,5 @@
 function checkInput(id,bool){
-    if(bool)
+    if($(id).val() && bool)
         $(id+"-g").removeClass("error");
     else{
         readySubmit=false;
@@ -90,7 +90,7 @@ $(function() {
     }
     $('.kill').click(
         function(){
-            return confirm("真的要和谐么")
+            return confirm("真的要删除么")
         }
     );
     $('#notifications_clean').click(function(e){

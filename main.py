@@ -20,6 +20,7 @@ from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
 from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
 from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
 from g import ImgurOauthHandler,ImgurUploadHandler,ImgurUnbindHandler
+from note import NoteHandler,NoteEditHandler,NoteRawHandler,NoteAddHandler,NoteRemoveHandler,NoteRenameHandler
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,database_name
 import pylibmc
@@ -62,6 +63,13 @@ class Application(tornado.web.Application):
             (r'/imgur/oauth',ImgurOauthHandler),
             (r'/imgur/unbind',ImgurUnbindHandler),
             (r'/imgur/upload',ImgurUploadHandler),
+
+            (r'/notes',NoteHandler),
+            (r'/notes/add',NoteAddHandler),
+            (r'/notes/remove/(.*)',NoteRemoveHandler),
+            (r'/notes/edit/(.*)',NoteEditHandler),
+            (r'/notes/rename/(.*)',NoteRenameHandler),
+            (r'/notes/raw/(.*)',NoteRawHandler),
 
             (r'/markdown',MarkDownPreViewHandler),
 

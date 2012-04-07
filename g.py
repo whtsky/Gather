@@ -11,7 +11,7 @@ class ImgurOauthHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username')
         password = self.get_argument('password')
-        user = self.get_current_user()
+        user = self.current_user
         auth_token = imguring.get_xauth_token(username,password,i_consumer_key,i_consumer_secret)
         user['i_oauth_token'] = auth_token['oauth_token']
         user['i_oauth_token_secret'] = auth_token['oauth_token_secret']
@@ -21,7 +21,7 @@ class ImgurOauthHandler(BaseHandler):
 
 class ImgurUploadHandler(BaseHandler):
     def post(self):
-        user = self.get_current_user()
+        user = self.current_user
         if 'bind_imgur' not in user or not user['bind_imgur']:
             self.write(json_encode({'stat':'fail','msg':'你需要在个人设置页面中绑定imgur账号才可以上传图片'}))
             return
@@ -32,7 +32,7 @@ class ImgurUploadHandler(BaseHandler):
 class ImgurUnbindHandler(BaseHandler):
     @authenticated
     def get(self):
-        user = self.get_current_user()
+        user = self.current_user
         del user['i_oauth_token'] ,user['i_oauth_token_secret'] ,user['bind_imgur']
         self.db.users.save(user)
         self.redirect('/setting')

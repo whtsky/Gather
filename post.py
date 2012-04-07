@@ -17,7 +17,7 @@ class PostHandler(BaseHandler, TwitterMixin):
     def post(self):
         title = xhtml_escape(self.get_argument('title'))
         assert len(title)<51
-        user = self.get_current_user()
+        user = self.current_user
         md = self.get_argument('markdown')
         posts = self.db.posts
         tags = []
@@ -64,7 +64,7 @@ class PostHandler(BaseHandler, TwitterMixin):
 class PostViewHandler(BaseHandler, TwitterMixin):
     def get(self,postid):
         postid = int(postid)
-        user = self.get_current_user()
+        user = self.current_user
         if user:
             change = False
             for m in user['notification']:
@@ -110,7 +110,7 @@ class PostViewHandler(BaseHandler, TwitterMixin):
     def post(self,postid):
         md = self.get_argument('markdown')
         time_now = int(time())
-        user = self.get_current_user()
+        user = self.current_user
         postid = int(postid)
         content = md_convert(md,notice=True,time=time_now,user=user['username'],db=self.db,postid=postid)
         post = self.db.posts.find_one({'_id':postid})
@@ -162,7 +162,7 @@ class PostViewHandler(BaseHandler, TwitterMixin):
 
 class MarkDownPreViewHandler(BaseHandler):
     def post(self):
-        self.write(md_convert(self.get_argument('md')))
+        self.write(md_convert(self.get_argument('md','')))
 
 class TopicsViewHandler(BaseHandler):
     def get(self):
@@ -192,13 +192,12 @@ class MarkPostHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self,postid):
         post = int(postid)
-        user = self.get_current_user()
+        user = self.current_user
         if post in user['postmark']:
             user['postmark'].remove(post)
         else:
             user['postmark'].append(post)
         self.db.users.save(user)
-        self.mc['user:%s' % user['username'].encode('utf-8')] = user
         self.write('done.')
 
 class MyMarkedPostHandler(BaseHandler):

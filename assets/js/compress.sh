@@ -8,3 +8,8 @@ uglifyjs -nc authsetting.js > ../../static/js/authsetting.js
 uglifyjs -nc signup.js > ../../static/js/signup.js
 uglifyjs -nc login.js > ../../static/js/login.js
 
+uglifyjs -nc ace.js > ../../static/js/made.js
+uglifyjs -nc mode-markdown.js >> ../../static/js/made.js
+uglifyjs -nc theme-twilight.js >> ../../static/js/made.js
+uglifyjs -nc theme-textmate.js >> ../../static/js/made.js
+uglifyjs -nc made.js >> ../../static/js/made.js

@@ -25,7 +25,7 @@ yinyuetai = re.compile('http://www.yinyuetai.com/video/(\d+)')
 username_finder = re.compile(u'@(\w{1,25})\s')
 emoji_finder = re.compile(u'(:[^:]+:)')
 
-md = Markdown(extensions=['fenced_code','smart_strong','tables'])
+md = Markdown(extensions=['fenced_code'])
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -39,10 +39,10 @@ class BaseHandler(tornado.web.RequestHandler):
         return password and self.db.users.find_one({'password':password}) or None
 
     def get_error_html(self,status_code, **kwargs):
-        return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin)
+        return self.render_string('404.html',google_analytics=google_analytics,admin_list=admin,unread=0)
 
     def render(self, template_name, **kwargs):
-        user = self.get_current_user()
+        user = self.current_user
         unread = 0
         if user:
             for x in user['notification']:
@@ -74,7 +74,7 @@ class ErrorHandler(BaseHandler):
 def time_span(t):
     '''convert timestamp to readable string.'''
     t=time.gmtime(t)
-    return '<time datetime="%s" title="%s">%s</time>' % (time.strftime('%Y-%m-%dT%H:%M:%SZ',t),time.strftime('%Y年%m月%d日%H点%M分',t),time.strftime('%Y年%m月%d日%H点%M分',t))
+    return '<time datetime="%s"></time>' % time.strftime('%Y-%m-%dT%H:%M:%SZ',t)
 
 def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
     '''convert md to html'''

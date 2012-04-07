@@ -17,12 +17,12 @@ def hashpassword(username,password):
 
 class AuthSignupHandler(BaseHandler):
     def get(self):
-        if self.get_current_user():
+        if self.current_user:
             self.redirect(self.get_argument('next', '/'))
         self.render('signup.html')
 
     def post(self):
-        assert not self.get_current_user()
+        assert not self.current_user
         password = self.get_argument('password')
         username = self.get_argument('username')
         email = self.get_argument('email')
@@ -57,13 +57,13 @@ class AuthLogoutHandler(BaseHandler):
         
 class AuthLoginHandler(BaseHandler):
     def get(self):
-        if self.get_current_user():
+        if self.current_user:
             self.redirect(self.get_argument('next', '/'))
         else:
             self.render('login.html')
         
     def post(self):
-        assert not self.get_current_user()
+        assert not self.current_user
         username = self.get_argument('username')
         password = self.get_argument('password')
         password = hashpassword(username,password)
@@ -87,11 +87,11 @@ class AuthInfoHandler(BaseHandler):
 class AuthSettingHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render('authsetting.html',user=self.get_current_user())
+        self.render('authsetting.html',user=self.current_user)
 
     @authenticated
     def post(self):
-        user = self.get_current_user()
+        user = self.current_user
         for x in ('email','location','twitter','github','css'):
             user[x] = xhtml_unescape(self.get_argument(x,''))
             for x in set(html_killer.findall(user[x])):
@@ -109,7 +109,7 @@ class AuthChangePasswordHandler(BaseHandler):
 
     @authenticated
     def post(self):
-        user = self.get_current_user()
+        user = self.current_user
         if user['password'] == hashpassword(username,self.get_argument('old')):
             user['password'] = hashpassword(username,self.get_argument('new'))
             self.db.users.save(user)
@@ -120,7 +120,7 @@ class AuthChangePasswordHandler(BaseHandler):
 class BlockUserHandler(BaseHandler):
     @authenticated
     def get(self,username):
-        user = self.get_current_user()
+        user = self.current_user
         if username in user['block_user']:
             user['block_user'].remove(username)
         else:
@@ -134,7 +134,7 @@ class NotificationHandler(BaseHandler):
         self.render('notifications.html',time_span=time_span)
 
     def post(self):
-        u = self.get_current_user()
+        u = self.current_user
         u['notification'] = []
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))

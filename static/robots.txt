@@ -10,3 +10,4 @@ Disallow: /admin/
 Disallow: /markdown
 Disallow: /imgur/
 Disallow: /twitter/
+Disallow: /notes/

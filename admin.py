@@ -6,7 +6,7 @@ from config import admin
 
 class RemoveUserHandler(BaseHandler):
     def get(self,username):
-        assert self.get_current_user()['username'] in admin
+        assert self.current_user['username'] in admin
         self.db.users.remove({'username':username})
         removepost(fliter={'author':username},db=self.db,mc=self.mc)
         postids = []
@@ -24,7 +24,7 @@ class RemoveUserHandler(BaseHandler):
 
 class RemovePostHandler(BaseHandler):
     def get(self,postid):
-        assert self.get_current_user()['username'] in admin
+        assert self.current_user['username'] in admin
         postid = int(postid)
         removepost(fliter={'_id':postid},db=self.db,mc=self.mc)
         try:
@@ -35,7 +35,7 @@ class RemovePostHandler(BaseHandler):
 
 class RemoveCommentHandler(BaseHandler):
     def get(self,postid,commentid):
-        assert self.get_current_user()['username'] in admin
+        assert self.current_user['username'] in admin
         post = self.db.posts.find_one({'_id':int(postid)})
         del post['comments'][int(commentid)-1]
         self.db.posts.save(post)
@@ -57,7 +57,7 @@ class RemoveCommentHandler(BaseHandler):
 
 class ChangeTagHandler(BaseHandler):
     def post(self,postid):
-        assert self.get_current_user()['username'] in admin
+        assert self.current_user['username'] in admin
         postid = int(postid)
         post = self.db.posts.find_one({'_id':postid})
         for tag in post['tags']:
