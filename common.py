@@ -43,7 +43,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def parse_user_agent(self):
         ua = self.request.headers.get("User-Agent", "bot").lower()
-        sources = ('iPod','iPhone','Android','Kindle')
+        sources = ('iPod','iPhone','iPad','Android','Kindle','Windows Phone','Symbian')
         source = None
         for type in sources:
             if type.lower() in ua:
