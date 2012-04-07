@@ -14,13 +14,13 @@ define('mongo_host', default='127.0.0.1', help='mongodb host')
 define('mongo_port', default=27017, help='mongodb port')
 define('memcached_host', default=['127.0.0.1'],help='memcached host')
 
-from auth import AuthSignupHandler,AuthLoginHandler,AuthLogoutHandler,AuthInfoHandler,AuthSettingHandler,AuthChangePasswordHandler,NotificationHandler,BlockUserHandler
-from post import PostHandler,PostViewHandler,MarkDownPreViewHandler,PostListModule,TopicsViewHandler,MarkPostHandler,MyMarkedPostHandler
-from tag import TagViewHandler,TagCloudHandler,TagFeedHandler,TagCloudModule
-from admin import RemoveUserHandler,RemovePostHandler,RemoveCommentHandler,ChangeTagHandler
-from t import TwitterOauthHandler,TwitterNotBindHandler,TweetHandler
-from g import ImgurOauthHandler,ImgurUploadHandler,ImgurUnbindHandler
-from note import NoteHandler,NoteEditHandler,NoteRawHandler,NoteAddHandler,NoteRemoveHandler,NoteRenameHandler,NotePublishHandler
+from auth import *
+from post import *
+from tag import *
+from admin import *
+from t import *
+from g import *
+from note import *
 from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
 from config import config,database_name
 import pylibmc
@@ -33,6 +33,7 @@ class Application(tornado.web.Application):
 
             (r'/signup', AuthSignupHandler),
             (r'/login', AuthLoginHandler),
+            (r'/login/google',GoogleLoginHandler),
             (r'/logout', AuthLogoutHandler),
             (r'/user/(\w+)',AuthInfoHandler),
             (r'/user/(\w+)/block',BlockUserHandler),

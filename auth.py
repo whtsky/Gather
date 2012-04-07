@@ -2,9 +2,10 @@
 
 from common import BaseHandler,time_span,html_killer
 from hashlib import sha1,md5
-from tornado.escape import json_encode, xhtml_escape, xhtml_unescape
+from tornado.escape import json_encode, xhtml_unescape
 import tornado.web
 from tornado.web import authenticated
+from tornado.auth import GoogleMixin
 import time
 from re import compile
 from urlparse import urlparse
@@ -138,3 +139,40 @@ class NotificationHandler(BaseHandler):
         u['notification'] = []
         self.db.users.save(u)
         self.redirect(self.get_argument('next', '/'))
+
+class GoogleLoginHandler(BaseHandler, GoogleMixin):
+
+    @tornado.web.asynchronous
+    def get(self):
+        if self.current_user:
+            self.redirect(self.get_argument('next', '/'))
+        elif self.get_argument("openid.mode", None):
+            self.get_authenticated_user(self.async_callback(self._on_auth))
+        else:
+            self.authenticate_redirect(ax_attrs=["email"])
+
+    def _on_auth(self, user):
+        email = user["email"].lower()
+        name = user['name']
+        user = self.db.users.find_one({'email':email})
+        if user:
+            self.set_secure_cookie('user',user['password'])
+            self.redirect('/')
+        elif not self.db.users.find_one({'username_lower':name.lower()}):
+            password = hashpassword(name,md5(str(time.time())).hexdigest())
+            self.db.users.insert({'_id':self.db.settings.find_and_modify(update={'$inc':{'user_id':1}}, new=True)['user_id'],
+                                      'username':name,
+                                      'username_lower':name.lower(),
+                                      'email':email,
+                                      'hashed_email':md5(email).hexdigest(),
+                                      'password':password,
+                                      'postmark':[],
+                                      'notification':[],
+                                      'block_user':[],
+                                      'twitter_bind':False,
+                                      'css':'',
+                                      'signtime':int(time.time())})
+            self.set_secure_cookie('user',password)
+            self.redirect('/')
+        else:
+            self.render('signup_third.html',message=u'这个Google账号的用户名已经被别人使用了。。',email=email)
