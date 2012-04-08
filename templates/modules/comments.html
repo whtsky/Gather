@@ -18,7 +18,7 @@
                     <div class='right'>
                         #{{ comment['location'] }}     发表于{{ time_span(comment['posttime']) }}
                         {% if current_user %}
-                        <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important kill hide">和谐</a>
+                        <a href="/admin/post/kill/{{ post['_id'] }}/{{ comment['location'] }}" class="label label-important kill hide">删除</a>
                         <a href="#new_reply" class='at' data-user-name="{{ comment['author'] }}">@</a>
                         {% end %}
                     </div>

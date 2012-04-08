@@ -229,3 +229,17 @@ img {
         width: 724px
     }
 }
+#footer .backtotop {
+    position:fixed;
+    right: 25px;
+    bottom: 50px;
+}
+#footer .backtotop a {
+    color: #000;
+    font-size: .8em;
+    background: url(/static/img/up.png) no-repeat 2px 1px;
+    padding-left: 16px;
+}
+#footer .backtotop a:hover {
+    padding-top: 4px;
+}
