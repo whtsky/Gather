@@ -100,7 +100,8 @@ body{
 
 section {
     overflow: hidden;
-    padding: 14px; }
+    padding: 14px;
+}
 section footer {
     margin: 0;
     padding: 10px; }
@@ -140,32 +141,7 @@ table.tag-list td.count{
     width: 10%;
     text-align: center;
 }
-table.tag-list {
-    width: 100%;
-}
-#wmd-input_speech {
-    padding: 0 !important;
-    width: 25px !important;
-    height: 30px !important;
-    float: none !important;
-    border: none !important;
-    background: transparent !important;
-    font-size: 16px !important;
-    padding-right: 5px !important;
-}
 
-.toolbar_button {
-    width: 6px;
-    min-width: 0;
-    float: left;
-    border: none;
-    padding: 0 12px;
-    background-color: transparent;
-}
-
-.toolbar_button:hover {
-    background-color: #ccc !important;
-}
 .col_fade {
     color: #999;
 }
@@ -229,17 +205,27 @@ img {
         width: 724px
     }
 }
-#footer .backtotop {
+#footer {
+    width:100%;
+    padding: 14px;
+    margin-bottom: 10px;
+    background:#fff;
+    clear:both;
+    border-top:1px solid #dadada;
+    font-size: 15px;
+    color: #999;
+}
+.backtotop {
     position:fixed;
     right: 25px;
     bottom: 50px;
 }
-#footer .backtotop a {
+.backtotop a {
     color: #000;
     font-size: .8em;
     background: url(/static/img/up.png) no-repeat 2px 1px;
     padding-left: 16px;
 }
-#footer .backtotop a:hover {
+.backtotop a:hover {
     padding-top: 4px;
 }
