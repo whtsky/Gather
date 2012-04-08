@@ -69,6 +69,7 @@ table.clear-table td.avatar{
     margin:0 auto;
 }
 body{
+    background-color: #EEE;
     background-image: url(/static/img/backgroud.png);
     font-size: 13px;
 }
