@@ -196,7 +196,7 @@ img {
 }
 
 @media (max-width: 979px){
-    #sidebar{
+    #sidebar,.backtotop{
         display: none
     }
 }
