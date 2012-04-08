@@ -21,9 +21,8 @@ class PostHandler(BaseHandler, TwitterMixin):
         md = self.get_argument('markdown')
         posts = self.db.posts
         tags = []
-        for x in xhtml_escape(self.get_argument('tags').lower()).split(' '):
-            if x:
-                tags.append(x)
+        for x in set(xhtml_escape(self.get_argument('tags').lower()).split(' ')):
+            tags.append(x)
         post = self.db.posts.find_one({'title':title,'author':user['username'],'tags':tags})
         if post:#Topic has already been posted.
             self.redirect('/topics/'+str(post['_id']))
