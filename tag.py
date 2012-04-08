@@ -21,12 +21,17 @@ class TagCloudModule(tornado.web.UIModule):
 class TagViewHandler(BaseHandler):
     def get(self,tagname):
         posts = self.db.posts.find({'tags':tagname.lower()},sort=[('changedtime', -1)])
-        if posts.count():
-            p = int(self.get_argument('p',1))
-            self.render('tag.html',tagname=tagname,posts=posts,
-                time_span=time_span,p=p)
-        else:
+        if not posts.count():
             raise tornado.web.HTTPError(404)
+        p = int(self.get_argument('p',1))
+        tag_sidebar = self.db.tags.find_one({'name':tagname})
+        tag_sidebar = 'sidebar' in tag_sidebar and tag_sidebar['sidebar'] or ''
+        self.render('tag.html',tagname=tagname,posts=posts,
+            time_span=time_span,p=p,tag_sidebar=tag_sidebar)
+
+    def post(self,tagname):
+        self.db.tags.update({'name':tagname},{'$set':{'sidebar':self.get_argument('sidebar','')}})
+        self.redirect('/tag/%s' % tagname)
 
 class TagCloudHandler(BaseHandler):
     def get(self):
