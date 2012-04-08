@@ -68,9 +68,7 @@ table.clear-table td.avatar{
     text-align: center;
     margin:0 auto;
 }
-#Wrapper{
-    background-color: #EEE;
-    background-image: url(/static/img/backgroud.png);
+body{
     font-size: 13px;
 }
 .sidebar-nav{
@@ -194,10 +192,22 @@ img {
 .full-input{
     width: 99%
 }
-
+@media (min-width: 979px){
+    #Wrapper{
+        background-color: #EEE;
+        background-image: url(/static/img/backgroud.png);
+    }
+}
 @media (max-width: 979px){
     #sidebar,.backtotop{
         display: none
+    }
+    body{
+        background-color: #EEE;
+        background-image: url(/static/img/backgroud.png);
+    }
+    #footer{
+        background-color: #FFF;
     }
 }
 @media (min-width: 768px) and (max-width: 979px) {
