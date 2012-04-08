@@ -93,7 +93,7 @@ class AuthSettingHandler(BaseHandler):
     @authenticated
     def post(self):
         user = self.current_user
-        for x in ('email','location','twitter','github','css'):
+        for x in ('location','twitter','github','css'):
             user[x] = xhtml_unescape(self.get_argument(x,''))
             for x in set(html_killer.findall(user[x])):
                 user[x] = user[x].replace(x,'')

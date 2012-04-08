@@ -21,6 +21,8 @@ class TwitterOauthHandler(BaseHandler, TwitterMixin):
         else:
             user = self.current_user
             user['access_token'] = twitter_user['access_token']
+            if 'words' not in user:
+                user['words'] = twitter_user['description']
             user['twitter'] = twitter_user['username']
             user['twitter_bind'] = True
 
