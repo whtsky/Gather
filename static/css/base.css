@@ -68,7 +68,7 @@ table.clear-table td.avatar{
     text-align: center;
     margin:0 auto;
 }
-body{
+#Wrapper{
     background-color: #EEE;
     background-image: url(/static/img/backgroud.png);
     font-size: 13px;
@@ -206,10 +206,8 @@ img {
     }
 }
 #footer {
-    width:100%;
     padding: 14px;
     margin-bottom: 10px;
-    background:#fff;
     clear:both;
     border-top:1px solid #dadada;
     font-size: 15px;

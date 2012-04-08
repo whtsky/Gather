@@ -117,31 +117,33 @@
     </div>
 </div>
 {% end %}
-<div class="container">
-    <div class='row'>
-        <div class="span12">
-            <ul class="breadcrumb">
-                {% block breadcrumb %}
-                <li class="active">{{ handler.settings['forum_title'] }}</li>
+<div id="Wrapper">
+    <div class="container">
+        <div class='row'>
+            <div class="span12">
+                <ul class="breadcrumb">
+                    {% block breadcrumb %}
+                    <li class="active">{{ handler.settings['forum_title'] }}</li>
+                    {% end %}
+                </ul>
+            </div>
+            {% block body %}
+            <div class="span9" id="main">
+                {% block content %}{% end %}
+            </div>
+            <div class="span3" id="sidebar">
+                {% block sidebar %}{% end %}
+                {% block tagcloud %}
+                <section class='box' id="tagcloud">
+                    <header>
+                        <h3>标签云</h3>
+                    </header>
+                    {{ modules.TagCloud(db,mc,limit=10) }}
+                </section>
                 {% end %}
-            </ul>
-        </div>
-        {% block body %}
-        <div class="span9" id="main">
-            {% block content %}{% end %}
-        </div>
-        <div class="span3" id="sidebar">
-            {% block sidebar %}{% end %}
-            {% block tagcloud %}
-            <section class='box' id="tagcloud">
-                <header>
-                    <h3>标签云</h3>
-                </header>
-                {{ modules.TagCloud(db,mc,limit=10) }}
-            </section>
+            </div>
             {% end %}
         </div>
-        {% end %}
     </div>
 </div>
 <p class="backtotop"><a href="#">Top</a></p>
