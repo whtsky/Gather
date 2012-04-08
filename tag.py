@@ -2,6 +2,7 @@
 
 import math
 from common import BaseHandler,time_span
+from config import admin
 import time
 import tornado.web
 
@@ -30,6 +31,7 @@ class TagViewHandler(BaseHandler):
             time_span=time_span,p=p,tag_sidebar=tag_sidebar)
 
     def post(self,tagname):
+        assert self.current_user['username'] in admin
         self.db.tags.update({'name':tagname},{'$set':{'sidebar':self.get_argument('sidebar','')}})
         self.redirect('/tag/%s' % tagname)
 

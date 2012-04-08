@@ -28,7 +28,7 @@
 {% block sidebar %}
 {{tag_sidebar}}
 
-{% if current_user['username'] in admin_list %}
+{% if current_user and current_user['username'] in admin_list %}
 <section class='box'>
     <header><h3>修改边栏</h3></header>
     <form method="post">
