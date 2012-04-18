@@ -117,7 +117,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
 
     if notice:
         for u in mentions:
-            db.users.update({'username_lower':u.lower(),'block_user':{'$nin':user}},
+            db.users.update({'username_lower':u.lower()},
             {'$push':
                      {'notification':
                               {'from':user,
