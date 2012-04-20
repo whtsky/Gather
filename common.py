@@ -114,6 +114,7 @@ def md_convert(txt,notice=False,time=None,user=None,db=None,postid=None):
             txt = txt.replace(emoji,u'<img src="/static/img/%s" class="emoji" />' % emojis[emoji])
 
     txt = md.convert(txt).replace('\n','<br />')
+    txt = txt.replace('&amp;lt;','&lt;').replace('&amp;gt;','&gt;')
 
     if notice:
         for u in mentions:
