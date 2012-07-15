@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import tornado.web
 from . import BaseHandler
 
 
@@ -22,11 +23,13 @@ class MemberRepliesHandler(BaseHandler):
 
 
 class BlockHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self, name):
         pass
 
 
 class RemoveHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self, name):
         member = self.get_member(name)
         member_id = member['_id']
@@ -35,10 +38,20 @@ class RemoveHandler(BaseHandler):
         self.application.db.members.remove({'_id': member_id})
 
 
+class SetRoleHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self, name):
+        pass
+
+    @tornado.web.authenticated
+    def post(self, name):
+        pass
+
 handlers = [
     (r'/member/(\w+)', MemberPageHandler),
     (r'/member/(\w+)/posts', MemberPageHandler),
     (r'/member/(\w+)/replies', MemberRepliesHandler),
     (r'/member/(\w+)/block', BlockHandler),
     (r'/member/(\w+)/remove', RemoveHandler),
+    (r'/member/(\w+)/role', SetRoleHandler),
 ]

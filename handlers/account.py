@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import tornado.web
 from . import BaseHandler
 import re
 import hashlib
@@ -63,7 +64,8 @@ class SigninHandler(BaseHandler):
         if not (username and password):
             self.flash('Please fill the required field')
         password = hashlib.sha1(password + username).hexdigest()
-        member = self.db.members.find_one({'name_lower': username, 'password': password})
+        member = self.db.members.find_one({'name_lower': username,
+                                           'password': password})
         if not member:
             self.flash('Invalid account or password')
             self.render('account_signin.html')
@@ -79,20 +81,23 @@ class SignoutHandler(BaseHandler):
 
 
 class SettingsHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         self.render('account_settings.html')
 
+    @tornado.web.authenticated
     def post(self):
         pass
 
 
 class ChangePasswordHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         self.render('account_password.html')
 
+    @tornado.web.authenticated
     def post(self):
         pass
-
 
 handlers = [
     (r'/account/signup', SignupHandler),

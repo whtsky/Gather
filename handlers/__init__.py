@@ -1,10 +1,17 @@
 #coding=utf-8
 
 import tornado.web
+import tornado.escape
 import hashlib
 
 
 class BaseHandler(tornado.web.RequestHandler):
+
+    def prepare(self):
+        self.messages = self.get_secure_cookie('flash_messages')
+        if not self.messages:
+            self.messages = []
+
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         return self.application.db.members.find_one({'password': password})
@@ -32,14 +39,12 @@ class BaseHandler(tornado.web.RequestHandler):
         return topic
 
     def flash(self, message, type='error'):
-        if not hasattr(self, 'messages'):
-            self.messages = []
-        messages = self.messages
-        messages.append((type, message))
+        self.messages.append((type, message))
+        self.set_secure_cookie('flash_messages',
+            tornado.escape.json_encode(self.messages))
 
     def get_flashed_messages(self):
-        if not hasattr(self, 'messages'):
-            return []
         messages = self.messages
         self.messages = []
+        self.clear_cookie('flash_messages')
         return messages
