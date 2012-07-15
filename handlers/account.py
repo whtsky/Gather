@@ -34,7 +34,7 @@ class SignupHandler(BaseHandler):
         if self.messages:
             self.render('account_signup.html')
             return
-        password = hashlib.sha1(password + email).hexdigest()
+        password = hashlib.sha1(password + username.lower()).hexdigest()
         self.db.members.insert({
             'name': username,
             'name_lower': username.lower(),
@@ -58,7 +58,18 @@ class SigninHandler(BaseHandler):
         self.render('account_signin.html')
 
     def post(self):
-        pass
+        username = self.get_argument('username', '').lower()
+        password = self.get_argument('password', None)
+        if not (username and password):
+            self.flash('Please fill the required field')
+        password = hashlib.sha1(password + username).hexdigest()
+        member = self.db.members.find_one({'name_lower': username, 'password': password})
+        if not member:
+            self.flash('Invalid account or password')
+            self.render('account_signin.html')
+            return
+        self.set_secure_cookie('user', password, expires_days=30)
+        self.redirect(self.get_argument('next', '/'))
 
 
 class SignoutHandler(BaseHandler):

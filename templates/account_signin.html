@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Signin") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header><h2>{{ _("Signin") }}</h2></header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {{ xsrf_form_html() }}
+            <div class="control-group">
+                <label class="control-label" for="username">{{ _("Username") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="username" name="username" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">{{ _("Password") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-xlarge" id="password" name="password" required>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Signin") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Don't have an account?") }}</header>
+    <a href="/account/signup?next={{ url_escape(request.uri) }}" class="btn btn-success">{{ _("Signin") }}</a>
+</div>
+{% end %}
