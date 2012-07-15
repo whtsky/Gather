@@ -10,8 +10,8 @@ class TopicHandler(BaseHandler):
 
 
 class ReplyHandler(BaseHandler):
-    def topic(self, topic_id):
-        pass
+    def post(self, topic_id):
+        self.db.topics.update({'_id': topic_id}, {'$inc': {'count': 1}})
 
 
 class RemoveHandler(BaseHandler):
@@ -24,7 +24,7 @@ class MoveHandler(BaseHandler):
         topic = self.get_topic(topic_id)
         self.render('topic/move.html', topic=topic)
 
-    def topic(self, topic_id):
+    def post(self, topic_id):
         pass
 
 

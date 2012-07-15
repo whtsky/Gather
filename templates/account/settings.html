@@ -1,0 +1,71 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ _("Settings") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header><h2>{{ _("Settings") }}</h2></header>
+    <form class="form-horizontal" method="post" action="/account/settings">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <div class="control-group">
+                <label class="control-label" for="username">{{ _("Username") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge disabled" id="username" name="username" value="{{ current_user['name'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="email">{{ _("Email") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge disabled" id="email" name="email" value="{{ current_user['email'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="website">{{ _("Website") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="website" name="website" value="{{ current_user['website'] }}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="description">{{ _("Description") }}</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" id="description" name="description">{{ current_user['description'] }}</textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Password") }}</header>
+    <form method="post" action="/account/password">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <div class="control-group">
+                <label class="control-label" for="old_password">{{ _("Old Password") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-medium" id="old_password" name="old_password" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="new_password">{{ _("New Password") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-medium" id="new_password" name="new_password" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="new_password2">{{ _("Confirm") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-medium" id="new_password2" name="new_password2" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
+        </fieldset>
+    </form>
+</div>
+{% end %}

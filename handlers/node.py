@@ -12,10 +12,12 @@ class NodeHandler(BaseHandler):
 
 
 class CreateTopicHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self, node_name):
         node = self.get_node(node_name)
         self.render('node/create.html', node=node)
 
+    @tornado.web.authenticated
     def post(self, node_name):
         node = self.get_node(node_name)
         title = self.get_argument('title', '')
@@ -85,7 +87,7 @@ class EditHandler(BaseHandler):
         node['html'] = self.get_argument('html', '')
         self.db.nodes.save(node)
 
-        self.flash('Save successfully', type='success')
+        self.flash('Saved successfully', type='success')
         self.redirect('/node/' + node['name'])
 
 

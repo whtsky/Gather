@@ -58,6 +58,8 @@ class SigninHandler(BaseHandler):
         self.render('account/signin.html')
 
     def post(self):
+        if self.current_user:
+            self.redirect(self.get_argument('next', '/'))
         username = self.get_argument('username', '').lower()
         password = self.get_argument('password', None)
         if not (username and password):
@@ -86,17 +88,36 @@ class SettingsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self):
-        pass
+        website = self.get_argument('website', '')
+        description = self.get_argument('description', '')
+        self.db.members.update({'_id': self.current_user['_id']},
+                {'$set':{'website': website, 'description': description}})
+        self.flash('Saved successfully', type='success')
+        self.redirect('/account/settings')
 
 
 class ChangePasswordHandler(BaseHandler):
     @tornado.web.authenticated
-    def get(self):
-        self.render('account/password.html')
-
-    @tornado.web.authenticated
     def post(self):
-        pass
+        old_password = self.get_argument('old_password', None)
+        new_password = self.get_argument('new_password', None)
+        new_password2 = self.get_argument('new_password2', None)
+        if not (old_password and new_password and new_password2):
+            self.flash('Please fill the required field')
+        if new_password != new_password2:
+            self.flash("Password doesn't match")
+        password = hashlib.sha1(old_password + self.current_user['name_lower'])
+        if password != self.current_user['password']:
+            self.flash('Invalid password')
+        if self.messages:
+            self.render('account/settings.html')
+            return
+        password = hashlib.sha1(new_password + self.current_user['name_lower'])
+        self.db.members.update({'_id': self.current_user['_id']},
+                {'$set':{'password': password}})
+        self.set_secure_cookie('user', password, expires_days=30)
+        self.flash('Saved successfully', type='success')
+        self.redirect('/account/settings')
 
 handlers = [
     (r'/account/signup', SignupHandler),
