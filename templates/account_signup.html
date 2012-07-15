@@ -7,7 +7,7 @@
     <header><h2>{{ _("Signup") }}</h2></header>
     <form class="form-horizontal" method="post">
         <fieldset>
-            {{ xsrf_form_html() }}
+            {% raw xsrf_form_html() %}
             <div class="control-group">
                 <label class="control-label" for="username">{{ _("Username") }}</label>
                 <div class="controls">

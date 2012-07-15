@@ -38,7 +38,7 @@ db.members.insert({
 'email': email,
 'website': '',
 'description': '',
-'locale': 'zh_CN-CN',
+'locale': 'zh_CN',
 'role': 3,
 'block': [],
 'star': [],

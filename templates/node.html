@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ node['name'] }} | {% end %}
+
+{% block sidebar %}
+{% raw node['html'] %}
+{% if node['description'] %}
+<div class="box">
+    <header>{{ node['name'] }}</header>
+    {{ node['description'] }}
+</div>
+{% end %}
+{% if current_user and current_user['role'] > 1 %}
+<div class="box">
+    <header>{{ _("Admin") }}</header>
+    <a href="/node/{{ node['name'] }}/edit" class="btn">{{ _("Edit Node") }}</a>
+    <a href="/node/add" class="btn btn-warning">{{ _("Add Node") }}</a>
+</div>
+{% end %}
+{% end %}

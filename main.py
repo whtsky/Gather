@@ -25,8 +25,8 @@ class Application(tornado.web.Application):
             settings['static_path'] = os.path.join(ROOT, "static")
 
         super(Application, self).__init__(urls.handlers,
-            ui_modules=urls.ui_modules, autoescape=None,
-            login_url='/account/signin', **settings)
+            ui_modules=urls.ui_modules, login_url='/account/signin',
+            **settings)
 
         self.db = pymongo.Connection(host=settings['mongodb_host'],
             port=settings['mongodb_port'])[settings['database_name']]
@@ -40,7 +40,6 @@ def main():
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
-
 
 if __name__ == '__main__':
     main()

@@ -2,16 +2,29 @@
 "Signin","登录"
 "Signout","登出"
 "Signup","注册"
+"Save","保存"
+"Admin","管理"
 
 "Site status","站点统计"
 "Members","用户"
+"Nodes","节点"
 "Topics","话题"
 "Replies","回复"
+"Description","简介"
+
+"Add Node","增加节点"
+"Edit Node","编辑节点"
+"Node Name","节点名"
+"Custom Html","自定义HTML"
 
 "Username","用户名"
 "Password","密码"
 "Confirm","确认"
 "Email","邮箱"
+
+"This node name is already registered","该节点名已注册"
+"Save successfully","保存成功"
+
 "Only English characters and digits are accepted.","只允许填写英文字符和数字"
 "Password doesn't match","密码不匹配"
 "Please fill the required field", "请填写所有必填项"
@@ -24,3 +37,4 @@
 
 "Already have an account?","已有账户？"
 "Don't have an account?","还没有账户？"
+

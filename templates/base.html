@@ -58,6 +58,7 @@
                     <header>{{ _("Site status") }}</header>
                     <ul>
                         <li>{{ _("Members") }}: {{ handler.db.members.count() }}</li>
+                        <li>{{ _("Nodes") }}: {{ handler.db.nodes.count() }}</li>
                         <li>{{ _("Topics") }}: {{ handler.db.topics.count() }}</li>
                         <li>{{ _("Replies") }}: {{ handler.db.replies.count() }}</li>
                     </ul>

@@ -6,18 +6,13 @@ import hashlib
 
 
 class BaseHandler(tornado.web.RequestHandler):
-
     def prepare(self):
-        self.messages = self.get_secure_cookie('flash_messages')
-        if not self.messages:
-            self.messages = []
+        messages = self.get_secure_cookie('flash_messages')
+        self.messages = messages and tornado.escape.json_decode(messages) or []
 
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         return self.application.db.members.find_one({'password': password})
-
-    def get_user_locale(self):
-        return self.current_user and self.current_user['locale'] or None
 
     @property
     def db(self):
@@ -38,6 +33,13 @@ class BaseHandler(tornado.web.RequestHandler):
             raise tornado.web.HTTPError(404)
         return topic
 
+    def get_node(self, node_name):
+        node_name = node_name.lower()
+        node = self.db.nodes.find_one({'name_lower': node_name})
+        if not node:
+            raise tornado.web.HTTPError(404)
+        return node
+
     def flash(self, message, type='error'):
         self.messages.append((type, message))
         self.set_secure_cookie('flash_messages',
@@ -48,3 +50,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.messages = []
         self.clear_cookie('flash_messages')
         return messages
+
+    def check_role(self, role_min=2):
+        if self.current_user['role'] < role_min:
+            raise tornado.web.HTTPError(403)
