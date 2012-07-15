@@ -91,7 +91,7 @@ class SettingsHandler(BaseHandler):
         website = self.get_argument('website', '')
         description = self.get_argument('description', '')
         self.db.members.update({'_id': self.current_user['_id']},
-                {'$set':{'website': website, 'description': description}})
+                {'$set': {'website': website, 'description': description}})
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
 
@@ -114,7 +114,7 @@ class ChangePasswordHandler(BaseHandler):
             return
         password = hashlib.sha1(new_password + self.current_user['name_lower'])
         self.db.members.update({'_id': self.current_user['_id']},
-                {'$set':{'password': password}})
+                {'$set': {'password': password}})
         self.set_secure_cookie('user', password, expires_days=30)
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')

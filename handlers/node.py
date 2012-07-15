@@ -29,6 +29,14 @@ class CreateTopicHandler(BaseHandler):
         if self.messages:
             self.render('node/create.html', node=node)
             return
+        topic = self.db.topics.find_one({
+            'title': title,
+            'content': content,
+            'author': self.current_user['_id']
+        })
+        if topic:
+            self.redirect('/topic/%s' % topic['_id'])
+            return
         time_now = utc_time()
         topic_id = self.db.topics.insert({
             'title': title,
