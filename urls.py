@@ -1,4 +1,4 @@
-from handlers import account, member, node, post
+from handlers import account, member, node, topic
 
 __all__ = ['handlers', 'ui_modules']
 
@@ -6,6 +6,6 @@ handlers = []
 handlers.extend(account.handlers)
 handlers.extend(member.handlers)
 handlers.extend(node.handlers)
-handlers.extend(post.handlers)
+handlers.extend(topic.handlers)
 
 ui_modules = {}

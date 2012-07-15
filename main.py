@@ -13,11 +13,16 @@ import urls
 
 define('port', default=8888, help='run on the given port', type=int)
 
+ROOT = os.path.abspath(os.path.dirname(__file__))
+
 
 class Application(tornado.web.Application):
     def __init__(self):
-        settings = {}
+        settings = {'template_path': os.path.join(ROOT, "templates")}
         execfile('settings.py', {}, settings)
+
+        if 'static_path' not in settings:
+            settings['static_path'] = os.path.join(ROOT, "static")
 
         super(Application, self).__init__(urls.handlers,
             ui_modules=urls.ui_modules, autoescape=None,

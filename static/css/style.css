@@ -1,0 +1,20 @@
+#main{
+    background-color: #d9d9d9;
+}
+.box {
+    background-color: white;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    -moz-box-shadow: 0 0 0 1px #DDD;
+    -webkit-box-shadow: 0 0 0 1px #DDD;
+    box-shadow: 0 0 0 1px #DDD;
+    overflow: hidden;
+    padding: 14px;
+}
+.box header {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDD;
+    font-weight: bold;
+}

@@ -29,9 +29,9 @@ while True:
     print("This email is already registered")
 
 password = raw_input('password:')
-password = hashlib.sha1(password+email).hexdigest()
+password = hashlib.sha1(password + email).hexdigest()
 
-db.members.find_one({
+db.members.insert({
 'name': username,
 'name_lower': username.lower(),
 'password': password,
@@ -43,4 +43,3 @@ db.members.find_one({
 'block': [],
 'star': [],
 })
-

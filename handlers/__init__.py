@@ -21,11 +21,12 @@ class BaseHandler(tornado.web.RequestHandler):
         member = self.db.members.find_one({'name_lower': name})
         if not member:
             raise tornado.web.HTTPError(404)
-        #TODO: ADD GAVATAR URI.
+        hashed_email = hashlib.md5(member['email']).hexdigest()
+        member['gravatar'] = self.settings['gravatar_base_url'] + hashed_email
         return member
 
-    def get_post(self, post_id):
-        post = self.db.posts.find_one({'_id': post_id})
-        if not post:
+    def get_topic(self, topic_id):
+        topic = self.db.topics.find_one({'_id': topic_id})
+        if not topic:
             raise tornado.web.HTTPError(404)
-        return post
+        return topic

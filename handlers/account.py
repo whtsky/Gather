@@ -30,7 +30,8 @@ class SignoutHandler(BaseHandler):
 
 class SettingsHandler(BaseHandler):
     def get(self):
-        self.render('account_settings.html')
+        #self.render('account_settings.html')
+        self.render('base.html')
 
     def post(self):
         pass
