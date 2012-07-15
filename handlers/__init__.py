@@ -30,3 +30,16 @@ class BaseHandler(tornado.web.RequestHandler):
         if not topic:
             raise tornado.web.HTTPError(404)
         return topic
+
+    def flash(self, message, type='error'):
+        if not hasattr(self, 'messages'):
+            self.messages = []
+        messages = self.messages
+        messages.append((type, message))
+
+    def get_flashed_messages(self):
+        if not hasattr(self, 'messages'):
+            return []
+        messages = self.messages
+        self.messages = []
+        return messages

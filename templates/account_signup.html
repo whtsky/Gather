@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Signup") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header><h2>{{ _("Signup") }}</h2></header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {{ xsrf_form_html() }}
+            <div class="control-group">
+                <label class="control-label" for="username">{{ _("Username") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="username" name="username" required>
+                    <p class="help-block">{{ _("Only English characters and digits are accepted.") }}</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="email">{{ _("Email") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="email" name="email" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">{{ _("Password") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-xlarge" id="password" name="password" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password2">{{ _("Confirm") }}</label>
+                <div class="controls">
+                    <input type="password" class="input-xlarge" id="password2" name="password2" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Signup") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Already have an account?") }}</header>
+    <a href="/account/signin?next={{ url_escape(request.uri) }}" class="btn btn-success">{{ _("Signin") }}</a>
+</div>
+{% end %}

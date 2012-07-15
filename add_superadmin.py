@@ -2,7 +2,7 @@
 #coding=utf-8
 
 from __future__ import print_function
-from handlers.account import username_check
+from handlers.account import username_validator
 import settings
 import pymongo
 import hashlib
@@ -14,8 +14,8 @@ username = email = ''
 
 while True:
     username = raw_input('username:')
-    if username_check.findall(username)[0] != username:
-        print("This username is not valid")
+    if not username_validator.match(username):
+        print("Invalid username")
         continue
     if not db.members.find_one({'name_lower': username.lower()}):
         break

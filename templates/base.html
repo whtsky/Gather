@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     {% block head %}{% end %}
-    <title>{% block title %}{{ handler.settings['forum_title'] }}{% end %}</title>
+    <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
     <link rel="stylesheet" href="{{ static_url('css/bootstrap-responsive.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}" type="text/css" />
@@ -22,27 +22,33 @@
     {% end %}
 </head>
 <body>
-<div id="main">
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="brand" href="#">{{ handler.settings['forum_title'] }}</a>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">{{ handler.settings['forum_title'] }}</a>
 
-                <ul class="nav pull-right">
-                    {% if not current_user %}
-                    <li><a href="/account/signup">{{ _("Signup") }}</a></li>
-                    <li><a href="/account/signin">{{ _("Signin") }}</a></li>
-                    {% else %}
-                    <li>{{ current_user['name'] }}</li>
-                    <li><a href="/account/settings">{{ _("Settings") }}</a></li>
-                    <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
-                    {% end %}
-                </ul>
-            </div>
+            <ul class="nav pull-right">
+                {% if not current_user %}
+                <li><a href="/account/signup?next={{ url_escape(request.uri) }}">{{ _("Signup") }}</a></li>
+                <li><a href="/account/signin?next={{ url_escape(request.uri) }}">{{ _("Signin") }}</a></li>
+                {% else %}
+                <li><a href="/member/{{ current_user['name'] }}">{{ current_user['name'] }}</a></li>
+                <li><a href="/account/settings">{{ _("Settings") }}</a></li>
+                <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
+                {% end %}
+            </ul>
         </div>
     </div>
+</div>
+<div id="main">
     <div class="container">
         <div class="row">
+            {% block body %}
+            {% for type, msg in handler.get_flashed_messages() %}
+            <div class="alert alert-{{type}}">
+                {{ _(msg) }}
+            </div>
+            {% end %}
             <div class="span8">
                 {% block content %}{% end %}
             </div>
@@ -57,6 +63,7 @@
                     </ul>
                 </div>
             </div>
+            {% end %}
         </div>
     </div>
 </div>

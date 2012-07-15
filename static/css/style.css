@@ -1,5 +1,8 @@
+#main .container{
+    padding-top: 60px;
+}
 #main{
-    background-color: #d9d9d9;
+    background-color: #EEE;
 }
 .box {
     background-color: white;
@@ -11,6 +14,8 @@
     box-shadow: 0 0 0 1px #DDD;
     overflow: hidden;
     padding: 14px;
+    border-bottom: 2px solid #fef8ee;
+    border-bottom: 2px solid #e2e2e9;
 }
 .box header {
     margin-bottom: 10px;

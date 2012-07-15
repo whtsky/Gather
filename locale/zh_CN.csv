@@ -7,3 +7,17 @@
 "Members","用户"
 "Topics","话题"
 "Replies","回复"
+
+"Username","用户名"
+"Password","密码"
+"Confirm","确认"
+"Email","邮箱"
+"Only English characters and digits are accepted.","只允许填写英文字符和数字"
+"Password doesn't match","密码不匹配"
+"Please fill the required field", "请填写所有必填项"
+"Username is invalid","用户名不正确"
+"Not a valid email address","邮箱格式不正确"
+"This username is already registered","该用户名已注册"
+"This email is already registered","该邮箱已注册"
+
+"Already have an account?","已有账户？"
