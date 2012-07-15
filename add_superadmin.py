@@ -38,8 +38,9 @@ db.members.insert({
 'email': email,
 'website': '',
 'description': '',
-'locale': 'zh_CN',
 'role': 3,
 'block': [],
-'star': [],
+'star': [],  # topics
+'follow': [],  # users
+'favorite': []  # nodes
 })

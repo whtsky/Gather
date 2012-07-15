@@ -1,0 +1,15 @@
+<div class="box">
+    <header>{{ node['name'] }}</header>
+    {{ node['description'] }}
+    <footer>
+        <a href="/node/{{ node['name'] }}" class="btn btn-warning">{{ _("View") }}</a>
+        {% if current_user %}
+        <a href="/node/{{ node['name'] }}/create" class="btn">{{ _("Create") }}</a>
+        {% if node['name_lower'] in current_user['favorite'] %}
+        <a href="/node/{{ node['name'] }}/unfavorite" class="btn btn-danger">{{ _("Unfavorite") }}</a>
+        {% else %}
+        <a href="/node/{{ node['name'] }}/favorite" class="btn btn-success">{{ _("Favorite") }}</a>
+        {% end %}
+        {% end %}
+    </footer>
+</div>

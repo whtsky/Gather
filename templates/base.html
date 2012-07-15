@@ -54,6 +54,14 @@
             </div>
             <div class="span4">
                 {% block sidebar %}{% end %}
+                {% if current_user and current_user['favorite'] %}
+                <div class="box">
+                    <header>{{ _("Favorite Nodes") }}</header>
+                    {% for node_name in current_user['favorite'] %}
+                    <a class="node" href="/node/{{ node_name }}" >{{ node_name }}</a>
+                    {% end %}
+                </div>
+                {% end %}
                 <div class="box">
                     <header>{{ _("Site status") }}</header>
                     <ul>

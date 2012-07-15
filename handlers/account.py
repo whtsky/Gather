@@ -13,7 +13,7 @@ class SignupHandler(BaseHandler):
     def get(self):
         if self.current_user:
             self.redirect(self.get_argument('next', '/'))
-        self.render('account_signup.html')
+        self.render('account/signup.html')
 
     def post(self):
         username = self.get_argument('username', None)
@@ -33,7 +33,7 @@ class SignupHandler(BaseHandler):
         if self.db.members.find_one({'email': email}):
             self.flash('This email is already registered')
         if self.messages:
-            self.render('account_signup.html')
+            self.render('account/signup.html')
             return
         password = hashlib.sha1(password + username.lower()).hexdigest()
         self.db.members.insert({
@@ -43,11 +43,13 @@ class SignupHandler(BaseHandler):
             'email': email,
             'website': '',
             'description': '',
-            'locale': 'zh_CN-CN',
             'role': 1,  # TODO:send mail.
             'block': [],
-            'star': [],
-            })
+            'star': [],  # topics
+            'follow': [],  # users
+            'favorite': []  # nodes
+
+        })
         self.set_secure_cookie('user', password, expires_days=30)
         self.redirect(self.get_argument('next', '/'))
 
@@ -56,7 +58,7 @@ class SigninHandler(BaseHandler):
     def get(self):
         if self.current_user:
             self.redirect(self.get_argument('next', '/'))
-        self.render('account_signin.html')
+        self.render('account/signin.html')
 
     def post(self):
         username = self.get_argument('username', '').lower()
@@ -68,7 +70,7 @@ class SigninHandler(BaseHandler):
                                            'password': password})
         if not member:
             self.flash('Invalid account or password')
-            self.render('account_signin.html')
+            self.render('account/signin.html')
             return
         self.set_secure_cookie('user', password, expires_days=30)
         self.redirect(self.get_argument('next', '/'))
@@ -83,7 +85,7 @@ class SignoutHandler(BaseHandler):
 class SettingsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('account_settings.html')
+        self.render('account/settings.html')
 
     @tornado.web.authenticated
     def post(self):
@@ -93,7 +95,7 @@ class SettingsHandler(BaseHandler):
 class ChangePasswordHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('account_password.html')
+        self.render('account/password.html')
 
     @tornado.web.authenticated
     def post(self):

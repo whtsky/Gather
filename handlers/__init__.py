@@ -23,8 +23,6 @@ class BaseHandler(tornado.web.RequestHandler):
         member = self.db.members.find_one({'name_lower': name})
         if not member:
             raise tornado.web.HTTPError(404)
-        hashed_email = hashlib.md5(member['email']).hexdigest()
-        member['gravatar'] = self.settings['gravatar_base_url'] + hashed_email
         return member
 
     def get_topic(self, topic_id):
@@ -39,6 +37,13 @@ class BaseHandler(tornado.web.RequestHandler):
         if not node:
             raise tornado.web.HTTPError(404)
         return node
+
+    def get_avatar(self, member, size=48):
+        hashed_email = hashlib.md5(member['email']).hexdigest()
+        avatar = self.settings['gravatar_base_url'] + hashed_email
+        avatar += '?s=%s' % size
+        return avatar
+
 
     def flash(self, message, type='error'):
         self.messages.append((type, message))

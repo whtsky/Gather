@@ -14,7 +14,6 @@
     box-shadow: 0 0 0 1px #DDD;
     overflow: hidden;
     padding: 14px;
-    border-bottom: 2px solid #fef8ee;
     border-bottom: 2px solid #e2e2e9;
 }
 .box header {
@@ -22,4 +21,19 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #DDD;
     font-weight: bold;
+}
+.box footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #DDD;
+    font-weight: bold;
+}
+.node{
+    display: inline-block;
+    padding: 2px 12px;
+    margin: 3px;
+    border-radius: 3px;
+    background-color: #F9F0A8;
+    color: #B52218;
+    font-size: 15px;
 }

@@ -30,13 +30,18 @@ class MoveHandler(BaseHandler):
 
 class StarHandler(BaseHandler):
     def get(self, topic_id):
-        pass
+        user_id = self.current_user['_id']
+        self.db.members.update({'_id': user_id},
+                {'$addToSet': {'star': topic_id}})
+        self.redirect('/topic/' + topic_id)
 
 
 class UnstarHandler(BaseHandler):
     def get(self, topic_id):
-        pass
-
+        user = self.current_user
+        user['star'].remove(topic_id)
+        self.db.members.save(user)
+        self.redirect('/topic/' + topic_id)
 
 handlers = [
     (r'/topic/(\w+)', TopicHandler),

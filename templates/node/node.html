@@ -1,15 +1,10 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
 
 {% block title %}{{ node['name'] }} | {% end %}
 
 {% block sidebar %}
 {% raw node['html'] %}
-{% if node['description'] %}
-<div class="box">
-    <header>{{ node['name'] }}</header>
-    {{ node['description'] }}
-</div>
-{% end %}
+{% module node_sitebar(node) %}
 {% if current_user and current_user['role'] > 1 %}
 <div class="box">
     <header>{{ _("Admin") }}</header>
