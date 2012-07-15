@@ -44,7 +44,6 @@ class BaseHandler(tornado.web.RequestHandler):
         avatar += '?s=%s' % size
         return avatar
 
-
     def flash(self, message, type='error'):
         self.messages.append((type, message))
         self.set_secure_cookie('flash_messages',

@@ -7,4 +7,4 @@ import pymongo
 db = pymongo.Connection(host=settings.mongodb_host,
     port=settings.mongodb_port)[settings.database_name]
 db.topics.create_index([('modified', 1), ('node', 1)])
-db.replies.create_index([('modified', 1)])
+db.replies.create_index([('modified', 1), ('index', -1)])

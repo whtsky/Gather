@@ -37,3 +37,8 @@
     color: #B52218;
     font-size: 15px;
 }
+
+#title, #content{
+    margin-top: 10px;
+    width: 98%;
+}

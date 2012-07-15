@@ -2,6 +2,7 @@
 
 import tornado.web
 from . import BaseHandler
+from .utils import make_content, utc_time
 
 
 class NodeHandler(BaseHandler):
@@ -13,9 +14,31 @@ class NodeHandler(BaseHandler):
 class CreateTopicHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
+        self.render('node/create.html', node=node)
 
-    def post(self):
+    def post(self, node_name):
         node = self.get_node(node_name)
+        title = self.get_argument('title', '')
+        content = self.get_argument('content', '')
+        if not (title and content):
+            self.flash('Please fill the required field')
+        if len(title) > 50:
+            self.flash("Title too lang.")
+        if self.messages:
+            self.render('node/create.html', node=node)
+            return
+        time_now = utc_time()
+        topic_id = self.db.topics.insert({
+            'title': title,
+            'content': content,
+            'content_html': make_content(content),
+            'author': self.current_user['_id'],
+            'node': node['name'],
+            'created': time_now,
+            'modified': time_now,
+            'reply_count': 0,
+        })
+        self.redirect('/topic/%s' % topic_id)
 
 
 class AddHandler(BaseHandler):
@@ -104,12 +127,12 @@ class NodeSidebar(tornado.web.UIModule):
 
 handlers = [
     (r'/node/add', AddHandler),
-    (r'/node/(\w+)', NodeHandler),
-    (r'/node/(\w+)/create', CreateTopicHandler),
-    (r'/node/(\w+)/edit', EditHandler),
-    (r'/node/(\w+)/remove', RemoveHandler),
-    (r'/node/(\w+)/favorite', FavoriteHandler),
-    (r'/node/(\w+)/unfavorite', UnfavoriteHandler),
+    (r'/node/([A-Za-z0-9.]+)', NodeHandler),
+    (r'/node/([A-Za-z0-9.]+)/create', CreateTopicHandler),
+    (r'/node/([A-Za-z0-9.]+)/edit', EditHandler),
+    (r'/node/([A-Za-z0-9.]+)/remove', RemoveHandler),
+    (r'/node/([A-Za-z0-9.]+)/favorite', FavoriteHandler),
+    (r'/node/([A-Za-z0-9.]+)/unfavorite', UnfavoriteHandler),
 ]
 
 ui_modules = {

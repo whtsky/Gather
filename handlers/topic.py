@@ -6,7 +6,7 @@ from . import BaseHandler
 class TopicHandler(BaseHandler):
     def get(self, topic_id):
         topic = self.get_topic(topic_id)
-        self.render('topic.html', topic=topic)
+        self.render('topic/topic.html', topic=topic)
 
 
 class ReplyHandler(BaseHandler):
@@ -22,7 +22,7 @@ class RemoveHandler(BaseHandler):
 class MoveHandler(BaseHandler):
     def get(self, topic_id):
         topic = self.get_topic(topic_id)
-        self.render('topic_move.html', topic=topic)
+        self.render('topic/move.html', topic=topic)
 
     def topic(self, topic_id):
         pass

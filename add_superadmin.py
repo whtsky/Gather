@@ -2,7 +2,7 @@
 #coding=utf-8
 
 from __future__ import print_function
-from handlers.account import username_validator
+from handlers.utils import username_validator
 import settings
 import pymongo
 import hashlib

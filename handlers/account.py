@@ -2,11 +2,8 @@
 
 import tornado.web
 from . import BaseHandler
-import re
 import hashlib
-
-username_validator = re.compile(r'^[a-zA-Z0-9]+$')
-email_validator = re.compile(r'^.+@[^.].*\.[a-z]{2,10}$', re.IGNORECASE)
+from .utils import username_validator, email_validator
 
 
 class SignupHandler(BaseHandler):
