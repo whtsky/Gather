@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 #coding=utf-8
 
+import os
 import tornado.httpserver
 import tornado.ioloop
+import tornado.locale
 import tornado.options
 import tornado.web
 import pymongo
@@ -16,12 +18,16 @@ class Application(tornado.web.Application):
     def __init__(self):
         settings = {}
         execfile('settings.py', {}, settings)
-        tornado.web.Application.__init__(self, urls.handlers,
-            ui_modules=urls.ui_modules, autoescape=None, login_url='/login',
-            **settings)
+
+        super(Application, self).__init__(urls.handlers,
+            ui_modules=urls.ui_modules, autoescape=None,
+            login_url='/account/signin', **settings)
 
         self.db = pymongo.Connection(host=settings['mongodb_host'],
             port=settings['mongodb_port'])[settings['database_name']]
+
+        tornado.locale.load_translations(os.path.join(ROOT, "locale"))
+        tornado.locale.set_default_locale('zh_CN')
 
 
 def main():

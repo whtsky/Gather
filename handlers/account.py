@@ -1,11 +1,14 @@
 #coding=utf-8
 
 from . import BaseHandler
+import re
+
+username_check = re.compile(u'(\w{1,25})')
 
 
 class SignupHandler(BaseHandler):
     def get(self):
-        self.render('auth_signup.html')
+        self.render('account_signup.html')
 
     def post(self):
         pass
@@ -13,7 +16,7 @@ class SignupHandler(BaseHandler):
 
 class SigninHandler(BaseHandler):
     def get(self):
-        self.render('auth_signup.html')
+        self.render('account_signup.html')
 
     def post(self):
         pass
@@ -27,7 +30,7 @@ class SignoutHandler(BaseHandler):
 
 class SettingsHandler(BaseHandler):
     def get(self):
-        self.render('auth_settings.html')
+        self.render('account_settings.html')
 
     def post(self):
         pass
@@ -35,16 +38,16 @@ class SettingsHandler(BaseHandler):
 
 class ChangePasswordHandler(BaseHandler):
     def get(self):
-        self.render('auth_password.html')
+        self.render('account_password.html')
 
     def post(self):
         pass
 
 
 handlers = [
-    (r'/auth/signup', SignupHandler),
-    (r'/auth/signin', SigninHandler),
-    (r'/auth/signout', SignoutHandler),
-    (r'/auth/settings', SettingsHandler),
-    (r'/auth/password', ChangePasswordHandler),
+    (r'/account/signup', SignupHandler),
+    (r'/account/signin', SigninHandler),
+    (r'/account/signout', SignoutHandler),
+    (r'/account/settings', SettingsHandler),
+    (r'/account/password', ChangePasswordHandler),
 ]

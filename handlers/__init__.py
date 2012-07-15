@@ -7,7 +7,10 @@ import hashlib
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         password = self.get_secure_cookie('user')
-        return self.application.db.users.find_one({'password': password})
+        return self.application.db.members.find_one({'password': password})
+
+    def get_user_locale(self):
+        return self.current_user and self.current_user['locale'] or None
 
     @property
     def db(self):
