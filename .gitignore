@@ -1,6 +1,4 @@
 
+settings.py
 *.pyc
 .idea
-config.py
-static/js
-*.zip

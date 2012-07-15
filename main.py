@@ -7,103 +7,29 @@ import tornado.options
 import tornado.web
 import pymongo
 from tornado.options import define, options
-import os
+import urls
 
 define('port', default=8888, help='run on the given port', type=int)
-define('mongo_host', default='127.0.0.1', help='mongodb host')
-define('mongo_port', default=27017, help='mongodb port')
-define('memcached_host', default=['127.0.0.1'],help='memcached host')
 
-from auth import *
-from post import *
-from tag import *
-from admin import *
-from t import *
-from g import *
-from note import *
-from common import HomeHandler,FeedHandler,EditModule,ErrorHandler
-from config import config,database_name
-import pylibmc
 
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [
-            (r'/', HomeHandler),
-            (r'/feed', FeedHandler),
+        settings = {}
+        execfile('settings.py', {}, settings)
+        tornado.web.Application.__init__(self, urls.handlers,
+            ui_modules=urls.ui_modules, autoescape=None, login_url='/login',
+            **settings)
 
-            (r'/signup', AuthSignupHandler),
-            (r'/login', AuthLoginHandler),
-            (r'/login/google',GoogleLoginHandler),
-            (r'/logout', AuthLogoutHandler),
-            (r'/user/(\w+)',AuthInfoHandler),
-            (r'/user/(\w+)/block',BlockUserHandler),
-            (r'/setting',AuthSettingHandler),
-            (r'/setting/password',AuthChangePasswordHandler),
+        self.db = pymongo.Connection(host=settings['mongodb_host'],
+            port=settings['mongodb_port'])[settings['database_name']]
 
-            (r'/my/post',MyMarkedPostHandler),
-            (r'/my/notifications',NotificationHandler),
 
-            (r'/topics',TopicsViewHandler),
-            (r'/topics/(\d+)', PostViewHandler),
-            (r'/topics/(\d+)/mark',MarkPostHandler),
-            (r'/topics/add', PostHandler),
-
-            (r'/tag', TagCloudHandler),
-            (r'/tag/(.+)', TagViewHandler),
-            (r'/feed/(.+)', TagFeedHandler),
-
-            (r'/admin/user/kill/(\w+)',RemoveUserHandler),
-            (r'/admin/post/kill/(\d+)',RemovePostHandler),
-            (r'/admin/post/kill/(\d+)/(\d+)',RemoveCommentHandler),
-            (r'/admin/post/changetag/(\d+)',ChangeTagHandler),
-
-            (r'/twitter/oauth',TwitterOauthHandler),
-            (r'/twitter/unbind',TwitterNotBindHandler),
-            (r'/twitter/tweet',TweetHandler),
-
-            (r'/imgur/oauth',ImgurOauthHandler),
-            (r'/imgur/unbind',ImgurUnbindHandler),
-            (r'/imgur/upload',ImgurUploadHandler),
-
-            (r'/notes',NoteHandler),
-            (r'/notes/add',NoteAddHandler),
-            (r'/notes/remove/(.*)',NoteRemoveHandler),
-            (r'/notes/edit/(.*)',NoteEditHandler),
-            (r'/notes/rename/(.*)',NoteRenameHandler),
-            (r'/notes/raw/(.*)',NoteRawHandler),
-            (r'/notes/publish/(.*)',NotePublishHandler),
-
-            (r'/markdown',MarkDownPreViewHandler),
-
-            (r'.*',ErrorHandler),
-
-        ]
-
-        settings = dict(
-            ui_modules={"Post": PostListModule,
-                        "TagCloud": TagCloudModule,
-                        "Edit":EditModule},
-            autoescape=None,
-            login_url='/login',
-            template_path=os.path.join(os.path.dirname(__file__), 'templates'),
-            static_path=os.path.join(os.path.dirname(__file__), 'static'),
-            gzip=True,
-            **config
-        )
-
-        tornado.web.Application.__init__(self, handlers, **settings)
-
-        self.db = pymongo.Connection(host=options.mongo_host,port=options.mongo_port)[database_name]
-
-        self.mc = pylibmc.Client(options.memcached_host,binary=True)
-        
-        if not self.db.settings.find_one({'post_id':{'$lte':0}}):
-            self.db.settings.save({'post_id':1})
-            self.db.settings.save({'user_id':0})
-            self.db.posts.create_index([('changedtime',1)])
-
-if __name__ == '__main__':
+def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
+
+
+if __name__ == '__main__':
+    main()
