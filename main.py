@@ -7,8 +7,8 @@ import tornado.ioloop
 import tornado.locale
 import tornado.options
 import tornado.web
-import pymongo
 from tornado.options import define, options
+from init_db import db
 import urls
 
 define('port', default=8888, help='run on the given port', type=int)
@@ -28,8 +28,7 @@ class Application(tornado.web.Application):
             ui_modules=urls.ui_modules, login_url='/account/signin',
             **settings)
 
-        self.db = pymongo.Connection(host=settings['mongodb_host'],
-            port=settings['mongodb_port'])[settings['database_name']]
+        self.db = db
 
         tornado.locale.load_translations(os.path.join(ROOT, "locale"))
         tornado.locale.set_default_locale('zh_CN')

@@ -16,8 +16,9 @@ block
          right">{{ reply_nums }}</a>
     </p>
     <p>
+        {{ _("Created by") }}
         <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
-        {{ _("Created at") }} {{ handler.format_time(topic['created']) }}
+        {{ _("Last replied at") }} {{ handler.format_time(topic['last_reply_time']) }}
         {% if topic['created'] != topic['modified'] %}
          / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
         {% end %}

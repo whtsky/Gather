@@ -1,9 +1,11 @@
 body{
     background-color: #EEE;
 }
+
 #main .container{
     padding-top: 60px;
 }
+
 .box {
     background-color: white;
     -moz-border-radius: 3px;
@@ -16,17 +18,21 @@ body{
     padding: 14px;
     border-bottom: 2px solid #e2e2e9;
 }
+
 .box header {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #DDD;
     font-weight: bold;
+    font-size: 17px;
 }
+
 .box footer {
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid #DDD;
 }
+
 .node{
     display: inline-block;
     padding: 2px 12px;
@@ -93,4 +99,8 @@ body{
 
 .no_block .block{
     display: block;
+}
+
+table{
+    width: 100%
 }

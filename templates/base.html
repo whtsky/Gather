@@ -28,8 +28,21 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
             <a class="brand" href="/">{{ handler.settings['forum_title'] }}</a>
-
+            <div class="nav-collapse">
+                <ul class="nav">
+                    {% block nav %}
+                    <li><a href="/topic">{{ _("Topics") }}</a></li>
+                    <li><a href="/node">{{ _("Nodes") }}</a></li>
+                    <li><a href="/member">{{ _("Members") }}</a></li>
+                    {% end %}
+                </ul>
+            </div>
             <ul class="nav pull-right">
                 {% if not current_user %}
                 <li><a href="/account/signup?next={{ url_escape(request.uri) }}">{{ _("Signup") }}</a></li>
@@ -47,11 +60,13 @@
     <div class="container">
         <div class="row">
             {% block body %}
-            {% for type, msg in handler.get_flashed_messages() %}
-            <div class="alert alert-{{type}}">
-                {{ _(msg) }}
+            <div class="span12">
+                {% for type, msg in handler.get_flashed_messages() %}
+                <div class="alert alert-{{type}}">
+                    {{ _(msg) }}
+                </div>
+                {% end %}
             </div>
-            {% end %}
             <div class="span9">
                 {% block content %}{% end %}
             </div>

@@ -1,6 +1,4 @@
-{% extends '../base.html' %}
-
-{% block description %}{{ member['name'] }}{% end %}
+{% extends 'base.html' %}
 
 {% block title %}{{ member['name'] }} | {% end %}
 
@@ -11,20 +9,21 @@
         {% if current_user %}
         <div class="right">
             {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
-                <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a>
+            <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a>
             {% end %}
             {% if current_user != member %}
-                {% if member['name_lower'] in current_user['block'] %}
-                    <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
-                {% else %}
-                    <a href="/member/{{ member['name'] }}/block" class="btn btn-danger">{{ _("Block") }}</a>
-                {% end %}
+            {% if member['name_lower'] in current_user['block'] %}
+            <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
+            {% else %}
+            <a href="/member/{{ member['name'] }}/block" class="btn btn-danger">{{ _("Block") }}</a>
+            {% end %}
             {% end %}
         </div>
         {% end %}
         <p class="username">{{ member['name'] }}</p>
+        <p>{{ _("Join at") }} {{ handler.format_time(member['created']) }}</p>
         {% if member['website'] %}
-            <p><a href="{{ member['website'] }}" rel="nofollow">{{ member['website'] }}</a></p>
+        <p><a href="{{ member['website'] }}" rel="nofollow">{{ member['website'] }}</a></p>
         {% end %}
     </div>
     {% if member['description'] %}
@@ -52,11 +51,17 @@
 {% if replies.count() %}
 <div class="box">
     <header>{{ _("Replies") }}</header>
-    {% for reply in replies %}
-    <div class="list">
-        <a href="/topic/{{ reply['topic'] }}">{% raw reply['content_html'] %}</a>
-    </div>
-    {% end %}
+    <table class="table table-striped">
+        <tbody>
+        {% for reply in replies %}
+        <tr>
+            <td>
+                <a href="/topic/{{ reply['topic'] }}">{% raw reply['content_html'] %}</a>
+            </td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
 </div>
 {% end %}
 

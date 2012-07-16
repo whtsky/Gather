@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import time
 import tornado.web
 from . import BaseHandler
 import hashlib
@@ -40,6 +41,7 @@ class SignupHandler(BaseHandler):
             'email': email,
             'website': '',
             'description': '',
+            'created':time.time(),
             'role': 1,  # TODO:send mail.
             'block': [],
             'like': [],  # topics

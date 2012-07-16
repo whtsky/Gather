@@ -4,6 +4,11 @@ import tornado.web
 from . import BaseHandler
 
 
+class MemberListHandler(BaseHandler):
+    def get(self):
+        pass
+
+
 class MemberPageHandler(BaseHandler):
     def get(self, name):
         member = self.get_member(name)
@@ -11,7 +16,7 @@ class MemberPageHandler(BaseHandler):
             sort=[('last_reply_time', -1)])
         topics = topics[:self.settings['topics_per_page']]
         replies = self.db.replies.find({'author': member['name']},
-            sort=[('modified', 1)])
+            sort=[('modified', -1)])
         replies = replies[:self.settings['replies_per_page']]
         if member['like']:
             member['like'] = member['like'][:self.settings['topics_per_page']]
@@ -29,8 +34,8 @@ class MemberTopicsHandler(BaseHandler):
             sort=[('last_reply_time', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
-        topics = topics[(p-1)*self.settings['topics_per_page']:
-            p*self.settings['topics_per_page']]
+        topics = topics[(p - 1) * self.settings['topics_per_page']:
+            p * self.settings['topics_per_page']]
         self.render('member/topics.html', member=member,
             topics=topics, topics_count=topics_count, p=p)
 

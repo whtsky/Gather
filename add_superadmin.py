@@ -2,13 +2,10 @@
 #coding=utf-8
 
 from __future__ import print_function
+import time
+from init_db import db
 from handlers.utils import username_validator
-import settings
-import pymongo
 import hashlib
-
-db = pymongo.Connection(host=settings.mongodb_host,
-    port=settings.mongodb_port)[settings.database_name]
 
 username = email = ''
 
@@ -38,6 +35,7 @@ db.members.insert({
 'email': email,
 'website': '',
 'description': '',
+'created':time.time(),
 'role': 3,
 'block': [],
 'like': [],  # topics

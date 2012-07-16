@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Nodes") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Nodes") }}</header>
+    {% for node in handler.db.nodes.find() %}
+    <div class="list">
+        <p><a href="/node/{{ node['name'] }}" class="node">{{ node['name'] }}</a></p>
+        <p>{{ node['description'] }}</p>
+    </div>
+    {% end %}
+</div>
+{% end %}

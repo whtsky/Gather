@@ -1,0 +1,9 @@
+{% extends '../base.html' %}
+
+{% block description %}{{ member['name'] }}{% end %}
+
+{% block nav %}
+<li><a href="/topic">{{ _("Topics") }}</a></li>
+<li><a href="/node">{{ _("Nodes") }}</a></li>
+<li class="active"><a href="/member">{{ _("Members") }}</a></li>
+{% end %}

@@ -6,6 +6,12 @@ from . import BaseHandler
 from .utils import make_content
 
 
+class NodeListHandler(BaseHandler):
+    def get(self):
+        nodes = self.db.nodes.find()
+        self.render('node/list.html', nodes=nodes)
+
+
 class NodeHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
@@ -86,7 +92,7 @@ class AddHandler(BaseHandler):
             'description': description,
             'html': html,
         })
-        self.redirect('/node/' + name)
+        self.redirect(self.get_argument('next', '/node/' + node['name']))
 
 
 class EditHandler(BaseHandler):
@@ -103,7 +109,7 @@ class EditHandler(BaseHandler):
         self.db.nodes.save(node)
 
         self.flash('Saved successfully', type='success')
-        self.redirect('/node/' + node['name'])
+        self.redirect(self.get_argument('next', '/node/' + node['name']))
 
 
 class RemoveHandler(BaseHandler):
@@ -123,7 +129,7 @@ class FavoriteHandler(BaseHandler):
         user_id = self.current_user['_id']
         self.db.members.update({'_id': user_id},
                 {'$addToSet': {'favorite': node['name']}})
-        self.redirect('/node/' + node['name'])
+        self.redirect(self.get_argument('next', '/node/' + node['name']))
 
 
 class UnfavoriteHandler(BaseHandler):
@@ -133,7 +139,7 @@ class UnfavoriteHandler(BaseHandler):
         user = self.current_user
         user['favorite'].remove(node['name'])
         self.db.members.save(user)
-        self.redirect('/node/' + node['name'])
+        self.redirect(self.get_argument('next', '/node/' + node['name']))
 
 
 class NodeSidebar(tornado.web.UIModule):
@@ -141,6 +147,7 @@ class NodeSidebar(tornado.web.UIModule):
         return self.render_string("node/modules/sidebar.html", node=node)
 
 handlers = [
+    (r'/node', NodeListHandler),
     (r'/node/add', AddHandler),
     (r'/node/([%A-Za-z0-9.]+)', NodeHandler),
     (r'/node/([%A-Za-z0-9.]+)/create', CreateTopicHandler),

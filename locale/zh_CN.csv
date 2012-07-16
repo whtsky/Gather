@@ -33,8 +33,14 @@
 "Edit","编辑"
 "Remove","删除"
 "Move","移动"
+"From","从"
+"To","到"
+"Move Topic","移动话题"
+"Created by","作者"
 "Created at","创建于"
 "Modified at","修改于"
+"Last replied at","上次回复于"
+"Join at","加入于"
 "Replied at","回复于"
 "Posted in","发表在"
 
@@ -64,6 +70,7 @@
 "This node name is already registered","该节点名已注册"
 "Saved successfully","保存成功"
 "Removed successfully","删除成功"
+"Moved successfully","移动成功"
 
 "Only English characters and digits are accepted.","只允许填写英文字符和数字"
 "Password doesn't match","密码不匹配"

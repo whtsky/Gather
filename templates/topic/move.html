@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Move Topic") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Move Topic") }}</header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <div class="control-group">
+                <label class="control-label">{{ _("Move") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge disabled" value="{{ topic['title'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ _("From") }}</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge disabled" value="{{ topic['node'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="node">{{ _("To") }}</label>
+                <div class="controls">
+                    <select name="node" id="node">
+                        {% for node in handler.db.nodes.find() %}
+                            {% if node['name'] != topic['node'] %}
+                            <option value="{{ node['name'] }}">{{ node['name'] }}</option>
+                            {% end %}
+                        {% end %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Move") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}

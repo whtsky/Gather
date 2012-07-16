@@ -107,12 +107,18 @@ class EditHandler(BaseHandler):
 
 class MoveHandler(BaseHandler):
     def get(self, topic_id):
-        pass
-        #topic = self.get_topic(topic_id)
-        #self.render('topic/move.html', topic=topic)
+        topic = self.get_topic(topic_id)
+        self.render('topic/move.html', topic=topic)
 
     def post(self, topic_id):
-        pass
+        node_name = self.get_argument('node', '')
+        import logging
+        logging.info(node_name)
+        node = self.get_node(node_name.lower())
+        self.db.topics.update({'_id': ObjectId(topic_id)},
+                {'$set': {'node': node['name']}})
+        self.flash('Moved successfully', type='success')
+        self.redirect('/topic/%s' % topic_id)
 
 
 class LikeHandler(BaseHandler):
