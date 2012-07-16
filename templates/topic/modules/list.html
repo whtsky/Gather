@@ -1,7 +1,7 @@
 {% for topic in topics %}
 <div class="list">
     {% set author = handler.get_member(topic['author']) %}
-    {% set reply_nums = handler.db.replies.find({'topic': topic['_id']}).count() %}
+    {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
     <img class="avatar" src="{{ handler.get_avatar(author) }}" />
     <p>
         <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>

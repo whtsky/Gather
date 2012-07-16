@@ -9,7 +9,7 @@ from .utils import make_content
 
 class TopicListHandler(BaseHandler):
     def get(self):
-        topics = self.db.topics.find(sort=[('created', -1)])
+        topics = self.db.topics.find(sort=[('last_reply_time', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
         self.render('topic/list.html', topics=topics,
@@ -57,6 +57,8 @@ class ReplyHandler(BaseHandler):
             'modified': time_now,
             'index': index,
         })
+        self.db.topics.update({'_id': ObjectId(topic_id)},
+            {'$set': {'last_reply_time': time_now}})
         self.redirect('/topic/%s' % topic_id)
 
 

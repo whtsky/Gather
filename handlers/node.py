@@ -10,7 +10,7 @@ class NodeHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
         topics = self.db.topics.find({'node': node['name']},
-            sort=[('created', -1)])
+            sort=[('last_reply_time', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
         self.render('node/node.html', node=node, topics=topics,
@@ -54,6 +54,7 @@ class CreateTopicHandler(BaseHandler):
             'node': node['name'],
             'created': time_now,
             'modified': time_now,
+            'last_reply_time': time_now,
             'index': 0,
         })
         self.redirect('/topic/%s' % topic_id)
