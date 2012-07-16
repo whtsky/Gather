@@ -5,6 +5,7 @@
 "Save","保存"
 "Admin","管理"
 
+"Recent Topics","最近更新"
 "Site status","站点统计"
 "Members","用户"
 "Nodes","节点"
@@ -12,6 +13,7 @@
 "Replies","回复"
 "Description","简介"
 "Website","网站"
+"Author","作者"
 
 "Add Node","增加节点"
 "Edit Node","编辑节点"
@@ -20,9 +22,20 @@
 "Create","新建"
 "View","查看"
 
+"Edit","编辑"
+"Remove","删除"
+"Move","移动"
+"Created at","创建于"
+"Modified at","修改于"
+"Posted in","发表在"
+
+"Prev","上一页"
+"Next","下一页"
+
 "Title","标题"
 "Post","发布"
-"Title too lang","标题过长"
+"The title is too long","标题过长"
+"The description is too lang","简介过长"
 
 "Old Password","原密码"
 "New Password","新密码"

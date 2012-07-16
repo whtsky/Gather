@@ -2,6 +2,8 @@
 
 import tornado.web
 import tornado.escape
+import time
+from pymongo.objectid import ObjectId
 import hashlib
 
 
@@ -26,7 +28,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return member
 
     def get_topic(self, topic_id):
-        topic = self.db.topics.find_one({'_id': topic_id})
+        topic = self.db.topics.find_one({'_id': ObjectId(topic_id)})
         if not topic:
             raise tornado.web.HTTPError(404)
         return topic
@@ -55,6 +57,13 @@ class BaseHandler(tornado.web.RequestHandler):
         self.clear_cookie('flash_messages')
         return messages
 
-    def check_role(self, role_min=2):
-        if self.current_user['role'] < role_min:
-            raise tornado.web.HTTPError(403)
+    def check_role(self, role_min=2, owner_name='', return_bool=False):
+        user = self.current_user
+        if user and (user['name'] == owner_name or user['role'] >= role_min):
+            return True
+        if return_bool:
+            return False
+        raise tornado.web.HTTPError(403)
+
+    def format_time(self, t):
+        return time.strftime('%Y-%m-%d %H:%M:%S',time.gmtime(t))

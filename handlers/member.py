@@ -25,17 +25,15 @@ class MemberRepliesHandler(BaseHandler):
 class BlockHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, name):
-        member = self.get_member(name)
         self.db.members.update({'_id': self.current_user['_id']},
-                {'$addToSet': {'block': member['_id']}})
+                {'$addToSet': {'block': name.lower()}})
         self.redirect('/')
 
 
 class UnblockHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, name):
-        member = self.get_member(name)
-        self.current_user['block'].remove(member['_id'])
+        self.current_user['block'].remove(name.lower())
         self.db.members.save(self.current_user)
         self.redirect('/member/' + name)
 

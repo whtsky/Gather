@@ -1,0 +1,23 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ _("Recent Topics") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header></header>
+    {% set topics_per_page = handler.settings['topics_per_page'] %}
+    {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
+    <ul class="pager">
+        {% if p > 1 %}
+        <li class="previous">
+            <a href="/topic?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+        </li>
+        {% end %}
+        {% if p*topics_per_page < topics_count %}
+        <li class="next">
+            <a href="/topic?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% end %}

@@ -90,6 +90,8 @@ class SettingsHandler(BaseHandler):
     def post(self):
         website = self.get_argument('website', '')
         description = self.get_argument('description', '')
+        if len(description) > 300:
+            self.flash("The description is too lang")
         self.db.members.update({'_id': self.current_user['_id']},
                 {'$set': {'website': website, 'description': description}})
         self.flash('Saved successfully', type='success')

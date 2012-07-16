@@ -1,0 +1,51 @@
+{% extends '../base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ static_url('css/pygments_style.css') }}" type="text/css" />
+{% end %}
+
+{% block title %}{{ topic['title'] }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>
+        <h1>{{ topic['title'] }}</h1>
+        {% if current_user %}
+        <div class="right">
+            {% if str(topic['_id']) in current_user['star'] %}
+            <a href="/topic/{{ topic['_id'] }}/unstar" class="topic_star"></a>
+            {% else %}
+            <a href="/topic/{{ topic['_id'] }}/star" class="topic_star"><i class="icon-star-empty"></i></a>
+            {% end %}
+        </div>
+        {% end %}
+    </header>
+    {% raw topic['content_html'] %}
+    <footer>
+        {{ _("Created at") }} {{ handler.format_time(topic['created']) }} /
+        {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
+    </footer>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    {% set author = handler.get_member(topic['author']) %}
+    <header>{{ _("Author") }}</header>
+    <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+    <p><a href="/member/{{ author['name'] }}" class="username">{{ author['name'] }}</a></p>
+    {% if author['website'] %}
+    <p><a href="{{ author['website'] }}" rel="nofollow">{{ author['website'] }}</a></p>
+    {% end %}
+
+</div>
+{% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
+<div class="box">
+    <header>{{ _("Admin") }}</header>
+    <a href="/topic/{{ topic['_id'] }}/edit" class="btn one_third">{{ _("Edit") }}</a>
+    <a href="/topic/{{ topic['_id'] }}/move" class="btn btn-warning one_third">{{ _("Move") }}</a>
+    <a href="/topic/{{ topic['_id'] }}/remove" class="btn btn-danger one_third">{{ _("Remove") }}</a>
+</div>
+{% end %}
+{% module node_sitebar(handler.get_node(topic['node'])) %}
+{% end %}

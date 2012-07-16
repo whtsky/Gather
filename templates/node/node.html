@@ -2,10 +2,30 @@
 
 {% block title %}{{ node['name'] }} | {% end %}
 
+{% block content %}
+<div class="box">
+    <header>{{ node['name'] }}</header>
+    {% set topics_per_page = handler.settings['topics_per_page'] %}
+    {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
+    <ul class="pager">
+        {% if p > 1 %}
+        <li class="previous">
+            <a href="/node/{{ node['name'] }}?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+        </li>
+        {% end %}
+        {% if p*topics_per_page < topics_count %}
+        <li class="next">
+            <a href="/node/{{ node['name'] }}?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% end %}
+
 {% block sidebar %}
 {% raw node['html'] %}
 {% module node_sitebar(node) %}
-{% if current_user and current_user['role'] > 1 %}
+{% if handler.check_role(return_bool=True) %}
 <div class="box">
     <header>{{ _("Admin") }}</header>
     <a href="/node/{{ node['name'] }}/edit" class="btn">{{ _("Edit Node") }}</a>

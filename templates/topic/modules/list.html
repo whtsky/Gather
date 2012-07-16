@@ -1,0 +1,19 @@
+{% for topic in topics %}
+<div class="list">
+    {% set author = handler.get_member(topic['author']) %}
+    {% set reply_nums = handler.db.replies.find({'topic': topic['_id']}).count() %}
+    <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+    <p>
+        <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
+
+        <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}" class="badge
+        {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
+         right">{{ reply_nums }}</a>
+    </p>
+    <p>
+        <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+        {{ _("Created at") }} {{ handler.format_time(topic['created']) }} /
+        {{ _("Posted in") }} <a href="/node/topic['node']">{{ topic['node'] }}</a>
+    </p>
+</div>
+{% end %}

@@ -10,9 +10,12 @@ forum_url = 'http://xxx.com/'
 #static_path = ''
 #static_url_prefix = 'http://assets.xxx.com'
 
+topics_per_page = 20
+replies_per_page = topics_per_page
 
-gravatar_base_url = 'http://www.gravatar.com/avatar/'
+gravatar_base_url = 'http://cn.gravatar.com/avatar/'
 google_analytics = ''
 cookie_secret = 'hey reset me!'
 
 gzip = False
+debug = True

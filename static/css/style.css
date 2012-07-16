@@ -26,7 +26,6 @@
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid #DDD;
-    font-weight: bold;
 }
 .node{
     display: inline-block;
@@ -41,4 +40,34 @@
 #title, #content{
     margin-top: 10px;
     width: 98%;
+}
+
+.username{
+    font-weight: bold;
+    font-size: 15px;
+    color: #000
+}
+
+.username:hover{
+    color: #000;
+    text-decoration: none;
+}
+
+.avatar{
+    float: left;
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 8px;
+}
+
+.right{
+    float: right;
+}
+
+.list{
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDD;
 }
