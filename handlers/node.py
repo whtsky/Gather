@@ -1,14 +1,16 @@
 #coding=utf-8
 
+import time
 import tornado.web
 from . import BaseHandler
-from .utils import make_content, utc_time
+from .utils import make_content
 
 
 class NodeHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
-        topics = self.db.topics.find({'node': node['name']})
+        topics = self.db.topics.find({'node': node['name']},
+            sort=[('created', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
         self.render('node/node.html', node=node, topics=topics,
@@ -18,11 +20,13 @@ class NodeHandler(BaseHandler):
 class CreateTopicHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, node_name):
+        self.check_role(role_min=1)
         node = self.get_node(node_name)
         self.render('node/create.html', node=node)
 
     @tornado.web.authenticated
     def post(self, node_name):
+        self.check_role(role_min=1)
         node = self.get_node(node_name)
         title = self.get_argument('title', '')
         content = self.get_argument('content', '')
@@ -41,7 +45,7 @@ class CreateTopicHandler(BaseHandler):
         if topic:
             self.redirect('/topic/%s' % topic['_id'])
             return
-        time_now = utc_time()
+        time_now = time.time()
         topic_id = self.db.topics.insert({
             'title': title,
             'content': content,
@@ -50,7 +54,7 @@ class CreateTopicHandler(BaseHandler):
             'node': node['name'],
             'created': time_now,
             'modified': time_now,
-            'reply_count': 0,
+            'index': 0,
         })
         self.redirect('/topic/%s' % topic_id)
 

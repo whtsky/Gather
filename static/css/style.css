@@ -1,8 +1,8 @@
+body{
+    background-color: #EEE;
+}
 #main .container{
     padding-top: 60px;
-}
-#main{
-    background-color: #EEE;
 }
 .box {
     background-color: white;
@@ -60,10 +60,12 @@
     border-radius: 5px;
     margin-left: 5px;
     margin-right: 8px;
+    display: inline-block;
 }
 
 .right{
     float: right;
+    display: inline-block;
 }
 
 .list{

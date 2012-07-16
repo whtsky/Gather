@@ -9,23 +9,71 @@
 {% block content %}
 <div class="box">
     <header>
-        <h1>{{ topic['title'] }}</h1>
-        {% if current_user %}
-        <div class="right">
-            {% if str(topic['_id']) in current_user['star'] %}
-            <a href="/topic/{{ topic['_id'] }}/unstar" class="topic_star"></a>
-            {% else %}
-            <a href="/topic/{{ topic['_id'] }}/star" class="topic_star"><i class="icon-star-empty"></i></a>
-            {% end %}
-        </div>
+        <h1>{{ topic['title'] }}
+            {% if current_user %}
+            <div class="right">
+                {% if str(topic['_id']) in current_user['like'] %}
+                <a href="/topic/{{ topic['_id'] }}/unlike" class="btn btn-danger">{{ _("unlike") }}</a>
+                {% else %}
+                <a href="/topic/{{ topic['_id'] }}/like" class="btn">{{ _("Like") }}</a>
+                {% end %}
+            </div>
+        </h1>
         {% end %}
     </header>
     {% raw topic['content_html'] %}
     <footer>
-        {{ _("Created at") }} {{ handler.format_time(topic['created']) }} /
-        {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
+        {{ _("Created at") }} {{ handler.format_time(topic['created']) }}
+        {% if topic['created'] != topic['modified'] %}
+        / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
+        {% end %}
     </footer>
 </div>
+{% if replies_count %}
+<div class="box">
+    <header>{{ _("Replies") }}</header>
+    {% set replies_per_page = handler.settings['replies_per_page'] %}
+    {% for reply in replies[(p-1)*replies_per_page:p*replies_per_page] %}
+    <div class="list">
+        {% set author = handler.get_member(reply['author']) %}
+        <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+        <p>
+            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+            {{ _("Replied at") }} {{ handler.format_time(reply['created']) }}
+            {% if reply['created'] != reply['modified'] %}
+            / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
+            {% end %}
+            #{{ reply['index'] }}
+        </p>
+        <p>{% raw reply['content_html'] %}</p>
+    </div>
+    {% end %}
+    <ul class="pager">
+        {% if p > 1 %}
+        <li class="previous">
+            <a href="/topic/{{ topic['_id'] }}?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+        </li>
+        {% end %}
+        {% if p*replies_per_page < replies_count %}
+        <li class="next">
+            <a href="/topic/{{ topic['_id'] }}?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% end %}
+
+{% if handler.check_role(role_min=1, return_bool=True) %}
+<div class="box">
+    <header>{{ _("Reply") }}</header>
+    <form action="/topic/{{ topic['_id'] }}/reply" method="post">
+        {% raw xsrf_form_html() %}
+        <textarea id="content" name="content" rows="10"></textarea>
+        <button type="submit" class="btn btn-primary">{{ _("Post") }}</button>
+    </form>
+</div>
+{% end %}
+
 {% end %}
 
 {% block sidebar %}
@@ -37,7 +85,6 @@
     {% if author['website'] %}
     <p><a href="{{ author['website'] }}" rel="nofollow">{{ author['website'] }}</a></p>
     {% end %}
-
 </div>
 {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
 <div class="box">

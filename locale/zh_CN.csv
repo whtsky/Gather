@@ -14,6 +14,11 @@
 "Description","简介"
 "Website","网站"
 "Author","作者"
+"Code Block Example","代码块示例"
+
+"Like","喜欢"
+"Unlike","取消"
+"Reply","回复"
 
 "Add Node","增加节点"
 "Edit Node","编辑节点"
@@ -27,6 +32,7 @@
 "Move","移动"
 "Created at","创建于"
 "Modified at","修改于"
+"Replied at","回复于"
 "Posted in","发表在"
 
 "Prev","上一页"
@@ -66,3 +72,8 @@
 "Already have an account?","已有账户？"
 "Don't have an account?","还没有账户？"
 
+"%s minutes ago","%s分钟前"
+"%s hours ago","%s小时前"
+"%s days ago","%s天前"
+"%s months ago","%s个月前"
+"%s years ago","%s年前"

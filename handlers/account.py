@@ -42,7 +42,7 @@ class SignupHandler(BaseHandler):
             'description': '',
             'role': 1,  # TODO:send mail.
             'block': [],
-            'star': [],  # topics
+            'like': [],  # topics
             'follow': [],  # users
             'favorite': []  # nodes
 

@@ -1,6 +1,5 @@
 
 import re
-import time
 from tornado.escape import xhtml_escape, _unicode, _URL_RE
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -13,10 +12,6 @@ _GIST_RE = re.compile(r'(https?://gist.github.com/[\d]+)')
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
 
 formatter = HtmlFormatter()
-
-
-def utc_time():
-    return int(time.mktime(time.gmtime()))
 
 
 def make_content(text, extra_params='rel="nofollow"'):

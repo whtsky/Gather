@@ -12,8 +12,11 @@
     </p>
     <p>
         <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
-        {{ _("Created at") }} {{ handler.format_time(topic['created']) }} /
-        {{ _("Posted in") }} <a href="/node/topic['node']">{{ topic['node'] }}</a>
+        {{ _("Created at") }} {{ handler.format_time(topic['created']) }}
+        {% if topic['created'] != topic['modified'] %}
+         / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
+        {% end %}
+        {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ topic['node'] }}</a>
     </p>
 </div>
 {% end %}

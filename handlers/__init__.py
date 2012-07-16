@@ -66,4 +66,5 @@ class BaseHandler(tornado.web.RequestHandler):
         raise tornado.web.HTTPError(403)
 
     def format_time(self, t):
-        return time.strftime('%Y-%m-%d %H:%M:%S',time.gmtime(t))
+        t += self.settings['gmt_offset'] * 3600
+        return time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t))

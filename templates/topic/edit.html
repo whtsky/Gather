@@ -1,16 +1,16 @@
 {% extends '../base.html' %}
 
-{% block title %}{{ _("Create") }} | {% end %}
+{% block title %}{{ _("Edit") }} | {% end %}
 
 {% block content %}
 <div class="box">
-    <header><h2>{{ _("Create") }}</h2></header>
+    <header><h2>{{ _("Edit") }}</h2></header>
     <form class="form-horizontal" method="post">
         <fieldset>
             {% raw xsrf_form_html() %}
             <input type="text" class="input-xxlarge" id="title" name="title" placeholder="{{ _('Title') }}"
-                   maxlength="100" required>
-            <textarea id="content" name="content" rows="20" required></textarea>
+                   maxlength="100" value="{{ topic['title'] }}" required>
+            <textarea id="content" name="content" rows="20" required>{{ topic['content'] }}</textarea>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{{ _("Post") }}</button>
             </div>

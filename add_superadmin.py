@@ -40,7 +40,7 @@ db.members.insert({
 'description': '',
 'role': 3,
 'block': [],
-'star': [],  # topics
+'like': [],  # topics
 'follow': [],  # users
 'favorite': []  # nodes
 })
