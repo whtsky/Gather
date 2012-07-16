@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     {% block head %}{% end %}
+    <meta name=description content="{% block description %}{% end %},{{ handler.settings['forum_title'] }}">
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
-    <link rel="stylesheet" href="{{ static_url('css/bootstrap-responsive.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ static_url('css/bootstrap-responsive.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='{{ static_url("js/jquery-1.7.2.min.js") }}'></script>

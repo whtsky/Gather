@@ -34,6 +34,8 @@ class CreateTopicHandler(BaseHandler):
             self.flash('Please fill the required field')
         if len(title) > 100:
             self.flash("The title is too long")
+        if len(content) > 20000:
+            self.flash("The content is too lang")
         if self.messages:
             self.render('node/create.html', node=node)
             return

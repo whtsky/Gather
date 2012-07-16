@@ -60,7 +60,6 @@ body{
     border-radius: 5px;
     margin-left: 5px;
     margin-right: 8px;
-    display: inline-block;
 }
 
 .right{
@@ -72,4 +71,26 @@ body{
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #DDD;
+}
+
+.block{
+    display: none;
+}
+
+#profile_main{
+    height: 72px;
+    font-size: 15px;
+}
+
+#profile_main .avatar{
+    width: 72px;
+    height: 72px;
+}
+
+#profile_main .username{
+    font-size: 20px;
+}
+
+.no_block .block{
+    display: block;
 }

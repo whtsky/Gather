@@ -20,7 +20,7 @@ class TopicHandler(BaseHandler):
     def get(self, topic_id):
         topic = self.get_topic(topic_id)
         replies = self.db.replies.find({'topic': topic_id},
-            sort=[('created', 1)])
+            sort=[('modified', 1)])
         replies_count = replies.count()
         p = int(self.get_argument('p', 1))
         self.render('topic/topic.html', topic=topic,
@@ -35,6 +35,9 @@ class ReplyHandler(BaseHandler):
         content = self.get_argument('content', None)
         if not content:
             self.flash('Please fill the required field')
+        if len(content) > 20000:
+            self.flash("The content is too lang")
+        if self.messages:
             self.redirect('/topic/%s' % topic_id)
             return
         reply = self.db.replies.find_one({
@@ -90,6 +93,8 @@ class EditHandler(BaseHandler):
             self.flash('Please fill the required field')
         if len(title) > 100:
             self.flash("The title is too long")
+        if len(content) > 20000:
+            self.flash("The content is too lang")
         if self.messages:
             self.render('topic/edit.html', topic=topic)
             return

@@ -1,0 +1,67 @@
+{% extends '../base.html' %}
+
+{% block description %}{{ member['name'] }}{% end %}
+
+{% block title %}{{ member['name'] }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <div id="profile_main">
+        <img src="{{ handler.get_avatar(member) }}" class="avatar" />
+        {% if current_user %}
+        <div class="right">
+            {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
+                <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a>
+            {% end %}
+            {% if current_user != member %}
+                {% if member['name_lower'] in current_user['block'] %}
+                    <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
+                {% else %}
+                    <a href="/member/{{ member['name'] }}/block" class="btn btn-danger">{{ _("Block") }}</a>
+                {% end %}
+            {% end %}
+        </div>
+        {% end %}
+        <p class="username">{{ member['name'] }}</p>
+        {% if member['website'] %}
+            <p><a href="{{ member['website'] }}" rel="nofollow">{{ member['website'] }}</a></p>
+        {% end %}
+    </div>
+    {% if member['description'] %}
+    <footer>
+        <p>{% raw escape(member['description']).replace('\n','<br />') %}</p>
+    </footer>
+    {% end %}
+</div>
+
+{% if topics.count() %}
+<div class="box no_block">
+    <header>{{ _("Topics") }}</header>
+    {% module topic_list(topics) %}
+    <a href="/member/{{ member['name'] }}/topics">{{ _("More") }} >></a>
+</div>
+{% end %}
+
+{% if liked_topics %}
+<div class="box no_block">
+    <header>{{ _("Like") }}</header>
+    {% module topic_list(liked_topics) %}
+</div>
+{% end %}
+
+{% if replies.count() %}
+<div class="box">
+    <header>{{ _("Replies") }}</header>
+    {% for reply in replies %}
+    <div class="list">
+        <a href="/topic/{{ reply['topic'] }}">{% raw reply['content_html'] %}</a>
+    </div>
+    {% end %}
+</div>
+{% end %}
+
+{% end %}
+
+{% block sidebar %}
+
+{% end %}

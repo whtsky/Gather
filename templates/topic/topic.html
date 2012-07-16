@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="{{ static_url('css/pygments_style.css') }}" type="text/css" />
 {% end %}
 
+{% block description %}{{ topic['title'] }},{{ topic['node'] }}{% end %}
+
 {% block title %}{{ topic['title'] }} | {% end %}
 
 {% block content %}
@@ -13,7 +15,7 @@
             {% if current_user %}
             <div class="right">
                 {% if str(topic['_id']) in current_user['like'] %}
-                <a href="/topic/{{ topic['_id'] }}/unlike" class="btn btn-danger">{{ _("unlike") }}</a>
+                <a href="/topic/{{ topic['_id'] }}/unlike" class="btn btn-danger">{{ _("Unlike") }}</a>
                 {% else %}
                 <a href="/topic/{{ topic['_id'] }}/like" class="btn">{{ _("Like") }}</a>
                 {% end %}
@@ -34,8 +36,11 @@
     <header>{{ _("Replies") }}</header>
     {% set replies_per_page = handler.settings['replies_per_page'] %}
     {% for reply in replies[(p-1)*replies_per_page:p*replies_per_page] %}
-    <div class="list">
-        {% set author = handler.get_member(reply['author']) %}
+    {% set author = handler.get_member(reply['author']) %}
+    <div class="list
+    {% if current_user and author['name_lower'] in current_user['block'] %}
+block
+{% end %}">
         <img class="avatar" src="{{ handler.get_avatar(author) }}" />
         <p>
             <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>

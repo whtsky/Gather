@@ -1,0 +1,23 @@
+{% extends '../base.html' %}
+
+
+{% block title %}{{ _("Topics") }} | {{ member['name'] }} | {% end %}
+
+{% block content %}
+<div class="box no_block">
+    <header>{{ _("Topics") }}</header>
+    {% module topic_list(topics) %}
+    <ul class="pager">
+        {% if p > 1 %}
+        <li class="previous">
+            <a href="/member/{{ member['name'] }}/topics?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+        </li>
+        {% end %}
+        {% if p*handler.settings['topics_per_page'] < topics_count %}
+        <li class="next">
+            <a href="/member/{{ member['name'] }}/topics?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% end %}

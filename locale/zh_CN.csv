@@ -17,7 +17,10 @@
 "Code Block Example","代码块示例"
 
 "Like","喜欢"
+"Likes","喜欢"
 "Unlike","取消"
+"Block","屏蔽"
+"Unblock","解除屏蔽"
 "Reply","回复"
 
 "Add Node","增加节点"
@@ -41,6 +44,7 @@
 "Title","标题"
 "Post","发布"
 "The title is too long","标题过长"
+"The content is too lang","内容过长"
 "The description is too lang","简介过长"
 
 "Old Password","原密码"
@@ -54,6 +58,8 @@
 "Password","密码"
 "Confirm","确认"
 "Email","邮箱"
+
+"More","查看更多"
 
 "This node name is already registered","该节点名已注册"
 "Saved successfully","保存成功"
@@ -71,9 +77,3 @@
 
 "Already have an account?","已有账户？"
 "Don't have an account?","还没有账户？"
-
-"%s minutes ago","%s分钟前"
-"%s hours ago","%s小时前"
-"%s days ago","%s天前"
-"%s months ago","%s个月前"
-"%s years ago","%s年前"

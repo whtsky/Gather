@@ -1,6 +1,11 @@
 {% for topic in topics %}
-<div class="list">
-    {% set author = handler.get_member(topic['author']) %}
+{% set author = handler.get_member(topic['author']) %}
+<div class="
+list
+{% if current_user and author['name_lower'] in current_user['block'] %}
+block
+{% end %}
+">
     {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
     <img class="avatar" src="{{ handler.get_avatar(author) }}" />
     <p>
