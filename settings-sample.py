@@ -11,6 +11,7 @@ forum_url = 'http://xxx.com/'
 #static_url_prefix = 'http://assets.xxx.com'
 
 gmt_offset = 8
+notifications_per_page = 10
 topics_per_page = 20
 replies_per_page = topics_per_page
 

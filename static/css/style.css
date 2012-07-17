@@ -35,11 +35,13 @@ body{
 
 .node{
     display: inline-block;
-    padding: 2px 12px;
-    margin: 3px;
+    line-height: 20px;
+    color: #fff;
+    font-weight: bold;
+    padding: 1px 4px;
+    background-color: #BFBFBF;
     border-radius: 3px;
-    background-color: #F9F0A8;
-    color: #B52218;
+    -moz-border-radius: 3px;
     font-size: 15px;
 }
 
@@ -51,12 +53,6 @@ body{
 .username{
     font-weight: bold;
     font-size: 15px;
-    color: #000
-}
-
-.username:hover{
-    color: #000;
-    text-decoration: none;
 }
 
 .avatar{
@@ -66,6 +62,10 @@ body{
     border-radius: 5px;
     margin-left: 5px;
     margin-right: 8px;
+}
+
+.reply-content{
+    margin-left: 61px; <!-- 48+5+8 -->
 }
 
 .right{
@@ -101,6 +101,46 @@ body{
     display: block;
 }
 
+#current_base{
+    height: 48px
+}
+
 table{
     width: 100%
 }
+
+#current_info{
+    text-align: center
+}
+
+#current_info #followed, #current_info #favorite {
+    width: 33%
+}
+
+#current_info #liked{
+    width: 34%;
+    border-left: 1px solid rgba(100, 100, 100, 0.4);
+    border-right: 1px solid rgba(100, 100, 100, 0.4);
+}
+
+#current_info p{
+    margin-top: 3px;
+}
+
+#current_info span{
+    font-size: 16px
+}
+
+#current_info a, #current_footer a, .username{
+    color: #000;
+}
+
+#current_info a:hover, #current_footer a:hover, .username:hover, .node:hover{
+    text-decoration: none;
+    color: #000
+}
+
+.node:hover{
+    color: #fff;
+}
+

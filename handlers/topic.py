@@ -20,7 +20,7 @@ class TopicHandler(BaseHandler):
     def get(self, topic_id):
         topic = self.get_topic(topic_id)
         replies = self.db.replies.find({'topic': topic_id},
-            sort=[('modified', 1)])
+            sort=[('index', 1)])
         replies_count = replies.count()
         p = int(self.get_argument('p', 1))
         self.render('topic/topic.html', topic=topic,
@@ -51,9 +51,11 @@ class ReplyHandler(BaseHandler):
         index = self.db.topics.find_and_modify({'_id': ObjectId(topic_id)},
             update={'$inc': {'index': 1}})['index'] + 1
         time_now = time.time()
+        content_html = make_content(content)
+        self.send_notification(content_html, topic_id)
         self.db.replies.insert({
             'content': content,
-            'content_html': make_content(content),
+            'content_html': content_html,
             'author': self.current_user['name'],
             'topic': topic_id,
             'created': time_now,

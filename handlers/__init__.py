@@ -1,10 +1,13 @@
 #coding=utf-8
 
+import re
 import tornado.web
 import tornado.escape
 import time
 from pymongo.objectid import ObjectId
 import hashlib
+
+_MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -72,3 +75,19 @@ class BaseHandler(tornado.web.RequestHandler):
         if date == time.strftime('%Y-%m-%d', time.gmtime(time.time() + offset)):
             return time.strftime('%H:%M:%S', t)
         return date
+
+    def send_notification(self, content, topic_id):
+        name = self.current_user['name_lower']
+        for name in _MENTION_FINDER_.findall(content):
+            member = self.get_member(name)
+            if name in member['block'] or name == member['name_lower']:
+                continue
+            self.db.notifications.insert({
+                'topic': topic_id,
+                'from': name,
+                'to': member['name_lower'],
+                'content': content,
+                'read': False,
+                'created': time.time(),
+            })
+

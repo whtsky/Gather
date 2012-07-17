@@ -9,7 +9,7 @@ username_validator = re.compile(r'^[a-zA-Z0-9]+$')
 email_validator = re.compile(r'^.+@[^.].*\.[a-z]{2,10}$', re.IGNORECASE)
 
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
-_MEMTION_RE = re.compile(r'(?:^|\W)@(\w+)')
+_MENTION_RE = re.compile(r'((?:^|\W)@\w+)')
 _EMAIL_RE = re.compile(r'([A-Za-z0-9-+.]+@[A-Za-z0-9-.]+)(\s|$)')
 
 formatter = HtmlFormatter()
@@ -43,6 +43,12 @@ def make_content(text, extra_params='rel="nofollow"'):
                 'end': m.group(2)}
         return u'<a href="mailto:%(mail)s">%(mail)s</a>%(end)s' % data
 
+    def convert_mention(m):
+        data = {}
+        data['begin'], data['user'] = m.group(1).split('@')
+
+        return u'%(begin)s<a href="/member/%(user)s" class="mention">@%(user)s</a>' % data
+
     def highligt(m):
         try:
             name = m.group(1)
@@ -56,4 +62,5 @@ def make_content(text, extra_params='rel="nofollow"'):
     text = _unicode(xhtml_escape(text))
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
     text = _EMAIL_RE.sub(cover_email, text)
+    text = _MENTION_RE.sub(convert_mention, text)
     return _URL_RE.sub(make_link, text)

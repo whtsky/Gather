@@ -27,8 +27,7 @@
 "Edit Node","编辑节点"
 "Node Name","节点名"
 "Custom Html","自定义HTML"
-"Create","新建"
-"View","查看"
+"Create Topic","新建话题"
 
 "Edit","编辑"
 "Remove","删除"
@@ -56,9 +55,14 @@
 "Old Password","原密码"
 "New Password","新密码"
 
-"Favorite","收藏"
-"Unfavorite","取消"
+"Favorite It","收藏节点"
+"Unfavorite It","取消收藏"
+"Followed Members","特殊收听"
+"View It","查看节点"
+"Liked Topics","喜爱主题"
 "Favorite Nodes","收藏节点"
+
+"unread notification","未读提醒"
 
 "Username","用户名"
 "Password","密码"

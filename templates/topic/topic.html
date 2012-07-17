@@ -23,7 +23,9 @@
         </h1>
         {% end %}
     </header>
-    {% raw topic['content_html'] %}
+    <article>
+        {% raw topic['content_html'] %}
+    </article>
     <footer>
         {{ _("Created at") }} {{ handler.format_time(topic['created']) }}
         {% if topic['created'] != topic['modified'] %}
@@ -50,7 +52,7 @@ block
             {% end %}
             #{{ reply['index'] }}
         </p>
-        <p>{% raw reply['content_html'] %}</p>
+        <div class="reply-content">{% raw reply['content_html'] %}</div>
     </div>
     {% end %}
     <ul class="pager">

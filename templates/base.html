@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     {% block head %}{% end %}
@@ -71,6 +71,42 @@
                 {% block content %}{% end %}
             </div>
             <div class="span3">
+                {% if current_user %}
+                <div class="box">
+                    <div id="current_base">
+                        <img class="avatar" src="{{ handler.get_avatar(current_user) }}" />
+                        <p><a href="/member/{{ current_user['name'] }}" class="username">{{ current_user['name'] }}</a></p>
+                        {% if current_user['website'] %}
+                        <p><a href="{{ current_user['website'] }}" rel="nofollow">{{ current_user['website'] }}</a></p>
+                        {% end %}
+                    </div>
+                    <table id="current_info">
+                        <td id="followed">
+                            <a href="/account/followed">
+                                <span>{{ len(current_user['follow']) }}</span>
+                                <p>{{ _("Followed Members") }}</p>
+                            </a>
+                        </td>
+                        <td id="liked">
+                            <a href="/account/liked">
+                                <span>{{ len(current_user['like']) }}</span>
+                                <p>{{ _("Liked Topics") }}</p>
+                            </a>
+                        </td>
+                        <td id="favorite">
+                            <a href="/account/favorited">
+                                <span>{{ len(current_user['favorite']) }}</span>
+                                <p>{{ _("Favorite Nodes") }}</p>
+                            </a>
+                        </td>
+                    </table>
+                    <footer id="current_footer">
+                        <a href="/account/notifications">
+                            {{ handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() }} {{ _("unread notification") }}
+                        </a>
+                    </footer>
+                </div>
+                {% end %}
                 {% block sidebar %}{% end %}
                 {% if current_user and current_user['favorite'] %}
                 <div class="box">

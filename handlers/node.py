@@ -54,10 +54,11 @@ class CreateTopicHandler(BaseHandler):
             self.redirect('/topic/%s' % topic['_id'])
             return
         time_now = time.time()
+        content_html = make_content(content)
         topic_id = self.db.topics.insert({
             'title': title,
             'content': content,
-            'content_html': make_content(content),
+            'content_html': content_html,
             'author': self.current_user['name'],
             'node': node['name'],
             'created': time_now,
@@ -65,6 +66,7 @@ class CreateTopicHandler(BaseHandler):
             'last_reply_time': time_now,
             'index': 0,
         })
+        self.send_notification(content_html, topic_id)
         self.redirect('/topic/%s' % topic_id)
 
 
