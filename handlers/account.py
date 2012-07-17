@@ -41,7 +41,7 @@ class SignupHandler(BaseHandler):
             'email': email,
             'website': '',
             'description': '',
-            'created':time.time(),
+            'created': time.time(),
             'role': 1,  # TODO:send mail.
             'block': [],
             'like': [],  # topics
@@ -123,10 +123,26 @@ class ChangePasswordHandler(BaseHandler):
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
 
+
+class NotificationsHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        p = int(self.get_argument('p', 1))
+        notis = self.db.notifications.find({
+            'to': self.current_user['name_lower']
+        }, sort=[('created', -1)])
+        notis_count = notis.count()
+        per_page = self.settings['notifications_per_page']
+        notis = notis[(p - 1) * per_page:p * per_page]
+        self.render('account/notifications.html', notis=notis,
+            notis_count=notis_count, p=p)
+
+
 handlers = [
     (r'/account/signup', SignupHandler),
     (r'/account/signin', SigninHandler),
     (r'/account/signout', SignoutHandler),
     (r'/account/settings', SettingsHandler),
     (r'/account/password', ChangePasswordHandler),
+    (r'/account/notifications', NotificationsHandler),
 ]

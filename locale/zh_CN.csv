@@ -62,6 +62,7 @@
 "Liked Topics","喜爱主题"
 "Favorite Nodes","收藏节点"
 
+"Notifications","提醒"
 "unread notification","未读提醒"
 
 "Username","用户名"
@@ -70,6 +71,10 @@
 "Email","邮箱"
 
 "More","查看更多"
+"Total %s","共计%s条"
+"in","在"
+"mentioned you","中提到了你"
+"unread","未读"
 
 "This node name is already registered","该节点名已注册"
 "Saved successfully","保存成功"

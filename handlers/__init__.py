@@ -71,16 +71,19 @@ class BaseHandler(tornado.web.RequestHandler):
     def format_time(self, t):
         offset = self.settings['gmt_offset'] * 3600
         t = time.gmtime(t + offset)
+        now = time.gmtime(time.time() + offset)
         date = time.strftime('%Y-%m-%d', t)
-        if date == time.strftime('%Y-%m-%d', time.gmtime(time.time() + offset)):
+        if date == time.strftime('%Y-%m-%d', now):
             return time.strftime('%H:%M:%S', t)
         return date
 
     def send_notification(self, content, topic_id):
-        name = self.current_user['name_lower']
-        for name in _MENTION_FINDER_.findall(content):
-            member = self.get_member(name)
-            if name in member['block'] or name == member['name_lower']:
+        uname = self.current_user['name_lower']
+        for name in set(_MENTION_FINDER_.findall(content)):
+            member = self.db.members.find_one({'name_lower': name.lower()})
+            if not member:
+                continue
+            if uname in member['block'] or uname == member['name_lower']:
                 continue
             self.db.notifications.insert({
                 'topic': topic_id,
@@ -90,4 +93,3 @@ class BaseHandler(tornado.web.RequestHandler):
                 'read': False,
                 'created': time.time(),
             })
-

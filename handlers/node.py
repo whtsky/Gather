@@ -94,7 +94,7 @@ class AddHandler(BaseHandler):
             'description': description,
             'html': html,
         })
-        self.redirect(self.get_argument('next', '/node/' + node['name']))
+        self.redirect(self.get_argument('next', '/node/' + name))
 
 
 class EditHandler(BaseHandler):

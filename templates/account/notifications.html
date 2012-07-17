@@ -1,0 +1,45 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ _("Notifications") }} | {% end %}
+
+{% block content %}
+<div class="box" id="notification_list">
+    <header>
+        <h2>{{ _("Notifications") }}
+            <div class="right">
+                {{ _("Total %s") % notis_count }}
+            </div>
+        </h2>
+    </header>
+    {% for noti in notis %}
+    <div class="list">
+        {% set author = handler.get_member(noti['from']) %}
+        <img src="{{ handler.get_avatar(author) }}" class="avatar" />
+        <p>
+            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+            {{ _("in") }}
+            {% set topic = handler.get_topic(noti['topic']) %}
+            <a href="/topic/{{ topic['_id'] }}">{{ topic['title'] }}</a>
+            {{ _("mentioned you") }}
+            {% if not noti['read'] %}
+            <span class="label label-important">{{ _("unread") }}</span>
+            {% set tmp = handler.db.notifications.update({'_id':noti['_id']},{'$set':{'read':True}}) %}
+            {% end %}
+        </p>
+        <div class="well">{% raw noti['content'] %}</div>
+    </div>
+    {% end %}
+    <ul class="pager">
+        {% if p > 1 %}
+        <li class="previous">
+            <a href="/account/notifications?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+        </li>
+        {% end %}
+        {% if p*handler.settings['notifications_per_page'] < notis_count %}
+        <li class="next">
+            <a href="/account/notifications?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% end %}

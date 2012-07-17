@@ -64,7 +64,7 @@ body{
     margin-right: 8px;
 }
 
-.reply-content{
+.reply-content, #notification_list .well{
     margin-left: 61px; <!-- 48+5+8 -->
 }
 
@@ -144,3 +144,8 @@ table{
     color: #fff;
 }
 
+#notification_list h2 .right{
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: normal;
+}

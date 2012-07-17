@@ -46,8 +46,9 @@ def make_content(text, extra_params='rel="nofollow"'):
     def convert_mention(m):
         data = {}
         data['begin'], data['user'] = m.group(1).split('@')
-
-        return u'%(begin)s<a href="/member/%(user)s" class="mention">@%(user)s</a>' % data
+        t = u'%(begin)s<a href="/member/%(user)s" class="mention">' \
+            u'@%(user)s</a>'
+        return t % data
 
     def highligt(m):
         try:

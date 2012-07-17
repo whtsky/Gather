@@ -5,7 +5,7 @@
 {% block content %}
 <div class="box">
     <div id="profile_main">
-        <img src="{{ handler.get_avatar(member) }}" class="avatar" />
+        <img src="{{ handler.get_avatar(member, size=72) }}" class="avatar" />
         {% if current_user %}
         <div class="right">
             {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
