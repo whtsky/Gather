@@ -8,6 +8,7 @@
         <h2>{{ _("Notifications") }}
             <div class="right">
                 {{ _("Total %s") % notis_count }}
+                <a href="/account/notifications/clear" class="label label-important">{{ _("Clear") }}</a>
             </div>
         </h2>
     </header>
@@ -22,24 +23,14 @@
             <a href="/topic/{{ topic['_id'] }}">{{ topic['title'] }}</a>
             {{ _("mentioned you") }}
             {% if not noti['read'] %}
-            <span class="label label-important">{{ _("unread") }}</span>
+            <span class="label label-success">{{ _("unread") }}</span>
             {% set tmp = handler.db.notifications.update({'_id':noti['_id']},{'$set':{'read':True}}) %}
             {% end %}
+            <a href="/account/notifications/{{ noti['_id'] }}/remove?next={{ url_escape(request.uri) }}" class="label label-important">{{ _("Remove") }}</a>
         </p>
         <div class="well">{% raw noti['content'] %}</div>
     </div>
     {% end %}
-    <ul class="pager">
-        {% if p > 1 %}
-        <li class="previous">
-            <a href="/account/notifications?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
-        </li>
-        {% end %}
-        {% if p*handler.settings['notifications_per_page'] < notis_count %}
-        <li class="next">
-            <a href="/account/notifications?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
-        </li>
-        {% end %}
-    </ul>
+    {% module paginator(p=p,perpage=handler.settings['notifications_per_page'],count=notis_count,base_url="/account/notifications") %}
 </div>
 {% end %}

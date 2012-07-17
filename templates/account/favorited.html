@@ -1,0 +1,14 @@
+{% extends '../base.html' %}
+
+{% block description %}{{ _("Favorite Nodes") }}{% end %}
+
+{% block title %}{{ _("Favorite Nodes") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Favorite Nodes") }}</header>
+    {% set topics_per_page = handler.settings['topics_per_page'] %}
+    {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
+    {% module paginator(p=p,perpage=topics_per_page,count=topics_count,base_url="/account/favorited") %}
+</div>
+{% end %}

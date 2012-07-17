@@ -1,9 +1,10 @@
 #coding=utf-8
 
 import time
-import tornado.web
-from . import BaseHandler
 import hashlib
+import tornado.web
+from pymongo.objectid import ObjectId
+from . import BaseHandler
 from .utils import username_validator, email_validator
 
 
@@ -124,6 +125,31 @@ class ChangePasswordHandler(BaseHandler):
         self.redirect('/account/settings')
 
 
+class LikedHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        topics = self.current_user['like']
+        count = len(topics)
+        p = int(self.get_argument('p', 1))
+        perpage = self.settings['topics_per_page']
+        topics = topics[(p - 1) * perpage:p * perpage]
+        topics = [self.get_topic(x) for x in topics]
+        self.render('account/liked.html', topics=topics, count=count, p=p,
+            perpage=perpage)
+
+
+class FavoritedHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        topics = self.db.topics.find({
+            'node': {'$in': self.current_user['favorite']}
+        }, sort=[('last_reply_time', -1)])
+        topics_count = topics.count()
+        p = int(self.get_argument('p', 1))
+        self.render('account/favorited.html', topics=topics,
+            topics_count=topics_count, p=p)
+
+
 class NotificationsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -138,11 +164,29 @@ class NotificationsHandler(BaseHandler):
             notis_count=notis_count, p=p)
 
 
+class NotificationsClearHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.db.notifications.remove({'to': self.current_user['name_lower']})
+        self.redirect('/')
+
+
+class NotificationsRemoveHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self, id):
+        self.db.notifications.remove({'_id': ObjectId(id)})
+        self.redirect(self.get_argument('next', '/account/notifications'))
+
+
 handlers = [
     (r'/account/signup', SignupHandler),
     (r'/account/signin', SigninHandler),
     (r'/account/signout', SignoutHandler),
     (r'/account/settings', SettingsHandler),
     (r'/account/password', ChangePasswordHandler),
+    (r'/account/liked', LikedHandler),
+    (r'/account/favorited', FavoritedHandler),
     (r'/account/notifications', NotificationsHandler),
+    (r'/account/notifications/clear', NotificationsClearHandler),
+    (r'/account/notifications/(\w+)/remove', NotificationsRemoveHandler),
 ]

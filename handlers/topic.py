@@ -147,7 +147,7 @@ class TopicList(tornado.web.UIModule):
 class Paginator(tornado.web.UIModule):
     def render(self, p, perpage, count, base_url):
         return self.render_string("topic/modules/paginator.html", p=p,
-            perpage=perpage,count=count,base_url=base_url)
+            perpage=perpage, count=count, base_url=base_url)
 
 handlers = [
     (r'/', TopicListHandler),

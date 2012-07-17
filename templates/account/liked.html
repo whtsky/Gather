@@ -1,0 +1,11 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ _("Liked Topics") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header><h2>{{ _("Liked Topics") }}</h2></header>
+    {% module topic_list(topics) %}
+    {% module paginator(p=p,perpage=perpage,count=count,base_url="/account/liked") %}
+</div>
+{% end %}

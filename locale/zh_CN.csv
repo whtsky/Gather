@@ -18,7 +18,7 @@
 
 "Like","喜欢"
 "Likes","喜欢"
-"Unlike","取消"
+"Unlike","不喜欢"
 "Block","屏蔽"
 "Unblock","解除屏蔽"
 "Reply","回复"
@@ -72,6 +72,7 @@
 
 "More","查看更多"
 "Total %s","共计%s条"
+"Clear","清空"
 "in","在"
 "mentioned you","中提到了你"
 "unread","未读"
