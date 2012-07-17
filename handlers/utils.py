@@ -8,8 +8,9 @@ from pygments.lexers import get_lexer_by_name, TextLexer
 username_validator = re.compile(r'^[a-zA-Z0-9]+$')
 email_validator = re.compile(r'^.+@[^.].*\.[a-z]{2,10}$', re.IGNORECASE)
 
-_GIST_RE = re.compile(r'(https?://gist.github.com/[\d]+)')
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
+_MEMTION_RE = re.compile(r'(?:^|\W)@(\w+)')
+_EMAIL_RE = re.compile(r'([A-Za-z0-9-+.]+@[A-Za-z0-9-.]+)(\s|$)')
 
 formatter = HtmlFormatter()
 
@@ -30,16 +31,17 @@ def make_content(text, extra_params='rel="nofollow"'):
 
         params = extra_params
 
-        match = _GIST_RE.match(href)
-        if match:
-            return '<script src="%s.js"></script>' % match.group(1)
-
         if '.' in href:
             name_extension = href.split('.')[-1]
             if name_extension in ('jpg', 'png', 'git', 'jpeg'):
                 return u'<img src="%s" />' % href
 
         return u'<a href="%s"%s>%s</a>' % (href, params, url)
+
+    def cover_email(m):
+        data = {'mail': m.group(1),
+                'end': m.group(2)}
+        return u'<a href="mailto:%(mail)s">%(mail)s</a>%(end)s' % data
 
     def highligt(m):
         try:
@@ -53,4 +55,5 @@ def make_content(text, extra_params='rel="nofollow"'):
 
     text = _unicode(xhtml_escape(text))
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
+    text = _EMAIL_RE.sub(cover_email, text)
     return _URL_RE.sub(make_link, text)
