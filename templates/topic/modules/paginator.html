@@ -1,0 +1,12 @@
+<ul class="pager">
+    {% if p > 1 %}
+    <li class="previous">
+        <a href="{{ base_url }}?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
+    </li>
+    {% end %}
+    {% if p*perpage < count %}
+    <li class="next">
+        <a href="{{ base_url }}?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
+    </li>
+    {% end %}
+</ul>

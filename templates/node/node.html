@@ -9,18 +9,7 @@
     <header>{{ node['name'] }}</header>
     {% set topics_per_page = handler.settings['topics_per_page'] %}
     {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
-    <ul class="pager">
-        {% if p > 1 %}
-        <li class="previous">
-            <a href="/node/{{ node['name'] }}?p={{p-1}}">&lt;&lt; {{ _("Prev") }}</a>
-        </li>
-        {% end %}
-        {% if p*topics_per_page < topics_count %}
-        <li class="next">
-            <a href="/node/{{ node['name'] }}?p={{p+1}}">{{ _("Next") }} &gt;&gt;</a>
-        </li>
-        {% end %}
-    </ul>
+    {% module paginator(p=p,perpage=topics_per_page,count=topics_count,base_url="/node/" + node['name']) %}
 </div>
 {% end %}
 
