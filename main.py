@@ -11,9 +11,10 @@ from tornado.options import define, options
 from init_db import db
 import urls
 
-define('port', default=8888, help='run on the given port', type=int)
-
 ROOT = os.path.abspath(os.path.dirname(__file__))
+
+define('port', default=8888, help='run on the given port', type=int)
+define('settings', default=os.path.join(ROOT, 'settings.py'), help='path to the settings file.', type=str)
 
 
 class Application(tornado.web.Application):
@@ -22,7 +23,7 @@ class Application(tornado.web.Application):
                     'role': {1: 'Member',
                              2: 'Admin',
                              3: 'SuperAdmin'}}
-        execfile('settings.py', {}, settings)
+        execfile(options.settings, {}, settings)
 
         if 'static_path' not in settings:
             settings['static_path'] = os.path.join(ROOT, "static")
