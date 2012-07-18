@@ -4,7 +4,7 @@ import re
 import tornado.web
 import tornado.escape
 import time
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 import hashlib
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')

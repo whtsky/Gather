@@ -3,7 +3,7 @@
 import tornado.web
 import time
 from . import BaseHandler
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 from .utils import make_content
 
 

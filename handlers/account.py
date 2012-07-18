@@ -3,7 +3,7 @@
 import time
 import hashlib
 import tornado.web
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 from . import BaseHandler
 from .utils import username_validator, email_validator
 
