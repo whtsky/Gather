@@ -7,25 +7,6 @@
 <div class="box">
     <div id="profile_main">
         <img src="{{ handler.get_avatar(member, size=72) }}" class="avatar" />
-        {% if current_user %}
-        <div class="right">
-            {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
-            <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a>
-            {% end %}
-            {% if current_user != member %}
-            {% if member['name_lower'] in current_user['follow'] %}
-            <a href="/member/{{ member['name'] }}/unfollow" class="btn">{{ _("Unfollow") }}</a>
-            {% else %}
-            <a href="/member/{{ member['name'] }}/follow" class="btn btn-success">{{ _("Follow") }}</a>
-            {% end %}
-            {% if member['name_lower'] in current_user['block'] %}
-            <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
-            {% else %}
-            <a href="/member/{{ member['name'] }}/block" class="btn btn-danger">{{ _("Block") }}</a>
-            {% end %}
-            {% end %}
-        </div>
-        {% end %}
         <p class="username">{{ member['name'] }}</p>
         <p>{{ _("Join at") }} {{ handler.format_time(member['created']) }}</p>
         {% if member['website'] %}
@@ -74,5 +55,38 @@
 {% end %}
 
 {% block sidebar %}
-
+{% if current_user %}
+<div class="box">
+    <header>{{ _("Member") }}</header>
+    {% if current_user != member %}
+    {% if member['name_lower'] in current_user['follow'] %}
+    <a href="/member/{{ member['name'] }}/unfollow" class="btn">{{ _("Unfollow") }}</a>
+    {% else %}
+    <a href="/member/{{ member['name'] }}/follow" class="btn btn-success">{{ _("Follow") }}</a>
+    {% end %}
+    {% if member['name_lower'] in current_user['block'] %}
+    <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
+    {% else %}
+    <a href="/member/{{ member['name'] }}/block" class="btn btn-warning">{{ _("Block") }}</a>
+    {% end %}
+    {% end %}
+    {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
+    <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove Member") }}</a>
+    {% end %}
+    {% if handler.check_role(return_bool=True) %}
+    <footer>
+        <form method="post" action="/member/{{ member['name'] }}/role">
+            <select name="role" id="role">
+                {% for role in range(1,4) %}
+                {% if role != member['role'] and role <= current_user['role'] %}
+                <option value="{{ role }}">{{ _(handler.settings['role'][role]) }}</option>
+                {% end %}
+                {% end %}
+            </select>
+            <button type="submit" class="btn btn-primary">{{ _("Change Role") }}</button>
+        </form>
+    </footer>
+    {% end %}
+</div>
+{% end %}
 {% end %}

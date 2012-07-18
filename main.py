@@ -18,7 +18,10 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 
 class Application(tornado.web.Application):
     def __init__(self):
-        settings = {'template_path': os.path.join(ROOT, "templates")}
+        settings = {'template_path': os.path.join(ROOT, "templates"),
+                    'role': {1: 'Member',
+                             2: 'Admin',
+                             3: 'SuperAdmin'}}
         execfile('settings.py', {}, settings)
 
         if 'static_path' not in settings:

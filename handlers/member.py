@@ -85,10 +85,16 @@ class RemoveHandler(BaseHandler):
         self.application.db.members.remove({'_id': member_id})
 
 
-class SetRoleHandler(BaseHandler):
+class ChangeRoleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, name):
-        pass
+        role = int(self.get_argument('role', 100))
+        self.check_role(role_min=role)
+        name = name.lower()
+        self.db.members.update({'name_lower': name},
+                {'$set': {'role': role}})
+        self.redirect('/member/' + name)
+
 
 handlers = [
     (r'/member/(\w+)', MemberPageHandler),
@@ -98,5 +104,5 @@ handlers = [
     (r'/member/(\w+)/block', BlockHandler),
     (r'/member/(\w+)/unblock', UnblockHandler),
     (r'/member/(\w+)/remove', RemoveHandler),
-    (r'/member/(\w+)/role', SetRoleHandler),
+    (r'/member/(\w+)/role', ChangeRoleHandler),
 ]

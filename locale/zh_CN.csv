@@ -4,9 +4,11 @@
 "Signup","注册"
 "Save","保存"
 "Admin","管理"
+"SuperAdmin","总管理"
 
 "Recent Topics","最近更新"
 "Site status","站点统计"
+"Member","用户"
 "Members","用户"
 "Nodes","节点"
 "Topics","话题"
@@ -19,7 +21,7 @@
 "Like","喜欢"
 "Likes","喜欢"
 "Unlike","不喜欢"
-"Block","屏蔽"
+"Block","屏蔽用户"
 "Unblock","解除屏蔽"
 "Reply","回复"
 
@@ -31,6 +33,8 @@
 
 "Edit","编辑"
 "Remove","删除"
+"Remove Member","删除用户"
+"Change Role","改变身份"
 "Move","移动"
 "From","从"
 "To","到"
