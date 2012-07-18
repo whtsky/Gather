@@ -13,10 +13,10 @@
     </header>
     {% for noti in notis %}
     <div class="list">
-        {% set author = handler.get_member(noti['from']) %}
-        <img src="{{ handler.get_avatar(author) }}" class="avatar" />
+        {% set member = handler.get_member(noti['from']) %}
+        <img src="{{ handler.get_avatar(member) }}" class="avatar" />
         <p>
-            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+            <a href="/member/{{ member['name'] }}">{{ member['name'] }}</a>
             {{ _("in") }}
             {% set topic = handler.get_topic(noti['topic']) %}
             <a href="/topic/{{ topic['_id'] }}">{{ topic['title'] }}</a>

@@ -69,14 +69,14 @@ class ReplyHandler(BaseHandler):
 
 class RemoveHandler(BaseHandler):
     def get(self, topic_id):
-        self.check_role()
+        self.check_role(owner_name=self.current_user['name'])
         members = self.db.members.find({'like': topic_id})
         for member in members:
             member['like'].remove(topic_id)
             self.db.members.save(member)
-
         self.db.topics.remove({'_id': ObjectId(topic_id)})
-        self.db.replies.remove({'topic': topic_id})
+        self.db.replies.remove({'topic': ObjectId(topic_id)})
+        self.db.notifications.remove({'topic': topic_id})
         self.flash('Removed successfully', type='success')
         self.redirect('/')
 
@@ -106,7 +106,10 @@ class EditHandler(BaseHandler):
             self.render('topic/edit.html', topic=topic)
             return
         topic['modified'] = time.time()
-        topic['content_html'] = make_content(content)
+        content = make_content(content)
+        self.db.notifications.update({'content': topic['content_html']},
+            {'$set': {'content': content}})
+        topic['content_html'] = content
         self.db.topics.save(topic)
         self.flash('Saved successfully', type='success')
         self.redirect('/topic/%s' % topic_id)

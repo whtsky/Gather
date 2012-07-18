@@ -87,7 +87,7 @@ class BaseHandler(tornado.web.RequestHandler):
                 continue
             self.db.notifications.insert({
                 'topic': topic_id,
-                'from': name,
+                'from': uname,
                 'to': member['name_lower'],
                 'content': content,
                 'read': False,
