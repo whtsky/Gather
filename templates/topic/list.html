@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ _("Recent Topics") }} | {% end %}
+{% block canonical %}topic?p={{p}}{% end %}
 
 {% block content %}
 <div class="box">

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ member['name'] }} | {% end %}
+{% block canonical %}member/{{ member['name'] }}{% end %}
 
 {% block content %}
 <div class="box">

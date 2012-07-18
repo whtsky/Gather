@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block description %}{{ node['name'] }}{% end %}
+{% block canonical %}node/{{ node['name'] }}{% end %}
 
 {% block title %}{{ node['name'] }} | {% end %}
 

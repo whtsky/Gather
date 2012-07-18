@@ -7,6 +7,7 @@
 {% block description %}{{ topic['title'] }},{{ topic['node'] }}{% end %}
 
 {% block title %}{{ topic['title'] }} | {% end %}
+{% block canonical %}topic/{{ topic['_id'] }}?p={{p}}{% end %}
 
 {% block content %}
 <div class="box">
