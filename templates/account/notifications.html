@@ -5,12 +5,11 @@
 {% block content %}
 <div class="box" id="notification_list">
     <header>
-        <h2>{{ _("Notifications") }}
+        {{ _("Notifications") }}
             <div class="right">
                 {{ _("Total %s") % notis_count }}
                 <a href="/account/notifications/clear" class="label label-important">{{ _("Clear") }}</a>
             </div>
-        </h2>
     </header>
     {% for noti in notis %}
     <div class="list">

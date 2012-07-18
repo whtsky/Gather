@@ -12,6 +12,11 @@
             <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a>
             {% end %}
             {% if current_user != member %}
+            {% if member['name_lower'] in current_user['follow'] %}
+            <a href="/member/{{ member['name'] }}/unfollow" class="btn">{{ _("Unfollow") }}</a>
+            {% else %}
+            <a href="/member/{{ member['name'] }}/follow" class="btn btn-success">{{ _("Follow") }}</a>
+            {% end %}
             {% if member['name_lower'] in current_user['block'] %}
             <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
             {% else %}

@@ -110,6 +110,7 @@ table{
 }
 
 #current_info{
+    margin-top: 10px;
     text-align: center
 }
 
@@ -144,8 +145,12 @@ table{
     color: #fff;
 }
 
-#notification_list h2 .right{
-    margin-top: 20px;
-    font-size: 14px;
+#notification_list .right{
+    margin-top: 8px;
     font-weight: normal;
+}
+
+#followed_list .avatar{
+    width: 24px;
+    height: 24px
 }

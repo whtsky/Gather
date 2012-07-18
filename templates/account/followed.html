@@ -1,0 +1,27 @@
+{% extends '../base.html' %}
+
+{% block description %}{{ _("Followed Members") }}{% end %}
+
+{% block title %}{{ _("Followed Members") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Topics") }}</header>
+    {% set topics_per_page = handler.settings['topics_per_page'] %}
+    {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
+    {% module paginator(p=p,perpage=topics_per_page,count=topics_count,base_url="/account/followed") %}
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box" id="followed_list">
+    <header>{{ _("Followed Members") }}</header>
+    {% for member_name in current_user['follow'] %}
+    {% set member = handler.get_member(member_name) %}
+    <div class="list">
+        <img src="{{ handler.get_avatar(member, size=24) }}" class="avatar" />
+        <a href="/member/{{ member['name'] }}">{{ member['name'] }}</a>
+    </div>
+    {% end %}
+</div>
+{% end %}

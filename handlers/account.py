@@ -150,6 +150,18 @@ class FavoritedHandler(BaseHandler):
             topics_count=topics_count, p=p)
 
 
+class FollowedHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        topics = self.db.topics.find({
+            'author': {'$in': self.current_user['follow']}
+        }, sort=[('last_reply_time', -1)])
+        topics_count = topics.count()
+        p = int(self.get_argument('p', 1))
+        self.render('account/followed.html', topics=topics,
+            topics_count=topics_count, p=p)
+
+
 class NotificationsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -184,6 +196,7 @@ handlers = [
     (r'/account/signout', SignoutHandler),
     (r'/account/settings', SettingsHandler),
     (r'/account/password', ChangePasswordHandler),
+    (r'/account/followed', FollowedHandler),
     (r'/account/liked', LikedHandler),
     (r'/account/favorited', FavoritedHandler),
     (r'/account/notifications', NotificationsHandler),
