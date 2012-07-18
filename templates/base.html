@@ -113,7 +113,7 @@
                 <div class="box">
                     <header>{{ _("Favorite Nodes") }}</header>
                     {% for node_name in current_user['favorite'] %}
-                    <a class="node" href="/node/{{ node_name }}" >{{ node_name }}</a>
+                    <a class="node" href="/node/{{ node_name }}" >{{ handler.get_node(node_name)['title'] }}</a>
                     {% end %}
                 </div>
                 {% end %}

@@ -6,7 +6,13 @@ from . import BaseHandler
 
 class MemberListHandler(BaseHandler):
     def get(self):
-        pass
+        per_page = self.settings['members_per_page']
+        members = self.db.members.find(sort=[('created', 1)])
+        count = members.count()
+        p = int(self.get_argument('p', 1))
+        members = members[(p - 1) * per_page:p * per_page]
+        self.render('member/list.html', per_page=per_page, members=members, count=count,
+            p=p)
 
 
 class MemberPageHandler(BaseHandler):
@@ -74,17 +80,6 @@ class UnblockHandler(BaseHandler):
         self.redirect('/member/' + name)
 
 
-class RemoveHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, name):
-        member = self.get_member(name)
-        self.check_role(owner_name=member['name'])
-        member_id = member['_id']
-        self.application.db.posts.remove({'author': member_id})
-        self.application.db.replies.remove({'author': member_id})
-        self.application.db.members.remove({'_id': member_id})
-
-
 class ChangeRoleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, name):
@@ -97,12 +92,12 @@ class ChangeRoleHandler(BaseHandler):
 
 
 handlers = [
+    (r'/member', MemberListHandler),
     (r'/member/(\w+)', MemberPageHandler),
     (r'/member/(\w+)/topics', MemberTopicsHandler),
     (r'/member/(\w+)/follow', FollowHandler),
     (r'/member/(\w+)/unfollow', UnfollowHandler),
     (r'/member/(\w+)/block', BlockHandler),
     (r'/member/(\w+)/unblock', UnblockHandler),
-    (r'/member/(\w+)/remove', RemoveHandler),
     (r'/member/(\w+)/role', ChangeRoleHandler),
 ]

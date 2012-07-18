@@ -78,10 +78,13 @@ class AddHandler(BaseHandler):
     def post(self):
         self.check_role()
         name = self.get_argument('name', None)
+        title = self.get_argument('title', name)
         if not name:
             self.flash('Please fill the required field')
         if self.db.nodes.find_one({'name_lower': name.lower()}):
             self.flash('This node name is already registered')
+        if self.db.nodes.find_one({'title': title}):
+            self.flash('This node title is already registered')
         if self.messages:
             self.render('node/add.html')
             return
@@ -91,6 +94,7 @@ class AddHandler(BaseHandler):
         self.db.nodes.insert({
             'name': name,
             'name_lower': name.lower(),
+            'title': title,
             'description': description,
             'html': html,
         })
@@ -117,11 +121,24 @@ class EditHandler(BaseHandler):
 class RemoveHandler(BaseHandler):
     def get(self, node_name):
         self.check_role()
-        pass
+        node = self.get_node(node_name)
+        self.render('node/remove.html', node=node)
 
     def post(self, node_name):
         self.check_role()
-        pass
+        from_node = self.get_node(node_name)
+        node_name = self.get_argument('node')
+        to_node = self.get_node(node_name)
+        members = self.db.members.find({'favorite': from_node['name']})
+        for member in members:
+            member['favorite'].remove(from_node['name'])
+            self.db.members.save(member)
+
+        self.db.nodes.remove(from_node)
+        self.db.topics.update({'node': from_node['name_lower']},
+            {'$set': {'node': to_node['name_lower']}}, multi=True)
+        self.flash('Removed successfully', type='success')
+        self.redirect('/')
 
 
 class FavoriteHandler(BaseHandler):

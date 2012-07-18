@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block description %}{{ node['name'] }}{% end %}
+{% block description %}{{ node['name'] }},{{ node['title'] }}{% end %}
 {% block canonical %}node/{{ node['name'] }}{% end %}
 
-{% block title %}{{ node['name'] }} | {% end %}
+{% block title %}{{ node['title'] }} | {% end %}
 
 {% block content %}
 <div class="box">
-    <header>{{ node['name'] }}</header>
+    <header>{{ node['title'] }}</header>
     {% set topics_per_page = handler.settings['topics_per_page'] %}
     {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
     {% module paginator(p=p,perpage=topics_per_page,count=topics_count,base_url="/node/" + node['name']) %}
@@ -22,6 +22,7 @@
     <header>{{ _("Admin") }}</header>
     <a href="/node/{{ node['name'] }}/edit" class="btn">{{ _("Edit Node") }}</a>
     <a href="/node/add" class="btn btn-warning">{{ _("Add Node") }}</a>
+    <a href="/node/{{ node['name'] }}/remove" class="btn btn-danger">{{ _("Remove Node") }}</a>
 </div>
 {% end %}
 {% end %}

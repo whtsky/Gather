@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Members") }} | {% end %}
+{% block description %}{% end %}
+{% block canonical %}member?p={{p}}{% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Members") }}</header>
+    {% for member in members %}
+    <a href="/member/{{ member['name'] }}" title="{{ member['name'] }}"><img src="{{ handler.get_avatar(member) }}" class="avatar" /></a>
+    {% end %}
+    {% module paginator(p=p,perpage=handler.settings['members_per_page'],count=count,base_url="/member") %}
+</div>
+{% end %}

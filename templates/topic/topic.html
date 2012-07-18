@@ -2,9 +2,10 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ static_url('css/pygments_style.css') }}" type="text/css" />
+{% set node = handler.get_node(topic['node']) %}
 {% end %}
 
-{% block description %}{{ topic['title'] }},{{ topic['node'] }}{% end %}
+{% block description %}{{ topic['title'] }},{{ topic['node'] }},{{ node['title'] }}{% end %}
 
 {% block title %}{{ topic['title'] }} | {% end %}
 {% block canonical %}topic/{{ topic['_id'] }}?p={{p}}{% end %}
@@ -91,5 +92,5 @@ block
     <a href="/topic/{{ topic['_id'] }}/remove" class="btn btn-danger one_third">{{ _("Remove") }}</a>
 </div>
 {% end %}
-{% module node_sitebar(handler.get_node(topic['node'])) %}
+{% module node_sitebar(node) %}
 {% end %}

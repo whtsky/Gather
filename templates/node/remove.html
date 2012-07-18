@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block description %}{{ _("Remove Node") }}{% end %}
+
+{% block title %}{{ _("Remove Node") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Remove Node") }}</header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <div class="control-group">
+                <label class="control-label">{{ _("Node Name") }}</label>
+                <div class="controls">
+                    <input class="input-xlarge disabled" type="text" value="{{ node['name'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ _("Node Title") }}</label>
+                <div class="controls">
+                    <input class="input-xlarge disabled" type="text" value="{{ node['title'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="node">{{ _("Move Topics To") }}</label>
+                <div class="controls">
+                    <select name="node" id="node">
+                        {% for n in handler.db.nodes.find() %}
+                        {% if n['name_lower'] != node['name_lower'] %}
+                        <option value="{{ n['name'] }}">{{ n['title'] }}</option>
+                        {% end %}
+                        {% end %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Remove") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}

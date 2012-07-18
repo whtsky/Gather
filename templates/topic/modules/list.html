@@ -22,7 +22,7 @@ block
         {% if topic['created'] != topic['modified'] %}
          / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
         {% end %}
-        {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ topic['node'] }}</a>
+        {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ handler.get_node(topic['node'])['title'] }}</a>
     </p>
 </div>
 {% end %}

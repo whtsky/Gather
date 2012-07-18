@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="box">
-    <header><h2>{{ _("Edit Node") }}</h2></header>
+    <header>{{ _("Edit Node") }}</header>
     <form class="form-horizontal" method="post">
         <fieldset>
             {% raw xsrf_form_html() %}
@@ -12,6 +12,12 @@
                 <label class="control-label" for="name">{{ _("Node Name") }}</label>
                 <div class="controls">
                     <input class="input-xlarge disabled" id="name" type="text" value="{{ node['name'] }}" disabled>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="title">{{ _("Node Title") }}</label>
+                <div class="controls">
+                    <input class="input-xlarge disabled" id="title" type="text" value="{{ node['title'] }}" disabled>
                 </div>
             </div>
             <div class="control-group">

@@ -24,7 +24,7 @@ body{
     padding-bottom: 10px;
     border-bottom: 1px solid #DDD;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .box footer {
@@ -148,6 +148,7 @@ table{
 #notification_list .right{
     margin-top: 8px;
     font-weight: normal;
+    font-size: 17px;
 }
 
 #followed_list .avatar{

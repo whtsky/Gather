@@ -26,7 +26,7 @@
                     <select name="node" id="node">
                         {% for node in handler.db.nodes.find() %}
                             {% if node['name'] != topic['node'] %}
-                            <option value="{{ node['name'] }}">{{ node['name'] }}</option>
+                            <option value="{{ node['name'] }}">{{ node['title'] }}</option>
                             {% end %}
                         {% end %}
                     </select>
