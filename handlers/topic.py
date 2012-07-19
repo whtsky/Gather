@@ -186,6 +186,13 @@ class EditReplyHandler(BaseHandler):
 class RemoveReplyHandler(BaseHandler):
     def get(self, reply_id):
         self.check_role(owner_name=self.current_user['name'])
+        reply = self.db.replies.find_one({'_id': ObjectId(reply_id)})
+        if not reply:
+            raise tornado.web.HTTPError(404)
+        self.db.notifications.remove({
+            'from': reply['author'].lower(),
+            'content': reply['content_html'],
+        }, multi=True)
         self.db.replies.remove({'_id': ObjectId(reply_id)})
         self.flash('Removed successfully', type='success')
         self.redirect(self.get_argument('next', '/'))
