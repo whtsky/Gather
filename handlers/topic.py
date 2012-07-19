@@ -186,7 +186,7 @@ class EditReplyHandler(BaseHandler):
 class RemoveReplyHandler(BaseHandler):
     def get(self, reply_id):
         self.check_role(owner_name=self.current_user['name'])
-        self.db.replies.remove({'_id': ObjectId(topic_id)})
+        self.db.replies.remove({'_id': ObjectId(reply_id)})
         self.flash('Removed successfully', type='success')
         self.redirect(self.get_argument('next', '/'))
 
