@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Edit") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Edit") }}</header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <textarea id="content" name="content" rows="20" required>{{ reply['content'] }}</textarea>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Post") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Code Block Example") }}</header>
+    <p>```python</p>
+    <p>print "hello world!"</p>
+    <p>```</p>
+</div>
+{% end %}

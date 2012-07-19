@@ -52,6 +52,10 @@ block
             / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
             {% end %}
             #{{ reply['index'] }}
+            {% if current_user and handler.check_role(owner_name=reply['author'], return_bool=True) %}
+            <a href="/reply/{{ reply['_id'] }}/edit?next={{ url_escape(request.uri) }}" class="label label-warning">{{ _("Edit") }}</a>
+            <a href="/reply/{{ reply['_id'] }}/remove" class="label label-important">{{ _("Remove") }}</a>
+            {% end %}
         </p>
         <div class="reply-content">{% raw reply['content_html'] %}</div>
     </div>

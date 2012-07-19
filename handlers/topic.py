@@ -18,6 +18,10 @@ class TopicListHandler(BaseHandler):
 
 class TopicHandler(BaseHandler):
     def get(self, topic_id):
+        if self.current_user:
+            self.db.notifications.update({
+                'topic': topic_id, 'to':self.current_user['name_lower']
+            }, {'$set': {'read': True}})
         topic = self.get_topic(topic_id)
         replies = self.db.replies.find({'topic': topic_id},
             sort=[('index', 1)])
@@ -147,6 +151,46 @@ class UnlikeHandler(BaseHandler):
         self.redirect('/topic/' + topic_id)
 
 
+class EditReplyHandler(BaseHandler):
+    def get(self, reply_id):
+        reply = self.db.replies.find_one({'_id': ObjectId(reply_id)})
+        if not reply:
+            raise tornado.web.HTTPError(404)
+        self.check_role(owner_name=reply['author'])
+        self.render('topic/edit_reply.html', reply=reply)
+
+    def post(self, reply_id):
+        reply = self.db.replies.find_one({'_id': ObjectId(reply_id)})
+        if not reply:
+            raise tornado.web.HTTPError(404)
+        self.check_role(owner_name=reply['author'])
+        content = self.get_argument('content', '')
+        reply['content'] = content
+        if not content:
+            self.flash('Please fill the required field')
+        elif len(content) > 20000:
+            self.flash("The content is too lang")
+        if self.messages:
+            self.render('topic/edit_reply.html', reply=reply)
+            return
+        reply['modified'] = time.time()
+        content = make_content(content)
+        self.db.notifications.update({'content': reply['content_html']},
+                {'$set': {'content': content}})
+        reply['content_html'] = content
+        self.db.replies.save(reply)
+        self.flash('Saved successfully', type='success')
+        self.redirect(self.get_argument('next', '/'))
+
+
+class RemoveReplyHandler(BaseHandler):
+    def get(self, reply_id):
+        self.check_role(owner_name=self.current_user['name'])
+        self.db.replies.remove({'_id': ObjectId(topic_id)})
+        self.flash('Removed successfully', type='success')
+        self.redirect(self.get_argument('next', '/'))
+
+
 class TopicList(tornado.web.UIModule):
     def render(self, topics):
         return self.render_string("topic/modules/list.html", topics=topics)
@@ -167,6 +211,8 @@ handlers = [
     (r'/topic/(\w+)/move', MoveHandler),
     (r'/topic/(\w+)/like', LikeHandler),
     (r'/topic/(\w+)/unlike', UnlikeHandler),
+    (r'/reply/(\w+)/edit', EditReplyHandler),
+    (r'/reply/(\w+)/remove', RemoveReplyHandler),
 ]
 
 ui_modules = {
