@@ -84,7 +84,8 @@ class ChangeRoleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, name):
         role = int(self.get_argument('role', 100))
-        self.check_role(role_min=role)
+        if self.current_user['role'] < 3:
+            self.check_role(role_min=role+1)
         name = name.lower()
         self.db.members.update({'name_lower': name},
                 {'$set': {'role': role}})

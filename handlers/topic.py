@@ -35,7 +35,7 @@ class ReplyHandler(BaseHandler):
         content = self.get_argument('content', None)
         if not content:
             self.flash('Please fill the required field')
-        if len(content) > 20000:
+        elif len(content) > 20000:
             self.flash("The content is too lang")
         if self.messages:
             self.redirect('/topic/%s' % topic_id)
