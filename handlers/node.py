@@ -48,7 +48,7 @@ class CreateTopicHandler(BaseHandler):
         topic = self.db.topics.find_one({
             'title': title,
             'content': content,
-            'author': self.current_user['_id']
+            'author': self.current_user['name']
         })
         if topic:
             self.redirect('/topic/%s' % topic['_id'])

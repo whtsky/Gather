@@ -43,7 +43,7 @@ class ReplyHandler(BaseHandler):
         reply = self.db.replies.find_one({
             'topic': topic_id,
             'content': content,
-            'author': self.current_user['_id']
+            'author': self.current_user['name']
         })
         if reply:
             self.redirect('/topic/%s' % topic_id)
