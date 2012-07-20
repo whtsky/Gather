@@ -19,9 +19,6 @@ block
         {{ _("Created by") }}
         <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
         {{ _("Last replied at") }} {{ handler.format_time(topic['last_reply_time']) }}
-        {% if topic['created'] != topic['modified'] %}
-         / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
-        {% end %}
         {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ handler.get_node(topic['node'])['title'] }}</a>
     </p>
 </div>
