@@ -1,0 +1,163 @@
+@import "bootstrap";
+@import "_bootstrap-responsive";
+@import "pygments_style";
+@import "variables";
+@import "mixin";
+
+body{
+  background-color: #EEE;
+}
+
+#main .container{
+  padding-top: 60px;
+}
+
+.box {
+  background-color: white;
+  @include border-radius(3px);
+  margin-bottom: $spacing;
+  @include box-shadow(0 0 0 1px #DDD);
+  overflow: hidden;
+  padding: 14px;
+  border-bottom: 2px solid #e2e2e9;
+
+  header {
+    margin-bottom: $spacing;
+    padding-bottom: $spacing;
+    border-bottom: 1px solid #DDD;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  footer{
+    margin-top: $spacing;
+    padding-top: $spacing;
+    border-top: 1px solid #DDD;
+  }
+}
+
+.node{
+  display: inline-block;
+  @include text_like;
+  line-height: 20px;
+  color: #fff;
+  font-weight: bold;
+  padding: 1px 4px;
+  background-color: #BFBFBF;
+  @include border-radius(3px);
+  font-size: 15px;
+
+  &:hover{
+    color: #fff;
+  }
+
+}
+
+#title, #content{
+  margin-top: $spacing;
+  width: 98%;
+}
+
+.username{
+  font-weight: bold;
+  font-size: 15px;
+  @include text_like;
+}
+
+.avatar{
+  float: left;
+  width: $avatar;
+  height: $avatar;
+  @include border-radius(5px);
+  margin-left: $avatar_margin_left;
+  margin-right: $avatar_margin_right;
+}
+
+.reply-content, #notification_list .well{
+  margin-left: $avatar + $avatar_margin_left + $avatar_margin_left;
+}
+
+.right{
+  float: right;
+  display: inline-block;
+}
+
+.list{
+  margin-bottom: $spacing;
+  padding-bottom: $spacing;
+  border-bottom: 1px solid #DDD;
+}
+
+.block{
+  display: none;
+}
+
+#profile_main{
+  height: $avatar_large;
+  font-size: 15px;
+
+  .avatar{
+    width: $avatar_large;
+    height: $avatar_large;
+  }
+
+  .username{
+    font-size: 20px;
+  }
+
+}
+
+.no_block .block{
+  display: block;
+}
+
+#current_base{
+  height: $avatar
+}
+
+table{
+  width: 100%
+}
+
+#current_sidebar{
+  @include text_like;
+}
+
+#current_info{
+  margin-top: $spacing;
+  text-align: center;
+
+  #followed, #favorite {
+    width: 33%
+  }
+
+  #liked{
+    width: 34%;
+    border-left: 1px solid rgba(100, 100, 100, 0.4);
+    border-right: 1px solid rgba(100, 100, 100, 0.4);
+  }
+
+  p{
+    margin-top: 3px;
+  }
+
+  span{
+    font-size: 16px
+  }
+
+}
+
+#notification_list .right{
+  margin-top: 8px;
+  font-weight: normal;
+  font-size: 17px;
+}
+
+#followed_list .avatar{
+  width: $avatar_small;
+  height: $avatar_small
+}
+
+#post_submit_div{
+  margin-top: $spacing
+}

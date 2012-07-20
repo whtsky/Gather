@@ -2,3 +2,6 @@
 settings.py
 *.pyc
 .idea
+
+#sass
+.sass-cache
