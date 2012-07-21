@@ -127,11 +127,11 @@ table{
   margin-top: $spacing;
   text-align: center;
 
-  #followed, #favorite {
+  td {
     width: 33%
   }
 
-  #liked{
+  .liked{
     width: 34%;
     border-left: 1px solid rgba(100, 100, 100, 0.4);
     border-right: 1px solid rgba(100, 100, 100, 0.4);

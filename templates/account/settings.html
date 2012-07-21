@@ -32,6 +32,20 @@
                     <textarea class="input-xxlarge" id="description" name="description" rows="10">{{ current_user['description'] }}</textarea>
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label" for="language">{{ _("Language") }}</label>
+                <div class="controls">
+                    <select name="language" id="language">
+                        {% for locale in locales %}
+                        <option value="{{ locale[0] }}"
+                        {% if current_user['language'] == locale[0] %}
+                        selected="selected"
+                        {% end %}
+                        >{{ locale[1] }}</option>
+                        {% end %}
+                    </select>
+                </div>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
             </div>

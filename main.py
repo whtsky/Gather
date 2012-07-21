@@ -14,7 +14,8 @@ import urls
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
 define('port', default=8888, help='run on the given port', type=int)
-define('settings', default=os.path.join(ROOT, 'settings.py'), help='path to the settings file.', type=str)
+define('settings', default=os.path.join(ROOT, 'settings.py'),
+    help='path to the settings file.', type=str)
 
 
 class Application(tornado.web.Application):
@@ -35,7 +36,14 @@ class Application(tornado.web.Application):
         self.db = db
 
         tornado.locale.load_translations(os.path.join(ROOT, "locale"))
-        tornado.locale.set_default_locale('zh_CN')
+        tornado.locale.set_default_locale(settings['default_locale'])
+        supported_locales = tornado.locale.get_supported_locales()
+        supported_locales.sort()
+        locales = []
+        for locale in supported_locales:
+            locale = (locale, tornado.locale.LOCALE_NAMES[locale]['name'])
+            locales.append(locale)
+        self.locales = tuple(locales)
 
 
 def main():

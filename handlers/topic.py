@@ -20,7 +20,7 @@ class TopicHandler(BaseHandler):
     def get(self, topic_id):
         if self.current_user:
             self.db.notifications.update({
-                'topic': topic_id, 'to':self.current_user['name_lower']
+                'topic': topic_id, 'to': self.current_user['name_lower']
             }, {'$set': {'read': True}})
         topic = self.get_topic(topic_id)
         replies = self.db.replies.find({'topic': topic_id},

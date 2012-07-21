@@ -3,6 +3,7 @@
 import re
 import tornado.web
 import tornado.escape
+import tornado.locale
 import time
 from bson.objectid import ObjectId
 import hashlib
@@ -18,6 +19,11 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         return self.application.db.members.find_one({'password': password})
+
+    def get_user_locale(self):
+        if not self.current_user:
+            return None
+        return tornado.locale.get(self.current_user['language'])
 
     @property
     def db(self):

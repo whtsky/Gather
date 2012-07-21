@@ -80,24 +80,40 @@
                         {% end %}
                     </div>
                     <table id="current_info">
-                        <td id="followed">
+                        <tr>
+                        <td>
                             <a href="/account/followed">
                                 <span>{{ len(current_user['follow']) }}</span>
-                                <p>{{ _("Followed Members") }}</p>
                             </a>
                         </td>
-                        <td id="liked">
+                        <td class="liked">
                             <a href="/account/liked">
                                 <span>{{ len(current_user['like']) }}</span>
-                                <p>{{ _("Liked Topics") }}</p>
                             </a>
                         </td>
-                        <td id="favorite">
+                        <td>
                             <a href="/account/favorited">
                                 <span>{{ len(current_user['favorite']) }}</span>
-                                <p>{{ _("Favorite Nodes") }}</p>
                             </a>
                         </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/account/followed">
+                                    <p>{{ _("Followed Members") }}</p>
+                                </a>
+                            </td>
+                            <td class="liked">
+                                <a href="/account/liked">
+                                    <p>{{ _("Liked Topics") }}</p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/account/favorited">
+                                    <p>{{ _("Favorite Nodes") }}</p>
+                                </a>
+                            </td>
+                        </tr>
                     </table>
                     <footer>
                         <a href="/account/notifications">

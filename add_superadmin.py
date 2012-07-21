@@ -4,6 +4,7 @@
 from __future__ import print_function
 import time
 from init_db import db
+import settings
 from handlers.utils import username_validator
 import hashlib
 
@@ -37,6 +38,7 @@ db.members.insert({
 'description': '',
 'created': time.time(),
 'role': 3,
+'language': settings.default_locale,
 'block': [],
 'like': [],  # topics
 'follow': [],  # users

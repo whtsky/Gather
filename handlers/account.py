@@ -3,6 +3,7 @@
 import time
 import hashlib
 import tornado.web
+import tornado.locale
 from bson.objectid import ObjectId
 from . import BaseHandler
 from .utils import username_validator, email_validator
@@ -43,6 +44,7 @@ class SignupHandler(BaseHandler):
             'website': '',
             'description': '',
             'created': time.time(),
+            'language': self.settings['default_locale'],
             'role': 1,  # TODO:send mail.
             'block': [],
             'like': [],  # topics
@@ -87,16 +89,20 @@ class SignoutHandler(BaseHandler):
 class SettingsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('account/settings.html')
+        self.render('account/settings.html', locales=self.application.locales)
 
     @tornado.web.authenticated
     def post(self):
         website = self.get_argument('website', '')
         description = self.get_argument('description', '')
+        language = self.get_argument('language')
         if len(description) > 1500:
             self.flash("The description is too lang")
-        self.db.members.update({'_id': self.current_user['_id']},
-                {'$set': {'website': website, 'description': description}})
+        self.db.members.update({'_id': self.current_user['_id']}, {'$set': {
+                'website': website,
+                'description': description,
+                'language': language
+            }})
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
 

@@ -11,8 +11,8 @@ class MemberListHandler(BaseHandler):
         count = members.count()
         p = int(self.get_argument('p', 1))
         members = members[(p - 1) * per_page:p * per_page]
-        self.render('member/list.html', per_page=per_page, members=members, count=count,
-            p=p)
+        self.render('member/list.html', per_page=per_page, members=members,
+            count=count, p=p)
 
 
 class MemberPageHandler(BaseHandler):
@@ -85,7 +85,7 @@ class ChangeRoleHandler(BaseHandler):
     def post(self, name):
         role = int(self.get_argument('role', 100))
         if self.current_user['role'] < 3:
-            self.check_role(role_min=role+1)
+            self.check_role(role_min=role + 1)
         name = name.lower()
         self.db.members.update({'name_lower': name},
                 {'$set': {'role': role}})
