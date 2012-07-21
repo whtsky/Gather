@@ -21,3 +21,4 @@ google_analytics = ''
 cookie_secret = 'hey reset me!'
 
 gzip = False
+debug = True
