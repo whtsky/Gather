@@ -37,7 +37,7 @@ class Application(tornado.web.Application):
 
         tornado.locale.load_translations(os.path.join(ROOT, "locale"))
         tornado.locale.set_default_locale(settings['default_locale'])
-        supported_locales = tornado.locale.get_supported_locales()
+        supported_locales = list(tornado.locale.get_supported_locales())
         supported_locales.sort()
         locales = []
         for locale in supported_locales:
