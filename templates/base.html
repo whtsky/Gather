@@ -103,8 +103,10 @@
                         <a href="/account/notifications">
                             {{ handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() }} {{ _("unread notification") }}
                         </a>
-                        <a href="/topic/create" class="right">{{ _("Create Topic") }}</a>
                     </footer>
+                </div>
+                <div class="box">
+                    <a href="/topic/create" class="btn btn-warning">{{ _("Create Topic") }}</a>
                 </div>
                 {% end %}
                 {% block sidebar %}{% end %}
