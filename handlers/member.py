@@ -7,7 +7,7 @@ from . import BaseHandler
 class MemberListHandler(BaseHandler):
     def get(self):
         per_page = self.settings['members_per_page']
-        members = self.db.members.find(sort=[('created', 1)])
+        members = self.db.members.find(sort=[('created', -1)])
         count = members.count()
         p = int(self.get_argument('p', 1))
         members = members[(p - 1) * per_page:p * per_page]

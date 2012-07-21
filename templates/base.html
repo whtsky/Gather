@@ -99,10 +99,11 @@
                             </a>
                         </td>
                     </table>
-                    <footer id="current_footer">
+                    <footer>
                         <a href="/account/notifications">
                             {{ handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() }} {{ _("unread notification") }}
                         </a>
+                        <a href="/topic/create" class="right">{{ _("Create Topic") }}</a>
                     </footer>
                 </div>
                 {% end %}

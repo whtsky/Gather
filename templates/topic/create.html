@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Create Topic") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Choose a node") }}</header>
+    {% for node in handler.db.nodes.find() %}
+    <p><a href="/node/{{ node['name'] }}/create" class="node">{{ node['title'] }}</a>
+    {% end %}
+</div>
+{% end %}

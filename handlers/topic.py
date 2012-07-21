@@ -32,6 +32,12 @@ class TopicHandler(BaseHandler):
             p=p)
 
 
+class CreateHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('topic/create.html')
+
+
 class ReplyHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, topic_id):
@@ -211,6 +217,7 @@ class Paginator(tornado.web.UIModule):
 handlers = [
     (r'/', TopicListHandler),
     (r'/topic', TopicListHandler),
+    (r'/topic/create', CreateHandler),
     (r'/topic/(\w+)', TopicHandler),
     (r'/topic/(\w+)/edit', EditHandler),
     (r'/topic/(\w+)/reply', ReplyHandler),
