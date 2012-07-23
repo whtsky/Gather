@@ -7,6 +7,9 @@
 <div class="box">
     <div id="profile_main">
         <img src="{{ handler.get_avatar(member, size=72) }}" class="avatar" />
+        {% if member['role'] == -1 %}
+        <span class="label label-important right">{{ _("Deactived") }}</span>
+        {% end %}
         <p class="username">{{ member['name'] }}</p>
         <p>{{ _("Join at") }} {{ handler.format_time(member['created']) }}</p>
         {% if member['website'] %}
@@ -77,6 +80,9 @@
     <footer>
         <form method="post" action="/member/{{ member['name'] }}/role">
             <select name="role" id="role">
+                {% if member['role'] > -1 %}
+                <option value="-1">{{ _("Deactive") }}</option>
+                {% end %}
                 {% for role in range(1,4) %}
                 {% if role != member['role'] and role < current_user['role'] %}
                 <option value="{{ role }}">{{ _(handler.settings['role'][role]) }}</option>

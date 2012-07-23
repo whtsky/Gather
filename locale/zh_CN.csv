@@ -40,7 +40,7 @@
 "Remove",删除
 "Remove Member",删除用户
 "Deactive",封禁
-"Reactive",解封
+"Deactived",已被封禁
 "Change Role",改变身份
 "Move",移动
 "From",从
@@ -97,10 +97,10 @@
 "Moved successfully",移动成功
 "Will be same as the name by default",默认将与节点名相同
 
-"Are you human?","非人哉！"
+"Are you human?",非人哉！
 "Only English characters and digits are accepted.",只允许填写英文字符和数字
 "Password doesn't match",密码不匹配
-"Please fill the required field", "请填写所有必填项
+"Please fill the required field", 请填写所有必填项
 "Username is invalid",用户名不正确
 "Not a valid email address",邮箱格式不正确
 "This username is already registered",该用户名已注册

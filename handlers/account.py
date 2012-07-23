@@ -29,7 +29,8 @@ class SignupHandler(BaseHandler):
             self.flash('Username is invalid')
         if email and not email_validator.match(email):
             self.flash('Not a valid email address')
-        if username and self.db.members.find_one({'name_lower': username.lower()}):
+        if username and \
+           self.db.members.find_one({'name_lower': username.lower()}):
             self.flash('This username is already registered')
         if email and self.db.members.find_one({'email': email}):
             self.flash('This email is already registered')

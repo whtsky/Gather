@@ -51,24 +51,6 @@ class UnfollowHandler(BaseHandler):
         self.redirect('/member/' + name)
 
 
-class DeactiveHandler(BaseHandler):
-    def get(self, name):
-        self.check_role()
-        member = self.get_member(name)
-        member['role'] = -1
-        self.db.members.save(member)
-        self.redirect('/member/%s' % name)
-
-
-class ReactiveHandler(BaseHandler):
-    def get(self, name):
-        self.check_role()
-        member = self.get_member(name)
-        member['role'] = 1
-        self.db.members.save(member)
-        self.redirect('/member/%s' % name)
-
-
 class MemberTopicsHandler(BaseHandler):
     def get(self, name):
         member = self.get_member(name)
@@ -118,7 +100,5 @@ handlers = [
     (r'/member/(\w+)/unfollow', UnfollowHandler),
     (r'/member/(\w+)/block', BlockHandler),
     (r'/member/(\w+)/unblock', UnblockHandler),
-    (r'/member/(\w+)/deactive', DeactiveHandler),
-    (r'/member/(\w+)/reactive', ReactiveHandler),
     (r'/member/(\w+)/role', ChangeRoleHandler),
 ]
