@@ -5,6 +5,7 @@ import hashlib
 import tornado.web
 import tornado.locale
 from bson.objectid import ObjectId
+import ayah
 from . import BaseHandler
 from .utils import username_validator, email_validator
 
@@ -13,27 +14,46 @@ class SignupHandler(BaseHandler):
     def get(self):
         if self.current_user:
             self.redirect(self.get_argument('next', '/'))
-        self.render('account/signup.html')
+        ayah_html = ''
+        if self.settings['use_ayah']:
+            ayah.configure(self.settings['ayah_public_key'],
+                self.settings['ayah_scoring_key'])
+            ayah_html = ayah.get_publisher_html()
+        self.render('account/signup.html', ayah_html=ayah_html)
 
     def post(self):
         username = self.get_argument('username', None)
         email = self.get_argument('email', '').lower()
         password = self.get_argument('password', None)
         password2 = self.get_argument('password2', None)
+        if self.settings['use_ayah']:
+            ayah.configure(self.settings['ayah_public_key'],
+                self.settings['ayah_scoring_key'])
+            session_secret = self.get_argument('session_secret')
+            passed = ayah.score_result(session_secret)
+            if not passed:
+                self.flash('Are you human?')
+                self.redirect('/')
+                return
         if not (username and email and password and password2):
             self.flash('Please fill the required field')
         if password != password2:
             self.flash("Password doesn't match")
-        if not username_validator.match(username):
+        if username and not username_validator.match(username):
             self.flash('Username is invalid')
-        if not email_validator.match(email):
+        if email and not email_validator.match(email):
             self.flash('Not a valid email address')
-        if self.db.members.find_one({'name_lower': username.lower()}):
+        if username and self.db.members.find_one({'name_lower': username.lower()}):
             self.flash('This username is already registered')
-        if self.db.members.find_one({'email': email}):
+        if email and self.db.members.find_one({'email': email}):
             self.flash('This email is already registered')
         if self.messages:
-            self.render('account/signup.html')
+            ayah_html = ''
+            if self.settings['use_ayah']:
+                ayah.configure(self.settings['ayah_public_key'],
+                    self.settings['ayah_scoring_key'])
+                ayah_html = ayah.get_publisher_html()
+            self.render('account/signup.html', ayah_html=ayah_html)
             return
         password = hashlib.sha1(password + username.lower()).hexdigest()
         self.db.members.insert({

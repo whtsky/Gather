@@ -39,6 +39,8 @@
 "Edit",编辑
 "Remove",删除
 "Remove Member",删除用户
+"Deactive",封禁
+"Reactive",解封
 "Change Role",改变身份
 "Move",移动
 "From",从
@@ -95,6 +97,7 @@
 "Moved successfully",移动成功
 "Will be same as the name by default",默认将与节点名相同
 
+"Are you human?","非人哉！"
 "Only English characters and digits are accepted.",只允许填写英文字符和数字
 "Password doesn't match",密码不匹配
 "Please fill the required field", "请填写所有必填项
@@ -104,6 +107,7 @@
 "This email is already registered",该邮箱已注册
 "Invalid account or password",账户或密码错误
 "Invalid password",密码错误
+"Your account has been deactived",你的账号已被封禁
 
 "Already have an account?",已有账户？
 "Don't have an account?",还没有账户？

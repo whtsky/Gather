@@ -7,8 +7,7 @@
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='{{ static_url("js/jquery-1.7.2.min.js") }}'></script>
-    <script src='{{ static_url("js/bootstrap.min.js") }}'></script>
+    <script src='{{ static_url("js/script.js") }}'></script>
     <link rel="canonical" href="{{ handler.settings['forum_url'] }}{% block canonical %}{% end %}" />
     {% if handler.settings['google_analytics'] %}
     <script type="text/javascript">

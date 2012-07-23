@@ -1,4 +1,4 @@
-#coding=utf-8
+ #coding=utf-8
 
 import time
 import tornado.web
@@ -26,13 +26,11 @@ class NodeHandler(BaseHandler):
 class CreateTopicHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, node_name):
-        self.check_role(role_min=1)
         node = self.get_node(node_name)
         self.render('node/create.html', node=node)
 
     @tornado.web.authenticated
     def post(self, node_name):
-        self.check_role(role_min=1)
         node = self.get_node(node_name)
         title = self.get_argument('title', '')
         content = self.get_argument('content', '')

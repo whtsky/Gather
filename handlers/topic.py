@@ -41,7 +41,6 @@ class CreateHandler(BaseHandler):
 class ReplyHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, topic_id):
-        self.check_role(role_min=1)
         content = self.get_argument('content', None)
         if not content:
             self.flash('Please fill the required field')

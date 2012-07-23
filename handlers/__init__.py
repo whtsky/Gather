@@ -18,7 +18,12 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         password = self.get_secure_cookie('user')
-        return self.application.db.members.find_one({'password': password})
+        member = self.application.db.members.find_one({'password': password})
+        if member and member['role'] < 0:
+            self.flash('Your account has been deactived.')
+            self.clear_cookie('user')
+            return None
+        return member
 
     def get_user_locale(self):
         if not self.current_user:
