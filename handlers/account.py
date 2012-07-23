@@ -5,7 +5,6 @@ import hashlib
 import tornado.web
 import tornado.locale
 from bson.objectid import ObjectId
-import ayah
 from . import BaseHandler
 from .utils import username_validator, email_validator
 
@@ -14,27 +13,14 @@ class SignupHandler(BaseHandler):
     def get(self):
         if self.current_user:
             self.redirect(self.get_argument('next', '/'))
-        ayah_html = ''
-        if self.settings['use_ayah']:
-            ayah.configure(self.settings['ayah_public_key'],
-                self.settings['ayah_scoring_key'])
-            ayah_html = ayah.get_publisher_html()
-        self.render('account/signup.html', ayah_html=ayah_html)
+        self.render('account/signup.html')
 
     def post(self):
+        self.verify_ayah()
         username = self.get_argument('username', None)
         email = self.get_argument('email', '').lower()
         password = self.get_argument('password', None)
         password2 = self.get_argument('password2', None)
-        if self.settings['use_ayah']:
-            ayah.configure(self.settings['ayah_public_key'],
-                self.settings['ayah_scoring_key'])
-            session_secret = self.get_argument('session_secret')
-            passed = ayah.score_result(session_secret)
-            if not passed:
-                self.flash('Are you human?')
-                self.redirect('/')
-                return
         if not (username and email and password and password2):
             self.flash('Please fill the required field')
         if password != password2:
@@ -48,12 +34,7 @@ class SignupHandler(BaseHandler):
         if email and self.db.members.find_one({'email': email}):
             self.flash('This email is already registered')
         if self.messages:
-            ayah_html = ''
-            if self.settings['use_ayah']:
-                ayah.configure(self.settings['ayah_public_key'],
-                    self.settings['ayah_scoring_key'])
-                ayah_html = ayah.get_publisher_html()
-            self.render('account/signup.html', ayah_html=ayah_html)
+            self.render('account/signup.html')
             return
         password = hashlib.sha1(password + username.lower()).hexdigest()
         self.db.members.insert({
@@ -83,8 +64,7 @@ class SigninHandler(BaseHandler):
         self.render('account/signin.html')
 
     def post(self):
-        if self.current_user:
-            self.redirect(self.get_argument('next', '/'))
+        self.verify_ayah()
         username = self.get_argument('username', '').lower()
         password = self.get_argument('password', None)
         if not (username and password):

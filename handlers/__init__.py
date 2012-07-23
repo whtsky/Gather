@@ -7,6 +7,7 @@ import tornado.locale
 import time
 from bson.objectid import ObjectId
 import hashlib
+import ayah
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 
@@ -33,6 +34,25 @@ class BaseHandler(tornado.web.RequestHandler):
     @property
     def db(self):
         return self.application.db
+
+    def get_ayah_html(self):
+        ayah_html = ''
+        if self.settings['use_ayah']:
+            ayah.configure(self.settings['ayah_public_key'],
+                self.settings['ayah_scoring_key'])
+            ayah_html = ayah.get_publisher_html()
+        return ayah_html
+
+    def verify_ayah(self):
+        if self.settings['use_ayah']:
+            ayah.configure(self.settings['ayah_public_key'],
+                self.settings['ayah_scoring_key'])
+            session_secret = self.get_argument('session_secret')
+            passed = ayah.score_result(session_secret)
+            if not passed:
+                self.flash('Are you human?')
+                self.redirect('/')
+        return True
 
     def get_member(self, name):
         name = name.lower()

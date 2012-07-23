@@ -31,6 +31,7 @@ class CreateTopicHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self, node_name):
+        self.verify_ayah()
         node = self.get_node(node_name)
         title = self.get_argument('title', '')
         content = self.get_argument('content', '')
