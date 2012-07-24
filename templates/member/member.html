@@ -75,9 +75,6 @@
     <a href="/member/{{ member['name'] }}/block" class="btn btn-warning">{{ _("Block") }}</a>
     {% end %}
     {% end %}
-    {% if handler.check_role(owner_name=member['name'], return_bool=True) %}
-    <a href="/member/{{ member['name'] }}/remove" class="btn btn-danger">{{ _("Remove Member") }}</a>
-    {% end %}
     {% if handler.check_role(return_bool=True) %}
     <footer>
         <form method="post" action="/member/{{ member['name'] }}/role">
