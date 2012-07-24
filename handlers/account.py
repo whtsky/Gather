@@ -38,6 +38,9 @@ class SignupHandler(BaseHandler):
             self.render('account/signup.html')
             return
         password = hashlib.sha1(password + username.lower()).hexdigest()
+        role = 1
+        if not self.db.members.count():
+            role = 3
         self.db.members.insert({
             'name': username,
             'name_lower': username.lower(),
@@ -47,7 +50,7 @@ class SignupHandler(BaseHandler):
             'description': '',
             'created': time.time(),
             'language': self.settings['default_locale'],
-            'role': 1,  # TODO:send mail.
+            'role': role,  # TODO:send mail.
             'block': [],
             'like': [],  # topics
             'follow': [],  # users

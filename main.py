@@ -7,8 +7,8 @@ import tornado.ioloop
 import tornado.locale
 import tornado.options
 import tornado.web
+import pymongo
 from tornado.options import define, options
-from init_db import db
 import urls
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -34,6 +34,14 @@ class Application(tornado.web.Application):
         super(Application, self).__init__(urls.handlers,
             ui_modules=urls.ui_modules, login_url='/account/signin',
             **settings)
+
+        db = pymongo.Connection(host=settings['mongodb_host'],
+            port=settings['mongodb_port'])[settings['database_name']]
+        db.members.create_index([('created', -1)])
+        db.topics.create_index([('last_reply_time', -1), ('node', 1)])
+        db.replies.create_index([('topic', 1), ('index', 1)])
+        db.notifications.create_index([('to', 1), ('created', 1)])
+        db.links.create_index([('priority', -1)])
 
         self.db = db
 
