@@ -75,7 +75,7 @@ body{
 }
 
 .reply-content, #notification_list .well{
-  margin-left: $avatar + $avatar_margin_left + $avatar_margin_left;
+  margin-left: $avatar + $avatar_margin_left + $avatar_margin_left + 3px;
 }
 
 .list{
