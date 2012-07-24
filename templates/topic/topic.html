@@ -55,6 +55,9 @@ block
             / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
             {% end %}
             #{{ reply['index'] }}
+            {% if author['role'] == -1 %}
+            <span class="label label-important">{{ _("Deactived") }}</span>
+            {% end %}
             {% if current_user and handler.check_role(owner_name=reply['author'], return_bool=True) %}
             <a href="/reply/{{ reply['_id'] }}/edit?next={{ url_escape(request.uri) }}" class="label label-warning">{{ _("Edit") }}</a>
             {% end %}
@@ -84,6 +87,9 @@ block
     {% set author = handler.get_member(topic['author']) %}
     <header>{{ _("Author") }}</header>
     <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+    {% if author['role'] == -1 %}
+    <span class="label label-important right">{{ _("Deactived") }}</span>
+    {% end %}
     <p><a href="/member/{{ author['name'] }}" class="username">{{ author['name'] }}</a></p>
     {% if author['website'] %}
     <p><a href="{{ author['website'] }}" rel="nofollow">{{ author['website'] }}</a></p>
