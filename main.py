@@ -29,6 +29,8 @@ class Application(tornado.web.Application):
         if 'static_path' not in settings:
             settings['static_path'] = os.path.join(ROOT, "static")
 
+        settings['host'] = settings['forum_url'].split('/')[2]
+
         super(Application, self).__init__(urls.handlers,
             ui_modules=urls.ui_modules, login_url='/account/signin',
             **settings)
@@ -48,7 +50,7 @@ class Application(tornado.web.Application):
 
 def main():
     tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(Application())
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
 

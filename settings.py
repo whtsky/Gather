@@ -8,6 +8,8 @@ database_name = 'forum'
 forum_title = 'site_name'
 forum_url = 'http://xxx.com/'
 # forum_url MUST ends with '/'
+only_use_forum_url = True
+#Will redirect all the request to the forum url if True.
 #static_path = ''
 #static_url_prefix = 'http://assets.xxx.com'
 

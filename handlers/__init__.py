@@ -14,6 +14,11 @@ _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
+        if self.request.remote_ip != '127.0.0.1' and \
+           self.request.host != self.settings['host']:
+            self.redirect(self.settings['forum_url'] + self.request.uri[1:],
+                permanent=True)
+
         messages = self.get_secure_cookie('flash_messages')
         self.messages = messages and tornado.escape.json_decode(messages) or []
 
