@@ -8,9 +8,9 @@
     <div id="profile_main">
         <img src="{{ handler.get_avatar(member, size=72) }}" class="avatar" />
         {% if member['role'] == -1 %}
-        <span class="label label-important right">{{ _("Deactived") }}</span>
+        <span class="label label-important pull-right">{{ _("Deactived") }}</span>
         {% elif member['role'] > 1 %}
-        <span class="label label-important right">{{ _(handler.settings['role'][member['role']]) }}</span>
+        <span class="label label-important pull-right">{{ _(handler.settings['role'][member['role']]) }}</span>
         {% end %}
         <p class="username">{{ member['name'] }}</p>
         <p>{{ _("Join at") }} {{ handler.format_time(member['created']) }}</p>

@@ -13,7 +13,7 @@ block
 
         <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}" class="badge
         {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
-         right">{{ reply_nums }}</a>
+         pull-right">{{ reply_nums }}</a>
     </p>
     <p>
         {{ _("Created by") }}

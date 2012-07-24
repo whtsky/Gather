@@ -12,4 +12,4 @@ js:
 	uglifyjs -nc assets/js/bootstrap.min.js >> static/js/script.js
 	uglifyjs -nc assets/js/jquery.caret.js > static/js/editor.js
 	uglifyjs -nc assets/js/jquery.atwho.js >> static/js/editor.js
-	coffee -p assets/js/atuser.coffee | uglifyjs >> static/js/editor.js
+	coffee -p assets/js/editor.coffee | uglifyjs >> static/js/editor.js
