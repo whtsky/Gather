@@ -1,0 +1,45 @@
+{% extends '../base.html' %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Links") }}</header>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ _("Priority") }}</th>
+            <th>{{ _("Name") }}</th>
+            <th>{{ _("Link") }}</th>
+            <th>{{ _("Title") }}</th>
+            <th>{{ _("Action") }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for link in handler.db.links.find(sort=[('priority', -1)]) %}
+        <tr>
+            <td>{{ link['priority'] }}</td>
+            <td>{{ link['name'] }}</td>
+            <td>{{ link['link'] }}</td>
+            <td>{{ link['title'] }}</td>
+            <td><a href="/dashboard/link/{{ link['_id'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a></td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Add Link") }}</header>
+    <form method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <input type="text" class="input-medium" id="priority" name="priority" placeholder="priority.optional.">
+            <input type="text" class="input-medium" id="name" name="name" placeholder="name" required>
+            <input type="text" class="input-medium" name="title" placeholder="title.optional." >
+            <input type="text" class="input-medium" id="link" name="link" placeholder="http://" required><br />
+            <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
+        </fieldset>
+    </form>
+</div>
+{% end %}
