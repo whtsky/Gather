@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-{% set node = handler.get_node(topic['node']) %}
+{% if current_user %}
+<script src='{{ static_url("js/editor.js") }}'></script>
+{% end %}
 {% end %}
 
-{% block description %}{{ topic['title'] }},{{ topic['node'] }},{{ node['title'] }}{% end %}
+{% block description %}{{ topic['title'] }},{{ topic['node'] }},{% set node = handler.get_node(topic['node']) %}{{ node['title'] }}{% end %}
 
 {% block title %}{{ topic['title'] }} | {% end %}
 {% block canonical %}topic/{{ topic['_id'] }}?p={{p}}{% end %}
@@ -49,7 +51,7 @@ block
         <a href="/reply/{{ reply['_id'] }}/remove" class="close right">&times;</a>
         {% end %}
         <p>
-            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+            <a href="/member/{{ author['name'] }}" class="reply_user">{{ author['name'] }}</a>
             {{ _("Replied at") }} {{ handler.format_time(reply['created']) }}
             {% if reply['created'] != reply['modified'] %}
             / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
