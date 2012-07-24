@@ -47,6 +47,18 @@
                 <li><a href="/account/signin?next={{ url_escape(request.uri) }}">{{ _("Signin") }}</a></li>
                 {% else %}
                 <li><a href="/member/{{ current_user['name'] }}">{{ current_user['name'] }}</a></li>
+                <ul class="nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ _("Create Topic") }}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for target_node in handler.db.nodes.find() %}
+                            <li><a href="/node/{{ target_node['name'] }}/create">{{ target_node['title'] }}</a></li>
+                            {% end %}
+                        </ul>
+                    </li>
+                </ul>
                 <li><a href="/account/settings">{{ _("Settings") }}</a></li>
                 <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
                 {% end %}
@@ -119,9 +131,6 @@
                             {{ handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() }} {{ _("unread notification") }}
                         </a>
                     </footer>
-                </div>
-                <div class="box">
-                    <a href="/topic/create" class="btn btn-warning">{{ _("Create Topic") }}</a>
                 </div>
                 {% end %}
                 {% block sidebar %}{% end %}
