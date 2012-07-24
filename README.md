@@ -12,7 +12,7 @@ vim settings.py
 
 You must rewrite `forum_title` and `forum_url`.
 
-`cookie_secret` must to be a random string.
+`cookie_secret` must be a random string.
 
 Then,run`python main.py` and goto http://localhost:8888/.The first member will be superadmin.
 
