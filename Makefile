@@ -1,3 +1,5 @@
+all: css js
+
 css:
 	sass assets/css/pbb.scss:static/css/style.css --style compressed
 
