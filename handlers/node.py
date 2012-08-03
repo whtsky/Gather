@@ -110,6 +110,26 @@ class EditHandler(BaseHandler):
     def post(self, node_name):
         self.check_role()
         node = self.get_node(node_name)
+        name = self.get_argument('name', None)
+        title = self.get_argument('title', name)
+        if not name:
+            self.flash('Please fill the required field')
+        if name != node['name'] and \
+            self.db.nodes.find_one({'name_lower': name.lower()}):
+                self.flash('This node name is already registered')
+        if title != node['title'] and \
+            self.db.nodes.find_one({'title': title}):
+            self.flash('This node title is already registered')
+        if self.messages:
+            self.render('node/edit.html', node=node)
+            return
+
+        self.db.topics.update({'node': node['name_lower']},
+            {'$set': {'node': name.lower()}}, multi=True)
+        node['name'] = name
+        node['name_lower'] = name.lower()
+        node['title'] = title
+        node['description'] = self.get_argument('description', '')
         node['description'] = self.get_argument('description', '')
         node['html'] = self.get_argument('html', '')
         self.db.nodes.save(node)
