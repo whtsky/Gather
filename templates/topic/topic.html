@@ -102,7 +102,7 @@ block
 </div>
 {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
 <div class="box">
-    <header>{{ _("Admin") }}</header>
+    <header>{{ _("Settings") }}</header>
     <a href="/topic/{{ topic['_id'] }}/edit" class="btn one_third">{{ _("Edit") }}</a>
     <a href="/topic/{{ topic['_id'] }}/move" class="btn btn-warning one_third">{{ _("Move") }}</a>
     <a href="/topic/{{ topic['_id'] }}/remove" class="btn btn-danger one_third">{{ _("Remove") }}</a>

@@ -16,7 +16,7 @@ class SignupHandler(BaseHandler):
         self.render('account/signup.html')
 
     def post(self):
-        self.verify_ayah()
+        self.recaptcha_validate()
         username = self.get_argument('username', None)
         email = self.get_argument('email', '').lower()
         password = self.get_argument('password', None)
@@ -68,7 +68,7 @@ class SigninHandler(BaseHandler):
         self.render('account/signin.html')
 
     def post(self):
-        self.verify_ayah()
+        self.recaptcha_validate()
         username = self.get_argument('username', '').lower()
         password = self.get_argument('password', None)
         if not (username and password):

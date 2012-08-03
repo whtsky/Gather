@@ -19,7 +19,7 @@
 {% module node_sitebar(node) %}
 {% if handler.check_role(return_bool=True) %}
 <div class="box">
-    <header>{{ _("Admin") }}</header>
+    <header>{{ _("Settings") }}</header>
     <a href="/node/{{ node['name'] }}/edit" class="btn">{{ _("Edit Node") }}</a>
     <a href="/node/add" class="btn btn-warning">{{ _("Add Node") }}</a>
     <a href="/node/{{ node['name'] }}/remove" class="btn btn-danger">{{ _("Remove Node") }}</a>

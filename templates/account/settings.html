@@ -55,6 +55,10 @@
 {% end %}
 
 {% block sidebar %}
+<div class="avatar">
+    <header>{{ _("Avatar") }}</header>
+    <a href="http://gravatar.com/">{{ _("Change your avatar at Gravatar") }}</a>
+</div>
 <div class="box">
     <header>{{ _("Password") }}</header>
     <form method="post" action="/account/password">

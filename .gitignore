@@ -4,3 +4,6 @@
 
 #sass
 .sass-cache
+
+#OS X
+.DS_Store

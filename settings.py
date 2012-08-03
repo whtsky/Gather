@@ -24,9 +24,10 @@ gravatar_base_url = 'http://cn.gravatar.com/avatar/'
 google_analytics = ''
 cookie_secret = 'hey reset me!'
 
-use_ayah = False  # If you use it,set to True
-ayah_public_key = ''
-ayah_scoring_key = ''
+use_recaptcha = False  # If you use it,set to True
+recaptcha_key = ''
+recaptcha_secret = ''
+recaptcha_theme = 'clean'
 
 gzip = False
 debug = True
