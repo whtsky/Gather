@@ -22,7 +22,7 @@ class MemberPageHandler(BaseHandler):
             sort=[('last_reply_time', -1)])
         topics = topics[:self.settings['topics_per_page']]
         replies = self.db.replies.find({'author': member['name']},
-            sort=[('index', -1)])
+            sort=[('created', -1)])
         replies = replies[:self.settings['replies_per_page']]
         if member['like']:
             member['like'] = member['like'][:self.settings['topics_per_page']]

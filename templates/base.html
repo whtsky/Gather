@@ -6,11 +6,13 @@
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='{{ static_url("js/script.js") }}'></script>
+    <script src='{{ static_url("js/lib.js") }}'></script>
+    <script src='{{ static_url("js/search.js") }}'></script>
     <link rel="canonical" href="{{ handler.settings['forum_url'] }}{% block canonical %}{% end %}" />
     {% block head %}{% end %}
-    {% if handler.settings['google_analytics'] %}
     <script type="text/javascript">
+        var domain = "{{ handler.settings['host'] }}";
+        {% if handler.settings['google_analytics'] %}
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '{{ handler.settings["google_analytics"] }}']);
         _gaq.push(['_trackPageview']);
@@ -19,8 +21,9 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
+        {% end %}
     </script>
-    {% end %}
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -39,6 +42,9 @@
                     <li><a href="/node">{{ _("Nodes") }}</a></li>
                     <li><a href="/member">{{ _("Members") }}</a></li>
                     {% end %}
+                    <form class="navbar-search pull-left" onsubmit="return search()">
+                      <input type="text" class="search-query span2" placeholder="{{ _("Search") }}">
+                    </form>
                 </ul>
                 <ul class="nav pull-right">
                     {% if not current_user %}
