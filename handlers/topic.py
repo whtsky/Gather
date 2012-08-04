@@ -76,7 +76,8 @@ class ReplyHandler(BaseHandler):
             data['source'] = source
         self.db.replies.insert(data)
         self.db.topics.update({'_id': ObjectId(topic_id)},
-            {'$set': {'last_reply_time': time_now}})
+            {'$set': {'last_reply_time': time_now,
+                'last_reply_by': self.current_user['name']}})
         self.redirect('/topic/%s' % topic_id)
 
 
