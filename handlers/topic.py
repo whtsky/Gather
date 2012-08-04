@@ -88,8 +88,9 @@ class RemoveHandler(BaseHandler):
         for member in members:
             member['like'].remove(topic_id)
             self.db.members.save(member)
-        self.db.topics.remove({'_id': ObjectId(topic_id)})
-        self.db.replies.remove({'topic': ObjectId(topic_id)})
+        topic_id = ObjectId(topic_id)
+        self.db.topics.remove({'_id': topic_id})
+        self.db.replies.remove({'topic': topic_id})
         self.db.notifications.remove({'topic': topic_id})
         self.flash('Removed successfully', type='success')
         self.redirect('/')

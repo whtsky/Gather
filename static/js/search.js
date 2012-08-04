@@ -1,1 +1,0 @@
-var search;search=function(){var e;return e=$(".search-query").val(),e?(window.open("https://www.google.com/search?q=site:"+domain+" "+e),$(".search-query").val(""),!1):!1};
