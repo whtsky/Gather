@@ -21,7 +21,7 @@ class TopicHandler(BaseHandler):
         if self.current_user:
             self.db.notifications.update({
                 'topic': topic_id, 'to': self.current_user['name_lower']
-            }, {'$set': {'read': True}})
+            }, {'$set': {'read': True}}, multi=True)
         topic = self.get_topic(topic_id)
         replies = self.db.replies.find({'topic': topic_id},
             sort=[('index', 1)])

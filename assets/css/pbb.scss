@@ -1,5 +1,5 @@
 @import "bootstrap";
-@import "_bootstrap-responsive";
+@import "responsive";
 @import "pygments_style";
 @import "variables";
 @import "mixin";
@@ -7,10 +7,6 @@
 
 body{
   background-color: #EEE;
-}
-
-#main .container{
-  padding-top: 60px;
 }
 
 .box {
@@ -21,6 +17,7 @@ body{
   overflow: hidden;
   padding: 14px;
   border-bottom: 2px solid #e2e2e9;
+  word-break:break-all;
 
   header {
     margin-bottom: $spacing;
@@ -156,10 +153,6 @@ table{
 #followed_list .avatar img{
   width: $avatar_small;
   height: $avatar_small
-}
-
-#post_submit_div{
-  margin-top: $spacing
 }
 
 #footer{

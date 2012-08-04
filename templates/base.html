@@ -40,42 +40,42 @@
                     <li><a href="/member">{{ _("Members") }}</a></li>
                     {% end %}
                 </ul>
+                <ul class="nav pull-right">
+                    {% if not current_user %}
+                    <li><a href="/account/signup?next={{ url_escape(request.uri) }}">{{ _("Signup") }}</a></li>
+                    <li><a href="/account/signin?next={{ url_escape(request.uri) }}">{{ _("Signin") }}</a></li>
+                    {% else %}
+                    <li><a href="/member/{{ current_user['name'] }}">{{ current_user['name'] }}</a></li>
+                    {% if current_user['role'] == 3 %}
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ _("Dashboard") }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/dashboard/link">{{ _("Link") }}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+    
+                    {% end %}
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ _("Create Topic") }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for target_node in handler.db.nodes.find() %}
+                                <li><a href="/node/{{ target_node['name'] }}/create">{{ target_node['title'] }}</a></li>
+                                {% end %}
+                            </ul>
+                        </li>
+                    </ul>
+                    <li><a href="/account/settings">{{ _("Settings") }}</a></li>
+                    <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
+                    {% end %}
+                </ul>
             </div>
-            <ul class="nav pull-right">
-                {% if not current_user %}
-                <li><a href="/account/signup?next={{ url_escape(request.uri) }}">{{ _("Signup") }}</a></li>
-                <li><a href="/account/signin?next={{ url_escape(request.uri) }}">{{ _("Signin") }}</a></li>
-                {% else %}
-                <li><a href="/member/{{ current_user['name'] }}">{{ current_user['name'] }}</a></li>
-                {% if current_user['role'] == 3 %}
-                <ul class="nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ _("Dashboard") }}
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/dashboard/link">{{ _("Link") }}</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                {% end %}
-                <ul class="nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ _("Create Topic") }}
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% for target_node in handler.db.nodes.find() %}
-                            <li><a href="/node/{{ target_node['name'] }}/create">{{ target_node['title'] }}</a></li>
-                            {% end %}
-                        </ul>
-                    </li>
-                </ul>
-                <li><a href="/account/settings">{{ _("Settings") }}</a></li>
-                <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
-                {% end %}
-            </ul>
         </div>
     </div>
 </div>

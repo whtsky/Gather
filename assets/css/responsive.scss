@@ -1,0 +1,32 @@
+@import "bootstrap-responsive";
+
+@media (min-width: 980px) {
+  #main .container{
+	padding-top: 60px;
+  }
+}
+
+@media (max-width: 980px) {
+  .form-horizontal{
+  	.control-group > label {
+      float: none;
+	  width: auto;
+	  padding-top: 0;
+	  text-align: left;
+	}
+    .controls {
+  	  margin-left: 0;	
+  	  input, textarea{
+  	    width: 98%;
+  	  }
+    }
+    .control-list {
+	  padding-top: 0; // has to be padding because margin collaspes
+    }
+    .form-actions {
+	  padding-left: 10px;
+	  padding-right: 10px;
+    }
+    
+  }
+}
