@@ -32,6 +32,11 @@ body{
     padding-top: $spacing;
     border-top: 1px solid #DDD;
   }
+  
+  img{
+    max-width: 100%;
+  }
+  
 }
 
 .node{

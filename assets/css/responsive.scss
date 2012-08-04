@@ -6,7 +6,7 @@
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .form-horizontal{
   	.control-group > label {
       float: none;
@@ -21,8 +21,8 @@
   	  }
     }
     .control-list {
-	  padding-top: 0; // has to be padding because margin collaspes
-    }
+	  padding-top: 0;
+	}
     .form-actions {
 	  padding-left: 10px;
 	  padding-right: 10px;
