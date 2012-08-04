@@ -15,7 +15,6 @@
             <input type="text" class="input-xxlarge" id="title" name="title" placeholder="{{ _('Title') }}"
                    maxlength="100" required>
             <textarea id="content" name="content" rows="20" required></textarea>
-            {% raw handler.recaptcha_render() %}
             <div id="post_submit_div">
                 <button type="submit" class="btn btn-primary">{{ _("Post") }}</button>
             </div>

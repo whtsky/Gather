@@ -68,7 +68,6 @@ class SigninHandler(BaseHandler):
         self.render('account/signin.html')
 
     def post(self):
-        self.recaptcha_validate()
         username = self.get_argument('username', '').lower()
         password = self.get_argument('password', None)
         if not (username and password):

@@ -67,13 +67,13 @@ body{
 
 .avatar{
   float: left;
-  width: $avatar;
-  height: $avatar;
   margin-left: $avatar_margin_left;
   margin-right: $avatar_margin_right;
   
   img{
     @include border-radius(5px);
+    width: $avatar;
+    height: $avatar;
   }
   
 }
@@ -96,7 +96,7 @@ body{
   height: $avatar_large;
   font-size: 15px;
 
-  .avatar{
+  .avatar img{
     width: $avatar_large;
     height: $avatar_large;
   }
@@ -153,7 +153,7 @@ table{
   font-size: 17px;
 }
 
-#followed_list .avatar{
+#followed_list .avatar img{
   width: $avatar_small;
   height: $avatar_small
 }
