@@ -53,7 +53,7 @@ class CreateTopicHandler(BaseHandler):
             return
         time_now = time.time()
         content_html = make_content(content)
-        topic_id = self.db.topics.insert({
+        data = {
             'title': title,
             'content': content,
             'content_html': content_html,
@@ -63,7 +63,11 @@ class CreateTopicHandler(BaseHandler):
             'modified': time_now,
             'last_reply_time': time_now,
             'index': 0,
-        })
+        }
+        source = self.get_source()
+        if source:
+            data['source'] = source
+        topic_id = self.db.topics.insert(data)
         self.send_notification(content_html, topic_id)
         self.redirect('/topic/%s' % topic_id)
 

@@ -86,7 +86,7 @@ class RecaptchaMixin(object):
 
     def recaptcha_validate(self):
         if not self.settings['use_recaptcha']:
-            return 
+            return
         token = self._recaptcha_token()
         challenge = self.get_argument('recaptcha_challenge_field', None)
         response = self.get_argument('recaptcha_response_field', None)

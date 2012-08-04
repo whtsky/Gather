@@ -62,7 +62,8 @@ class ReplyHandler(BaseHandler):
         time_now = time.time()
         content_html = make_content(content)
         self.send_notification(content_html, topic_id)
-        self.db.replies.insert({
+        source = self.get_source()
+        data = {
             'content': content,
             'content_html': content_html,
             'author': self.current_user['name'],
@@ -70,7 +71,10 @@ class ReplyHandler(BaseHandler):
             'created': time_now,
             'modified': time_now,
             'index': index,
-        })
+        }
+        if source:
+            data['source'] = source
+        self.db.replies.insert(data)
         self.db.topics.update({'_id': ObjectId(topic_id)},
             {'$set': {'last_reply_time': time_now}})
         self.redirect('/topic/%s' % topic_id)

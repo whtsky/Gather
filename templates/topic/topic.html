@@ -34,6 +34,9 @@
         {% if topic['created'] != topic['modified'] %}
         / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
         {% end %}
+        {% if 'source' in topic %}
+        via {{ topic['source'] }}
+        {% end %}
     </footer>
 </div>
 {% if replies_count %}
@@ -60,6 +63,9 @@ block
             / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
             {% end %}
             #{{ reply['index'] }}
+            {% if 'source' in reply %}
+            via {{ reply['source'] }}
+            {% end %}
             {% if author['role'] == -1 %}
             <span class="label label-important">{{ _("Deactived") }}</span>
             {% end %}

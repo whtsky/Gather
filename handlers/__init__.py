@@ -36,6 +36,14 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
             return None
         return tornado.locale.get(self.current_user['language'])
 
+    def get_source(self):
+        ua = self.request.headers.get("User-Agent", "bot").lower()
+        mobiles = ('iPod', 'iPhone', 'iPad', 'Android', 'Kindle')
+        for m in mobiles:
+            if m.lower() in ua:
+                return m
+        return None
+
     @property
     def db(self):
         return self.application.db
