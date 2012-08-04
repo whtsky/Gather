@@ -22,7 +22,7 @@
     <header>{{ _("Dashboard") }}</header>
     <a href="/node/{{ node['name'] }}/edit" class="btn">{{ _("Edit Node") }}</a>
     <a href="/node/add" class="btn btn-warning">{{ _("Add Node") }}</a>
-    <a href="/node/{{ node['name'] }}/remove" class="btn btn-danger">{{ _("Remove Node") }}</a>
+    <a data-href="/node/{{ node['name'] }}/remove" href="#" class="btn btn-danger dangerous">{{ _("Remove Node") }}</a>
 </div>
 {% end %}
 {% end %}

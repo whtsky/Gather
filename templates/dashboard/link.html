@@ -20,7 +20,7 @@
             <td>{{ link['name'] }}</td>
             <td>{{ link['link'] }}</td>
             <td>{{ link['title'] }}</td>
-            <td><a href="/dashboard/link/{{ link['_id'] }}/remove" class="btn btn-danger">{{ _("Remove") }}</a></td>
+            <td><a data-href="/dashboard/link/{{ link['_id'] }}/remove" href="#" class="btn btn-danger dangerous">{{ _("Remove") }}</a></td>
         </tr>
         {% end %}
         </tbody>
