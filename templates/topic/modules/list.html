@@ -7,12 +7,13 @@ block
 {% end %}
 ">
     {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
+    {% set last_page = handler.get_page_num(reply_nums, handler.settings['replies_per_page']) %}
     {% raw handler.get_avatar(author) %}
     <div class="list-content">
         <p>
-            <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
+            <a href="/topic/{{ topic['_id'] }}?p={{ last_page }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
     
-            <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}" class="badge
+            <a href="/topic/{{ topic['_id'] }}?p={{ last_page }}#reply{{ reply_nums }}" class="badge
             {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
              pull-right">{{ reply_nums }}</a>
         </p>

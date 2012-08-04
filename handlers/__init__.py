@@ -74,6 +74,9 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         avatar += '?s=%s' % size
         return '<a href="/member/%s" class="avatar">\
             <img src="%s" /></a>' % (member['name'], avatar)
+            
+    def get_page_num(self, count, per_page):
+        return int((count + per_page - 1) / per_page)
 
     def flash(self, message, type='error'):
         self.messages.append((type, message))

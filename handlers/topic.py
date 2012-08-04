@@ -78,7 +78,10 @@ class ReplyHandler(BaseHandler):
         self.db.topics.update({'_id': ObjectId(topic_id)},
             {'$set': {'last_reply_time': time_now,
                 'last_reply_by': self.current_user['name']}})
-        self.redirect('/topic/%s' % topic_id)
+        reply_nums = self.db.replies.find({'topic': topic_id}).count()
+        last_page = self.get_page_num(reply_nums,
+            self.settings['replies_per_page'])
+        self.redirect('/topic/%s?p=%s' % (topic_id, last_page))
 
 
 class RemoveHandler(BaseHandler):
