@@ -78,7 +78,7 @@ body{
   
 }
 
-.reply-content, #notification_list .well{
+.reply-content, #notification_list .well, .list-content, #current_base p{
   margin-left: $avatar + $avatar_margin_left + $avatar_margin_left + 3px;
 }
 
@@ -112,7 +112,7 @@ body{
 }
 
 #current_base{
-  height: $avatar
+  min-height: $avatar
 }
 
 table{

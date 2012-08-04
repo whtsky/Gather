@@ -8,18 +8,20 @@ block
 ">
     {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
     {% raw handler.get_avatar(author) %}
-    <p>
-        <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
-
-        <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}" class="badge
-        {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
-         pull-right">{{ reply_nums }}</a>
-    </p>
-    <p>
-        {{ _("Created by") }}
-        <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
-        {{ _("Last replied at") }} {{ handler.format_time(topic['last_reply_time']) }}
-        {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ handler.get_node(topic['node'])['title'] }}</a>
-    </p>
+    <div class="list-content">
+        <p>
+            <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
+    
+            <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}" class="badge
+            {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
+             pull-right">{{ reply_nums }}</a>
+        </p>
+        <p>
+            {{ _("Created by") }}
+            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
+            {{ _("Last replied at") }} {{ handler.format_time(topic['last_reply_time']) }}
+            {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ handler.get_node(topic['node'])['title'] }}</a>
+        </p>
+    </div>
 </div>
 {% end %}

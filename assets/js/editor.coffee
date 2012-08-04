@@ -25,5 +25,6 @@ $ ->
     else
       new_text = "\n#{new_text}"
     reply_content.focus().val reply_content.val() + new_text
+    return false
 
   return
