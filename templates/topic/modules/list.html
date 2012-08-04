@@ -18,8 +18,12 @@ block
         </p>
         <p>
             {{ _("Created by") }}
-            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a>
-            {{ _("Last replied at") }} {{ handler.format_time(topic['last_reply_time']) }}
+            <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a> | 
+            {% set replied = handler.db.replies.find_one({'topic': str(topic['_id'])}, sort=[('index', -1)]) %}
+            {% if replied %}
+            <a href="/member/{{ replied['author'] }}">{{ replied['author'] }}</a>
+            {{ _("replied at") }} {{ handler.format_time(topic['last_reply_time']) }} | 
+            {% end %}
             {{ _("Posted in") }} <a href="/node/{{ topic['node'] }}">{{ handler.get_node(topic['node'])['title'] }}</a>
         </p>
     </div>
