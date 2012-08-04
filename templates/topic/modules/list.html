@@ -19,7 +19,7 @@ block
         <p>
             {{ _("Created by") }}
             <a href="/member/{{ author['name'] }}">{{ author['name'] }}</a> | 
-            {% if 'last_reply_time' in topic %}
+            {% if 'last_reply_by' in topic %}
             <a href="/member/{{ topic['last_reply_by'] }}">{{ topic['last_reply_by'] }}</a>
             {{ _("replied at") }} {{ handler.format_time(topic['last_reply_time']) }} | 
             {% end %}

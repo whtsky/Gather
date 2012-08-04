@@ -61,6 +61,7 @@ class CreateTopicHandler(BaseHandler):
             'node': node['name'],
             'created': time_now,
             'modified': time_now,
+            'last_reply_time': time_now,
             'index': 0,
         }
         source = self.get_source()
