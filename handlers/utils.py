@@ -58,9 +58,10 @@ def make_content(text, extra_params='rel="nofollow"'):
             lexer = TextLexer()
         text = m.group(2).replace('&quot;', '"').replace('&amp;', '&')
         text = text.replace('&lt;', '<').replace('&gt;', '>')
+        text = text.replace('&nbsp;', ' ')
         return highlight(text, lexer, formatter)
 
-    text = _unicode(xhtml_escape(text))
+    text = _unicode(xhtml_escape(text)).replace(' ', '&nbsp;')
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
     text = _EMAIL_RE.sub(cover_email, text)
     text = _MENTION_RE.sub(convert_mention, text)
