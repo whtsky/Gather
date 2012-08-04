@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block description %}{{ member['name'] }},topics{% end %}
 {% block title %}{{ _("Topics") }} | {{ member['name'] }} | {% end %}
 {% block canonical %}member/{{ member['name'] }}/topics?p={{p}}{% end %}
 
