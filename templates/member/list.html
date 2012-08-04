@@ -8,7 +8,7 @@
 <div class="box">
     <header>{{ _("Members") }}</header>
     {% for member in members %}
-    <a href="/member/{{ member['name'] }}" title="{{ member['name'] }}"><img src="{{ handler.get_avatar(member) }}" class="avatar" /></a>
+    {% raw handler.get_avatar(member) %}
     {% end %}
     {% module paginator(p=p,perpage=handler.settings['members_per_page'],count=count,base_url="/member") %}
 </div>

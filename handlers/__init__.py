@@ -64,7 +64,8 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         hashed_email = hashlib.md5(member['email']).hexdigest()
         avatar = self.settings['gravatar_base_url'] + hashed_email
         avatar += '?s=%s' % size
-        return avatar
+        return '<a href="/member/%s" class="avatar">\
+            <img src="%s" /></a>' % (member['name'], avatar)
 
     def flash(self, message, type='error'):
         self.messages.append((type, message))

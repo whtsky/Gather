@@ -46,7 +46,7 @@
     {% if current_user and author['name_lower'] in current_user['block'] %}
 block
 {% end %}">
-        <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+        {% raw handler.get_avatar(author) %}
         <p>
             {% if current_user %}
             {% if handler.check_role(owner_name=reply['author'], return_bool=True) %}
@@ -91,7 +91,7 @@ block
 <div class="box">
     {% set author = handler.get_member(topic['author']) %}
     <header>{{ _("Author") }}</header>
-    <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+    {% raw handler.get_avatar(author) %}
     {% if author['role'] == -1 %}
     <span class="label label-important pull-right">{{ _("Deactived") }}</span>
     {% end %}
@@ -102,7 +102,7 @@ block
 </div>
 {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
 <div class="box">
-    <header>{{ _("Settings") }}</header>
+    <header>{{ _("Dashboard") }}</header>
     <a href="/topic/{{ topic['_id'] }}/edit" class="btn one_third">{{ _("Edit") }}</a>
     <a href="/topic/{{ topic['_id'] }}/move" class="btn btn-warning one_third">{{ _("Move") }}</a>
     <a href="/topic/{{ topic['_id'] }}/remove" class="btn btn-danger one_third">{{ _("Remove") }}</a>

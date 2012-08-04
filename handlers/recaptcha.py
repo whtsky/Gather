@@ -70,6 +70,8 @@ class RecaptchaMixin(object):
     RECAPTCHA_VERIFY_URL = "http://www.google.com/recaptcha/api/verify"
 
     def recaptcha_render(self):
+        if not self.settings['use_recaptcha']:
+            return ''
         token = self._recaptcha_token()
         html = (
             '<div id="recaptcha_div"></div>'

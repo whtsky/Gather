@@ -14,7 +14,7 @@
     {% for noti in notis %}
     <div class="list">
         {% set member = handler.get_member(noti['from']) %}
-        <img src="{{ handler.get_avatar(member) }}" class="avatar" />
+        {% raw handler.get_avatar(member) %}
         <p>
             <a href="/member/{{ member['name'] }}">{{ member['name'] }}</a>
             {{ _("in") }}

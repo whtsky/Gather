@@ -69,9 +69,13 @@ body{
   float: left;
   width: $avatar;
   height: $avatar;
-  @include border-radius(5px);
   margin-left: $avatar_margin_left;
   margin-right: $avatar_margin_right;
+  
+  img{
+    @include border-radius(5px);
+  }
+  
 }
 
 .reply-content, #notification_list .well{

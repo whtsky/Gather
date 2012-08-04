@@ -7,7 +7,7 @@ block
 {% end %}
 ">
     {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
-    <img class="avatar" src="{{ handler.get_avatar(author) }}" />
+    {% raw handler.get_avatar(author) %}
     <p>
         <a href="/topic/{{ topic['_id'] }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
 

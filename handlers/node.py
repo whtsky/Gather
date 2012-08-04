@@ -123,8 +123,8 @@ class EditHandler(BaseHandler):
             self.render('node/edit.html', node=node)
             return
 
-        self.db.topics.update({'node': node['name_lower']},
-            {'$set': {'node': name.lower()}}, multi=True)
+        self.db.topics.update({'node': node['name']},
+            {'$set': {'node': name}}, multi=True)
         node['name'] = name
         node['name_lower'] = name.lower()
         node['title'] = title
@@ -154,8 +154,8 @@ class RemoveHandler(BaseHandler):
             self.db.members.save(member)
 
         self.db.nodes.remove(from_node)
-        self.db.topics.update({'node': from_node['name_lower']},
-            {'$set': {'node': to_node['name_lower']}}, multi=True)
+        self.db.topics.update({'node': from_node['name']},
+            {'$set': {'node': to_node['name']}}, multi=True)
         self.flash('Removed successfully', type='success')
         self.redirect('/')
 
