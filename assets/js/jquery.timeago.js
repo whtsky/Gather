@@ -41,12 +41,6 @@
         minutes: "%d minutes",
         hour: "about an hour",
         hours: "about %d hours",
-        day: "a day",
-        days: "%d days",
-        month: "about a month",
-        months: "%d months",
-        year: "about a year",
-        years: "%d years",
         wordSeparator: " ",
         numbers: []
       }
@@ -65,8 +59,26 @@
       var seconds = Math.abs(distanceMillis) / 1000;
       var minutes = seconds / 60;
       var hours = minutes / 60;
-      var days = hours / 24;
-      var years = days / 365;
+      
+      now = new Date();
+      dt = new Date(now.valueOf() - distanceMillis);
+      var year = dt.getFullYear(); 
+      var month = ("0" + (dt.getMonth() + 1)).slice(-2); 
+      var day = ("0" + dt.getDate()).slice(-2); 
+      var h = ("0" + dt.getHours()).slice(-2); 
+      var m = ("0" + dt.getMinutes()).slice(-2); 
+      var s = ("0" + dt.getSeconds()).slice(-2); 
+      
+      date = year + '-' + month + '-' + day;
+      time = h + ':' + m + ':' + s;
+      
+      if($this){
+        $this.attr('title', date + ' ' + time);
+      }
+      
+      if (hours > (now.getHours() + 1) || hours === 24) {
+        return date;
+      }
 
       function substitute(stringOrFunction, number) {
         var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
@@ -78,13 +90,7 @@
         seconds < 90 && substitute($l.minute, 1) ||
         minutes < 45 && substitute($l.minutes, Math.round(minutes)) ||
         minutes < 90 && substitute($l.hour, 1) ||
-        hours < 24 && substitute($l.hours, Math.round(hours)) ||
-        hours < 42 && substitute($l.day, 1) ||
-        days < 30 && substitute($l.days, Math.round(days)) ||
-        days < 45 && substitute($l.month, 1) ||
-        days < 365 && substitute($l.months, Math.round(days / 30)) ||
-        years < 1.5 && substitute($l.year, 1) ||
-        substitute($l.years, Math.round(years));
+        hours < 24 && substitute($l.hours, Math.round(hours));
 
       var separator = $l.wordSeparator === undefined ?  " " : $l.wordSeparator;
       return $.trim([prefix, words, suffix].join(separator));
@@ -121,7 +127,8 @@
   function refresh() {
     var data = prepareData(this);
     if (!isNaN(data.datetime)) {
-      $(this).text(inWords(data.datetime));
+      $this = $(this);
+      $this.text(inWords(data.datetime));
     }
     return this;
   }

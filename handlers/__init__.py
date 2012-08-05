@@ -100,8 +100,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
     def format_time(self, t):
         t = time.gmtime(t)
         utc = time.strftime('%Y-%m-%dT%H:%M:%SZ', t)
-        date = time.strftime('%Y-%m-%d %H:%M:%S', t)
-        htm = '<time datetime="%s">%s</time>' % (utc, date)
+        htm = '<time datetime="%s"></time>' % utc
         return htm
 
     def send_notification(self, content, topic_id):
