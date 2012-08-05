@@ -14,7 +14,6 @@ only_use_forum_url = True
 #static_url_prefix = 'http://assets.xxx.com'
 
 default_locale = 'zh_CN'
-gmt_offset = 8
 notifications_per_page = 10
 members_per_page = 100
 topics_per_page = 20

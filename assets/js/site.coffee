@@ -7,6 +7,7 @@ search = ->
 	return false
 	
 $ ->
+	$('time').timeago()
 	$('.dangerous').click ->
 		if window.confirm('Are you sure?')
 			window.location = $(this).data('href')

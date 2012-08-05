@@ -20,9 +20,9 @@
         {% raw topic['content_html'] %}
     </article>
     <footer>
-        {{ _("Created at") }} {{ handler.format_time(topic['created']) }}
+        {{ _("Created at") }} {% raw handler.format_time(topic['created']) %}
         {% if topic['created'] != topic['modified'] %}
-        / {{ _("Modified at") }} {{ handler.format_time(topic['modified']) }}
+        / {{ _("Modified at") }} {% raw handler.format_time(topic['modified']) %}
         {% end %}
         {% if 'source' in topic %}
         via {{ topic['source'] }}
@@ -60,9 +60,9 @@ block
             </div>
             {% end %}
             <a href="/member/{{ author['name'] }}" class="reply_user">{{ author['name'] }}</a>
-            {{ _("Replied at") }} {{ handler.format_time(reply['created']) }}
+            {{ _("Replied at") }} {% raw handler.format_time(reply['created']) %}
             {% if reply['created'] != reply['modified'] %}
-            / {{ _("Modified at") }} {{ handler.format_time(reply['modified']) }}
+            / {{ _("Modified at") }} {% raw handler.format_time(reply['modified']) %}
             {% end %}
             #{{ reply['index'] }}
             {% if 'source' in reply %}

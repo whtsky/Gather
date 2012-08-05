@@ -98,13 +98,11 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         raise tornado.web.HTTPError(403)
 
     def format_time(self, t):
-        offset = self.settings['gmt_offset'] * 3600
-        t = time.gmtime(t + offset)
-        now = time.gmtime(time.time() + offset)
-        date = time.strftime('%Y-%m-%d', t)
-        if date == time.strftime('%Y-%m-%d', now):
-            return time.strftime('%H:%M:%S', t)
-        return date
+        t = time.gmtime(t)
+        utc = time.strftime('%Y-%m-%dT%H:%M:%SZ', t)
+        date = time.strftime('%Y-%m-%d %H:%M:%S', t)
+        htm = '<time datetime="%s">%s</time>' % (utc, date)
+        return htm
 
     def send_notification(self, content, topic_id):
         uname = self.current_user['name_lower']

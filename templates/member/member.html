@@ -13,7 +13,7 @@
         <span class="label label-important pull-right">{{ _(handler.settings['role'][member['role']]) }}</span>
         {% end %}
         <p class="username">{{ member['name'] }}</p>
-        <p>{{ _("Join at") }} {{ handler.format_time(member['created']) }}</p>
+        <p>{{ _("Join at") }} {% raw handler.format_time(member['created']) %}</p>
         {% if member['website'] %}
         <p><a href="{{ member['website'] }}" rel="nofollow">{{ member['website'] }}</a></p>
         {% end %}
