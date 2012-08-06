@@ -42,6 +42,8 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         for m in mobiles:
             if m.lower() in ua:
                 return m
+        if 'silk' in ua:
+            return 'Kindle Fire'
         return None
 
     @property
