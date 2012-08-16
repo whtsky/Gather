@@ -29,10 +29,16 @@
         {% end %}
         {% if current_user %}
         <div class="pull-right">
+            {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
+            <a href="/topic/{{ topic['_id'] }}/edit">{{ _("Edit") }}</a>
+            <a href="/topic/{{ topic['_id'] }}/move">{{ _("Move") }}</a>
+            <a data-href="/topic/{{ topic['_id'] }}/remove" href="#">{{ _("Remove") }}</a>
+            {% end %}
+
             {% if str(topic['_id']) in current_user['like'] %}
-            <a href="/topic/{{ topic['_id'] }}/unlike" class="btn btn-danger">{{ _("Unlike") }}</a>
+            <a href="/topic/{{ topic['_id'] }}/unlike">{{ _("Unlike") }}</a>
             {% else %}
-            <a href="/topic/{{ topic['_id'] }}/like" class="btn">{{ _("Like") }}</a>
+            <a href="/topic/{{ topic['_id'] }}/like">{{ _("Like") }}</a>
             {% end %}
         </div>
         {% end %}
@@ -105,13 +111,5 @@ block
     <p><a href="{{ author['website'] }}" rel="nofollow">{{ author['website'] }}</a></p>
     {% end %}
 </div>
-{% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
-<div class="box">
-    <header>{{ _("Dashboard") }}</header>
-    <a href="/topic/{{ topic['_id'] }}/edit" class="btn">{{ _("Edit") }}</a>
-    <a href="/topic/{{ topic['_id'] }}/move" class="btn btn-warning">{{ _("Move") }}</a>
-    <a data-href="/topic/{{ topic['_id'] }}/remove" href="#" class="btn btn-danger dangerous">{{ _("Remove") }}</a>
-</div>
-{% end %}
 {% module node_sitebar(node) %}
 {% end %}
