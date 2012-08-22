@@ -26,7 +26,7 @@
 </div>
 
 {% if topics.count() %}
-<div class="box no_block">
+<div class="box">
     <header>{{ _("Topics") }}</header>
     {% module topic_list(topics) %}
     <a href="/member/{{ member['name'] }}/topics">{{ _("More") }} >></a>
@@ -34,7 +34,7 @@
 {% end %}
 
 {% if liked_topics %}
-<div class="box no_block">
+<div class="box">
     <header>{{ _("Like") }}</header>
     {% module topic_list(liked_topics) %}
 </div>
@@ -68,11 +68,6 @@
     <a href="/member/{{ member['name'] }}/unfollow" class="btn">{{ _("Unfollow") }}</a>
     {% else %}
     <a href="/member/{{ member['name'] }}/follow" class="btn btn-success">{{ _("Follow") }}</a>
-    {% end %}
-    {% if member['name_lower'] in current_user['block'] %}
-    <a href="/member/{{ member['name'] }}/unblock" class="btn">{{ _("Unblock") }}</a>
-    {% else %}
-    <a href="/member/{{ member['name'] }}/block" class="btn btn-warning">{{ _("Block") }}</a>
     {% end %}
     {% end %}
     {% if handler.check_role(return_bool=True) %}

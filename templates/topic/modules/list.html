@@ -1,11 +1,6 @@
 {% for topic in topics %}
 {% set author = handler.get_member(topic['author']) %}
-<div class="
-list
-{% if current_user and author['name_lower'] in current_user['block'] %}
-block
-{% end %}
-">
+<div class="list">
     {% set reply_nums = handler.db.replies.find({'topic': str(topic['_id'])}).count() %}
     {% set last_page = handler.get_page_num(reply_nums, handler.settings['replies_per_page']) %}
     {% raw handler.get_avatar(author) %}

@@ -50,10 +50,7 @@
     {% set replies_per_page = handler.settings['replies_per_page'] %}
     {% for reply in replies[(p-1)*replies_per_page:p*replies_per_page] %}
     {% set author = handler.get_member(reply['author']) %}
-    <div class="list
-    {% if current_user and author['name_lower'] in current_user['block'] %}
-block
-{% end %}">
+    <div class="list">
         {% raw handler.get_avatar(author) %}
         <p>
             {% if current_user %}

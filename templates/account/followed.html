@@ -5,7 +5,7 @@
 {% block title %}{{ _("Followed Members") }} | {% end %}
 
 {% block content %}
-<div class="box no_block">
+<div class="box">
     <header>{{ _("Topics") }}</header>
     {% set topics_per_page = handler.settings['topics_per_page'] %}
     {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}

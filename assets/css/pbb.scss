@@ -90,10 +90,6 @@ body{
   border-bottom: 1px solid #DDD;
 }
 
-.block{
-  display: none;
-}
-
 #profile_main{
   height: $avatar_large;
   font-size: 15px;
@@ -107,10 +103,6 @@ body{
     font-size: 20px;
   }
 
-}
-
-.no_block .block{
-  display: block;
 }
 
 #current_base{

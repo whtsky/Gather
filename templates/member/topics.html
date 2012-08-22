@@ -5,7 +5,7 @@
 {% block canonical %}member/{{ member['name'] }}/topics?p={{p}}{% end %}
 
 {% block content %}
-<div class="box no_block">
+<div class="box">
     <header>{{ _("Topics") }}</header>
     {% module topic_list(topics) %}
     {% module paginator(p=p,perpage=handler.settings['topics_per_page'],count=topics_count,base_url="/member/%s/topics" % member['name']) %}

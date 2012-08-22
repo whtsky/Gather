@@ -111,7 +111,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
             member = self.db.members.find_one({'name_lower': name.lower()})
             if not member:
                 continue
-            if uname in member['block'] or uname == member['name_lower']:
+            if uname == member['name_lower']:
                 continue
             self.db.notifications.insert({
                 'topic': topic_id,

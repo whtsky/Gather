@@ -51,7 +51,6 @@ class SignupHandler(BaseHandler):
             'created': time.time(),
             'language': self.settings['default_locale'],
             'role': role,  # TODO:send mail.
-            'block': [],
             'like': [],  # topics
             'follow': [],  # users
             'favorite': []  # nodes

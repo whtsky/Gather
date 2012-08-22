@@ -64,22 +64,6 @@ class MemberTopicsHandler(BaseHandler):
             topics=topics, topics_count=topics_count, p=p)
 
 
-class BlockHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, name):
-        self.db.members.update({'_id': self.current_user['_id']},
-                {'$addToSet': {'block': name.lower()}})
-        self.redirect('/')
-
-
-class UnblockHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, name):
-        self.current_user['block'].remove(name.lower())
-        self.db.members.save(self.current_user)
-        self.redirect('/member/' + name)
-
-
 class ChangeRoleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, name):
@@ -98,7 +82,5 @@ handlers = [
     (r'/member/(\w+)/topics', MemberTopicsHandler),
     (r'/member/(\w+)/follow', FollowHandler),
     (r'/member/(\w+)/unfollow', UnfollowHandler),
-    (r'/member/(\w+)/block', BlockHandler),
-    (r'/member/(\w+)/unblock', UnblockHandler),
     (r'/member/(\w+)/role', ChangeRoleHandler),
 ]

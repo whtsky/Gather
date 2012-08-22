@@ -51,7 +51,6 @@ if __name__ == '__main__':
     'created': time.time(),
     'role': 3,
     'language': settings.default_locale,
-    'block': [],
     'like': [],  # topics
     'follow': [],  # users
     'favorite': []  # nodes
