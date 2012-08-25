@@ -10,6 +10,7 @@ import hashlib
 from .recaptcha import RecaptchaMixin
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
+_NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
 class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
@@ -37,13 +38,24 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         return tornado.locale.get(self.current_user['language'])
 
     def get_source(self):
-        ua = self.request.headers.get("User-Agent", "bot").lower()
-        mobiles = ('iPod', 'iPhone', 'iPad', 'Android', 'Kindle')
-        for m in mobiles:
-            if m.lower() in ua:
-                return m
-        if 'silk' in ua:
-            return 'Kindle Fire'
+        ua = self.request.headers.get("User-Agent", "bot")
+        sources = dict(
+            iPod='iPod',
+            iPhone='iPhone',
+            iPad='iPad',
+            Android='Android',
+            Kindle='Kindle',
+            BlackBerry='BlackBerry',
+            TouchPad='TouchPad',
+            silk='Kindle Fire',
+        )
+        for k, v in sources.items():
+            if k in ua:
+                return v
+
+        if 'Nokia' in ua:
+            return _NOKIA_FINDER_.findall(ua)[0]
+
         return None
 
     @property
