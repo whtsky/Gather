@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+
+{% block title %}User Agent | {% end %}
+
+{% block content %}
+<div class="box">
+	<header>User Agent</header>
+	<textarea id="content" rows="5">{% raw ua %}</textarea>
+	<hr>
+	Source: {{ source }}
+</div>
+{% end %}
