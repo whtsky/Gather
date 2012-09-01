@@ -52,7 +52,8 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         for k, v in sources.items():
             if k in ua:
                 return v
-
+		if 'Windows Phone' in ua:
+			return 'Windows Phone'
         if 'Nokia' in ua:
             return _NOKIA_FINDER_.findall(ua)[0]
 
