@@ -14,15 +14,6 @@ _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
 class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
-    def prepare(self):
-        if self.request.remote_ip != '127.0.0.1' and \
-           self.request.host != self.settings['host']:
-            self.redirect(self.settings['forum_url'] + self.request.uri[1:],
-                permanent=True)
-
-        messages = self.get_secure_cookie('flash_messages')
-        self.messages = messages and tornado.escape.json_decode(messages) or []
-
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         member = self.application.db.members.find_one({'password': password})
@@ -62,6 +53,13 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
     @property
     def db(self):
         return self.application.db
+        
+    @property
+    def messages(self):
+        if hasattr(self, 'messages'):
+            return self.messages
+        messages = self.get_secure_cookie('flash_messages')
+        self.messages = messages and tornado.escape.json_decode(messages) or []
 
     def get_member(self, name):
         name = name.lower()
