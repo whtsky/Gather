@@ -56,10 +56,10 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         
     @property
     def messages(self):
-        if hasattr(self, 'messages'):
-            return self.messages
-        messages = self.get_secure_cookie('flash_messages')
-        self.messages = messages and tornado.escape.json_decode(messages) or []
+        if not hasattr(self, '_messages'):
+            messages = self.get_secure_cookie('flash_messages')
+            self._messages = messages and tornado.escape.json_decode(messages) or []
+        return self._messages
 
     def get_member(self, name):
         name = name.lower()
@@ -98,7 +98,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
 
     def get_flashed_messages(self):
         messages = self.messages
-        self.messages = []
+        self._messages = []
         self.clear_cookie('flash_messages')
         return messages
 
