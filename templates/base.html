@@ -6,24 +6,8 @@
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='{{ static_url("js/lib.js") }}'></script>
-    <script src='{{ static_url("js/locale/%s.js" % handler.locale.code) }}'></script>
     <link rel="canonical" href="{{ handler.settings['forum_url'] }}{% block canonical %}{% end %}" />
     {% block head %}{% end %}
-    <script type="text/javascript">
-        var domain = "{{ handler.settings['host'] }}";
-        {% if handler.settings['google_analytics'] %}
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '{{ handler.settings["google_analytics"] }}']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-        {% end %}
-    </script>
-
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -192,5 +176,20 @@
         </div>
     </div>
 </div>
+<script src='{{ static_url("js/lib.js") }}'></script>
+<script src='{{ static_url("js/locale/%s.js" % handler.locale.code) }}'></script>
+<script type="text/javascript">
+    var domain = "{{ handler.settings['host'] }}";
+    {% if handler.settings['google_analytics'] %}
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '{{ handler.settings["google_analytics"] }}']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    {% end %}
+</script>
 </body>
 </html>
