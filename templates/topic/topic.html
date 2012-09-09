@@ -32,7 +32,7 @@
             {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
             <a href="/topic/{{ topic['_id'] }}/edit">{{ _("Edit") }}</a>
             <a href="/topic/{{ topic['_id'] }}/move">{{ _("Move") }}</a>
-            <a data-href="/topic/{{ topic['_id'] }}/remove" href="#">{{ _("Remove") }}</a>
+            <a data-href="/topic/{{ topic['_id'] }}/remove" href="#" class="dangerous">{{ _("Remove") }}</a>
             {% end %}
 
             {% if str(topic['_id']) in current_user['like'] %}
