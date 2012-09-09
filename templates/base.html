@@ -178,6 +178,7 @@
 </div>
 <script src='{{ static_url("js/lib.js") }}'></script>
 <script src='{{ static_url("js/locale/%s.js" % handler.locale.code) }}'></script>
+{% block footer %}{% end %}
 <script type="text/javascript">
     var domain = "{{ handler.settings['host'] }}";
     {% if handler.settings['google_analytics'] %}
