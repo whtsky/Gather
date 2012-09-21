@@ -6,10 +6,8 @@ search = ->
 	$('.search-query').val('')
 	return false
 	
-window._ = (msg) ->
-	i18n = window.i18n || {}
-	if msg in i18n
-		return i18n[msg]
+_ = (msg) ->
+	return i18n[msg] if i18n?[msg]?
 	return msg
 	
 $ ->
