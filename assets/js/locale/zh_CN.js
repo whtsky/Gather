@@ -12,3 +12,7 @@ jQuery.timeago.settings.strings = {
   numbers: [],
   wordSeparator: ""
 };
+
+i18n = {
+  "Are you sure?": "三思啊少年"
+}
