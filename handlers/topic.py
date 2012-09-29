@@ -94,7 +94,7 @@ class RemoveHandler(BaseHandler):
         topic_id = ObjectId(topic_id)
         self.db.topics.remove({'_id': topic_id})
         self.db.replies.remove({'topic': topic_id})
-        self.db.notifications.remove({'topic': topic_id})
+        self.db.notifications.remove({'topic': ObjectId(topic_id)})
         self.flash('Removed successfully', type='success')
         self.redirect('/')
 
@@ -125,7 +125,8 @@ class EditHandler(BaseHandler):
             return
         topic['modified'] = time.time()
         content = make_content(content)
-        self.db.notifications.update({'content': topic['content_html']},
+        self.db.notifications.update({'content': topic['content_html'],
+                                      'topic': ObjectId(topic_id)},
             {'$set': {'content': content}})
         topic['content_html'] = content
         self.db.topics.save(topic)
