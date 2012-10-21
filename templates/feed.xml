@@ -3,7 +3,6 @@
     <title>{{ handler.settings['forum_title'] }}</title>
     <link href="{{ handler.settings['forum_url'] }}feed" rel="self" />
     <link href="{{ handler.settings['forum_url'] }}" />
-    <updated>{{ topics and topics[0]['modified'] }}</updated>
     <id>{{ handler.settings['forum_url'] }}</id>
     {% for topic in topics[:15] %}
     <entry>
