@@ -12,7 +12,7 @@
         <id>{{ handler.settings['forum_url'] }}topic/{{ topic['_id'] }}</id>
         <content type="html">
             <![CDATA[
-             {{ topic['content_html'] }}
+             {% raw topic['content_html'] %}
             ]]>
         </content>
     </entry>
