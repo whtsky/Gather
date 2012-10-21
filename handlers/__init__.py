@@ -43,8 +43,8 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         for k, v in sources.items():
             if k in ua:
                 return v
-		if 'Windows Phone' in ua:
-			return 'Windows Phone'
+        if 'Windows Phone' in ua:
+            return 'Windows Phone'
         if 'Nokia' in ua:
             return _NOKIA_FINDER_.findall(ua)[0]
 
@@ -53,12 +53,14 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
     @property
     def db(self):
         return self.application.db
-        
+
     @property
     def messages(self):
         if not hasattr(self, '_messages'):
             messages = self.get_secure_cookie('flash_messages')
-            self._messages = messages and tornado.escape.json_decode(messages) or []
+            self._messages = []
+            if messages:
+                self._messages = tornado.escape.json_decode(messages)
         return self._messages
 
     def get_member(self, name):
@@ -87,7 +89,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         avatar += '?s=%s' % size
         return '<a href="/member/%s" class="avatar">\
             <img src="%s" /></a>' % (member['name'], avatar)
-            
+
     def get_page_num(self, count, per_page):
         return int((count + per_page - 1) / per_page)
 

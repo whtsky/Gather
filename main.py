@@ -25,7 +25,7 @@ class Application(tornado.web.Application):
                              2: 'Admin',
                              3: 'SuperAdmin'}}
         execfile(options.settings, {}, settings)
-        
+
         settings['host'] = settings['forum_url'].split('/')[2]
 
         if 'static_path' not in settings:

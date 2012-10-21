@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ handler.settings['forum_title'] }}</title>
+    <link href="{{ handler.settings['forum_url'] }}feed" rel="self" />
+    <link href="{{ handler.settings['forum_url'] }}" />
+    <updated>{{ topics and topics[0]['modified'] }}</updated>
+    <id>{{ handler.settings['forum_url'] }}</id>
+    {% for topic in topics[:15] %}
+    <entry>
+        <title><![CDATA[{{ topic['title'] }}]]></title>
+        <link href="{{ handler.settings['forum_url'] }}topic/{{ topic['_id'] }}"/>
+        <id>{{ handler.settings['forum_url'] }}topic/{{ topic['_id'] }}</id>
+        <content type="html">
+            <![CDATA[
+             {{ topic['content_html'] }}
+            ]]>
+        </content>
+    </entry>
+    {% end %}
+</feed>
