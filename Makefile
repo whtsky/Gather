@@ -11,13 +11,14 @@ js: js-lib js-editor js-locale
 js-lib:
 	uglifyjs -nc assets/js/jquery-1.7.2.min.js > static/js/lib.js
 	uglifyjs -nc assets/js/bootstrap.min.js >> static/js/lib.js
-	uglifyjs -nc assets/js/jquery.timeago.js >> static/js/lib.js 
+	uglifyjs -nc assets/js/jquery.timeago.js >> static/js/lib.js
 	coffee -b -p assets/js/site.coffee | uglifyjs >> static/js/lib.js
 	coffee -p assets/js/retina.coffee | uglifyjs >> static/js/lib.js
 	
 js-editor:
 	uglifyjs -nc assets/js/jquery.caret.js > static/js/editor.js
 	uglifyjs -nc assets/js/jquery.atwho.js >> static/js/editor.js
+	uglifyjs -nc assets/js/jquery.elastic.js >> static/js/editor.js
 	coffee -p assets/js/editor.coffee | uglifyjs >> static/js/editor.js
 	
 js-locale:

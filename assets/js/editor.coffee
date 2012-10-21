@@ -11,7 +11,7 @@ $ ->
   for a in $('.reply_user')
     add_name a
 
-  $('#content').atWho '@', {data: names}
+  $('#content').elastic().atWho '@', {data: names}
 
   $('.reply').click ->
     reply = $(this)
