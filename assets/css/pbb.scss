@@ -9,6 +9,10 @@ body{
   background-color: #EEE;
 }
 
+#main .container{
+  padding-top: 60px;
+}
+
 .box {
   background-color: white;
   @include border-radius(3px);
@@ -76,6 +80,10 @@ body{
     @include border-radius(5px);
     width: $avatar;
     height: $avatar;
+  }
+
+  #members-list &{
+    margin-bottom: $avatar_margin_left;
   }
   
 }

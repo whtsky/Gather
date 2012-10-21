@@ -17,7 +17,7 @@
             <div class="control-group">
                 <label class="control-label">{{ _("From") }}</label>
                 <div class="controls">
-                    <input type="text" class="input-xlarge disabled" value="{{ topic['node'] }}" disabled>
+                    <input type="text" class="input-xlarge disabled" value="{{ handler.get_node(topic['node'])['title'] }}" disabled>
                 </div>
             </div>
             <div class="control-group">

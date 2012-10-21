@@ -1,8 +1,8 @@
 @import "bootstrap-responsive";
 
-@media (min-width: 980px) {
+@media (max-width: 980px) {
   #main .container{
-	padding-top: 60px;
+	padding-top: 0px;
   }
 }
 

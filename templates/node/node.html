@@ -2,6 +2,7 @@
 
 {% block description %}{{ node['name'] }},{{ node['title'] }}{% end %}
 {% block canonical %}node/{{ node['name'] }}{% end %}
+{% block feed %}/node/{{ node['name'] }}/feed{% end %}
 
 {% block title %}{{ node['title'] }} | {% end %}
 

@@ -187,6 +187,15 @@ class NodeSidebar(tornado.web.UIModule):
     def render(self, node):
         return self.render_string("node/modules/sidebar.html", node=node)
 
+
+class FeedHandler(BaseHandler):
+    def get(self, node_name):
+        node = self.get_node(node_name)
+        topics = self.db.topics.find({'node': node['name']},
+            sort=[('modified', -1)])
+        self.render('feed.xml', topics=topics)
+
+
 handlers = [
     (r'/node', NodeListHandler),
     (r'/node/add', AddHandler),
@@ -196,6 +205,7 @@ handlers = [
     (r'/node/([%A-Za-z0-9.]+)/remove', RemoveHandler),
     (r'/node/([%A-Za-z0-9.]+)/favorite', FavoriteHandler),
     (r'/node/([%A-Za-z0-9.]+)/unfavorite', UnfavoriteHandler),
+    (r'/node/([%A-Za-z0-9.]+)/feed', FeedHandler),
 ]
 
 ui_modules = {

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="{{ handler.settings['forum_url'] }}{% block canonical %}{% end %}" />
-    <link rel="alternate" type="application/atom+xml" href="/feed" />
+    <link rel="alternate" type="application/atom+xml" href="{% block feed %}/feed{% end %}" />
     {% block head %}{% end %}
 </head>
 <body>
@@ -193,5 +193,12 @@
     })();
     {% end %}
 </script>
+<!--[if IE 6]>
+    {% if handler.locale.code == 'zh_CN' %}
+	<script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+	{% else %}
+	<script src="//letskillie6.googlecode.com/svn/trunk/2/default.js"></script>
+	{% end %}
+<![endif]-->
 </body>
 </html>
