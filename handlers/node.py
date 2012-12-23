@@ -199,13 +199,13 @@ class FeedHandler(BaseHandler):
 handlers = [
     (r'/node', NodeListHandler),
     (r'/node/add', AddHandler),
-    (r'/node/([%A-Za-z0-9.]+)', NodeHandler),
-    (r'/node/([%A-Za-z0-9.]+)/create', CreateTopicHandler),
-    (r'/node/([%A-Za-z0-9.]+)/edit', EditHandler),
-    (r'/node/([%A-Za-z0-9.]+)/remove', RemoveHandler),
-    (r'/node/([%A-Za-z0-9.]+)/favorite', FavoriteHandler),
-    (r'/node/([%A-Za-z0-9.]+)/unfavorite', UnfavoriteHandler),
-    (r'/node/([%A-Za-z0-9.]+)/feed', FeedHandler),
+    (r'/node/([%A-Za-z0-9.-]+)', NodeHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/create', CreateTopicHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/edit', EditHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/remove', RemoveHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/favorite', FavoriteHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/unfavorite', UnfavoriteHandler),
+    (r'/node/([%A-Za-z0-9.-]+)/feed', FeedHandler),
 ]
 
 ui_modules = {
