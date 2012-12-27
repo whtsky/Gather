@@ -114,18 +114,17 @@ class ChangePasswordHandler(BaseHandler):
     def post(self):
         old_password = self.get_argument('old_password', None)
         new_password = self.get_argument('new_password', None)
-        new_password2 = self.get_argument('new_password2', None)
-        if not (old_password and new_password and new_password2):
+        if not (old_password and new_password):
             self.flash('Please fill the required field')
-        if new_password != new_password2:
-            self.flash("Password doesn't match")
-        password = hashlib.sha1(old_password + self.current_user['name_lower'])
+        key = old_password + self.current_user['name'].lower()
+        password = hashlib.sha1(key).hexdigest()
         if password != self.current_user['password']:
             self.flash('Invalid password')
         if self.messages:
-            self.render('account/settings.html')
+            self.redirect('/account/settings')
             return
-        password = hashlib.sha1(new_password + self.current_user['name_lower'])
+        key = new_password + self.current_user['name'].lower()
+        password = str(hashlib.sha1(key).hexdigest())
         self.db.members.update({'_id': self.current_user['_id']},
                 {'$set': {'password': password}})
         self.set_secure_cookie('user', password, expires_days=30)
