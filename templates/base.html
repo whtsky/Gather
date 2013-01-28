@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    {% $set noticount = handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() %}
     <meta charset="utf-8">
     <meta name=description content="{{ handler.settings['forum_title'] }},{% block description %}{% end %}">
-    <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}</title>
+    <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}{{ '(' + noticount + ')' if noticount }}
     <link rel="stylesheet" href="{{ static_url('css/style.css') }}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="{{ handler.settings['forum_url'] }}{% block canonical %}{% end %}" />
