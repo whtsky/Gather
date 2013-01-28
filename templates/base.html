@@ -97,42 +97,6 @@
                         <p><a href="{{ current_user['website'] }}" rel="nofollow">{{ current_user['website'] }}</a></p>
                         {% end %}
                     </div>
-                    <table id="current_info">
-                        <tr>
-                        <td>
-                            <a href="/account/followed">
-                                <span>{{ len(current_user['follow']) }}</span>
-                            </a>
-                        </td>
-                        <td class="liked">
-                            <a href="/account/liked">
-                                <span>{{ len(current_user['like']) }}</span>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/account/favorited">
-                                <span>{{ len(current_user['favorite']) }}</span>
-                            </a>
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/account/followed">
-                                    <p>{{ _("Followed Members") }}</p>
-                                </a>
-                            </td>
-                            <td class="liked">
-                                <a href="/account/liked">
-                                    <p>{{ _("Liked Topics") }}</p>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/account/favorited">
-                                    <p>{{ _("Favorite Nodes") }}</p>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
                     <footer>
                         <a href="/account/notifications">
                             {{ handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() }} {{ _("unread notification") }}
@@ -141,14 +105,6 @@
                 </div>
                 {% end %}
                 {% block sidebar %}{% end %}
-                {% if current_user and current_user['favorite'] %}
-                <div class="box">
-                    <header>{{ _("Favorite Nodes") }}</header>
-                    {% for node_name in current_user['favorite'] %}
-                    <a class="node" href="/node/{{ node_name }}" >{{ handler.get_node(node_name)['title'] }}</a>
-                    {% end %}
-                </div>
-                {% end %}
                 {% if handler.db.links.count() %}
                 <div class="box">
                     <header>{{ _("Links") }}</header>

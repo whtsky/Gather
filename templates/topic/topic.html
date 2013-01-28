@@ -34,12 +34,6 @@
             <a href="/topic/{{ topic['_id'] }}/move">{{ _("Move") }}</a>
             <a data-href="/topic/{{ topic['_id'] }}/remove" href="#" class="dangerous">{{ _("Remove") }}</a>
             {% end %}
-
-            {% if str(topic['_id']) in current_user['like'] %}
-            <a href="/topic/{{ topic['_id'] }}/unlike">{{ _("Unlike") }}</a>
-            {% else %}
-            <a href="/topic/{{ topic['_id'] }}/like">{{ _("Like") }}</a>
-            {% end %}
         </div>
         {% end %}
     </footer>

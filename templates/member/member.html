@@ -63,13 +63,6 @@
 {% if current_user %}
 <div class="box">
     <header>{{ _("Member") }}</header>
-    {% if current_user != member %}
-    {% if member['name_lower'] in current_user['follow'] %}
-    <a href="/member/{{ member['name'] }}/unfollow" class="btn">{{ _("Unfollow") }}</a>
-    {% else %}
-    <a href="/member/{{ member['name'] }}/follow" class="btn btn-success">{{ _("Follow") }}</a>
-    {% end %}
-    {% end %}
     {% if handler.check_role(return_bool=True) %}
     <footer>
         <form method="post" action="/member/{{ member['name'] }}/role">

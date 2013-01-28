@@ -9,7 +9,7 @@
             <a href="/topic/{{ topic['_id'] }}?p={{ last_page }}#reply{{ reply_nums }}">{{ topic['title'] }}</a>
     
             <a href="/topic/{{ topic['_id'] }}?p={{ last_page }}#reply{{ reply_nums }}" class="badge
-            {% if current_user and current_user['name'] == author['name'] %}badge-warning{%end%}
+            {% if current_user and current_user['name_lower'] not in topic.get('read', []) %}badge-success{%end%}
              pull-right">{{ reply_nums }}</a>
         </p>
         <p>

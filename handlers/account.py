@@ -132,43 +132,6 @@ class ChangePasswordHandler(BaseHandler):
         self.redirect('/account/settings')
 
 
-class LikedHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        topics = self.current_user['like']
-        count = len(topics)
-        p = int(self.get_argument('p', 1))
-        perpage = self.settings['topics_per_page']
-        topics = topics[(p - 1) * perpage:p * perpage]
-        topics = [self.get_topic(x) for x in topics]
-        self.render('account/liked.html', topics=topics, count=count, p=p,
-            perpage=perpage)
-
-
-class FavoritedHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        topics = self.db.topics.find({
-            'node': {'$in': self.current_user['favorite']}
-        }, sort=[('last_reply_time', -1)])
-        topics_count = topics.count()
-        p = int(self.get_argument('p', 1))
-        self.render('account/favorited.html', topics=topics,
-            topics_count=topics_count, p=p)
-
-
-class FollowedHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        topics = self.db.topics.find({
-            'author': {'$in': self.current_user['follow']}
-        }, sort=[('last_reply_time', -1)])
-        topics_count = topics.count()
-        p = int(self.get_argument('p', 1))
-        self.render('account/followed.html', topics=topics,
-            topics_count=topics_count, p=p)
-
-
 class NotificationsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -203,9 +166,6 @@ handlers = [
     (r'/account/signout', SignoutHandler),
     (r'/account/settings', SettingsHandler),
     (r'/account/password', ChangePasswordHandler),
-    (r'/account/followed', FollowedHandler),
-    (r'/account/liked', LikedHandler),
-    (r'/account/favorited', FavoritedHandler),
     (r'/account/notifications', NotificationsHandler),
     (r'/account/notifications/clear', NotificationsClearHandler),
     (r'/account/notifications/(\w+)/remove', NotificationsRemoveHandler),

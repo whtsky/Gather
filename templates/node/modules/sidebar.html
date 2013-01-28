@@ -5,11 +5,6 @@
         <a href="/node/{{ node['name'] }}" class="btn">{{ _("View It") }}</a>
         {% if current_user %}
         <a href="/node/{{ node['name'] }}/create?next={{ url_escape(request.uri) }}" class="btn btn-warning">{{ _("Create Topic") }}</a>
-        {% if node['name'] in current_user['favorite'] %}
-        <a href="/node/{{ node['name'] }}/unfavorite?next={{ url_escape(request.uri) }}" class="btn btn-danger">{{ _("Unfavorite It") }}</a>
-        {% else %}
-        <a href="/node/{{ node['name'] }}/favorite?next={{ url_escape(request.uri) }}" class="btn btn-success">{{ _("Favorite It") }}</a>
-        {% end %}
         {% end %}
     </footer>
 </div>

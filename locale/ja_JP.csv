@@ -29,9 +29,6 @@
 "Code Block Example",コードブロックの例
 "Choose a node",ノードを選択してください
 
-"Like",いいね
-"Likes",いいね
-"Unlike",嫌う
 "Reply",応答する
 
 "Add Node",ノードを追加する
@@ -52,8 +49,6 @@
 "From",から
 "To",へ
 
-"Follow",フォロー
-"Unfollow",アンフォロー
 "Move Topic",トピックの移動する
 "Created by",この作者は
 "Created at",提出時間は
@@ -76,9 +71,6 @@
 "Old Password",旧パスワード
 "New Password",新規パスワード
 
-"Favorite It",好きだ
-"Unfavorite It",嫌い
-"Followed Members",フォロード
 "View It",このノードを表示する
 "Liked Topics",いいね
 "Favorite Nodes",いいね

@@ -18,11 +18,17 @@ class TopicListHandler(BaseHandler):
 
 class TopicHandler(BaseHandler):
     def get(self, topic_id):
+        topic = self.get_topic(topic_id)
         if self.current_user:
             self.db.notifications.update({
                 'topic': topic_id, 'to': self.current_user['name_lower']
             }, {'$set': {'read': True}}, multi=True)
-        topic = self.get_topic(topic_id)
+            if 'read' in topic:
+                self.db.topics.update({'_id': ObjectId(topic_id)},
+                    {'$addToSet': {'read': self.current_user['name_lower']}})
+            else:
+                self.db.topics.update({'_id': ObjectId(topic_id)},
+                    {'$set': {'read': [self.current_user['name_lower']]}})
         replies = self.db.replies.find({'topic': topic_id},
             sort=[('index', 1)])
         replies_count = replies.count()
@@ -77,7 +83,8 @@ class ReplyHandler(BaseHandler):
         self.db.replies.insert(data)
         self.db.topics.update({'_id': ObjectId(topic_id)},
             {'$set': {'last_reply_time': time_now,
-                'last_reply_by': self.current_user['name']}})
+                'last_reply_by': self.current_user['name'],
+                'read': []}})
         reply_nums = self.db.replies.find({'topic': topic_id}).count()
         last_page = self.get_page_num(reply_nums,
             self.settings['replies_per_page'])

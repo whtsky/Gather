@@ -29,9 +29,6 @@
 "Code Block Example",代码块示例
 "Choose a node",选择一个节点
 
-"Like",喜欢
-"Likes",喜欢
-"Unlike",不喜欢
 "Reply",回复
 
 "Add Node",增加节点
@@ -51,8 +48,6 @@
 "Move",移动
 "From",从
 "To",到
-"Follow",特别收听
-"Unfollow",取消收听
 "Move Topic",移动话题
 "Created by",作者
 "Created at",创建于
@@ -74,12 +69,7 @@
 "Old Password",原密码
 "New Password",新密码
 
-"Favorite It",收藏节点
-"Unfavorite It",取消收藏
-"Followed Members",特别收听
 "View It",查看节点
-"Liked Topics",喜爱主题
-"Favorite Nodes",收藏节点
 
 "Notifications",提醒
 "unread notification",未读提醒
