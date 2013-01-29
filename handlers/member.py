@@ -33,24 +33,6 @@ class MemberPageHandler(BaseHandler):
             replies=replies, liked_topics=liked_topics)
 
 
-class FollowHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, name):
-        member = self.get_member(name)
-        self.db.members.update({'_id': self.current_user['_id']},
-                {'$addToSet': {'follow': member['name']}})
-        self.redirect('/member/%s' % name)
-
-
-class UnfollowHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, name):
-        member = self.get_member(name)
-        self.current_user['follow'].remove(member['name'])
-        self.db.members.save(self.current_user)
-        self.redirect('/member/' + name)
-
-
 class MemberTopicsHandler(BaseHandler):
     def get(self, name):
         member = self.get_member(name)
@@ -80,7 +62,5 @@ handlers = [
     (r'/member', MemberListHandler),
     (r'/member/(\w+)', MemberPageHandler),
     (r'/member/(\w+)/topics', MemberTopicsHandler),
-    (r'/member/(\w+)/follow', FollowHandler),
-    (r'/member/(\w+)/unfollow', UnfollowHandler),
     (r'/member/(\w+)/role', ChangeRoleHandler),
 ]

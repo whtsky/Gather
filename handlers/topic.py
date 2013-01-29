@@ -157,22 +157,6 @@ class MoveHandler(BaseHandler):
         self.redirect('/topic/%s' % topic_id)
 
 
-class LikeHandler(BaseHandler):
-    def get(self, topic_id):
-        user_id = self.current_user['_id']
-        self.db.members.update({'_id': user_id},
-                {'$addToSet': {'like': topic_id}})
-        self.redirect('/topic/' + topic_id)
-
-
-class UnlikeHandler(BaseHandler):
-    def get(self, topic_id):
-        user = self.current_user
-        user['like'].remove(topic_id)
-        self.db.members.save(user)
-        self.redirect('/topic/' + topic_id)
-
-
 class EditReplyHandler(BaseHandler):
     def get(self, reply_id):
         reply = self.db.replies.find_one({'_id': ObjectId(reply_id)})
@@ -239,8 +223,6 @@ handlers = [
     (r'/topic/(\w+)/reply', ReplyHandler),
     (r'/topic/(\w+)/remove', RemoveHandler),
     (r'/topic/(\w+)/move', MoveHandler),
-    (r'/topic/(\w+)/like', LikeHandler),
-    (r'/topic/(\w+)/unlike', UnlikeHandler),
     (r'/reply/(\w+)/edit', EditReplyHandler),
     (r'/reply/(\w+)/remove', RemoveReplyHandler),
 ]

@@ -163,26 +163,6 @@ class RemoveHandler(BaseHandler):
         self.redirect('/')
 
 
-class FavoriteHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, node_name):
-        node = self.get_node(node_name)
-        user_id = self.current_user['_id']
-        self.db.members.update({'_id': user_id},
-                {'$addToSet': {'favorite': node['name']}})
-        self.redirect(self.get_argument('next', '/node/' + node['name']))
-
-
-class UnfavoriteHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, node_name):
-        node = self.get_node(node_name)
-        user = self.current_user
-        user['favorite'].remove(node['name'])
-        self.db.members.save(user)
-        self.redirect(self.get_argument('next', '/node/' + node['name']))
-
-
 class NodeSidebar(tornado.web.UIModule):
     def render(self, node):
         return self.render_string("node/modules/sidebar.html", node=node)
@@ -203,8 +183,6 @@ handlers = [
     (r'/node/([%A-Za-z0-9.-]+)/create', CreateTopicHandler),
     (r'/node/([%A-Za-z0-9.-]+)/edit', EditHandler),
     (r'/node/([%A-Za-z0-9.-]+)/remove', RemoveHandler),
-    (r'/node/([%A-Za-z0-9.-]+)/favorite', FavoriteHandler),
-    (r'/node/([%A-Za-z0-9.-]+)/unfavorite', UnfavoriteHandler),
     (r'/node/([%A-Za-z0-9.-]+)/feed', FeedHandler),
 ]
 
