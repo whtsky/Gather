@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    {% $set noticount = handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() %}
+    {% set noticount = handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() %}
     <meta charset="utf-8">
     <meta name=description content="{{ handler.settings['forum_title'] }},{% block description %}{% end %}">
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}{{ '(' + noticount + ')' if noticount }}</title>
