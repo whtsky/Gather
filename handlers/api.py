@@ -20,8 +20,10 @@ class NewNotificationsHandler(BaseHandler):
             topic = self.get_topic(noti['topic'])
             content = html_re.sub('', noti['content'])
             content = tornado.escape.xhtml_unescape(content)
+            avatar = self.get_avatar(member, size=128)[58:126]
             notifications.append({
-                'avatar': self.get_avatar(member),
+                'id': str(noti['_id']),
+                'avatar': avatar,
                 'title': '%s mentioned you' % member['name'],
                 'content': content,
                 'url': '/topic/%s' % topic['_id']
@@ -29,7 +31,8 @@ class NewNotificationsHandler(BaseHandler):
 
         # Turn to json.
         self.write({
-            "notifications": notifications
+            "notifications": notifications,
+            "id": notifications[0]['id']
         })
         # https://github.com/facebook/tornado/blob/master/tornado/web.py#L501
 

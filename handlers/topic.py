@@ -33,6 +33,8 @@ class TopicHandler(BaseHandler):
             sort=[('index', 1)])
         replies_count = replies.count()
         p = int(self.get_argument('p', 1))
+        if p < 1:
+            p = 1
         self.render('topic/topic.html', topic=topic,
             replies=replies, replies_count=replies_count,
             p=p)
