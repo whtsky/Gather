@@ -14,6 +14,7 @@ js-lib:
 	uglifyjs -nc assets/js/jquery.timeago.js >> static/js/lib.js
 	coffee -b -p assets/js/site.coffee | uglifyjs >> static/js/lib.js
 	coffee -p assets/js/retina.coffee | uglifyjs >> static/js/lib.js
+	coffee -p assets/js/notifier.coffee | uglifyjs >> static/js/lib.js
 	
 js-editor:
 	uglifyjs -nc assets/js/jquery.caret.js > static/js/editor.js

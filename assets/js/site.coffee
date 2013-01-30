@@ -16,4 +16,12 @@ $ ->
 		if window.confirm(_('Are you sure?'))
 			window.location = $(this).data('href')
 		return false
-		
+
+	$.ajax
+        url: "/api/notifications/new"
+        success: (data) ->
+            window.data = data
+            for notification in data.notifications
+                $.notifier.notify(notification.avatar, notification.title,
+                    notification.content, notification.url)
+            return

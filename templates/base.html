@@ -77,7 +77,7 @@
     <div class="container">
         <div class="row">
             {% block body %}
-            <div class="span12">
+            <div class="span12" id="messages">
                 {% for type, msg in handler.get_flashed_messages() %}
                 <div class="alert alert-{{type}}">
                     {{ _(msg) }}
