@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    {% if current_user %}
     {% set noticount = handler.db.notifications.find({'to': current_user['name_lower'],'read': False}).count() %}
+    {% else %}
+    {% set noticount = 0 %}
+    {% end %}
     <meta charset="utf-8">
     <meta name=description content="{{ handler.settings['forum_title'] }},{% block description %}{% end %}">
     <title>{% block title %}{% end %}{{ handler.settings['forum_title'] }}{% if noticount %}({{ noticount }}){% end %}</title>
