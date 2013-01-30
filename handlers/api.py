@@ -29,6 +29,9 @@ class NewNotificationsHandler(BaseHandler):
                 'url': '/topic/%s' % topic['_id']
             })
 
+        if not notifications:
+            return
+
         # Turn to json.
         self.write({
             "notifications": notifications,
