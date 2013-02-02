@@ -21,7 +21,8 @@ class TopicHandler(BaseHandler):
         topic = self.get_topic(topic_id)
         if self.current_user:
             self.db.notifications.update({
-                'topic': topic_id, 'to': self.current_user['name_lower']
+                'topic': ObjectId(topic_id),
+                'to': self.current_user['name_lower']
             }, {'$set': {'read': True}}, multi=True)
             if 'read' in topic:
                 self.db.topics.update({'_id': ObjectId(topic_id)},
