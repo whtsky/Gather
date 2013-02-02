@@ -86,7 +86,7 @@ class ReplyHandler(BaseHandler):
         self.db.topics.update({'_id': ObjectId(topic_id)},
             {'$set': {'last_reply_time': time_now,
                 'last_reply_by': self.current_user['name'],
-                'read': []}})
+                'read': [self.current_user['name_lower']]}})
         reply_nums = self.db.replies.find({'topic': topic_id}).count()
         last_page = self.get_page_num(reply_nums,
             self.settings['replies_per_page'])

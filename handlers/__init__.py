@@ -119,6 +119,8 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         return htm
 
     def send_notification(self, content, topic_id):
+        if not isinstance(topic_id, ObjectId):
+            topic_id = ObjectId(topic_id)
         uname = self.current_user['name_lower']
         for name in set(_MENTION_FINDER_.findall(content)):
             member = self.db.members.find_one({'name_lower': name.lower()})
