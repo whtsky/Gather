@@ -84,11 +84,15 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         return node
 
     def get_avatar(self, member, size=48):
-        hashed_email = hashlib.md5(member['email']).hexdigest()
-        avatar = self.settings['gravatar_base_url'] + hashed_email
-        avatar += '?s=%s' % size
+        url = self.get_avatar_img(member, size)
         return '<a href="/member/%s" class="avatar">\
-            <img src="%s" /></a>' % (member['name'], avatar)
+            <img src="%s" /></a>' % (member['name'], url)
+
+    def get_avatar_img(self, member, size=48):
+        hashed_email = hashlib.md5(member['email']).hexdigest()
+        url = self.settings['gravatar_base_url'] + hashed_email
+        url += '?s=%s' % size
+        return url
 
     def get_page_num(self, count, per_page):
         return int((count + per_page - 1) / per_page)
