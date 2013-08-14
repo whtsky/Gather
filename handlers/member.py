@@ -12,17 +12,17 @@ class MemberListHandler(BaseHandler):
         p = int(self.get_argument('p', 1))
         members = members[(p - 1) * per_page:p * per_page]
         self.render('member/list.html', per_page=per_page, members=members,
-            count=count, p=p)
+                    count=count, p=p)
 
 
 class MemberPageHandler(BaseHandler):
     def get(self, name):
         member = self.get_member(name)
         topics = self.db.topics.find({'author': member['name']},
-            sort=[('last_reply_time', -1)])
+                                     sort=[('last_reply_time', -1)])
         topics = topics[:self.settings['topics_per_page']]
         replies = self.db.replies.find({'author': member['name']},
-            sort=[('created', -1)])
+                                       sort=[('created', -1)])
         replies = replies[:self.settings['replies_per_page']]
         if member['like']:
             member['like'] = member['like'][:self.settings['topics_per_page']]
@@ -30,20 +30,22 @@ class MemberPageHandler(BaseHandler):
         else:
             liked_topics = []
         self.render('member/member.html', member=member, topics=topics,
-            replies=replies, liked_topics=liked_topics)
+                    replies=replies, liked_topics=liked_topics)
 
 
 class MemberTopicsHandler(BaseHandler):
     def get(self, name):
         member = self.get_member(name)
-        topics = self.db.topics.find({'author': member['name']},
-            sort=[('last_reply_time', -1)])
+        topics = self.db.topics.find(
+            {'author': member['name']},
+            sort=[('last_reply_time', -1)]
+        )
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
         topics = topics[(p - 1) * self.settings['topics_per_page']:
-            p * self.settings['topics_per_page']]
+                        p*self.settings['topics_per_page']]
         self.render('member/topics.html', member=member,
-            topics=topics, topics_count=topics_count, p=p)
+                    topics=topics, topics_count=topics_count, p=p)
 
 
 class ChangeRoleHandler(BaseHandler):
@@ -54,7 +56,7 @@ class ChangeRoleHandler(BaseHandler):
             self.check_role(role_min=role + 1)
         name = name.lower()
         self.db.members.update({'name_lower': name},
-                {'$set': {'role': role}})
+                               {'$set': {'role': role}})
         self.redirect('/member/' + name)
 
 

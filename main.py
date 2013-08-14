@@ -23,7 +23,8 @@ class Application(tornado.web.Application):
         settings = {'template_path': os.path.join(ROOT, "templates"),
                     'role': {1: 'Member',
                              2: 'Admin',
-                             3: 'SuperAdmin'}}
+                             3: 'SuperAdmin',
+                             5: 'Owner'}}
         execfile(options.settings, {}, settings)
 
         settings['host'] = settings['forum_url'].split('/')[2]

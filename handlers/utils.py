@@ -1,4 +1,3 @@
-
 import re
 from tornado.escape import xhtml_escape, _unicode, _URL_RE
 from pygments import highlight

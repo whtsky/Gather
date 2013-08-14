@@ -40,7 +40,7 @@ class SignupHandler(BaseHandler):
         password = hashlib.sha1(password + username.lower()).hexdigest()
         role = 1
         if not self.db.members.count():
-            role = 3
+            role = 5
         self.db.members.insert({
             'name': username,
             'name_lower': username.lower(),
