@@ -71,7 +71,7 @@
                 <option value="-1">{{ _("Deactive") }}</option>
                 {% end %}
                 {% for role in range(1,current_user['role']) %}
-                {% if role != member['role'] and role < current_user['role'] %}
+                {% if role != member['role'] and role < current_user['role'] and role in handler.settings['role'] %}
                 <option value="{{ role }}">{{ _(handler.settings['role'][role]) }}</option>
                 {% end %}
                 {% end %}
