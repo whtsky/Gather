@@ -12,8 +12,10 @@ class TopicListHandler(BaseHandler):
         topics = self.db.topics.find(sort=[('last_reply_time', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
-        self.render('topic/list.html', topics=topics,
-            topics_count=topics_count, p=p)
+        self.render(
+            'topic/list.html', topics=topics,
+            topics_count=topics_count, p=p
+        )
 
 
 class TopicHandler(BaseHandler):
