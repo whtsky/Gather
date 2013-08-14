@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 mongodb_host = '127.0.0.1'
 mongodb_port = 27017
@@ -8,8 +8,8 @@ database_name = 'forum'
 forum_title = 'site_name'
 forum_url = 'http://xxx.com/'
 # forum_url MUST ends with '/'
-#static_path = ''
-#static_url_prefix = 'http://assets.xxx.com'
+# static_path = ''
+# static_url_prefix = 'http://assets.xxx.com'
 
 default_locale = 'zh_CN'
 notifications_per_page = 10

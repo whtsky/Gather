@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding=utf-8
+# coding=utf-8
 
 from __future__ import print_function
 import time
@@ -10,7 +10,7 @@ import hashlib
 import pymongo
 
 db = pymongo.Connection(host=settings.mongodb_host,
-    port=settings.mongodb_port)[settings.database_name]
+                        port=settings.mongodb_port)[settings.database_name]
 db.members.create_index([('created', -1)])
 db.topics.create_index([('last_reply_time', -1), ('node', 1)])
 db.replies.create_index([('topic', 1), ('index', 1)])
@@ -42,16 +42,16 @@ if __name__ == '__main__':
     password = hashlib.sha1(password + username.lower()).hexdigest()
 
     db.members.insert({
-    'name': username,
-    'name_lower': username.lower(),
-    'password': password,
-    'email': email,
-    'website': '',
-    'description': '',
-    'created': time.time(),
-    'role': 3,
-    'language': settings.default_locale,
-    'like': [],  # topics
-    'follow': [],  # users
-    'favorite': []  # nodes
-    })
+                      'name': username,
+                      'name_lower': username.lower(),
+                      'password': password,
+                      'email': email,
+                      'website': '',
+                      'description': '',
+                      'created': time.time(),
+                      'role': 3,
+                      'language': settings.default_locale,
+                      'like': [],  # topics
+                      'follow': [],  # users
+                      'favorite': []  # nodes
+                      })

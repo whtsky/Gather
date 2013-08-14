@@ -24,7 +24,8 @@ class NewNotificationsHandler(BaseHandler):
             notifications.append({
                 'id': str(noti['_id']),
                 'avatar': avatar,
-                'title': '%s mentioned you at %s' % (member['name'], topic['title']),
+                'title': '%s mentioned you at %s' %
+                (member['name'], topic['title']),
                 'content': content,
                 'url': '/topic/%s' % topic['_id']
             })

@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 import tornado.web
 import time
@@ -28,19 +28,19 @@ class TopicHandler(BaseHandler):
             }, {'$set': {'read': True}}, multi=True)
             if 'read' in topic:
                 self.db.topics.update({'_id': ObjectId(topic_id)},
-                    {'$addToSet': {'read': self.current_user['name_lower']}})
+                                      {'$addToSet': {'read': self.current_user['name_lower']}})
             else:
                 self.db.topics.update({'_id': ObjectId(topic_id)},
-                    {'$set': {'read': [self.current_user['name_lower']]}})
+                                      {'$set': {'read': [self.current_user['name_lower']]}})
         replies = self.db.replies.find({'topic': topic_id},
-            sort=[('index', 1)])
+                                       sort=[('index', 1)])
         replies_count = replies.count()
         p = int(self.get_argument('p', 1))
         if p < 1:
             p = 1
         self.render('topic/topic.html', topic=topic,
-            replies=replies, replies_count=replies_count,
-            p=p)
+                    replies=replies, replies_count=replies_count,
+                    p=p)
 
 
 class CreateHandler(BaseHandler):
@@ -69,7 +69,7 @@ class ReplyHandler(BaseHandler):
             self.redirect('/topic/%s' % topic_id)
             return
         index = self.db.topics.find_and_modify({'_id': ObjectId(topic_id)},
-            update={'$inc': {'index': 1}})['index'] + 1
+                                               update={'$inc': {'index': 1}})['index'] + 1
         time_now = time.time()
         content_html = make_content(content)
         self.send_notification(content_html, topic_id)
@@ -87,12 +87,13 @@ class ReplyHandler(BaseHandler):
             data['source'] = source
         self.db.replies.insert(data)
         self.db.topics.update({'_id': ObjectId(topic_id)},
-            {'$set': {'last_reply_time': time_now,
-                'last_reply_by': self.current_user['name'],
-                'read': [self.current_user['name_lower']]}})
+                              {'$set': {'last_reply_time': time_now,
+                                        'last_reply_by':
+                                        self.current_user['name'],
+                                        'read': [self.current_user['name_lower']]}})
         reply_nums = self.db.replies.find({'topic': topic_id}).count()
         last_page = self.get_page_num(reply_nums,
-            self.settings['replies_per_page'])
+                                      self.settings['replies_per_page'])
         self.redirect('/topic/%s?p=%s' % (topic_id, last_page))
 
 
@@ -117,7 +118,7 @@ class EditHandler(BaseHandler):
         self.check_role(owner_name=topic['author'])
         node = self.get_node(topic['node'])
         self.render('topic/edit.html', topic=topic,
-            node=node)
+                    node=node)
 
     def post(self, topic_id):
         topic = self.get_topic(topic_id)
@@ -139,7 +140,7 @@ class EditHandler(BaseHandler):
         content = make_content(content)
         self.db.notifications.update({'content': topic['content_html'],
                                       'topic': ObjectId(topic_id)},
-            {'$set': {'content': content}})
+                                     {'$set': {'content': content}})
         topic['content_html'] = content
         self.db.topics.save(topic)
         self.flash('Saved successfully', type='success')
@@ -157,7 +158,7 @@ class MoveHandler(BaseHandler):
         logging.info(node_name)
         node = self.get_node(node_name.lower())
         self.db.topics.update({'_id': ObjectId(topic_id)},
-                {'$set': {'node': node['name']}})
+                              {'$set': {'node': node['name']}})
         self.flash('Moved successfully', type='success')
         self.redirect('/topic/%s' % topic_id)
 
@@ -187,7 +188,7 @@ class EditReplyHandler(BaseHandler):
         reply['modified'] = time.time()
         content = make_content(content)
         self.db.notifications.update({'content': reply['content_html']},
-                {'$set': {'content': content}})
+                                     {'$set': {'content': content}})
         reply['content_html'] = content
         self.db.replies.save(reply)
         self.flash('Saved successfully', type='success')
@@ -217,7 +218,7 @@ class TopicList(tornado.web.UIModule):
 class Paginator(tornado.web.UIModule):
     def render(self, p, perpage, count, base_url):
         return self.render_string("topic/modules/paginator.html", p=p,
-            perpage=perpage, count=count, base_url=base_url)
+                                  perpage=perpage, count=count, base_url=base_url)
 
 handlers = [
     (r'/', TopicListHandler),

@@ -1,4 +1,4 @@
- #coding=utf-8
+ # coding=utf-8
 
 import time
 import tornado.web
@@ -16,11 +16,11 @@ class NodeHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
         topics = self.db.topics.find({'node': node['name']},
-            sort=[('last_reply_time', -1)])
+                                     sort=[('last_reply_time', -1)])
         topics_count = topics.count()
         p = int(self.get_argument('p', 1))
         self.render('node/node.html', node=node, topics=topics,
-            topics_count=topics_count, p=p)
+                    topics_count=topics_count, p=p)
 
 
 class CreateTopicHandler(BaseHandler):
@@ -117,17 +117,17 @@ class EditHandler(BaseHandler):
         if not name:
             self.flash('Please fill the required field')
         if name != node['name'] and \
-            self.db.nodes.find_one({'name_lower': name.lower()}):
+                self.db.nodes.find_one({'name_lower': name.lower()}):
                 self.flash('This node name is already registered')
         if title != node['title'] and \
-            self.db.nodes.find_one({'title': title}):
+                self.db.nodes.find_one({'title': title}):
             self.flash('This node title is already registered')
         if self.messages:
             self.render('node/edit.html', node=node)
             return
 
         self.db.topics.update({'node': node['name']},
-            {'$set': {'node': name}}, multi=True)
+                              {'$set': {'node': name}}, multi=True)
         node['name'] = name
         node['name_lower'] = name.lower()
         node['title'] = title
@@ -158,7 +158,7 @@ class RemoveHandler(BaseHandler):
 
         self.db.nodes.remove(from_node)
         self.db.topics.update({'node': from_node['name']},
-            {'$set': {'node': to_node['name']}}, multi=True)
+                              {'$set': {'node': to_node['name']}}, multi=True)
         self.flash('Removed successfully', type='success')
         self.redirect('/')
 
@@ -172,7 +172,7 @@ class FeedHandler(BaseHandler):
     def get(self, node_name):
         node = self.get_node(node_name)
         topics = self.db.topics.find({'node': node['name']},
-            sort=[('modified', -1)])
+                                     sort=[('modified', -1)])
         self.render('feed.xml', topics=topics)
 
 

@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 import time
 import hashlib
@@ -101,10 +101,10 @@ class SettingsHandler(BaseHandler):
         if len(description) > 1500:
             self.flash("The description is too lang")
         self.db.members.update({'_id': self.current_user['_id']}, {'$set': {
-                'website': website,
-                'description': description,
-                'language': language
-            }})
+            'website': website,
+            'description': description,
+            'language': language
+        }})
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
 
@@ -126,7 +126,7 @@ class ChangePasswordHandler(BaseHandler):
         key = new_password + self.current_user['name'].lower()
         password = str(hashlib.sha1(key).hexdigest())
         self.db.members.update({'_id': self.current_user['_id']},
-                {'$set': {'password': password}})
+                               {'$set': {'password': password}})
         self.set_secure_cookie('user', password, expires_days=30)
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
@@ -143,7 +143,7 @@ class NotificationsHandler(BaseHandler):
         per_page = self.settings['notifications_per_page']
         notis = notis[(p - 1) * per_page:p * per_page]
         self.render('account/notifications.html', notis=notis,
-            notis_count=notis_count, p=p)
+                    notis_count=notis_count, p=p)
 
 
 class NotificationsClearHandler(BaseHandler):

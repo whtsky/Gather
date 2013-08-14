@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 import re
 import tornado.web
@@ -101,7 +101,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
     def flash(self, message, type='error'):
         self.messages.append((type, message))
         self.set_secure_cookie('flash_messages',
-            tornado.escape.json_encode(self.messages))
+                               tornado.escape.json_encode(self.messages))
 
     def get_flashed_messages(self):
         messages = self.messages

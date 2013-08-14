@@ -97,7 +97,7 @@ class RecaptchaMixin(object):
             'response': response
         }
         body = urllib.urlopen(self.RECAPTCHA_VERIFY_URL,
-            urllib.urlencode(post_args)).read()
+                              urllib.urlencode(post_args)).read()
         verify, message = body.split()
         if verify != 'true':
             self.flash('Are you human?')
