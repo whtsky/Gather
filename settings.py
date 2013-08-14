@@ -7,6 +7,7 @@ database_name = 'forum'
 
 forum_title = 'site_name'
 forum_url = 'http://xxx.com/'
+sentry_dsn = ''
 # forum_url MUST ends with '/'
 # static_path = ''
 # static_url_prefix = 'http://assets.xxx.com'

@@ -5,15 +5,18 @@ import tornado.web
 import tornado.escape
 import tornado.locale
 import time
-from bson.objectid import ObjectId
 import hashlib
+
+from raven.contrib.tornado import SentryMixin
+from bson.objectid import ObjectId
+
 from .recaptcha import RecaptchaMixin
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
-class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
+class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin, SentryMixin):
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         member = self.application.db.members.find_one({'password': password})

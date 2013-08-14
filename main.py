@@ -8,8 +8,10 @@ import tornado.locale
 import tornado.options
 import tornado.web
 import pymongo
-from tornado.options import define, options
 import urls
+
+from tornado.options import define, options
+from raven.contrib.tornado import AsyncSentryClient
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -55,6 +57,8 @@ class Application(tornado.web.Application):
             locale = (locale, tornado.locale.LOCALE_NAMES[locale]['name'])
             locales.append(locale)
         self.locales = tuple(locales)
+        
+        self.sentry_client = AsyncSentryClient(settings['sentry_dsn'])
 
 
 def main():

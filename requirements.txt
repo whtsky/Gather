@@ -1,3 +1,7 @@
-tornado>=2.3
-pymongo>=2.2.1
-pygments>=1.5
+Pygments==1.6
+distribute==0.6.34
+pep8==1.4.6
+pymongo==2.5.2
+raven==3.4.1
+tornado==3.1
+wsgiref==0.1.2
