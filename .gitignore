@@ -47,3 +47,5 @@ docs/_
 include/
 
 .coveralls.yml
+
+.sass-cache

@@ -84,6 +84,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin):
         return node
 
     def get_avatar(self, member, size=48):
+        size *= 2  # Retina
         url = self.get_avatar_img(member, size)
         return '<a href="/member/%s" class="avatar">\
             <img src="%s" /></a>' % (member['name'], url)
