@@ -151,7 +151,7 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin, SentryMixin):
             "author": self.current_user['name'],
             "before": before,
             "after": after,
-            "ghdiff": ghdiff.diff(before, after),
+            "ghdiff": ghdiff.diff(before, after, css=False),
             "target_id": ObjectId(id),
             "created": time.time()
         }
