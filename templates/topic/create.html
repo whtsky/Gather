@@ -4,11 +4,6 @@
 
 {% block head %}
 <script src='{{ static_url("js/editor.js") }}'></script>
-<script>
-    $(document).ready(function() { $("#node").select2({
-            placeholder: {{ _("Choose a node") }},
-    });});
-</script>
 {% end %}
 
 {% block content %}
