@@ -4,7 +4,7 @@
     <footer>
         <a href="/node/{{ node['name'] }}" class="btn">{{ _("View It") }}</a>
         {% if current_user %}
-        <a href="/node/{{ node['name'] }}/create?next={{ url_escape(request.uri) }}" class="btn btn-warning">{{ _("Create Topic") }}</a>
+        <a href="/topic/create?node={{ node['name'] }}" class="btn btn-warning">{{ _("Create Topic") }}</a>
         {% end %}
     </footer>
 </div>

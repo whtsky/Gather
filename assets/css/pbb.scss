@@ -60,7 +60,11 @@ body{
 
 }
 
-#title, #content{
+#topic_node {
+  width: 150px;
+}
+
+#content{
   margin-top: $spacing;
   width: 98%;
 }

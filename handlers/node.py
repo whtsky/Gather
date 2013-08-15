@@ -23,55 +23,6 @@ class NodeHandler(BaseHandler):
                     topics_count=topics_count, p=p)
 
 
-class CreateTopicHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self, node_name):
-        node = self.get_node(node_name)
-        self.render('node/create.html', node=node)
-
-    @tornado.web.authenticated
-    def post(self, node_name):
-        node = self.get_node(node_name)
-        title = self.get_argument('title', '')
-        content = self.get_argument('content', '')
-        if not (title and content):
-            self.flash('Please fill the required field')
-        if len(title) > 100:
-            self.flash("The title is too long")
-        if len(content) > 20000:
-            self.flash("The content is too lang")
-        if self.messages:
-            self.render('node/create.html', node=node)
-            return
-        topic = self.db.topics.find_one({
-            'title': title,
-            'content': content,
-            'author': self.current_user['name']
-        })
-        if topic:
-            self.redirect('/topic/%s' % topic['_id'])
-            return
-        time_now = time.time()
-        content_html = make_content(content)
-        data = {
-            'title': title,
-            'content': content,
-            'content_html': content_html,
-            'author': self.current_user['name'],
-            'node': node['name'],
-            'created': time_now,
-            'modified': time_now,
-            'last_reply_time': time_now,
-            'index': 0,
-        }
-        source = self.get_source()
-        if source:
-            data['source'] = source
-        topic_id = self.db.topics.insert(data)
-        self.send_notification(content_html, topic_id)
-        self.redirect('/topic/%s' % topic_id)
-
-
 class AddHandler(BaseHandler):
     def get(self):
         self.check_role()
@@ -180,7 +131,6 @@ handlers = [
     (r'/node', NodeListHandler),
     (r'/node/add', AddHandler),
     (r'/node/([%A-Za-z0-9.-]+)', NodeHandler),
-    (r'/node/([%A-Za-z0-9.-]+)/create', CreateTopicHandler),
     (r'/node/([%A-Za-z0-9.-]+)/edit', EditHandler),
     (r'/node/([%A-Za-z0-9.-]+)/remove', RemoveHandler),
     (r'/node/([%A-Za-z0-9.-]+)/feed', FeedHandler),

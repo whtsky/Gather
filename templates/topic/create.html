@@ -2,11 +2,40 @@
 
 {% block title %}{{ _("Create Topic") }} | {% end %}
 
+{% block head %}
+<script src='{{ static_url("js/editor.js") }}'></script>
+<script>
+    $(document).ready(function() { $("#node").select2({
+            placeholder: {{ _("Choose a node") }},
+    });});
+</script>
+{% end %}
+
 {% block content %}
 <div class="box">
-    <header>{{ _("Choose a node") }}</header>
-    {% for node in handler.db.nodes.find() %}
-    <p><a href="/node/{{ node['name'] }}/create" class="node">{{ node['title'] }}</a>
-    {% end %}
+    <header>{{ _("Create Topic") }}</header>
+    <form method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <select id="topic_node" name="node">
+            {% for node in handler.db.nodes.find() %}
+            <option value="{{ node['name'] }}"{% if node['name'] == node_name %} selected{% end %}> {{ node['title'] }}</option>
+            {% end %}
+            </select>
+            <input type="text" class="span7" id="title" name="title" placeholder="{{ _('Title') }}"
+                   maxlength="100" required>
+            <textarea id="content" name="content" rows="20" required></textarea>
+            <button type="submit" class="btn btn-primary">{{ _("Post") }}</button>
+        </fieldset>
+    </form>
+</div>
+{% end %}
+
+{% block sidebar %}
+<div class="box">
+    <header>{{ _("Code Block Example") }}</header>
+    <p>```python</p>
+    <p>print "hello world!"</p>
+    <p>```</p>
 </div>
 {% end %}
