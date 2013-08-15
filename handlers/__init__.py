@@ -17,7 +17,7 @@ _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
-class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin, SentryMixin):
+class BaseHandler(SentryMixin, tornado.web.RequestHandler, RecaptchaMixin):
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         member = self.application.db.members.find_one({'password': password})
