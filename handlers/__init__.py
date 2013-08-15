@@ -146,13 +146,14 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin, SentryMixin):
                 'created': time.time(),
             })
 
-    def save_history(self, id, before, after):
+    def save_history(self, id, before, after, type="content"):
         data = {
             "author": self.current_user['name'],
             "before": before,
             "after": after,
             "ghdiff": ghdiff.diff(before, after, css=False),
             "target_id": ObjectId(id),
-            "created": time.time()
+            "created": time.time(),
+            "type": type
         }
         self.db.histories.insert(data)

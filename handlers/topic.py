@@ -170,7 +170,6 @@ class EditHandler(BaseHandler):
         self.check_role(owner_name=topic['author'])
         title = self.get_argument('title', '')
         content = self.get_argument('content', '')
-        topic['title'] = title
         if not (title and content):
             self.flash('Please fill the required field')
         if len(title) > 100:
@@ -180,14 +179,21 @@ class EditHandler(BaseHandler):
         if self.messages:
             self.render('topic/edit.html', topic=topic)
             return
-        self.save_history(reply_id, reply['content'], content)
-        topic['content'] = content
-        topic['modified'] = time.time()
-        content = make_content(content)
-        self.db.notifications.update({'content': topic['content_html'],
-                                      'topic': ObjectId(topic_id)},
-                                     {'$set': {'content': content}})
-        topic['content_html'] = content
+        if content == topic['content'] and title == topic['title']:
+            self.redirect('/topic/%s' % topic_id)
+            return
+        if title != topic['title']:
+            self.save_history(topic_id, topic['title'], title, type="title")
+            topic['title'] = title
+        if content != topic['content']:
+            self.save_history(topic_id, topic['content'], content)
+            topic['content'] = content
+            topic['modified'] = time.time()
+            content = make_content(content)
+            self.db.notifications.update({'content': topic['content_html'],
+                                          'topic': ObjectId(topic_id)},
+                                         {'$set': {'content': content}})
+            topic['content_html'] = content
         self.db.topics.save(topic)
         self.flash('Saved successfully', type='success')
         self.redirect('/topic/%s' % topic_id)
@@ -229,6 +235,9 @@ class EditReplyHandler(BaseHandler):
             self.flash("The content is too lang")
         if self.messages:
             self.render('topic/edit_reply.html', reply=reply)
+            return
+        if content == reply['content']:
+            self.redirect(self.get_argument('next', '/'))
             return
         self.save_history(reply_id, reply['content'], content)
         reply['modified'] = time.time()
