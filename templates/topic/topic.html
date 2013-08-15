@@ -29,6 +29,9 @@
         {% end %}
         {% if current_user %}
         <div class="pull-right">
+            {% if handler.check_role(role_min=5, return_bool=True) and topic['created'] != topic['modified'] %}
+            <a href="/history/{{ topic['_id'] }}/">{{ _("History") }}</a>
+            {% end %}
             {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
             <a href="/topic/{{ topic['_id'] }}/edit">{{ _("Edit") }}</a>
             <a href="/topic/{{ topic['_id'] }}/move">{{ _("Move") }}</a>
