@@ -6,6 +6,7 @@ import tornado.escape
 import tornado.locale
 import time
 import hashlib
+import ghdiff
 
 from raven.contrib.tornado import SentryMixin
 from bson.objectid import ObjectId
@@ -144,3 +145,14 @@ class BaseHandler(tornado.web.RequestHandler, RecaptchaMixin, SentryMixin):
                 'read': False,
                 'created': time.time(),
             })
+
+    def save_history(self, id, before, after):
+        data = {
+            "author": self.current_user['name'],
+            "before": before,
+            "after": after,
+            "ghdiff": ghdiff.diff(before, after),
+            "target_id": ObjectId(id),
+            "created": time.time()
+        }
+        self.db.histories.insert(data)

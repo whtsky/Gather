@@ -171,7 +171,6 @@ class EditHandler(BaseHandler):
         title = self.get_argument('title', '')
         content = self.get_argument('content', '')
         topic['title'] = title
-        topic['content'] = content
         if not (title and content):
             self.flash('Please fill the required field')
         if len(title) > 100:
@@ -181,6 +180,8 @@ class EditHandler(BaseHandler):
         if self.messages:
             self.render('topic/edit.html', topic=topic)
             return
+        self.save_history(reply_id, reply['content'], content)
+        topic['content'] = content
         topic['modified'] = time.time()
         content = make_content(content)
         self.db.notifications.update({'content': topic['content_html'],
@@ -222,7 +223,6 @@ class EditReplyHandler(BaseHandler):
             raise tornado.web.HTTPError(404)
         self.check_role(owner_name=reply['author'])
         content = self.get_argument('content', '')
-        reply['content'] = content
         if not content:
             self.flash('Please fill the required field')
         elif len(content) > 20000:
@@ -230,7 +230,9 @@ class EditReplyHandler(BaseHandler):
         if self.messages:
             self.render('topic/edit_reply.html', reply=reply)
             return
+        self.save_history(reply_id, reply['content'], content)
         reply['modified'] = time.time()
+        reply['content'] = content
         content = make_content(content)
         self.db.notifications.update({'content': reply['content_html']},
                                      {'$set': {'content': content}})
@@ -255,6 +257,13 @@ class RemoveReplyHandler(BaseHandler):
         self.redirect(self.get_argument('next', '/'))
 
 
+class HistoryHandler(BaseHandler):
+    def get(self, id):
+        self.check_role(role_min=5)
+        id = ObjectId(id)
+        histories = self.db.histories.find({"target_id", id})
+
+
 class TopicList(tornado.web.UIModule):
     def render(self, topics):
         return self.render_string("topic/modules/list.html", topics=topics)
@@ -264,6 +273,7 @@ class Paginator(tornado.web.UIModule):
     def render(self, p, perpage, count, base_url):
         return self.render_string("topic/modules/paginator.html", p=p,
                                   perpage=perpage, count=count, base_url=base_url)
+
 
 handlers = [
     (r'/', TopicListHandler),
@@ -276,6 +286,7 @@ handlers = [
     (r'/topic/(\w+)/move', MoveHandler),
     (r'/reply/(\w+)/edit', EditReplyHandler),
     (r'/reply/(\w+)/remove', RemoveReplyHandler),
+    (r'/history/(\w+)', HistoryHandler)
 ]
 
 ui_modules = {

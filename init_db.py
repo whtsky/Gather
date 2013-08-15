@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # coding=utf-8
 
 import settings
@@ -11,3 +10,4 @@ db.topics.create_index([('last_reply_time', -1), ('node', 1)])
 db.replies.create_index([('topic', 1), ('index', 1)])
 db.notifications.create_index([('to', 1), ('created', 1)])
 db.links.create_index([('priority', -1)])
+db.histories.create_index([('target_id', 1), ('created', -1)])

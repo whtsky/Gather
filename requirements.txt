@@ -1,5 +1,6 @@
 distribute==0.6.34
 Fabric==1.7.0
+ghdiff==0.1
 paramiko==1.11.0
 pep8==1.4.6
 pycrypto==2.6

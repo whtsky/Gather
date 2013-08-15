@@ -49,6 +49,9 @@
         <p>
             {% if current_user %}
             <div class="pull-right">
+                {% if handler.check_role(role_min=5, return_bool=True) and reply['created'] != reply['modified'] %}
+                <a href="/history/{{ reply['_id'] }}/">{{ _("History") }}</a>
+                {% end %}
                 <a href="/reply/{{ reply['_id'] }}/edit?next={{ url_escape(request.uri) }}">{{ _("Edit") }}</a>
                 {% if handler.check_role(owner_name=reply['author'], return_bool=True) %}
                 <a data-href="/reply/{{ reply['_id'] }}/remove" href="#" class="dangerous">{{ _("Remove") }}</a>

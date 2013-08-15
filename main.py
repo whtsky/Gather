@@ -7,11 +7,11 @@ import tornado.ioloop
 import tornado.locale
 import tornado.options
 import tornado.web
-import pymongo
 import urls
 
 from tornado.options import define, options
 from raven.contrib.tornado import AsyncSentryClient
+from init_db import db
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,8 +38,6 @@ class Application(tornado.web.Application):
                                           ui_modules=urls.ui_modules, login_url='/account/signin',
                                           **settings)
 
-        db = pymongo.Connection(host=settings['mongodb_host'],
-                                port=settings['mongodb_port'])[settings['database_name']]
         db.members.create_index([('created', -1)])
         db.topics.create_index([('last_reply_time', -1), ('node', 1)])
         db.replies.create_index([('topic', 1), ('index', 1)])
