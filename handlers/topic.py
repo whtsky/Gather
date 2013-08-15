@@ -286,7 +286,7 @@ handlers = [
     (r'/topic/(\w+)/move', MoveHandler),
     (r'/reply/(\w+)/edit', EditReplyHandler),
     (r'/reply/(\w+)/remove', RemoveReplyHandler),
-    (r'/history/(\w+)', HistoryHandler)
+    (r'/history/(\w+)/', HistoryHandler)
 ]
 
 ui_modules = {
