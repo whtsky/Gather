@@ -27,11 +27,15 @@ class TopicHandler(BaseHandler):
                 'to': self.current_user['name_lower']
             }, {'$set': {'read': True}}, multi=True)
             if 'read' in topic:
-                self.db.topics.update({'_id': ObjectId(topic_id)},
-                                      {'$addToSet': {'read': self.current_user['name_lower']}})
+                self.db.topics.update(
+                    {'_id': ObjectId(topic_id)},
+                    {'$addToSet': {'read': self.current_user['name_lower']}}
+                )
             else:
-                self.db.topics.update({'_id': ObjectId(topic_id)},
-                                      {'$set': {'read': [self.current_user['name_lower']]}})
+                self.db.topics.update(
+                    {'_id': ObjectId(topic_id)},
+                    {'$set': {'read': [self.current_user['name_lower']]}}
+                )
         replies = self.db.replies.find({'topic': topic_id},
                                        sort=[('index', 1)])
         replies_count = replies.count()
@@ -270,7 +274,11 @@ class HistoryHandler(BaseHandler):
     def get(self, id):
         self.check_role(role_min=5)
         id = ObjectId(id)
-        histories = self.db.histories.find({"target_id", id})
+        histories = self.db.histories.find(
+            {"target_id", id},
+            sort=[('created', 1)]
+        )
+        return 'lol'
 
 
 class TopicList(tornado.web.UIModule):
