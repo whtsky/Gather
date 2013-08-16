@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("History") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("History") }}</header>
+    {% for history in histories %}
+    <div class="list">
+        {% set member = handler.get_member(history['author']) %}
+        {% raw handler.get_avatar(member) %}
+        <p>
+            <a href="/member/{{ member['name'] }}">{{ member['name'] }}</a>
+            {{ _("Changed") }} {{ _(history["type"]) }} {{ _("at") }}
+            {% raw handler.format_time(history['created']) %}
+        {% raw history["ghdiff"] %}
+        </p>
+
+    </div>
+    {% end %}
+</div>
+{% end %}

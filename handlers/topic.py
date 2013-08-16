@@ -275,10 +275,10 @@ class HistoryHandler(BaseHandler):
         self.check_role(role_min=5)
         id = ObjectId(id)
         histories = self.db.histories.find(
-            {"target_id", id},
+            {"target_id": id},
             sort=[('created', 1)]
         )
-        return 'lol'
+        self.render("topic/history.html", histories=histories)
 
 
 class TopicList(tornado.web.UIModule):
