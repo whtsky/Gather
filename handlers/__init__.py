@@ -8,7 +8,7 @@ import time
 import hashlib
 import ghdiff
 
-from raven.contrib.tornado import SentryMixin
+from sentry import RequestHandler
 from bson.objectid import ObjectId
 
 from .recaptcha import RecaptchaMixin
@@ -17,7 +17,7 @@ _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
-class BaseHandler(SentryMixin, tornado.web.RequestHandler, RecaptchaMixin):
+class BaseHandler(RequestHandler, RecaptchaMixin):
     def head(self, *args, **kwargs):
         self.get(*args, **kwargs)
         content_length = sum(len(part) for part in self._write_buffer)
