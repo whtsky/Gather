@@ -154,6 +154,7 @@ class RemoveHandler(BaseHandler):
             member['like'].remove(topic_id)
             self.db.members.save(member)
         topic_id = ObjectId(topic_id)
+        self.db.histories.remove({"target_id": topic_id})
         self.db.topics.remove({'_id': topic_id})
         self.db.replies.remove({'topic': topic_id})
         self.db.notifications.remove({'topic': ObjectId(topic_id)})
@@ -258,14 +259,16 @@ class EditReplyHandler(BaseHandler):
 class RemoveReplyHandler(BaseHandler):
     def get(self, reply_id):
         self.check_role(owner_name=self.current_user['name'])
-        reply = self.db.replies.find_one({'_id': ObjectId(reply_id)})
+        reply_id = ObjectId(reply_id)
+        reply = self.db.replies.find_one({'_id': reply_id})
         if not reply:
             raise tornado.web.HTTPError(404)
         self.db.notifications.remove({
             'from': reply['author'].lower(),
             'content': reply['content_html'],
         }, multi=True)
-        self.db.replies.remove({'_id': ObjectId(reply_id)})
+        self.db.histories.remove({"target_id": reply_id})
+        self.db.replies.remove({'_id': reply_id})
         self.flash('Removed successfully', type='success')
         self.redirect(self.get_argument('next', '/'))
 
