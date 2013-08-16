@@ -35,7 +35,7 @@
             {% if handler.check_role(owner_name=topic['author'], return_bool=True) %}
             <a href="/topic/{{ topic['_id'] }}/edit">{{ _("Edit") }}</a>
             <a href="/topic/{{ topic['_id'] }}/move">{{ _("Move") }}</a>
-            <a data-href="/topic/{{ topic['_id'] }}/remove" href="#" class="dangerous">{{ _("Remove") }}</a>
+            <a data-href="/topic/{{ topic['_id'] }}/remove" data-type="topic" href="#" class="remove">{{ _("Remove") }}</a>
             {% end %}
         </div>
         {% end %}
@@ -57,7 +57,7 @@
                 {% end %}
                 <a href="/reply/{{ reply['_id'] }}/edit?next={{ url_escape(request.uri) }}">{{ _("Edit") }}</a>
                 {% if handler.check_role(owner_name=reply['author'], return_bool=True) %}
-                <a data-href="/reply/{{ reply['_id'] }}/remove" href="#" class="dangerous">{{ _("Remove") }}</a>
+                <a data-href="/reply/{{ reply['_id'] }}/remove" data-type="reply" href="#" class="remove">{{ _("Remove") }}</a>
                 {% end %}
                 <a href="#" class="reply" data-floor="{{ reply['index'] }}" data-user="{{ author['name'] }}" title="{{ _('Reply') }}">@</a>
             </div>

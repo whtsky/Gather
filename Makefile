@@ -14,6 +14,7 @@ js-lib:
 	uglifyjs -nc assets/js/jquery.timeago.js >> static/js/lib.js
 	coffee -b -p assets/js/site.coffee | uglifyjs >> static/js/lib.js
 	coffee -p assets/js/notifier.coffee | uglifyjs >> static/js/lib.js
+	uglifyjs -nc assets/js/tornado_xsrf.js >> static/js/lib.js
 	
 js-editor:
 	uglifyjs -nc assets/js/jquery.caret.js > static/js/editor.js
@@ -26,4 +27,3 @@ js-locale:
 	mkdir static/js/locale
 	uglifyjs -nc assets/js/locale/en_US.js > static/js/locale/en_US.js
 	uglifyjs -nc assets/js/locale/zh_CN.js > static/js/locale/zh_CN.js
-	uglifyjs -nc assets/js/locale/ja_JP.js > static/js/locale/ja_JP.js

@@ -147,7 +147,7 @@ class ReplyHandler(BaseHandler):
 
 
 class RemoveHandler(BaseHandler):
-    def get(self, topic_id):
+    def post(self, topic_id):
         self.check_role(owner_name=self.current_user['name'])
         members = self.db.members.find({'like': topic_id})
         for member in members:
@@ -159,7 +159,6 @@ class RemoveHandler(BaseHandler):
         self.db.replies.remove({'topic': topic_id})
         self.db.notifications.remove({'topic': ObjectId(topic_id)})
         self.flash('Removed successfully', type='success')
-        self.redirect('/')
 
 
 class EditHandler(BaseHandler):
@@ -257,7 +256,7 @@ class EditReplyHandler(BaseHandler):
 
 
 class RemoveReplyHandler(BaseHandler):
-    def get(self, reply_id):
+    def post(self, reply_id):
         self.check_role(owner_name=self.current_user['name'])
         reply_id = ObjectId(reply_id)
         reply = self.db.replies.find_one({'_id': reply_id})
@@ -270,7 +269,6 @@ class RemoveReplyHandler(BaseHandler):
         self.db.histories.remove({"target_id": reply_id})
         self.db.replies.remove({'_id': reply_id})
         self.flash('Removed successfully', type='success')
-        self.redirect(self.get_argument('next', '/'))
 
 
 class HistoryHandler(BaseHandler):
