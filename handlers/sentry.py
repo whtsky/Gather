@@ -8,7 +8,7 @@ class RequestHandler(_SentryMixin, RequestHandler):
         if isinstance(value, HTTPError) and value.status_code in [403, 404]:
             RequestHandler.log_exception(self, typ, value, tb)
         else:
-            super(RequestHandler, self).log_exception(typ, value, tb)
+            _SentryMixin.log_exception(self, typ, value, tb)
 
     def get_sentry_user_info(self):
         user = self.current_user
