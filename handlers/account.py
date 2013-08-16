@@ -84,6 +84,9 @@ class SigninHandler(BaseHandler):
 
 class SignoutHandler(BaseHandler):
     def get(self):
+        user_name = self.get_argument('user', None)
+        if user_name != self.current_user['name']:
+            raise tornado.web.HTTPError(403)
         self.clear_cookie('user')
         self.redirect(self.get_argument('next', '/'))
 

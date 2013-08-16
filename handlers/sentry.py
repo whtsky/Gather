@@ -1,12 +1,13 @@
-from tornado.web import HTTPError, RequestHandler
+from tornado.web import HTTPError
+from tornado.web import RequestHandler as _RequestHandler
 
 from raven.contrib.tornado import SentryMixin as _SentryMixin
 
 
-class RequestHandler(_SentryMixin, RequestHandler):
+class RequestHandler(_SentryMixin, _RequestHandler):
     def log_exception(self, typ, value, tb):
         if isinstance(value, HTTPError) and value.status_code in [403, 404]:
-            RequestHandler.log_exception(self, typ, value, tb)
+            _RequestHandler.log_exception(self, typ, value, tb)
         else:
             _SentryMixin.log_exception(self, typ, value, tb)
 

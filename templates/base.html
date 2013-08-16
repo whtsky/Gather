@@ -60,7 +60,7 @@
                     {% end %}
                     <li><a href="/topic/create">{{ _("Create Topic") }}</a></li>
                     <li><a href="/account/settings">{{ _("Settings") }}</a></li>
-                    <li><a href="/account/signout?next={{ url_escape(request.uri) }}">{{ _("Signout") }}</a></li>
+                    <li><a href="/account/signout?next={{ url_escape(request.uri) }}&user={{ current_user['name'] }}">{{ _("Signout") }}</a></li>
                     {% end %}
                 </ul>
             </div>
