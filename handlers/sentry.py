@@ -1,29 +1,18 @@
-from tornado import web
+from tornado.web import HTTPError, RequestHandler
 
 from raven.contrib.tornado import SentryMixin as _SentryMixin
 
 
-class RequestHandler(_SentryMixin, web.RequestHandler):
+class RequestHandler(_SentryMixin, RequestHandler):
     def log_exception(self, typ, value, tb):
-        if isinstance(value, web.HTTPError) and value.status_code == 404:
-            web.RequestHandler.log_exception(self, typ, value, tb)
+        if isinstance(value, HTTPError) and value.status_code in [403, 404]:
+            RequestHandler.log_exception(self, typ, value, tb)
         else:
             super(RequestHandler, self).log_exception(typ, value, tb)
 
     def get_sentry_user_info(self):
-        """
-        Data for sentry.interfaces.User
-
-        Default implementation only sends `is_authenticated` by checking if
-        `tornado.web.RequestHandler.get_current_user` tests postitively for on
-        Truth calue testing
-        """
         user = self.current_user
-        data = {
-            'is_authenticated': True if user else False
-        }
-        if user:
-            data['name'] = user['name']
+        data = user or {}
         return {
             'sentry.interfaces.User': data
         }
