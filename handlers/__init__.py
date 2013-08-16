@@ -18,6 +18,12 @@ _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')
 
 
 class BaseHandler(SentryMixin, tornado.web.RequestHandler, RecaptchaMixin):
+    def head(self, *args, **kwargs):
+        self.get(*args, **kwargs)
+        content_length = sum(len(part) for part in self._write_buffer)
+        self._write_buffer = []
+        self.set_header("Content-Length", content_length)
+
     def get_current_user(self):
         password = self.get_secure_cookie('user')
         member = self.application.db.members.find_one({'password': password})
