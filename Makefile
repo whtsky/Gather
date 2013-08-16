@@ -9,7 +9,7 @@ css-watch:
 js: js-lib js-editor js-locale
 
 js-lib:
-	uglifyjs -nc assets/js/jquery-1.7.2.min.js > static/js/lib.js
+	uglifyjs -nc assets/js/jquery-2.0.3.min.js > static/js/lib.js
 	uglifyjs -nc assets/js/bootstrap.min.js >> static/js/lib.js
 	uglifyjs -nc assets/js/jquery.timeago.js >> static/js/lib.js
 	coffee -b -p assets/js/site.coffee | uglifyjs >> static/js/lib.js
