@@ -192,12 +192,12 @@ class EditHandler(BaseHandler):
         if content != topic['content']:
             self.save_history(topic_id, topic['content'], content)
             topic['content'] = content
-            topic['modified'] = time.time()
             content = make_content(content)
             self.db.notifications.update({'content': topic['content_html'],
                                           'topic': ObjectId(topic_id)},
                                          {'$set': {'content': content}})
             topic['content_html'] = content
+        topic['modified'] = time.time()
         self.db.topics.save(topic)
         self.flash('Saved successfully', type='success')
         self.redirect('/topic/%s' % topic_id)
