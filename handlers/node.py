@@ -31,8 +31,10 @@ class AddHandler(BaseHandler):
     def post(self):
         self.check_role()
         name = self.get_argument('name', None)
-        title = self.get_argument('title', name)
-        if not name:
+        title = self.get_argument('title', None)
+        if not title:
+            title = name
+        if not (name and title):
             self.flash('Please fill the required field')
         if self.db.nodes.find_one({'name_lower': name.lower()}):
             self.flash('This node name is already registered')
