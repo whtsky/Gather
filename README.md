@@ -31,4 +31,4 @@ You need to install them before changing the scripts.
 You can run `make js` to generate js.
 
 ##Thanks
-![PyCharm](http://www.jetbrains.com/img/logos/pycharm_logo.gif)
++ [PyCharm](http://www.jetbrains.com/pycharm/)
