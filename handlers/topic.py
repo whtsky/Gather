@@ -50,7 +50,7 @@ class TopicHandler(BaseHandler):
 class CreateHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        node_name = self.get_argument("node_name", "")
+        node_name = self.get_argument("node", "")
         self.render('topic/create.html', node_name=node_name)
 
     @tornado.web.authenticated
