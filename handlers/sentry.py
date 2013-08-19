@@ -15,7 +15,10 @@ class RequestHandler(_SentryMixin, _RequestHandler):
         user = self.current_user
         data = user or {}
         return {
-            'sentry.interfaces.User': data
+            'sentry.interfaces.User': {
+                "name": user.get("name", ""),
+                "email": user.get("email", "")
+            }
         }
 
     def get_sentry_data_from_request(self):
