@@ -1,17 +1,17 @@
 # coding=utf-8
 
+import time
+import hashlib
+
 import re
 import tornado.web
 import tornado.escape
 import tornado.locale
-import time
-import hashlib
 import ghdiff
-
 from sentry import RequestHandler
 from bson.objectid import ObjectId
-
 from .recaptcha import RecaptchaMixin
+
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
 _NOKIA_FINDER_ = re.compile('(Nokia.*?)/')

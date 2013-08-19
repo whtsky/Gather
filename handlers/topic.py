@@ -1,7 +1,9 @@
 # coding=utf-8
 
-import tornado.web
 import time
+import logging
+import tornado.web
+
 from . import BaseHandler
 from bson.objectid import ObjectId
 from .utils import make_content
@@ -149,11 +151,17 @@ class ReplyHandler(BaseHandler):
 class RemoveHandler(BaseHandler):
     def post(self, topic_id):
         self.check_role(owner_name=self.current_user['name'])
-        members = self.db.members.find({'like': topic_id})
-        for member in members:
-            member['like'].remove(topic_id)
-            self.db.members.save(member)
         topic_id = ObjectId(topic_id)
+        topic = self.get_topic(topic_id)
+        self.captureMessage(
+            "%s removed a topic" % self.current_user.name,
+            data={
+                "level": logging.INFO
+            }
+            extra={
+                "topic": topic
+            }
+        )
         self.db.histories.remove({"target_id": topic_id})
         self.db.topics.remove({'_id': topic_id})
         self.db.replies.remove({'topic': topic_id})
@@ -266,6 +274,17 @@ class RemoveReplyHandler(BaseHandler):
             'from': reply['author'].lower(),
             'content': reply['content_html'],
         }, multi=True)
+        topic = self.get_topic(reply['topic'])
+        self.captureMessage(
+            "%s removed a reply" % self.current_user.name,
+            data={
+                "level": logging.INFO
+            }
+            extra={
+                "reply": reply,
+                "topic": topic
+            }
+        )
         self.db.histories.remove({"target_id": reply_id})
         self.db.replies.remove({'_id': reply_id})
         self.flash('Removed successfully', type='success')
