@@ -10,7 +10,7 @@ import tornado.web
 import urls
 
 from tornado.options import define, options
-from raven.contrib.tornado import AsyncSentryClient
+from sentry_client import AsyncSentryClient
 from init_db import db
 
 ROOT = os.path.abspath(os.path.dirname(__file__))

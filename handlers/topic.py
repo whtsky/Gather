@@ -153,9 +153,8 @@ class RemoveHandler(BaseHandler):
         self.check_role(owner_name=self.current_user['name'])
         topic_id = ObjectId(topic_id)
         topic = self.get_topic(topic_id)
-        topic['_id'] = str(topic['_id'])
         self.captureMessage(
-            "%s removed a topic" % self.current_user.name,
+            "%s removed a topic" % self.current_user["name"],
             data={
                 "level": logging.INFO
             },
@@ -276,10 +275,8 @@ class RemoveReplyHandler(BaseHandler):
             'content': reply['content_html'],
         }, multi=True)
         topic = self.get_topic(reply['topic'])
-        topic['_id'] = str(topic['_id'])
-        reply['_id'] = str(reply['_id'])
         self.captureMessage(
-            "%s removed a reply" % self.current_user.name,
+            "%s removed a reply" % self.current_user["name"],
             data={
                 "level": logging.INFO
             },
