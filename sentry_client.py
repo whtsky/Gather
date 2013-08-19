@@ -1,9 +1,15 @@
 import base64
 import zlib
 
-import bson.json_util as json
-
+from raven.utils.json import json, BetterJSONEncoder
 from raven.contrib.tornado import AsyncSentryClient as _Client
+from bson.objectid import ObjectId
+
+class PBBJSONEncoder(BetterJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        return super(PBBJSONEncoder, self).default(obj)
 
 
 class AsyncSentryClient(_Client):
@@ -11,4 +17,5 @@ class AsyncSentryClient(_Client):
         """
         Serializes ``data`` into a raw string.
         """
-        return base64.b64encode(zlib.compress(json.dumps(data).encode('utf8')))
+        s = json.dumps(data, cls=PBBJSONEncoder).encode('utf8')
+        return base64.b64encode(zlib.compress(s))
