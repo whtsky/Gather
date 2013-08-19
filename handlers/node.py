@@ -1,10 +1,10 @@
  # coding=utf-8
 
- import tornado.web
+import tornado.web
 from . import BaseHandler
 
 
- class NodeListHandler(BaseHandler):
+class NodeListHandler(BaseHandler):
     def get(self):
         nodes = self.db.nodes.find()
         self.render('node/list.html', nodes=nodes)

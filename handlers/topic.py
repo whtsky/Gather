@@ -157,7 +157,7 @@ class RemoveHandler(BaseHandler):
             "%s removed a topic" % self.current_user.name,
             data={
                 "level": logging.INFO
-            }
+            },
             extra={
                 "topic": topic
             }
@@ -279,7 +279,7 @@ class RemoveReplyHandler(BaseHandler):
             "%s removed a reply" % self.current_user.name,
             data={
                 "level": logging.INFO
-            }
+            },
             extra={
                 "reply": reply,
                 "topic": topic
