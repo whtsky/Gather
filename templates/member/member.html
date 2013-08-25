@@ -76,6 +76,7 @@
                 {% end %}
                 {% end %}
             </select>
+            {% raw xsrf_form_html() %}
             <button type="submit" class="btn btn-primary">{{ _("Change Role") }}</button>
         </form>
     </footer>
