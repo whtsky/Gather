@@ -67,7 +67,7 @@
             {% if reply['created'] != reply['modified'] %}
             / {{ _("Modified at") }} {% raw handler.format_time(reply['modified']) %}
             {% end %}
-            #{{ reply['index'] }}
+            <span name="f-{{ reply['index'] }}">#{{ reply['index'] }}</span>
             {% if 'source' in reply %}
             via {{ reply['source'] }}
             {% end %}

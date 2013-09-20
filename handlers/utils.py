@@ -47,7 +47,13 @@ def make_content(text, extra_params='rel="nofollow"'):
         data['begin'], data['user'] = m.group(1).split('@')
         t = u'%(begin)s<a href="/member/%(user)s" class="mention">' \
             u'@%(user)s</a>'
-        return t % data
+        t = t % data
+        data['begin'], data['floor'] = m.group(1).split('#')
+        if not data['floor'].isdigit():    return t
+        else:
+            t += u'%(begin)s<a href="#f-%(floor)s class="mention mention_floor">' \
+                 u'#%(floor)s</a>'
+            return t % data
 
     def highligt(m):
         try:
