@@ -69,7 +69,7 @@ class CreateHandler(BaseHandler):
         if not self.get_node(node):
             raise tornado.web.HTTPError(403)
         if self.messages:
-            self.render('topic/create.html', node=node)
+            self.render('topic/create.html', node_name=node)
             return
         topic = self.db.topics.find_one({
             'title': title,
