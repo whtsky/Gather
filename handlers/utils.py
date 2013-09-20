@@ -9,6 +9,7 @@ email_validator = re.compile(r'^.+@[^.].*\.[a-z]{2,10}$', re.IGNORECASE)
 
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
 _MENTION_RE = re.compile(r'((?:^|\W)@\w+)')
+_FLOOR_RE = re.compile(r'((?:^|\W)#\w+)')
 _EMAIL_RE = re.compile(r'([A-Za-z0-9-+.]+@[A-Za-z0-9-.]+)(\s|$)')
 
 formatter = HtmlFormatter()
@@ -47,13 +48,16 @@ def make_content(text, extra_params='rel="nofollow"'):
         data['begin'], data['user'] = m.group(1).split('@')
         t = u'%(begin)s<a href="/member/%(user)s" class="mention">' \
             u'@%(user)s</a>'
-        t = t % data
+        return t % data
+
+    def convert_floor(m):
+        data = {}
         data['begin'], data['floor'] = m.group(1).split('#')
-        if not data['floor'].isdigit():    return t
-        else:
-            t += u'%(begin)s<a href="#f-%(floor)s class="mention mention_floor">' \
+        if data['floor'].isdigit():
+            t = u'%(begin)s<a href="#reply%(floor)s" class="mention mention_floor">' \
                  u'#%(floor)s</a>'
             return t % data
+        return m.group(0)
 
     def highligt(m):
         try:
@@ -70,4 +74,5 @@ def make_content(text, extra_params='rel="nofollow"'):
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
     text = _EMAIL_RE.sub(cover_email, text)
     text = _MENTION_RE.sub(convert_mention, text)
+    text = _FLOOR_RE.sub(convert_floor, text)
     return _URL_RE.sub(make_link, text)

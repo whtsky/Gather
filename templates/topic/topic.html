@@ -48,6 +48,7 @@
     {% for reply in replies[(p-1)*replies_per_page:p*replies_per_page] %}
     {% set author = handler.get_member(reply['author']) %}
     <div class="list">
+        <span class="floor" name="reply{{ reply['index'] }}" id="reply{{ reply['index'] }}"></span>
         {% raw handler.get_avatar(author) %}
         <p>
             {% if current_user %}
@@ -67,7 +68,7 @@
             {% if reply['created'] != reply['modified'] %}
             / {{ _("Modified at") }} {% raw handler.format_time(reply['modified']) %}
             {% end %}
-            <span name="f-{{ reply['index'] }}">#{{ reply['index'] }}</span>
+            #{{ reply['index'] }}
             {% if 'source' in reply %}
             via {{ reply['source'] }}
             {% end %}
