@@ -2,6 +2,7 @@
 
 import time
 import logging
+import re
 import tornado.web
 
 from . import BaseHandler
@@ -44,6 +45,22 @@ class TopicHandler(BaseHandler):
         p = int(self.get_argument('p', 1))
         if p < 1:
             p = 1
+
+        for reply in replies:
+            reply_content_html = reply['content_html']
+            floors = re.findall(r"""(<a.*?#)(\d+)""", reply['content_html'])
+            for floor in floors:
+                floor_page = int(
+                    int(floor[1]) / self.settings['replies_per_page'])
+                current_floor_page = int(
+                    reply['index'] / self.settings['replies_per_page'])
+                if not floor_page == current_floor_page:
+                    reply['content_html'] = reply['content_html'].replace(
+                        ''.join(floor),
+                        """<a href="?p=%s#reply%s""" % (floor_page, floor[1]))
+            if not reply_content_html == reply['content_html']:
+                self.db.replies.save(reply)
+
         self.render('topic/topic.html', topic=topic,
                     replies=replies, replies_count=replies_count,
                     p=p)
