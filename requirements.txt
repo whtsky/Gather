@@ -7,4 +7,5 @@ pycrypto==2.6
 Pygments==1.6
 pymongo==2.5.2
 raven==3.4.1
+requests==2.0.0
 tornado==3.1
