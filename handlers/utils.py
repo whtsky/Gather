@@ -1,4 +1,7 @@
 import re
+import requests
+import settings
+
 from tornado.escape import xhtml_escape, _unicode, _URL_RE
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -65,3 +68,19 @@ def make_content(text, extra_params='rel="nofollow"'):
     text = _EMAIL_RE.sub(cover_email, text)
     text = _MENTION_RE.sub(convert_mention, text)
     return _URL_RE.sub(make_link, text)
+
+
+def send_notify(user, message, url):
+    if settings.pushover_token:
+        return requests.post(
+            "https://api.pushover.net/1/messages.json",
+            data={
+                "token": settings.pushover_token,
+                "user": user,
+                "message": message,
+                "url": url
+            },
+            headers={
+                "Content-type": "application/x-www-form-urlencoded"
+            }
+        ).json()

@@ -8,9 +8,11 @@ import tornado.web
 import tornado.escape
 import tornado.locale
 import ghdiff
+
 from sentry import RequestHandler
 from bson.objectid import ObjectId
 from .recaptcha import RecaptchaMixin
+from utils import send_notify
 
 
 _MENTION_FINDER_ = re.compile('class="mention">@(\w+)')
@@ -119,6 +121,9 @@ class BaseHandler(RequestHandler, RecaptchaMixin):
         self.clear_cookie('flash_messages')
         return messages
 
+    def get_owner(self):
+        return self.db.members.find_one({'role': 5})
+
     def check_role(self, role_min=2, owner_name='', return_bool=False):
         user = self.current_user
         if user and (user['name'] == owner_name or user['role'] >= role_min):
@@ -137,12 +142,25 @@ class BaseHandler(RequestHandler, RecaptchaMixin):
         if not isinstance(topic_id, ObjectId):
             topic_id = ObjectId(topic_id)
         uname = self.current_user['name_lower']
+        settings = self.application.settings
+        topic = self.get_topic(topic_id)
         for name in set(_MENTION_FINDER_.findall(content)):
             member = self.db.members.find_one({'name_lower': name.lower()})
             if not member:
                 continue
             if uname == member['name_lower']:
                 continue
+            if member.get("pushover", ""):
+                send_notify(
+                    user=member["pushover"],
+                    message="".join([
+                        self.current_user['name'],
+                        self.locale.translate("in"),
+                        topic['title'],
+                        self.locale.translate("mentioned you")
+                    ]),
+                    url=settings["forum_url"] + "topic/%s" % topic_id
+                )
             self.db.notifications.insert({
                 'topic': topic_id,
                 'from': uname,

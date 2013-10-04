@@ -18,6 +18,7 @@ members_per_page = 100
 topics_per_page = 20
 replies_per_page = topics_per_page
 
+pushover_token = ""
 gravatar_base_url = 'http://cn.gravatar.com/avatar/'
 google_analytics = ''
 cookie_secret = 'hey reset me!'

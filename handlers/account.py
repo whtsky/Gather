@@ -100,13 +100,15 @@ class SettingsHandler(BaseHandler):
     def post(self):
         website = self.get_argument('website', '')
         description = self.get_argument('description', '')
+        pushover = self.get_argument('pushover', '')
         language = self.get_argument('language')
         if len(description) > 1500:
             self.flash("The description is too long")
         self.db.members.update({'_id': self.current_user['_id']}, {'$set': {
             'website': website,
             'description': description,
-            'language': language
+            'language': language,
+            'pushover': pushover
         }})
         self.flash('Saved successfully', type='success')
         self.redirect('/account/settings')
