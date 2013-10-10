@@ -27,12 +27,11 @@ window.notify = () ->
       return
 
 floor_link_page = ->
-  replies_per_page = 20
   floor_link = $(".mention.mention_floor")
   for i in floor_link
     floor_num = new Number(i.href.match(/#reply(\d+)/)[1])
     floor_page = new Number(
-      (floor_num + replies_per_page - 1) / replies_per_page)
+      (floor_num + @replies_per_page - 1) / @replies_per_page)
     floor_page = parseInt(floor_page)
     i.href = "?p=#{floor_page}#reply#{floor_num}"
 
