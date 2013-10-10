@@ -46,23 +46,6 @@ class TopicHandler(BaseHandler):
         if p < 1:
             p = 1
 
-        for reply in replies:
-            reply_content_html = reply['content_html']
-            floors = re.findall(r"(<a.*?#reply)(\d+)", reply['content_html'])
-            for floor in floors:
-                floor_page = self.get_page_num(
-                    int(floor[1]), self.settings['replies_per_page'])
-                current_floor_page = self.get_page_num(
-                    int(reply['index']), self.settings['replies_per_page'])
-                if not floor_page == current_floor_page:
-                    reply['content_html'] = reply['content_html'].replace(
-                        ''.join(floor),
-                        """<a href="?p=%s#reply%s""" % (floor_page, floor[1]))
-            if not reply_content_html == reply['content_html']:
-                self.db.replies.save(reply)
-
-        replies = self.db.replies.find({'topic': topic_id},
-                                       sort=[('index', 1)])
         self.render('topic/topic.html', topic=topic,
                     replies=replies, replies_count=replies_count,
                     p=p)
