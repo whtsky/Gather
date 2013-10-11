@@ -2,7 +2,6 @@
 
 import time
 import logging
-import re
 import tornado.web
 
 from . import BaseHandler
