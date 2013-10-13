@@ -39,18 +39,21 @@ floor_link_page = ->
 topic_link = ->
   element = $(".mention.mention_topic")
   elements = {}
-  for i, num in element
+  for i in element
     _id = $(i).attr("_id")
-    elements[_id] = {"_id": _id, "object": i}
+    if not elements[_id]
+      elements[_id] = []
+    elements[_id].push({"_id": _id, "object": i})
     $.ajax({
       url: "/api/topic/#{_id}/json",
       cache: false,
       success: (data) ->
-        object = elements[data._id].object
-        _id = $(object).attr("_id")
-        _title = data.title
-        _content_short = data.content.slice(0,20)
-        object.title = "#{_title}\n\n#{_content_short}"
+        object = elements[data._id][0].object
+        object.innerHTML = data.title
+        object.title = data.content.slice(0, 30)
+        if data.content.length > 30
+          object.title += "..."
+        elements[data._id] = elements[data._id].slice(1)
         return
     })
   return
