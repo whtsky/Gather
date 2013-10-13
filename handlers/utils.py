@@ -62,10 +62,10 @@ def make_content(text, extra_params='rel="nofollow"'):
         data = {}
         data['begin'], data['topic_link'] = m.group(1).split('t')
         data['topic_link_short'] = data['topic_link'][:6]
-        t = u'%(begin)s<a href="%(topic_link)s"' \
-            u' class="mention mention_topic">t%(topic_link_short)s</a>'
+        t = u"""%(begin)s<a href="%(topic_link)s"
+            class="mention mention_topic"
+            _id=%(topic_link)s>t%(topic_link_short)s</a>"""
         return t % data
-        
 
     def highligt(m):
         try:
