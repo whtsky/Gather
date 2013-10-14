@@ -55,5 +55,5 @@ class TopicAsJSONHandler(BaseHandler):
 
 handlers = [
     (r'/api/notifications/new', NewNotificationsHandler),
-    (r'/api/topic/(\w+)/json', TopicAsJSONHandler),
+    (r'/api/topic/(\w+)', TopicAsJSONHandler),
 ]

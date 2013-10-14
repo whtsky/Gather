@@ -45,7 +45,7 @@ topic_link = ->
       elements[_id] = []
     elements[_id].push({"_id": _id, "object": i})
     $.ajax({
-      url: "/api/topic/#{_id}/json",
+      url: "/api/topic/#{_id}",
       cache: false,
       success: (data) ->
         object = elements[data._id][0].object
