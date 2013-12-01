@@ -14,6 +14,7 @@ class UserAgentHandler(BaseHandler):
 
 class FeedHandler(BaseHandler):
     def get(self):
+        self.set_header("Content-Type", "text/xml")
         topics = self.db.topics.find(sort=[('modified', -1)])
         self.render('feed.xml', topics=topics)
 
