@@ -31,7 +31,7 @@ def timestamp_to_datetime(t):
 def main():
     for pbb_member in mongo_database.members.find(sort=[('created', 1)]):
         account = Account(
-            username=pbb_member["name"],
+            username=pbb_member["name"].lower(),
             email=pbb_member["email"],
             website=pbb_member["website"],
             description=pbb_member["description"],
@@ -39,38 +39,42 @@ def main():
             created=timestamp_to_datetime(pbb_member["created"]),
             password="need-to-reset"
         )
+        print "Migrating Account %s" % account.username
         account.create_password(str(pbb_member["_id"]))
         db.session.add(account)
+        db.session.commit()
 
     for pbb_node in mongo_database.nodes.find():
         node = Node(
             name=pbb_node["title"],
-            slug=pbb_node["name"],
+            slug=pbb_node["name"].lower(),
             description=pbb_node["description"]
         )
         db.session.add(node)
-
-    db.session.commit()
+        db.session.commit()
 
     for pbb_topic in mongo_database.topics.find(sort=[('last_reply_time', 1)]):
         topic = Topic(
             title=pbb_topic["title"],
             content=pbb_topic["content"],
-            author=Account.query.filter_by(username=pbb_topic["author"]).first(),
-            node=Node.query.filter_by(name=pbb_topic["node"]).first(),
+            author=Account.query.filter_by(username=pbb_topic["author"].lower()).first(),
+            node=Node.query.filter_by(name=pbb_topic["node"].lower()).first(),
             created=timestamp_to_datetime(pbb_topic["created"]),
             updated=timestamp_to_datetime(pbb_topic["last_reply_time"])
         )
+        print "Migrating Topic %s by %s" % (topic.title, topic.author.username)
         db.session.add(topic)
         db.session.commit()
         for pbb_reply in mongo_database.replies.find({'topic': pbb_topic["_id"]},
                                                      sort=[('index', 1)]):
             reply = Reply(
                 content=pbb_reply["content"],
-                author=Account.query.filter_by(username=pbb_reply["author"]).first(),
+                author=Account.query.filter_by(username=pbb_reply["author"].lower()).first(),
                 topic=topic.id,
                 created=timestamp_to_datetime(pbb_reply["created"])
             )
+            print "Migrating Reply %s by %s" % (reply.title, reply.author.username)
+
             db.session.add(reply)
         db.session.commit()
 
