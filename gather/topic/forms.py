@@ -23,7 +23,7 @@ class CreateTopicForm(Form):
     )
     title = TextField("标题", validators=[
         Required(),
-        Length(max=20)
+        Length(max=30)
     ])
     content = TextAreaField("正文", validators=[Optional()])
 
