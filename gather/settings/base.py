@@ -6,7 +6,7 @@ FORUM_TITLE = "Gather"
 
 FORUM_DOMAIN = "127.0.0.1"
 FORUM_URL = "http://%s" % FORUM_DOMAIN
-DEFAULT_MAIL_SENDER = "no-reply@%s" % FORUM_DOMAIN
+MAIL_DEFAULT_SENDER = "no-reply@%s" % FORUM_DOMAIN
 
 PRODUCTION_USER = "gather"
 
