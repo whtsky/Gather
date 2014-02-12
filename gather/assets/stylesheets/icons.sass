@@ -1,0 +1,36 @@
+@import "bourbon/bourbon"
+@import "font-awesome"
+@import "variables"
+
+i.icon-select
+  @extend .fa
+  @extend .fa-chevron-down
+  margin-left: -3rem
+
+i#turbolinks_loading
+  @extend .fa
+  @extend .fa-rotate-right
+  position: absolute
+  bottom: 1rem
+  left: 1rem
+  font-size: 3rem
+  color: $nav-background-color
+  @include animation(spin 1s infinite linear)
+  display: none
+
+i.icon-settings
+  @extend .fa
+  @extend .fa-gear
+  float: right
+  color: gray
+  font-size: 1.4rem
+
+  &:hover
+    @include animation(spin 1s infinite linear)
+
+i#icon-find-success
+  @extend .fa
+  @extend .fa-check-circle-o
+  font-size: 1.5em
+
+  color: green

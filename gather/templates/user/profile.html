@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+{% block head %}
+
+{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('user') }}{% endblock %}
+
+{% block main %}
+  <div id="user-profile">
+    <header>
+      <img src="{{ user.avatar(100) }}" class="avatar"/>
+      {{ user.username }}
+      <ul id="user-profile-info">
+        <li>
+          <i class="fa fa-clock-o"></i>第 {{ user.id }} 名用户 注册于 {{ user.created.strftime("%Y-%m-%d") }}
+        </li>
+        {% if user.website %}
+        <li>
+          <i class="fa fa-globe"></i><a href="{{ user.website }}"{% if not user.is_admin %} rel="nofollow"{% endif %}>{{ user.website }}</a>
+        </li>
+        {% endif %}
+      </ul>
+    </header>
+    {{ user.description|content_to_html }}
+    {% if g.user and g.user.is_admin and g.user != user %}
+    <footer data-no-turbolink>
+      {% if user.is_staff %}
+        <a href="{{ url_for(".promote", name=user.name) }}" class="button">设置为管理</a>
+      {% else %}
+        <a href="{{ url_for(".demote", name=user.name) }}" class="button">取消管理</a>
+      {% endif %}
+    </footer>
+    {% endif %}
+  </div>
+{% endblock %}

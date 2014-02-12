@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "snippet/form.html" import form_field %}
+
+{% block title %}注册{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('register') }}{% endblock %}
+
+{% block content %}
+<div class="signal-form">
+    <form method="post" action="">
+      <h2>注册</h2>
+      {{ form.csrf_token }}
+      {{ form_field(form.username) }}
+      {{ form_field(form.email) }}
+      {{ form_field(form.password) }}
+      <div class="form-controls">
+        <button type="submit">注册</button>
+        <a href="{{ url_for('.login') }}">已经有帐号了？</a>
+      </div>
+    </form>
+</div>
+{% endblock %}

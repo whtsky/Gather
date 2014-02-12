@@ -1,0 +1,27 @@
+@import "functions"
+@import "responsive"
+@import "variables"
+
+#site-footer
+  border-top: 0.1rem solid black(0.1)
+  margin-top: 5rem
+  padding-top: 1rem
+  font-size: 1.6rem
+  text-align: center
+  color: #b3b3b3
+
+  width: 100%
+  @extend %centered
+
+  @include tablets
+    width: $tablet-width
+
+  @include desktop
+    width: $desktop-width
+
+  @include large
+    width: $large-width
+
+  a
+    color: #b3b3b3
+    text-decoration: none

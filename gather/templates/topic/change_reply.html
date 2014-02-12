@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}修改回复{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('topic') }}{% endblock %}
+
+{% block content %}
+  {% from "snippet/form.html" import form_field %}
+  <div class="signal-form">
+      <header>修改回复</header>
+      <form method="post" action="">
+        {{ form.csrf_token }}
+        {{ form_field(form.content) }}
+        <div class="form-controls">
+          <button type="submit">修改</button>
+        </div>
+      </form>
+  </div>
+{% endblock %}

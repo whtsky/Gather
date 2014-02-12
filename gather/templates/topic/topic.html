@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('topic') }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="作者： {{ topic.author.username }} <br />{{ topic.content|content_to_html }}" />
+{% endblock %}
+
+{% block main %}
+  <div class="topic-card">
+    <header>
+      {{ topic.title }}
+      {% if g.user and g.user.is_staff %}
+        <a href="{{ url_for('.change_topic', topic_id=topic.id) }}"><i class="icon-settings"></i></a>
+      {% endif %}
+    </header>
+    {{ topic.content|content_to_html }}
+    <footer>
+      {% from "snippet/topic.html" import topic_info %}
+      {{ topic_info(topic) }}
+    </footer>
+  </div>
+  {% if paginator.items %}
+    {% set floor_id = (paginator.page - 1) * paginator.per_page + 1 %}
+    <div class="card">
+      {% for reply in paginator.items %}
+        <div class="reply-list" data-floor="{{ floor_id }}" id="reply_{{ floor_id }}">
+          {% set author_url = url_for("user.profile", name=reply.author.username) %}
+          <a href="{{ author_url }}"><img src="{{ reply.author.avatar(60) }}" class="reply-avatar"/></a>
+          {% if g.user and g.user.is_staff %}
+            <a href="{{ url_for('.change_reply', topic_id=topic.id, reply_id=reply.id) }}"><i class="icon-settings"></i></a>
+          {% endif %}
+          <div class="reply-actions">
+            <span>#{{ floor_id }}</span>
+          </div>
+          <div class="reply-info">
+            <div class="reply-meta">
+              <a href="{{ author_url }}" class="user">{{ reply.author.username }}</a> <span>发布于</span>
+              <time datetime="{{ reply.created|xmldatetime }}"></time>
+              {% if reply.changed %}
+              | <span>修改于</span> <time datetime="{{ reply.changed|xmldatetime }}"></time>
+              {% endif %}
+            </div>
+            <div class="reply-content">
+              {{ reply.content|content_to_html }}
+            </div>
+          </div>
+        </div>
+        {% set floor_id = floor_id + 1 %}
+      {% endfor %}
+      {% from "snippet/pagination.html" import pagination %}
+      {{ pagination(paginator, url_for(".topic", topic_id=topic.id)) }}
+    </div>
+  {% endif %}
+  {% if g.user %}
+  <div class="card">
+    <header>回复</header>
+    {% from "snippet/form.html" import form_field %}
+    <form action="" method="post">
+      {{ form.csrf_token }}
+      {{ form.content }}
+      <div class="form-controls">
+        <button type="submit">回复</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  {% from "snippet/sidebar.html" import user_sidebar, node_sidebar %}
+  {{ user_sidebar(topic.author) }}
+  {{ node_sidebar(topic.node) }}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% macro navigation(current='') %}
+  <div id="nav-main">
+    <a href="{{ url_for('topic.index') }}"{% if current == 'topic' %} class="active"{% endif %}>话题</a>
+    <a href="{{ url_for('node.index') }}"{% if current == 'node' %} class="active"{% endif %}>节点</a>
+    <a href="{{ url_for('user.index') }}"{% if current == 'user' %} class="active"{% endif %}>用户</a>
+  </div>
+
+  <div id="nav-user">
+  {% if g.user %}
+    <a href="{{ url_for('user.profile', name=g.user.username) }}">{{ g.user.username }}</a>
+    <a href="{{ url_for('topic.create') }}"{% if current == 'create' %} class="active"{% endif %}>新建话题</a>
+    <a href="{{ url_for('account.settings') }}"{% if current == 'settings' %} class="active"{% endif %}>设置</a>
+    <a href="{{ url_for('account.logout') }}">退出</a>
+  {% else %}
+    <a href="{{ url_for('account.register') }}"{% if current == 'register' %} class="active"{% endif %}>注册</a>
+    <a href="{{ url_for('account.login') }}"{% if current == 'login' %} class="active"{% endif %}>登录</a>
+  {% endif %}
+  </div>
+{% endmacro %}

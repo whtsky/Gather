@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %} | Gather</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
+  {% block head %}
+  {% endblock %}
+  {% if config.GOOGLE_ANALYTICS %}
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '{{config.GOOGLE_ANALYTICS}}']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_trackPageLoadTime']);
+    {% if g.user %}
+    _gaq.push(['_setCustomVar', 1, 'UserType', 'Member', 2]);
+    {% else %}
+    _gaq.push(['_setCustomVar', 1, 'UserType', 'Guest', 2]);
+    {% endif %}
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  {% endif %}
+</head>
+<body>
+<i id="turbolinks_loading"></i>
+<div id="nav-wrapper">
+<div id="nav">
+  <a href="/" id="site-name">{{ config.FORUM_TITLE }}</a>
+  {% from "snippet/nav.html" import navigation %}
+  {% block nav %}{{ navigation() }}{% endblock %}
+</div>
+</div>
+<div id="wraps">
+  {% block content %}
+
+    <div id="main">
+      {% block main %}
+      {% endblock %}
+    </div>
+
+    <div id="sidebar">
+      {% block sidebar %}
+      {% endblock %}
+      <div class="card">
+        {% with status = site_status() %}
+        <header>站点统计</header>
+        <ul>
+          <li>用户： {{ status.account }}</li>
+          <li>节点： {{ status.node }}</li>
+          <li>话题： {{ status.topic }}</li>
+          <li>回复： {{ status.reply }}</li>
+        </ul>
+        {% endwith %}
+      </div>
+    </div>
+
+  {% endblock %}
+</div>
+<footer id="site-footer">
+  Powered by <a href="">Gather v3</a> |
+  Made by <a href="http://whouz.com">whtsky</a>
+</footer>
+{% assets "js_all" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% block js %}
+{% endblock %}
+</body>
+</html>

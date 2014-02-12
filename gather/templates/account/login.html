@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% from "snippet/form.html" import form_field %}
+
+{% block title %}登录{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('login') }}{% endblock %}
+
+{% block content %}
+<div class="signal-form">
+    <form method="post" action="">
+      <h2>登录</h2>
+      {{ form.csrf_token }}
+      {{ form_field(form.username) }}
+      {{ form_field(form.password) }}
+      <div class="form-controls">
+        <button type="submit">登录</button>
+
+        <a href="{{ url_for('.register') }}"> 还没有帐号？</a>
+        <a href="{{ url_for('.find_password') }}">忘记密码了？</a>
+      </div>
+    </form>
+</div>
+{% endblock %}

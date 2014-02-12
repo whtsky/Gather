@@ -1,0 +1,79 @@
+@import "functions"
+@import "responsive"
+@import "variables"
+
+#nav
+  @extend %clearfix
+  @extend %centered
+  width: 100%
+  z-index: 3000
+
+  @include tablets
+    margin-top: 0.5rem
+    width: $tablet-width
+
+  @include desktop
+    width: $desktop-width
+
+  @include large
+    width: $large-width
+
+#nav-wrapper
+  top: 0
+  left: 0
+  right: 0
+  margin-bottom: 2rem
+  background-color: $nav-background-color
+  opacity: .9
+  z-index: 2000
+
+  @include tablets
+    position: fixed
+
+  a
+    text-decoration: none
+
+#nav-main
+  text-align: center
+  @extend %centered
+  height: 4rem
+
+  @include tablets
+    text-align: left
+    float: left
+
+  > a
+    font-size: 1.6rem
+    line-height: 3rem
+    padding-left: 1.5rem
+    padding-right: 1.5rem
+    padding-bottom: .7rem
+    color: #ecf0f1
+    &:hover,  &.active
+      border-bottom: .5rem solid $background-color-yellow
+
+#nav-user
+  @extend #nav-main
+
+  @include tablets
+    float: right
+
+#site-name
+  text-align: center
+  font-size: 3rem
+  line-height: 3rem
+  color: #bdc3c7
+  text-decoration: none
+  border: none
+  display: block
+  margin-bottom: 2rem
+
+  @include tablets
+    display: inline
+    float: left
+    text-align: left
+    margin-right: 1rem
+    margin-bottom: 0
+
+  &:hover
+    color: #ecf0f1

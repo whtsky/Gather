@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "snippet/form.html" import form_field, description_field %}
+
+{% block title %}设置{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('settings') }}{% endblock %}
+
+{% block content %}
+<div class="signal-form">
+    <header>设置</header>
+    <form method="post" action="">
+      {{ form.csrf_token }}
+      {{ form_field(form.username) }}
+      {{ form_field(form.email) }}
+      {{ form_field(form.website) }}
+      {{ form_field(form.description) }}
+      <div class="form-controls">
+        <button type="submit">保存</button>
+      </div>
+    </form>
+</div>
+{% endblock %}

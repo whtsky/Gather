@@ -1,0 +1,24 @@
+{% macro topic_info(topic) %}
+  <a href="{{ url_for("node.node", slug=topic.node.slug) }}" class="node-label">{{ topic.node.name }}</a>
+  <a href="{{ author_url }}">{{ topic.author }}</a> 发布于 <time datetime="{{ topic.created|xmldatetime }}"></time>
+  {% if topic.changed %}
+    修改于 <time datetime="{{ topic.changed|xmldatetime }}"></time>
+  {% endif %}
+{% endmacro %}
+
+{% macro topic_list(topics) %}
+  {% for topic in topics %}
+    <div class="topic-list">
+      {% set topic_url = url_for("topic.topic", topic_id=topic.id) %}
+      {% set author_url = url_for("user.profile", name=topic.author.username) %}
+      <a href="{{ author_url }}"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>
+      <div class="topic-info">
+        <a href="{{ topic_url }}" class="topics-title">{{ topic.title }}</a>
+        <div class="topic-meta">
+          {{ topic_info(topic) }}
+        </div>
+      </div>
+      <a href="{{ topic_url }}" class="topic-reply-count">{{ topic.replies.count() }}</a>
+    </div>
+  {% endfor %}
+{% endmacro %}

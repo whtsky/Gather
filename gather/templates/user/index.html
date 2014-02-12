@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}用户{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('user') }}{% endblock %}
+
+{% block content %}
+  {% for user in paginator.items %}
+    <div class="user-card">
+      {% set user_profile = url_for('.profile', name=user.username) %}
+      <a href="{{ user_profile }}"><img src="{{ user.avatar(size=80) }}"></a>
+      <header><a href="{{ user_profile }}">{{ user.username }}</a></header>
+      {% if user.website %}
+        <a href="{{ user.website }}" rel="nofollow">{{ user.website }}</a>
+      {% else %}
+        注册于： {{ user.created.strftime("%Y-%m-%d") }}
+      {% endif %}
+    </div>
+  {% endfor %}
+  {#
+   TODO: 增加换页
+   #}
+{% endblock %}

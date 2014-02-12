@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}修改节点{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('node') }}{% endblock %}
+
+{% block content %}
+  {% from "snippet/form.html" import form_field, description_field %}
+  <div class="signal-form">
+      <header>修改节点</header>
+      <form method="post" action="">
+        {{ form.csrf_token }}
+        {{ form_field(form.name) }}
+        {{ form_field(form.slug) }}
+        {{ form_field(form.icon) }}
+        {{ form_field(form.description) }}
+        <div class="form-controls">
+          <button type="submit">保存</button>
+        </div>
+      </form>
+  </div>
+{% endblock %}

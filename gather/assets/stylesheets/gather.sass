@@ -1,0 +1,153 @@
+@import "bourbon/bourbon"
+@import "diff"
+
+@import "normalize"
+@import "functions"
+@import "responsive"
+@import "variables"
+@import "pygments"
+@import "jquery.atwho"
+
+@import "grid"
+@import "nav"
+@import "footer"
+@import "icons"
+@import "topic"
+@import "form"
+
+html
+  font-size: 62.5%  // 1rem = 10px
+
+body
+  font-family: $site-font-family
+  background-color: $background-color-yellow
+  font-size: 1.4rem
+
+img
+  max-width: 100%
+  height: auto
+
+a
+  text-decoration: none
+
+  &:hover
+    text-decoration: solid
+
+  &:visited
+    color: rgb(22, 39, 234)
+
+#wraps
+  width: 100%
+  @extend %centered
+  @extend %clearfix 
+
+  @include tablets
+    margin-top: 7rem
+    width: $tablet-width
+
+  @include desktop
+    width: $desktop-width
+
+  @include large
+    width: $large-width
+
+div.card
+  box-shadow: 0 0 0 1px #DDD
+  vertical-align: top
+  border-bottom: 2px solid #e2e2e9
+  overflow: hidden
+  background-color: $card-background-color
+  padding: 2rem 2rem
+  margin-bottom: 1rem
+
+  header
+    font-size: 2rem
+    padding-bottom: 1rem
+    margin-bottom: 1rem
+    border-bottom: 1px solid black(.1)
+
+  footer
+    border-top: 1px solid black(.1)
+    padding-top: 1rem
+    margin-top: 1rem
+
+div.signal-form
+  @extend .card
+  width: 98%
+  max-width: 500px
+  @extend %centered
+
+  h2
+    text-align: center
+
+  .form-controls
+    width: 50%
+    @extend %centered
+
+div.node-card
+  @extend %clearfix 
+  @extend .card
+  width: 27rem
+  height: auto
+  display: inline-block
+  margin-right: 3rem
+  margin-bottom: 1rem
+
+  img
+    float: left
+    width: 80px
+    height: 80px
+    margin-right: 1rem
+
+div.user-card
+  @extend div.node-card
+  max-height: 30rem
+
+  img
+    border-radius: 8px
+
+div#user-profile
+  @extend .card
+  header
+    @extend %clearfix 
+  img.avatar
+    width: 100px
+    height: 100px
+    float: left
+    margin-right: 2rem
+
+ul#user-profile-info
+  list-style: none
+  font-size: 1.4rem
+  li
+    margin-bottom: 1rem
+  i.fa
+    margin-right: .8rem
+
+ul.pagination
+  list-style: none
+  font-size: 1.4rem
+  li
+    padding: 4px 8px
+    display: inline
+    background-color: white
+    border: 1px solid black(.9)
+    &.active
+      background-color: $background-color-yellow
+    &.disabled
+      background-color: gray
+
+div.topic-card
+  @extend .card
+  header
+    font-size: 3rem
+
+div.sidebar-user-card
+  @extend .card
+  header
+    img
+      width: 48px
+      height: 48px
+      float: left
+      margin-right: 1rem
+    @extend %clearfix 

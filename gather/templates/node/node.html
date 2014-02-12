@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ node.name }}{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('node') }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="节点：{{ node.name }} <br />{{ node.description|content_to_html }}">
+{% endblock %}
+
+{% block main %}
+  <div class="card">
+    <header>
+      {{ node.name }}
+    </header>
+    {% from "snippet/topic.html" import topic_list %}
+    {{ topic_list(paginator.items) }}
+
+    <footer>
+      {% from "snippet/pagination.html" import pagination %}
+      {{ pagination(paginator, url_for(".node", slug=node.slug)) }}
+    </footer>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+{% from "snippet/sidebar.html" import node_sidebar %}
+{{ node_sidebar(node) }}
+{% endblock %}

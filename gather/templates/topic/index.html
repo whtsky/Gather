@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}话题列表{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('topic') }}{% endblock %}
+
+{% block main %}
+  <div class="card">
+    <header>话题列表</header>
+    {% from "snippet/topic.html" import topic_list %}
+    {{ topic_list(paginator.items) }}
+    <footer>
+      {% from "snippet/pagination.html" import pagination %}
+      {{ pagination(paginator, url_for(".index")) }}
+    </footer>
+  </div>
+{% endblock %}

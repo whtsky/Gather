@@ -1,0 +1,61 @@
+@import "functions"
+@import "variables"
+
+.topic-list
+  width: 98%
+  @extend %centered
+  @extend %clearfix
+  min-height: 60px
+  padding-bottom: 1rem
+  padding-top: 1rem
+  border-bottom: 1px solid black(.2)
+
+.topic-info, .reply-info
+  display: inline-block
+
+.topics-title
+  font-size: 2rem
+
+.topic-meta
+  margin-top: 1.5rem
+
+.topic-avatar, .reply-avatar
+  vertical-align: top
+  height: 60px
+  width: 60px
+  border-radius: 5px
+  margin-right: 1rem
+
+.node-label
+  background-color: slategray
+  color: white
+  padding: .3rem .5rem
+  border-radius: .5rem
+  margin-right: .5rem
+
+  &:visited
+    color: white
+
+.topic-reply-count
+  float: right
+  font-size: 1.6rem
+  background-color: $nav-background-color
+  border-radius: .7rem
+  padding: .3rem .5rem
+  color: white
+  &:visited
+    color: white
+
+.reply-list
+  @extend .topic-list
+  padding-bottom: 1rem
+  padding-top: 1rem
+
+.reply-meta
+  display: inline-block
+  vertical-align: text-top
+
+.reply-actions
+  float: right
+  color: slategray
+  margin-right: 1rem

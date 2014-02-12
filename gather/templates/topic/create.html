@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}新建话题{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('topic') }}{% endblock %}
+
+{% block content %}
+  {% from "snippet/form.html" import form_field %}
+  <div class="signal-form">
+      <header>新建话题</header>
+      <form method="post" action="">
+        {{ form.csrf_token }}
+        {{ form_field(form.node_id) }}
+        {{ form_field(form.title) }}
+        {{ form_field(form.content) }}
+        <div class="form-controls">
+          <button type="submit">新建</button>
+        </div>
+      </form>
+  </div>
+{% endblock %}

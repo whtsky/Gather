@@ -1,0 +1,31 @@
+@import "functions"
+@import "responsive"
+@import "variables"
+
+#main
+  width: 98%
+  @extend %centered
+  margin-bottom: 3rem
+  @include tablets
+    display: inline-block
+    float: left
+    width: $tablet-width*0.7 - 3rem
+
+  @include desktop
+    width: $desktop-width*0.7 - 3rem
+
+  @include large
+    width: $large-width*0.7 - 3rem
+
+
+#sidebar
+  @extend #main
+  @include tablets
+    float: right
+    width: $tablet-width*0.3
+
+  @include desktop
+    width: $desktop-width*0.3
+
+  @include large
+    width: $large-width*0.3

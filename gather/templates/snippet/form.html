@@ -1,0 +1,16 @@
+{% macro form_field(field) %}
+  <div class="form-field {% if field.errors %}form-error{% endif %}">
+    {{ field.label }}
+    {% if field.description %}
+      {{ field(placeholder=field.description) }}
+    {% else %}
+      {{ field(placeholder=field.label.text) }}
+    {% endif %}
+    {% if field.get_label %} {# QuerySelectField #}
+      <i class="icon-select"></i>
+    {% endif %}
+    {% if field.errors %}
+      <p class="form-field-error">{{ field.errors[0] }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}

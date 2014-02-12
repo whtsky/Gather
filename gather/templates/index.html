@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation() }}{% endblock %}
+
+{% block main %}
+<div class="card">
+<header>最近更新</header>
+{% from "snippet/topic.html" import topic_list %}
+{{ topic_list(topics) }}
+<footer>
+  <a href="{{ url_for("topic.index") }}">&gt;&gt; 浏览更多主题</a>
+</footer>
+</div>
+{% endblock %}

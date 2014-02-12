@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}重设密码{% endblock %}
+
+{% block content %}
+<div class="signal-form">
+    <h2>重设密码</h2>
+    {% from "snippet/form.html" import form_field %}
+    <form method="post" action="">
+      {{ form.csrf_token }}
+      {{ form_field(form.password) }}
+      <div class="form-controls">
+        <button type="submit">重设密码</button>
+      </div>
+    </form>
+</div>
+{% endblock %}

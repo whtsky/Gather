@@ -1,0 +1,25 @@
+{% macro node_sidebar(node) %}
+  <div class="card">
+    <header>
+      {{ node.name }}
+      {% if g.user and g.user.is_staff %}
+        <a href="{{ url_for('node.change', slug=node.slug) }}"><i class="icon-settings"></i></a>
+      {% endif %}
+    </header>
+    {{ node.description|content_to_html }}
+  </div>
+{% endmacro %}
+
+{% macro user_sidebar(user) %}
+  <div class="sidebar-user-card">
+    {% set user_profile = url_for('user.profile', name=user.username) %}
+    <header>
+      <a href="{{ user_profile }}"><img src="{{ user.avatar(size=48) }}"></a>
+      <a href="{{ user_profile }}">{{ user.username }}</a> <br />
+      {% if user.website %}
+        <a href="{{ user.website }}" rel="nofollow">{{ user.website }}</a>
+      {% endif %}
+    </header>
+    {{ user.description|content_to_html }}
+  </div>
+{% endmacro %}
