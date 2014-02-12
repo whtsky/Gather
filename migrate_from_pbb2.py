@@ -73,7 +73,7 @@ def main():
                 topic=topic.id,
                 created=timestamp_to_datetime(pbb_reply["created"])
             )
-            print "Migrating Reply %s by %s" % (reply.title, reply.author.username)
+            print "Migrating Reply %s by %s" % (reply.content, reply.author.username)
 
             db.session.add(reply)
         db.session.commit()
