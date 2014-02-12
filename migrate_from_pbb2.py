@@ -65,7 +65,7 @@ def main():
         print "Migrating Topic %s by %s" % (topic.title, topic.author.username)
         db.session.add(topic)
         db.session.commit()
-        for pbb_reply in mongo_database.replies.find({'topic': pbb_topic["_id"]},
+        for pbb_reply in mongo_database.replies.find({'topic': str(pbb_topic["_id"])},
                                                      sort=[('index', 1)]):
             reply = Reply(
                 content=pbb_reply["content"],
