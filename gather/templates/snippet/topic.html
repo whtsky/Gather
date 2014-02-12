@@ -1,6 +1,6 @@
 {% macro topic_info(topic) %}
   <a href="{{ url_for("node.node", slug=topic.node.slug) }}" class="node-label">{{ topic.node.name }}</a>
-  <a href="{{ author_url }}">{{ topic.author }}</a> 发布于 <time datetime="{{ topic.created|xmldatetime }}"></time>
+  <a href="{{ url_for("user.profile", name=topic.author.username) }}">{{ topic.author }}</a> 发布于 <time datetime="{{ topic.created|xmldatetime }}"></time>
   {% if topic.changed %}
     修改于 <time datetime="{{ topic.changed|xmldatetime }}"></time>
   {% endif %}
