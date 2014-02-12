@@ -70,7 +70,7 @@ def main():
             reply = Reply(
                 content=pbb_reply["content"],
                 author=Account.query.filter_by(username=pbb_reply["author"].lower()).first(),
-                topic=topic.id,
+                topic=topic,
                 created=timestamp_to_datetime(pbb_reply["created"])
             )
             print "Migrating Reply %s by %s" % (reply.content, reply.author.username)
