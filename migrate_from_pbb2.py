@@ -47,7 +47,7 @@ def main():
     for pbb_node in mongo_database.nodes.find():
         node = Node(
             name=pbb_node["title"],
-            slug=pbb_node["name"].lower(),
+            slug=pbb_node["name"],
             description=pbb_node["description"]
         )
         db.session.add(node)
@@ -58,7 +58,7 @@ def main():
             title=pbb_topic["title"],
             content=pbb_topic["content"],
             author=Account.query.filter_by(username=pbb_topic["author"].lower()).first(),
-            node=Node.query.filter_by(name=pbb_topic["node"].lower()).first(),
+            node=Node.query.filter_by(name=pbb_topic["node"]).first(),
             created=timestamp_to_datetime(pbb_topic["created"]),
             updated=timestamp_to_datetime(pbb_topic["last_reply_time"])
         )
