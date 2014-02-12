@@ -6,7 +6,7 @@
 {% block nav %}{{ navigation('topic') }}{% endblock %}
 
 {% block head %}
-<meta name="description" content="作者： {{ topic.author.username }} <br />{{ topic.content|content_to_html }}" />
+<meta name="description" content="作者： {{ topic.author.username }} <br />{{ topic.content }}" />
 {% endblock %}
 
 {% block main %}
