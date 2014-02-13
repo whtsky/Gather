@@ -13,7 +13,7 @@ bp = Blueprint("topic", __name__, url_prefix="/topic")
 @bp.route("/")
 def index():
     page = get_page()
-    paginator = Topic.query.order_by(Topic.updated.desc()).paginate(page)
+    paginator = Topic.query.order_by(Topic.created.desc()).paginate(page)
     return render_template('topic/index.html', paginator=paginator)
 
 

@@ -8,5 +8,5 @@ bp = Blueprint("frontend", __name__, url_prefix="/")
 
 @bp.route("/")
 def index():
-    topics = Topic.query.order_by(Topic.created.desc()).limit(20)
+    topics = Topic.query.order_by(Topic.updated.desc()).limit(5)
     return render_template("index.html", topics=topics)
