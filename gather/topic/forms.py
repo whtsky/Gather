@@ -75,7 +75,7 @@ class ChangeTopicForm(CreateTopicForm):
 
 
 class ReplyForm(Form):
-    content = TextAreaField("正文", validators=[Optional()])
+    content = TextAreaField("正文", validators=[Required()])
 
     def create(self, topic):
         reply = Reply(
