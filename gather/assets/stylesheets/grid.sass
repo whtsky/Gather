@@ -1,3 +1,4 @@
+@import "bourbon/bourbon"
 @import "functions"
 @import "responsive"
 @import "variables"
@@ -6,26 +7,26 @@
   width: 98%
   @extend %centered
   margin-bottom: 3rem
-  @include tablets
-    display: inline-block
-    float: left
-    width: $tablet-width*0.7 - 3rem
 
   @include desktop
-    width: $desktop-width*0.7 - 3rem
+    vertical-align: top
+    @include prefixer(box-sizing, border-box, moz webkit spec)
+    display: inline-block
+    padding-right: 1rem
+    width: $desktop-width*0.66
 
   @include large
-    width: $large-width*0.7 - 3rem
+    width: $large-width*0.66
 
 
 #sidebar
   @extend #main
-  @include tablets
-    float: right
-    width: $tablet-width*0.3
 
   @include desktop
-    width: $desktop-width*0.3
+    padding-right: 0
+    padding-left: 1rem
+    display: inline-block
+    width: $desktop-width*0.33
 
   @include large
-    width: $large-width*0.3
+    width: $large-width*0.33
