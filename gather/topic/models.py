@@ -38,6 +38,10 @@ class Topic(db.Model):
     def __repr__(self):
         return '<Topic: %s>' % self.title
 
+    @property
+    def last_page(self):
+        return Reply.query.filter_by(topic=self).paginate(1).pages or 1
+
 
 class Reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
