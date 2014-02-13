@@ -3,7 +3,7 @@
 from flask import Blueprint
 from flask import url_for, g, redirect, render_template, abort
 from gather.utils import get_page, no_xhr
-from gather.account.utils import require_login, require_staff
+from gather.account.utils import require_login, require_staff, require_admin
 from .forms import CreateTopicForm, ChangeTopicForm, ReplyForm, ChangeReplyForm
 from .models import db, Topic, Reply
 
@@ -47,6 +47,7 @@ def topic(topic_id):
 
 @bp.route("/<int:topic_id>/remove")
 @no_xhr
+@require_admin
 def remove_topic(topic_id):
     topic = Topic.query.get_or_404(topic_id)
     topic.replies.delete()
