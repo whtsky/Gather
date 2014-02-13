@@ -47,6 +47,7 @@ def reload_gunicorn():
 
 def update():
     update_from_github()
+    migrate_databases()
     reload_gunicorn()
 
 
