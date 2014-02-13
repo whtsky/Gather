@@ -5,13 +5,13 @@
   width: 98%
   @extend %centered
   @extend %clearfix
-  min-height: 60px
+  min-height: $small-avatar-size
   padding-bottom: 1rem
   padding-top: 1rem
   border-bottom: 1px solid black(.2)
 
 .topic-info, .reply-info
-  margin-left: 70px
+  margin-left: $small-avatar-size + 10px
 
 .topics-title
   font-size: 1.6rem
@@ -22,9 +22,9 @@
 .topic-avatar, .reply-avatar
   float: left
   vertical-align: top
-  height: 60px
-  width: 60px
-  border-radius: 5px
+  height: $small-avatar-size
+  width: $small-avatar-size
+  border-radius: $small-avatar-size/15
 
 .node-label
   background-color: slategray
@@ -43,7 +43,7 @@
   background-color: slateblue
   border-radius: 15px
   padding: 0 9px
-  margin-top: 20px
+  margin-top: $small-avatar-size/2 - 10px
   color: white
   &:visited
     color: white

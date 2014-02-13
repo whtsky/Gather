@@ -146,11 +146,14 @@ div.sidebar-user-card
   @extend .card
   header
     img
-      width: 48px
-      height: 48px
+      width: $small-avatar-size
+      height: $small-avatar-size
       float: left
       margin-right: 1rem
     @extend %clearfix
+
+    .small
+      padding-top: 1rem
 
 .dark-link
   color: $dark-link-color
@@ -163,3 +166,6 @@ div.sidebar-user-card
 
 .user-link
   @extend .dark-link
+
+.small
+  font-size: .8em

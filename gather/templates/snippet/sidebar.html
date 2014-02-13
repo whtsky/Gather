@@ -15,10 +15,12 @@
     {% set user_profile = url_for('user.profile', name=user.username) %}
     <header>
       <a href="{{ user_profile }}"><img src="{{ user.avatar(size=48) }}"></a>
-      <a href="{{ user_profile }}" class="dark-link">{{ user.username }}</a> <br />
+      <a href="{{ user_profile }}" class="user-link">{{ user.username }}</a>
+      <div class="small">
       {% if user.website %}
         <a href="{{ user.website }}" rel="nofollow" class="dark-link">{{ user.website }}</a>
       {% endif %}
+      </div>
     </header>
     {{ user.description|content_to_html }}
   </div>
