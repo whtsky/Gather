@@ -7,7 +7,8 @@ import datetime
 from flask import url_for
 from flask.ext.sqlalchemy import models_committed
 from markupsafe import Markup
-from tornado.escape import xhtml_escape, to_unicode, _URL_RE
+from houdini import escape_html
+from tornado.escape import to_unicode, _URL_RE
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, TextLexer
@@ -19,7 +20,7 @@ from gather.extensions import cache
 
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
 _MENTION_RE = re.compile(r'((?:^|\W)@\w+)')
-_FLOOR_RE = re.compile(r'((?:^|\W)#\d+)')
+_FLOOR_RE = re.compile(r'((?:^|[^&])#\d+)')
 _EMAIL_RE = re.compile(r'([A-Za-z0-9-+.]+@[A-Za-z0-9-.]+)(\s|$)')
 formatter = HtmlFormatter()
 
@@ -69,6 +70,8 @@ def sanitize(content):
 
 @cache.memoize(timeout=3600*24)
 def content_to_html(text, extra_params='rel="nofollow"'):
+    if not text:
+        return ""
     if extra_params:
         extra_params = " " + extra_params.strip()
 
@@ -120,7 +123,7 @@ def content_to_html(text, extra_params='rel="nofollow"'):
         text = text.replace('&nbsp;', ' ')
         return highlight(text, lexer, formatter)
 
-    text = to_unicode(xhtml_escape(text)).replace(' ', '&nbsp;')
+    text = to_unicode(escape_html(text)).replace(' ', '&nbsp;')
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
     text = _EMAIL_RE.sub(cover_email, text)
     text = _MENTION_RE.sub(convert_mention, text)

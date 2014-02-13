@@ -21,6 +21,7 @@ gevent==1.0
 ghdiff==0.1
 greenlet==0.4.2
 gunicorn==18.0
+houdini.py==0.1.0
 html5lib==0.999
 itsdangerous==0.23
 Jinja2==2.7.2
