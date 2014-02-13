@@ -28,9 +28,9 @@
     {% if g.user and g.user.is_admin and g.user != user %}
     <footer data-no-turbolink>
       {% if user.is_staff %}
-        <a href="{{ url_for('.demote', name=user.name) }}" class="button">取消管理</a>
+        <a href="{{ url_for('.demote', name=user.username) }}" class="button">取消管理</a>
       {% else %}
-        <a href="{{ url_for('.promote', name=user.name) }}" class="button">设置为管理</a>
+        <a href="{{ url_for('.promote', name=user.username) }}" class="button">设置为管理</a>
       {% endif %}
     </footer>
     {% endif %}
