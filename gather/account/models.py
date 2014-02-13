@@ -84,3 +84,13 @@ class Account(db.Model):
     def change_password(self, raw):
         self.password = self.create_password(raw)
         self.token = self.create_token()
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "role": self.role,
+            "website": self.website,
+            "description": self.description
+        }

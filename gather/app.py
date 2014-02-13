@@ -48,6 +48,7 @@ def register_blurprints(app):
     import gather.node
     import gather.topic
     import gather.admin
+    import gather.api
 
     app.register_blueprint(gather.frontend.bp)
     app.register_blueprint(gather.account.bp)
@@ -55,6 +56,7 @@ def register_blurprints(app):
     app.register_blueprint(gather.node.bp)
     app.register_blueprint(gather.topic.bp)
     app.register_blueprint(gather.admin.bp)
+    app.register_blueprint(gather.api.bp)
 
 
 def register_hooks(app):

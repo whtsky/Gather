@@ -42,6 +42,19 @@ class Topic(db.Model):
     def last_page(self):
         return Reply.query.filter_by(topic=self).paginate(1).pages or 1
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "author": self.author_id,
+            "node": self.node_id,
+            "content": self.content,
+            "created": self.created,
+            "repliy_count": self.replies.count(),
+            "updated": self.updated,
+            "changed": self.changed
+        }
+
 
 class Reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +75,16 @@ class Reply(db.Model):
         nullable=True,
         onupdate=datetime.utcnow
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "author": self.author_id,
+            "topic": self.topic_id,
+            "created": self.created,
+            "changed": self.changed
+        }
 
 
 class History(db.Model):

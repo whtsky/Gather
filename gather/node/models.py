@@ -28,6 +28,15 @@ class Node(db.Model):
         cache.set("node-list", nodes)
         return nodes
 
+    def to_dict(self):
+        return dict(
+            id=self.id,
+            name=self.name,
+            slug=self.slug,
+            description=self.description,
+            icon=self.icon
+        )
+
 
 def _clear_cache(sender, changes):
     for model, operation in changes:
