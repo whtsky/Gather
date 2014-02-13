@@ -6,8 +6,6 @@
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" />
   {% endassets %}
-  {% block head %}
-  {% endblock %}
   {% if config.GOOGLE_ANALYTICS %}
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -26,6 +24,11 @@
     })();
   </script>
   {% endif %}
+  {% assets "js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  {% block head %}
+  {% endblock %}
 </head>
 <body>
 
@@ -67,9 +70,6 @@
   Powered by <a href="https://github.com/whtsky/Gather">Gather v3</a> |
   Made by <a href="http://whouz.com">whtsky</a>
 </footer>
-{% assets "js_all" %}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
 {% block js %}
 {% endblock %}
 </body>
