@@ -49,8 +49,8 @@ def topic(topic_id):
 @no_xhr
 def remove_topic(topic_id):
     topic = Topic.query.get_or_404(topic_id)
-    db.seesion.remove(topic)
-    db.session.remove(topic.replies)
+    topic.replies.delete()
+    db.session.delete(topic)
     db.session.commit()
     return redirect("/")
 
