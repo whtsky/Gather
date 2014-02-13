@@ -72,7 +72,7 @@ class FindForm(Form):
     def send(self):
         config = current_app.config
         email = self.email.data
-        user = Account.query.filter_by(email=email).first_or_404()
+        user = Account.query.filter_by(email=email.lower()).first_or_404()
         msg = Message(
             "找回 {username} 在 {site_name} 的密码".format(
                 username=user.username,
