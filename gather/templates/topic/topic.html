@@ -17,7 +17,9 @@
         <a href="{{ url_for('.change_topic', topic_id=topic.id) }}"><i class="icon-settings"></i></a>
       {% endif %}
     </header>
-    {{ topic.content|content_to_html }}
+    <div>
+      {{ topic.content|content_to_html }}
+    </div>
     <footer>
       {% from "snippet/topic.html" import topic_info %}
       {{ topic_info(topic) }}
