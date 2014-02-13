@@ -29,8 +29,7 @@ class Topic(db.Model):
     )
     changed = db.Column(
         db.DateTime,
-        nullable=True,
-        onupdate=datetime.utcnow
+        nullable=True
     )
 
     def __str__(self):

@@ -68,6 +68,7 @@ class ChangeTopicForm(CreateTopicForm):
             )
             db.session.add(history)
             topic.content = content
+        topic.changed = datetime.now()
         db.session.add(topic)
         db.session.commit()
         return topic
