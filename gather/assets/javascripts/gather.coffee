@@ -9,7 +9,8 @@ init_at_who = ->
   for a in $('.user-link')
     add_name a
 
-  $('textarea').atwho at: '@', data: names
+  $('textarea').atWho '@', {data: names}
+  return
 ###, callbacks: {
     remote_filter: (query, callback) ->
       $.ajax {
@@ -29,6 +30,7 @@ init_at_who = ->
     }
 ###
 
+
 have_textarea = ->
   $("textarea").length
 
@@ -41,6 +43,20 @@ gather_main = ->
     resize()
     init_at_who()
   $("time").timeago(selector: 'time')
+
+  $('.reply_the_floor').click ->
+    reply = $(this)
+    floor = reply.data('floor')
+    user = reply.data('user')
+
+    reply_content = $("#content")
+    new_text = "##{floor} @#{user} "
+    if reply_content.val().trim().length is 0
+      new_text += ''
+    else
+      new_text = "\n#{new_text}"
+    reply_content.focus().val reply_content.val() + new_text
+    return false
 
 gather_page_load = ->
   gather_main()
