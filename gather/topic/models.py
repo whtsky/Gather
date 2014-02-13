@@ -10,11 +10,17 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text(), nullable=True, default="")
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'), index=True)
+    author_id = db.Column(
+        db.Integer,
+        db.ForeignKey('account.id'), index=True, nullable=False
+    )
     author = db.relationship(Account)
-    node_id = db.Column(db.Integer, db.ForeignKey('node.id'), index=True)
+    node_id = db.Column(
+        db.Integer,
+        db.ForeignKey('node.id'), index=True, nullable=False
+    )
     node = db.relationship(Node)
-    created = db.Column(db.DateTime, default=datetime.utcnow)
+    created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     replies = db.relationship("Reply", lazy='dynamic')
     updated = db.Column(
         db.DateTime,
@@ -37,9 +43,15 @@ class Topic(db.Model):
 class Reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text(), nullable=True, default="")
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(
+        db.Integer,
+        db.ForeignKey('account.id'), nullable=False
+    )
     author = db.relationship(Account)
-    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), index=True)
+    topic_id = db.Column(
+        db.Integer,
+        db.ForeignKey('topic.id'), index=True, nullable=False
+    )
     topic = db.relationship(Topic)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     changed = db.Column(
