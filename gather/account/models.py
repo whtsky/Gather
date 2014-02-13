@@ -71,11 +71,11 @@ class Account(db.Model):
 
     @property
     def is_staff(self):
-        return self.id == 1 or self.role >= 6
+        return self.is_admin or self.role == "staff"
 
     @property
     def is_admin(self):
-        return self.id == 1 or self.role >= 9
+        return self.id == 1 or self.role == "admin"
 
     def check_password(self, raw):
         passwd = '%s%s' % (raw, current_app.config['PASSWORD_SECRET'])
