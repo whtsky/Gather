@@ -2,10 +2,10 @@
 
 from flask import Blueprint
 from flask import url_for, g, redirect, render_template, abort
-from gather.utils import get_page
+from gather.utils import get_page, no_xhr
 from gather.account.utils import require_login, require_staff
 from .forms import CreateTopicForm, ChangeTopicForm, ReplyForm, ChangeReplyForm
-from .models import Topic, Reply
+from .models import db, Topic, Reply
 
 bp = Blueprint("topic", __name__, url_prefix="/topic")
 
@@ -43,6 +43,16 @@ def topic(topic_id):
         "topic/topic.html", topic=topic, form=form,
         paginator=paginator
     )
+
+
+@bp.route("/<int:topic_id>/remove")
+@no_xhr
+def remove_topic(topic_id):
+    topic = Topic.query.get_or_404(topic_id)
+    db.seesion.remove(topic)
+    db.session.remove(topic.replies)
+    db.session.commit()
+    return redirect("/")
 
 
 @bp.route("/<int:topic_id>/change", methods=("GET", "POST"))
