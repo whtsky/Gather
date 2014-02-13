@@ -59,6 +59,7 @@ div.card
   background-color: $card-background-color
   padding: 2rem 2rem
   margin-bottom: 1rem
+  word-break: break-all
 
   header
     font-size: 2rem
@@ -70,6 +71,9 @@ div.card
     border-top: 1px solid black(.1)
     padding-top: 1rem
     margin-top: 1rem
+
+  header + footer
+    border-top: none
 
 div.signal-form
   @extend .card
