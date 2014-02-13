@@ -42,7 +42,7 @@
           </div>
           <div class="reply-info">
             <div class="reply-meta">
-              <a href="{{ author_url }}" class="user">{{ reply.author.username }}</a> <span>发布于</span>
+              <a href="{{ author_url }}" class="user-link">{{ reply.author.username }}</a> <span>发布于</span>
               <time datetime="{{ reply.created|xmldatetime }}"></time>
               {% if reply.changed %}
               | <span>修改于</span> <time datetime="{{ reply.changed|xmldatetime }}"></time>

@@ -150,4 +150,16 @@ div.sidebar-user-card
       height: 48px
       float: left
       margin-right: 1rem
-    @extend %clearfix 
+    @extend %clearfix
+
+.dark-link
+  color: $dark-link-color
+
+  &:visited
+    color: $dark-link-color
+
+  &:hover
+    border-bottom: 1px solid $dark-link-color
+
+.user-link
+  @extend .dark-link

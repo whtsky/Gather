@@ -1,6 +1,6 @@
 {% macro topic_info(topic) %}
   <a href="{{ url_for("node.node", slug=topic.node.slug) }}" class="node-label">{{ topic.node.name }}</a>
-  <a href="{{ url_for("user.profile", name=topic.author.username) }}">{{ topic.author }}</a> 发布于 <time datetime="{{ topic.created|xmldatetime }}"></time>
+  <a href="{{ url_for("user.profile", name=topic.author.username) }}" class="user-link">{{ topic.author }}</a> 发布于 <time datetime="{{ topic.created|xmldatetime }}"></time>
   {% if topic.changed %}
     修改于 <time datetime="{{ topic.changed|xmldatetime }}"></time>
   {% endif %}
@@ -21,7 +21,7 @@
       <a href="{{ topic_url }}" class="topic-reply-count">{{ topic.replies.count() }}</a>
 
       {% set author_url = url_for("user.profile", name=topic.author.username) %}
-      <a href="{{ author_url }}"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>
+      <a href="{{ author_url }}" class="user-link"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>
       <div class="topic-info">
         <a href="{{ topic_url }}" class="topics-title">{{ topic.title }}</a>
         <div class="topic-meta">

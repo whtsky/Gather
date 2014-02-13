@@ -6,7 +6,7 @@ init_at_who = ->
     if name not in names
       names.push(name)
 
-  for a in $('.user')
+  for a in $('.user-link')
     add_name a
 
   $('textarea').atwho at: '@', data: names
