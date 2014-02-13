@@ -45,6 +45,11 @@ def reload_gunicorn():
     run("kill -HUP `cat /tmp/gather.pid`")
 
 
+def clear_cache():
+    with cd(project_root):
+        run("%s manage.py clear_cache" % python_path)
+
+
 def update():
     update_from_github()
     migrate_databases()
@@ -57,3 +62,4 @@ def fullyupdate():
     migrate_databases()
     reload_nginx()
     reload_gunicorn()
+    clear_cache()

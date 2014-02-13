@@ -20,6 +20,13 @@ def create_all():
 
 
 @manager.command
+def clear_cache():
+    from gather.extensions import cache
+    with app.app_context():
+        cache.clear()
+
+
+@manager.command
 def livereload():
     db.create_all()
     server = Server(app)
