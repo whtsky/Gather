@@ -124,8 +124,8 @@ def content_to_html(text, extra_params='rel="nofollow"'):
 
     text = to_unicode(xhtml_escape(text)).replace(' ', '&nbsp;')
     text = _CODE_RE.sub(highligt, text).replace('\n', '<br />')
-    text = _EMAIL_RE.sub(cover_email, text)
     text = _MENTION_RE.sub(convert_mention, text)
+    text = _EMAIL_RE.sub(cover_email, text)
     text = _FLOOR_RE.sub(convert_floor, text)
     return Markup(_URL_RE.sub(make_link, text))
 

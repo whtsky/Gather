@@ -6,10 +6,20 @@
   {% endif %}
 {% endmacro %}
 
-{% macro topic_list(topics) %}
+{% macro topic_list(topics, to_last_page=False) %}
   {% for topic in topics %}
     <div class="topic-list">
-      {% set topic_url = url_for("topic.topic", topic_id=topic.id) %}
+
+      {% if to_last_page %}
+        {% set topic_url = url_for("topic.topic", topic_id=topic.id) + "?page=%s" % topic.last_page %}
+      {% else %}
+        {% set topic_url = url_for("topic.topic", topic_id=topic.id) %}
+      {% endif %}
+
+      {% set topic_url = topic_url + "#__%s" % topic.replies.count() %}
+
+      <a href="{{ topic_url }}" class="topic-reply-count">{{ topic.replies.count() }}</a>
+
       {% set author_url = url_for("user.profile", name=topic.author.username) %}
       <a href="{{ author_url }}"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>
       <div class="topic-info">
@@ -18,7 +28,6 @@
           {{ topic_info(topic) }}
         </div>
       </div>
-      <a href="{{ topic_url }}" class="topic-reply-count">{{ topic.replies.count() }}</a>
     </div>
   {% endfor %}
 {% endmacro %}
