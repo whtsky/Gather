@@ -38,7 +38,7 @@ def topic(topic_id):
         base_url = url_for(".topic", topic_id=topic.id)
         return redirect("%s?page=%s" % (base_url, pages))
     replies = Reply.query.filter_by(topic=topic).order_by(Reply.id.asc())
-    paginator = replies.paginate(page, per_page=50)
+    paginator = replies.paginate(page)
     return render_template(
         "topic/topic.html", topic=topic, form=form,
         paginator=paginator
