@@ -10,7 +10,7 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import Required, Optional, Length
 from ghdiff import diff
 from gather.node.models import Node
-from .models import db, Topic, Reply, History
+from .models import Topic, Reply, History
 
 
 class CreateTopicForm(Form):
@@ -34,9 +34,7 @@ class CreateTopicForm(Form):
             node_id=self.node_id.data[0],
             author=g.user,
         )
-        db.session.add(topic)
-        db.session.commit()
-        return topic
+        return topic.save()
 
 
 class ChangeTopicForm(CreateTopicForm):
@@ -48,7 +46,7 @@ class ChangeTopicForm(CreateTopicForm):
                 topic=topic,
                 author=g.user
             )
-            db.session.add(history)
+            history.save()
             topic.title = title
         if self.node_id.data != topic.node_id:
             node = Node.query.get_or_404(self.node_id.data[0])
@@ -57,7 +55,7 @@ class ChangeTopicForm(CreateTopicForm):
                 topic=topic,
                 author=g.user
             )
-            db.session.add(history)
+            history.save()
             topic.node = node
         if self.content.data != topic.content:
             content = self.content.data
@@ -66,12 +64,10 @@ class ChangeTopicForm(CreateTopicForm):
                 topic=topic,
                 author=g.user
             )
-            db.session.add(history)
+            history.save()
             topic.content = content
         topic.changed = datetime.now()
-        db.session.add(topic)
-        db.session.commit()
-        return topic
+        return topic.save()
 
 
 class ReplyForm(Form):
@@ -83,10 +79,7 @@ class ReplyForm(Form):
             topic_id=topic.id,
             author=g.user
         )
-        topic.updated = datetime.now()
-        db.session.add(reply)
-        db.session.commit()
-        return reply
+        return reply.save()
 
 
 class ChangeReplyForm(Form):
@@ -105,8 +98,6 @@ class ChangeReplyForm(Form):
                 reply=reply,
                 author=g.user
             )
-            db.session.add(history)
+            history.save()
             reply.content = content
-        db.session.add(reply)
-        db.session.commit()
-        return reply
+        return reply.save()

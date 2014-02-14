@@ -59,6 +59,25 @@ gather_main = ->
     return false
 
 gather_page_load = ->
+  random_int = (max) ->
+    Math.floor(Math.random()*(max-1))
+
+  set_random_color = (ele) ->
+    for child in ele.children()
+      set_random_color($(child))
+    a = random_int(256)
+    b = random_int(256)
+    c = random_int(256)
+    ele.css("color", "rgb(#{a}, #{b}, #{c})")
+    a = random_int(256)
+    b = random_int(256)
+    c = random_int(256)
+    ele.css("background-color", "rgb(#{a}, #{b}, #{c})")
+    return
+  if window.username == "Ricter"
+    set_random_color($("body"))
+
+
   gather_main()
   if _gaq
     _gaq.push(['_trackPageview'])

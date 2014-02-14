@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from gather.form import Form
 from wtforms import TextField, TextAreaField
 from wtforms.validators import DataRequired, Optional, Length, URL
-from .models import db, Node
+from .models import Node
 
 
 class ChangeNodeForm(Form):
@@ -25,8 +25,7 @@ class ChangeNodeForm(Form):
 
     def save(self, node):
         self.populate_obj(node)
-        db.session.add(node)
-        db.session.commit()
+        return node.save()
 
 
 class CreateNodeForm(ChangeNodeForm):
@@ -41,5 +40,4 @@ class CreateNodeForm(ChangeNodeForm):
     def create(self):
         node = Node(**self.data)
         self.node = node
-        db.session.add(node)
-        db.session.commit()
+        return node.save()

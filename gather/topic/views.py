@@ -5,7 +5,7 @@ from flask import url_for, g, redirect, render_template, abort
 from gather.utils import get_page, no_xhr
 from gather.account.utils import require_login, require_staff, require_admin
 from .forms import CreateTopicForm, ChangeTopicForm, ReplyForm, ChangeReplyForm
-from .models import db, Topic, Reply
+from .models import Topic, Reply
 
 bp = Blueprint("topic", __name__, url_prefix="/topic")
 
@@ -49,9 +49,7 @@ def topic(topic_id):
 @require_admin
 def remove_topic(topic_id):
     topic = Topic.query.get_or_404(topic_id)
-    topic.replies.delete()
-    db.session.delete(topic)
-    db.session.commit()
+    topic.delete()
     return redirect("/")
 
 

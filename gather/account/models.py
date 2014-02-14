@@ -95,3 +95,8 @@ class Account(db.Model):
             "website": self.website,
             "description": self.description
         }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self

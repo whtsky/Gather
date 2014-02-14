@@ -8,7 +8,7 @@ from gather.form import Form
 from wtforms import TextField, PasswordField, TextAreaField
 from wtforms.validators import Length, Email, DataRequired, Optional, URL, Regexp
 from gather.utils import send_mail
-from gather.account.models import Account, db
+from gather.account.models import Account
 from gather.account.utils import login_user, create_reset_token
 
 
@@ -54,9 +54,7 @@ class RegisterForm(LoginForm):
 
     def save(self):
         user = Account(**self.data)
-        db.session.add(user)
-        db.session.commit()
-        return user
+        return user.save()
 
 
 class FindForm(Form):
@@ -97,9 +95,7 @@ class ResetForm(Form):
 
     def reset(self, user):
         user.change_password(self.password.data)
-        db.session.add(user)
-        db.session.commit()
-        return user
+        return user.save()
 
 
 class SettingsForm(Form):
@@ -135,5 +131,4 @@ class SettingsForm(Form):
     def save(self):
         user = Account.query.get(g.user.id)
         self.populate_obj(user)
-        db.session.add(user)
-        db.session.commit()
+        user.save()

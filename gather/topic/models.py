@@ -55,6 +55,17 @@ class Topic(db.Model):
             "changed": self.changed
         }
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        self.replies.delete()
+        db.session.delete(self)
+        db.session.commit()
+        return self
+
 
 class Reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +97,16 @@ class Reply(db.Model):
             "changed": self.changed
         }
 
+    def save(self):
+        if self.id:
+            # Update reply
+            topic = self.topic
+            topic.updated = datetime.now()
+            topic.save()
+        db.session.add(self)
+        db.session.commit()
+        return self
+
 
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -97,3 +118,8 @@ class History(db.Model):
     reply_id = db.Column(db.Integer, db.ForeignKey('reply.id'), index=True)
     reply = db.relationship(Reply)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self

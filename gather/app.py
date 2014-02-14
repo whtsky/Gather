@@ -9,9 +9,6 @@ from flask.ext.turbolinks import turbolinks
 from gather.extensions import db, assets, mail, cache
 from gather.settings import load_settings
 from gather.filters import sanitize, get_site_status, content_to_html, xmldatetime
-from gather.account.models import Account
-from gather.node.models import Node
-from gather.topic.models import Topic, Reply
 from gather.account.utils import get_current_user
 
 

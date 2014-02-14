@@ -36,6 +36,11 @@
     {{ g.user.css|safe }}
   </style>
 {% endif %}
+{% if g.user %}
+  <script>
+    window.username = "{{ g.user.username }}";
+  </script>
+{% endif %}
 <i id="turbolinks_loading"></i>
 <div id="nav-wrapper">
 <div id="nav">

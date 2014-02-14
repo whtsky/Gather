@@ -37,6 +37,11 @@ class Node(db.Model):
             icon=self.icon
         )
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
 
 def _clear_cache(sender, changes):
     for model, operation in changes:

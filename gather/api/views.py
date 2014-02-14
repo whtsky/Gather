@@ -4,7 +4,7 @@ from flask import Blueprint, abort, jsonify
 from flask import request, url_for, g
 from gather.extensions import cache
 from gather.utils import get_page
-from gather.account.models import db, Account
+from gather.account.models import Account
 from gather.node.models import Node
 from gather.topic.models import Topic
 
