@@ -52,7 +52,8 @@ class Topic(db.Model):
             "created": self.created,
             "repliy_count": self.replies.count(),
             "updated": self.updated,
-            "changed": self.changed
+            "changed": self.changed,
+            "replies": [reply.to_dict() for reply in self.replies]
         }
 
     def save(self):

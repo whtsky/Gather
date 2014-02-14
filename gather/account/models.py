@@ -29,7 +29,9 @@ class Account(db.Model):
     css = db.Column(db.String(), nullable=True, default="")
 
     created = db.Column(db.DateTime, default=datetime.utcnow)
-    token = db.Column(db.String(20))
+    token = db.Column(db.String(20), nullable=True, default="")
+
+    api_token = db.Column(db.String(40))
 
     def __init__(self, **kwargs):
         self.token = self.create_token(16)
@@ -95,6 +97,14 @@ class Account(db.Model):
             "website": self.website,
             "description": self.description
         }
+
+    def generate_api_token(self):
+        token = security.gen_salt(40)
+        while Account.query.filter_by(api_token=token).count():
+            token = security.gen_salt(40)
+        self.api_token = token
+        self.save()
+        return self
 
     def save(self):
         db.session.add(self)
