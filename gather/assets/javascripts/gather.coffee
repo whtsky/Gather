@@ -9,7 +9,7 @@ init_at_who = ->
   for a in $('.user-link')
     add_name a
 
-  $('textarea').atWho '@', {data: names}
+  $('textarea#content').atWho '@', {data: names}
   return
 ###, callbacks: {
     remote_filter: (query, callback) ->
@@ -60,7 +60,8 @@ gather_main = ->
 
 gather_page_load = ->
   gather_main()
-  _gaq.push(['_trackPageview'])
+  if _gaq
+    _gaq.push(['_trackPageview'])
 
 
 $(document).on 'page:load', gather_page_load

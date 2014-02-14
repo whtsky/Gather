@@ -26,6 +26,7 @@ class Account(db.Model):
 
     website = db.Column(db.String(100), nullable=True, default="")
     description = db.Column(db.String(500), nullable=True, default="")
+    css = db.Column(db.String(), nullable=True, default="")
 
     created = db.Column(db.DateTime, default=datetime.utcnow)
     token = db.Column(db.String(20))

@@ -31,7 +31,11 @@
   {% endblock %}
 </head>
 <body>
-
+{% if g.user and g.user.css %}
+  <style>
+    {{ g.user.css|safe }}
+  </style>
+{% endif %}
 <i id="turbolinks_loading"></i>
 <div id="nav-wrapper">
 <div id="nav">

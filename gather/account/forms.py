@@ -118,6 +118,9 @@ class SettingsForm(Form):
     description = TextAreaField("简介", validators=[
         Optional(), Length(max=500)
     ], description="我叫王大锤，万万没想到..")
+    css = TextAreaField("自定义 CSS", validators=[
+        Optional()
+    ], description="body{display: none}")
 
     def validate_username(self, field):
         user = Account.query.filter_by(username=field.data.lower()).first()
