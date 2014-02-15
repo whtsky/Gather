@@ -74,7 +74,7 @@ class ReplyForm(Form):
     def create(self, topic):
         reply = Reply(
             content=self.content.data,
-            topic_id=topic.id,
+            topic=topic,
             author=g.user
         )
         return reply.save()
