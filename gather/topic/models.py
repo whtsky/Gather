@@ -101,6 +101,8 @@ class Reply(db.Model):
     def save(self):
         if self.id:
             # Update reply
+            self.changed = datetime.now()
+        else:
             topic = self.topic
             topic.updated = datetime.now()
             topic.save()
