@@ -8,6 +8,11 @@ from gather.extensions import db
 
 
 class ReadTopic(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint(
+            'user_id', 'topic_id', name='uc_user_read_topic'
+        ),
+    )
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'), index=True)
     user = db.relationship(Account)
