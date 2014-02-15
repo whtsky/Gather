@@ -1,9 +1,18 @@
 # -*- coding:utf-8 -*-
 
 from datetime import datetime
+from gather.extensions import cache
 from gather.account.models import Account
 from gather.node.models import Node
 from gather.extensions import db
+
+
+class ReadTopic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'), index=True)
+    user = db.relationship(Account)
+    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), index=True)
+    topic = db.relationship("Topic")
 
 
 class Topic(db.Model):
@@ -56,6 +65,33 @@ class Topic(db.Model):
             "replies": [reply.to_dict() for reply in self.replies]
         }
 
+    @property
+    def read_cache_key(self):
+        return "read_topic_%s" % self.id
+
+    def have_read(self, user):
+        read_list = cache.get(self.read_cache_key)
+        if read_list and user.id in read_list:
+            return True
+        return ReadTopic.query.filter_by(topic=self, user=user).count()
+
+    def mark_read(self, user):
+        if self.have_read(user):
+            return
+        read_list = cache.get(self.read_cache_key)
+        if read_list:
+            read_list.apend(user.id)
+        else:
+            read_list = [user.id]
+        cache.set(self.read_cache_key, read_list)
+        read_mark = ReadTopic(topic=self, user=user)
+        db.session.add(read_mark)
+        db.session.commit()
+
+    def clear_read(self):
+        cache.delete(self.read_cache_key)
+        ReadTopic.query.filter_by(topic=self).delete()
+
     def save(self):
         db.session.add(self)
         db.session.commit()
@@ -63,6 +99,7 @@ class Topic(db.Model):
 
     def delete(self):
         self.replies.delete()
+        self.clear_read()
         db.session.delete(self)
         db.session.commit()
         return self
@@ -105,6 +142,7 @@ class Reply(db.Model):
         else:
             topic = self.topic
             topic.updated = datetime.now()
+            topic.clear_read()
             topic.save()
         db.session.add(self)
         db.session.commit()

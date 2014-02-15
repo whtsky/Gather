@@ -16,9 +16,9 @@
         {% set topic_url = url_for("topic.topic", topic_id=topic.id) %}
       {% endif %}
 
-      {% set topic_url = topic_url + "#__%s" % topic.replies.count() %}
-
-      <a href="{{ topic_url }}" class="topic-reply-count">{{ topic.replies.count() }}</a>
+      <a href="{{ topic_url }}" class="topic-reply-count{% if g.user and topic.have_read(g.user) %} visited{% endif %}">
+        {{ topic.replies.count() }}
+      </a>
 
       {% set author_url = url_for("user.profile", name=topic.author.username) %}
       <a href="{{ author_url }}" class="user-link"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>

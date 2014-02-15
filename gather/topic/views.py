@@ -38,6 +38,8 @@ def topic(topic_id):
         return redirect("%s?page=%s" % (base_url, topic.last_page))
     replies = Reply.query.filter_by(topic=topic).order_by(Reply.id.asc())
     paginator = replies.paginate(page)
+    if g.user:
+        topic.mark_read(g.user)
     return render_template(
         "topic/topic.html", topic=topic, form=form,
         paginator=paginator

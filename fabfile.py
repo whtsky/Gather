@@ -25,6 +25,7 @@ def update_pip_requirements():
 def migrate_databases():
     with cd(project_root):
         run("%s manage.py db upgrade" % python_path)
+        run("%s manage.py create_all" % python_path)
 
 
 def reload_nginx():
