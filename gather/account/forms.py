@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from flask import current_app, g, render_template, url_for
 from flask.ext.mail import Message
 from gather.form import Form
-from wtforms import TextField, PasswordField, TextAreaField
+from wtforms import TextField, PasswordField, TextAreaField, BooleanField
 from wtforms.validators import Length, Email, DataRequired, Optional, URL, Regexp
 from gather.utils import send_mail
 from gather.account.models import Account
@@ -111,6 +111,7 @@ class SettingsForm(Form):
         Email(),
         DataRequired()
     ])
+    feeling_lucky = BooleanField("手气不错")
     description = TextAreaField("简介", validators=[
         Optional(), Length(max=500)
     ], description="我叫王大锤，万万没想到..")

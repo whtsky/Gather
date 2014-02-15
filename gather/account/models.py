@@ -32,6 +32,7 @@ class Account(db.Model):
     token = db.Column(db.String(20), nullable=True, default="")
 
     api_token = db.Column(db.String(40))
+    feeling_lucky = db.Column(db.Boolean, default=False, nullable=True)
 
     def __init__(self, **kwargs):
         self.token = self.create_token(16)

@@ -56,9 +56,7 @@ gather_main = ->
     else
       new_text = "\n#{new_text}"
     reply_content.focus().val reply_content.val() + new_text
-    return false
 
-gather_page_load = ->
   random_int = (max) ->
     Math.floor(Math.random()*(max-1))
 
@@ -74,10 +72,12 @@ gather_page_load = ->
     c = random_int(256)
     ele.css("background-color", "rgb(#{a}, #{b}, #{c})")
     return
-  if window.username == "Ricter"
+  if window.feeling_lucky
     set_random_color($("body"))
 
+    return false
 
+gather_page_load = ->
   gather_main()
   if _gaq
     _gaq.push(['_trackPageview'])

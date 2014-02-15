@@ -39,6 +39,7 @@
 {% if g.user %}
   <script>
     window.username = "{{ g.user.username }}";
+    window.feeling_lucky = {{ g.user.feeling_lucky|tojson }};
   </script>
 {% endif %}
 <i id="turbolinks_loading"></i>
