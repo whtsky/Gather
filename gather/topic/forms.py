@@ -14,12 +14,12 @@ from .models import Topic, Reply, History
 
 
 class CreateTopicForm(Form):
-    node_id = QuerySelectField(
+    node = QuerySelectField(
         "节点",
         validators=[Required()],
-        query_factory=Node.cached_node_list,
-        get_pk=lambda a: a[0],
-        get_label=lambda a: a[1]
+        query_factory=Node.query_all,
+        get_pk=lambda a: a.id,
+        get_label=lambda a: a.name
     )
     title = TextField("标题", validators=[
         Required(),
@@ -29,10 +29,8 @@ class CreateTopicForm(Form):
 
     def create(self):
         topic = Topic(
-            title=self.title.data,
-            content=self.content.data,
-            node_id=self.node_id.data[0],
             author=g.user,
+            **self.data
         )
         return topic.save()
 
@@ -48,8 +46,8 @@ class ChangeTopicForm(CreateTopicForm):
             )
             history.save()
             topic.title = title
-        if self.node_id.data != topic.node_id:
-            node = Node.query.get_or_404(self.node_id.data[0])
+        if self.node.data != topic.node:
+            node = self.node.data
             history = History(
                 diff_content="从 %s 移动到 %s" % (topic.node.name, node.name),
                 topic=topic,

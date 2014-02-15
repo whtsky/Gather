@@ -18,15 +18,8 @@ class Node(db.Model):
         return '<Node: %s>' % self.name
 
     @classmethod
-    def cached_node_list(cls):
-        list = cache.get("node-list")
-        if list:
-            return list
-        nodes = []
-        for node in cls.query.all():
-            nodes.append((node.id, node.name))
-        cache.set("node-list", nodes)
-        return nodes
+    def query_all(cls):
+        return cls.query.all()
 
     def to_dict(self):
         return dict(
@@ -41,12 +34,3 @@ class Node(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
-
-
-def _clear_cache(sender, changes):
-    for model, operation in changes:
-        if isinstance(model, Node):
-            cache.delete('node-list')
-
-
-models_committed.connect(_clear_cache)
