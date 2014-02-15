@@ -85,7 +85,7 @@ class Topic(db.Model):
             return
         read_list = cache.get(self.read_cache_key)
         if read_list:
-            read_list.apend(user.id)
+            read_list.append(user.id)
         else:
             read_list = [user.id]
         cache.set(self.read_cache_key, read_list)
