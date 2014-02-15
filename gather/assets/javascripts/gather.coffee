@@ -56,6 +56,7 @@ gather_main = ->
     else
       new_text = "\n#{new_text}"
     reply_content.focus().val reply_content.val() + new_text
+    return false
 
   random_int = (max) ->
     Math.floor(Math.random()*(max-1))
@@ -74,8 +75,6 @@ gather_main = ->
     return
   if window.feeling_lucky
     set_random_color($("body"))
-
-    return false
 
 gather_page_load = ->
   gather_main()
