@@ -14,7 +14,7 @@ env.hosts = ["gather.whouz.com"]
 
 def update_from_github():
     with cd(project_root):
-        run("git pull")
+        run("git pull --no-ff")
 
 
 def update_pip_requirements():
