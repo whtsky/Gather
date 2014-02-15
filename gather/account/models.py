@@ -93,7 +93,7 @@ class Account(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email,
+            "email_md5": hashlib.md5(self.email).hexdigest(),
             "role": self.role,
             "website": self.website,
             "description": self.description
