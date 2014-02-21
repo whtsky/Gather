@@ -69,7 +69,7 @@ def sanitize(content):
 
 @cache.memoize(timeout=3600*24)
 def content_to_html(text, extra_params='rel="nofollow"'):
-    if not text:
+    if not text.strip():
         return ""
     if extra_params:
         extra_params = " " + extra_params.strip()
