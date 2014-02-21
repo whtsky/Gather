@@ -11,9 +11,9 @@ from gather.topic.models import Topic
 bp = Blueprint("user", __name__, url_prefix="/user")
 
 
-@bp.route("/")
-def index():
-    page = int(request.args.get("p", 1))
+@bp.route("/", defaults={'page': 1})
+@bp.route('/page/<int:page>')
+def index(page):
     accounts = Account.query.order_by(Account.id.desc())
     paginator = accounts.paginate(page, per_page=18)
     return render_template("user/index.html", paginator=paginator)
@@ -24,6 +24,15 @@ def profile(name):
     user = Account.query.filter_by(username=name).first_or_404()
     topics = Topic.query.filter_by(author=user).order_by(Topic.id.desc())[:5]
     return render_template("user/profile.html", user=user, topics=topics)
+
+
+@bp.route("/<name>/topic", defaults={'page': 1})
+@bp.route('/<name>/topic/page/<int:page>')
+def topic(name, page):
+    user = Account.query.filter_by(username=name).first_or_404()
+    paginator = Topic.query.filter_by(author=user).\
+        order_by(Topic.created.desc()).paginate(page)
+    return render_template('user/topic.html', user=user, paginator=paginator)
 
 
 @bp.route("/<name>/promote")

@@ -37,8 +37,11 @@
   </div>
 
   <div class="card">
-  {% from "snippet/topic.html" import topic_list %}
-  <header>最近发布的主题</header>
-  {{ topic_list(topics) }}
+    {% from "snippet/topic.html" import topic_list %}
+    <header>最近发布的主题</header>
+    {{ topic_list(topics) }}
+    <footer>
+      <a href="{{ url_for(".topic", name=user.username) }}">&gt;&gt; 浏览更多主题</a>
+    </footer>
   </div>
 {% endblock %}

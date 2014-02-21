@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ user.username }} 发布的话题{% endblock %}
+{% block head %}
+
+{% endblock %}
+
+{% from "snippet/nav.html" import navigation %}
+{% block nav %}{{ navigation('user') }}{% endblock %}
+
+{% block main %}
+  <div class="card">
+    <header>{{ user.username }} 发布的话题</header>
+    {% from "snippet/topic.html" import topic_list %}
+    {{ topic_list(paginator.items) }}
+      <footer>
+      {% from "snippet/pagination.html" import pagination %}
+      {{ pagination(paginator, url_for(".index")) }}
+    </footer>
+  </div>
+{% endblock %}
