@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 
 from flask import Blueprint, abort, jsonify
-from flask import request, url_for, g
+from flask import request, g
 from flask.ext.classy import FlaskView, route
 from gather.utils import get_page
 from gather.account.forms import LoginForm, RegisterForm, SettingsForm
 from gather.account.models import Account
 from gather.node.models import Node
+from gather.topic.forms import CreateTopicForm, ReplyForm
 from gather.topic.models import Topic
 
 
@@ -14,15 +15,22 @@ bp = Blueprint("api", __name__, url_prefix="/api")
 
 
 class GatherAPIView(FlaskView):
-    def before_request(self, *args, **kwargs):
-        if not g.user:
-            token = request.args.get("token", None)
+    def before_request(self, name, *args, **kwargs):
+        if g.user is not None:
+            if name in ("post", "put"):
+                return abort(403)
+        else:
+            token = request.values.get("token", None)
             if token:
-                user = Account.query.get(api_token=token)
+                user = Account.query.filter_by(api_token=token).first()
+                if not user:
+                    return jsonify(
+                        error="Wrong Token"
+                    )
                 g.user = user
 
 
-class GatherModelView(FlaskView):
+class GatherModelView(GatherAPIView):
     model = None
     model_name = ""
 
@@ -57,16 +65,32 @@ class UserView(GatherModelView):
         user = Account.query.get_or_404(id)
         if g.user != user:
             return abort(403)
-        # TODO: Support Put
+        form = SettingsForm(obj=user)
+        if form.validate_on_submit():
+            form.save()
+            return jsonify(
+                msg="Settins updated"
+            )
+        return jsonify(
+            error=form.errors.values()[0]
+        )
 
     def post(self):
-        # TODO: Support Post
-        pass
+        form = RegisterForm()
+        if form.validate_on_submit():
+            user = form.save()
+            return jsonify(
+                msg="Registered user",
+                user=user.to_dict()
+            )
+        return jsonify(
+            error=form.errors.values()[0]
+        )
+
 
     @route("/authorize/", methods=["POST"])
     def authorize(self):
         form = LoginForm()
-        form.csrf_enabled = False
         if not form.validate_on_submit():
             return jsonify(
                 token="",
@@ -86,6 +110,18 @@ UserView.register(bp)
 class TopicView(GatherModelView):
     model = Topic
 
+    def post(self):
+        form = CreateTopicForm()
+        if form.validate_on_submit():
+            topic = form.create()
+            return jsonify(
+                msg="Created topic",
+                topic=topic.to_dict()
+            )
+        return jsonify(
+            error=form.errors.values()[0]
+        )
+
 TopicView.register(bp)
 
 
@@ -94,4 +130,15 @@ class NodeView(GatherModelView):
 
 
 class ReplyView(GatherModelView):
-    pass
+    def post(self):
+        form = ReplyForm()
+        if form.validate_on_submit():
+            topic = form.create()
+            return jsonify(
+                msg="Created reply",
+                reply=reply.to_dict()
+            )
+        return jsonify(
+            error=form.errors.values()[0]
+        )
+
