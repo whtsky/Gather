@@ -143,10 +143,10 @@ class Reply(db.Model):
     def save(self):
         if self.id:
             # Update reply
-            self.changed = datetime.now()
+            self.changed = datetime.utcnow()
         else:
             topic = self.topic
-            topic.updated = datetime.now()
+            topic.updated = datetime.utcnow()
             topic.clear_read()
             topic.save()
         db.session.add(self)

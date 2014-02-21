@@ -64,7 +64,7 @@ class ChangeTopicForm(CreateTopicForm):
             )
             history.save()
             topic.content = content
-        topic.changed = datetime.now()
+        topic.changed = datetime.utcnow()
         return topic.save()
 
 
