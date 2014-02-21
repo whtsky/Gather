@@ -6,7 +6,7 @@
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" />
   {% endassets %}
-  {% if config.GOOGLE_ANALYTICS %}
+  {% if config.GOOGLE_ANALYTICS and not config.DEBUG %}
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '{{config.GOOGLE_ANALYTICS}}']);
