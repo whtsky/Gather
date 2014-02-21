@@ -11,10 +11,12 @@
     <div class="topic-list">
 
       {% if to_last_page %}
-        {% set topic_url = url_for("topic.topic", topic_id=topic.id) + "?page=%s" % topic.last_page %}
+        {% set topic_url = url_for("topic.topic", topic_id=topic.id, page=topic.last_page) %}
       {% else %}
         {% set topic_url = url_for("topic.topic", topic_id=topic.id) %}
       {% endif %}
+
+      {% set topic_url = topic_url + "#reply_count_%s" % topic.replies.count() %}
 
       <a href="{{ topic_url }}" class="topic-reply-count{% if g.user and topic.have_read(g.user) %} visited{% endif %}">
         {{ topic.replies.count() }}
