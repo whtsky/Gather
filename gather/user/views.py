@@ -22,7 +22,7 @@ def index():
 @bp.route("/<name>")
 def profile(name):
     user = Account.query.filter_by(username=name).first_or_404()
-    topics = Topic.query.filter_by(author=user)[:5]
+    topics = Topic.query.filter_by(author=user).order_by(Topic.id.desc())[:5]
     return render_template("user/profile.html", user=user, topics=topics)
 
 
