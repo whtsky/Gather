@@ -18,7 +18,6 @@
       {% endif %}
     </div>
   {% endfor %}
-  {#
-   TODO: 增加换页
-   #}
+  {% from "snippet/pagination.html" import pagination %}
+      {{ pagination(paginator, url_for(".index")) }}
 {% endblock %}
