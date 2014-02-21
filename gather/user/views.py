@@ -6,6 +6,7 @@ from flask import render_template, request
 from gather.utils import no_xhr
 from gather.account.models import db, Account
 from gather.account.utils import require_admin
+from gather.topic.models import Topic
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
@@ -21,7 +22,8 @@ def index():
 @bp.route("/<name>")
 def profile(name):
     user = Account.query.filter_by(username=name).first_or_404()
-    return render_template("user/profile.html", user=user)
+    topics = Topic.query.filter_by(author=user)[:5]
+    return render_template("user/profile.html", user=user, topics=topics)
 
 
 @bp.route("/<name>/promote")
