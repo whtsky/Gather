@@ -17,13 +17,12 @@
 @import "form"
 
 html
-  font-size: 62.5%  // 1rem = 10px
   text-rendering: optimizeLegibility
 
 body
   font-family: $site-font-family
   background-color: $background-color-yellow
-  font-size: 1.4rem
+  font-size: 14px
 
 img
   max-width: 100%
@@ -44,7 +43,7 @@ a
   @extend %clearfix 
 
   @include tablets
-    margin-top: 7rem
+    margin-top: 70px
     width: $tablet-width
 
   @include desktop
@@ -59,20 +58,20 @@ div.card
   border-bottom: 2px solid #e2e2e9
   overflow: hidden
   background-color: $card-background-color
-  padding: 2rem 2rem
-  margin-bottom: 1rem
+  padding: 20px
+  margin-bottom: 10px
   word-break: break-all
 
   header
-    font-size: 2rem
-    padding-bottom: 1rem
-    margin-bottom: 1rem
+    font-size: 18px
+    padding-bottom: 10px
+    margin-bottom: 10px
     border-bottom: 1px solid black(.1)
 
   footer
     border-top: 1px solid black(.1)
-    padding-top: 1rem
-    margin-top: 1rem
+    padding-top: 10px
+    margin-top: 10px
 
   header + footer
     border-top: none
@@ -93,21 +92,21 @@ div.signal-form
 div.node-card
   @extend %clearfix 
   @extend .card
-  width: 27rem
+  width: 270px
   height: auto
   display: inline-block
-  margin-right: 3rem
-  margin-bottom: 1rem
+  margin-right: 30px
+  margin-bottom: 10px
 
   img
     float: left
     width: 80px
     height: 80px
-    margin-right: 1rem
+    margin-right: 10px
 
 div.user-card
   @extend div.node-card
-  max-height: 30rem
+  max-height: 300px
 
   img
     border-radius: 8px
@@ -120,19 +119,19 @@ div#user-profile
     width: 100px
     height: 100px
     float: left
-    margin-right: 2rem
+    margin-right: 20px
 
 ul#user-profile-info
   list-style: none
-  font-size: 1.4rem
+  font-size: 14px
   li
-    margin-bottom: 1rem
+    margin-bottom: 10px
   i.fa
-    margin-right: .8rem
+    margin-right: 8px
 
 ul.pagination
   list-style: none
-  font-size: 1.4rem
+  font-size: 14px
   li
     padding: 4px 8px
     display: inline
@@ -150,11 +149,11 @@ div.sidebar-user-card
       width: $small-avatar-size
       height: $small-avatar-size
       float: left
-      margin-right: 1rem
+      margin-right: 10px
     @extend %clearfix
 
     .small
-      padding-top: 1rem
+      padding-top: 10px
 
 .dark-link
   color: $dark-link-color
