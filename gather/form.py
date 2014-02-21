@@ -2,9 +2,10 @@
 
 from __future__ import unicode_literals
 
-from flask import g
+from flask import g, _request_ctx_stack
 from flask.ext.wtf import Form as _Form
 from flask.ext.wtf.csrf import generate_csrf, validate_csrf
+from flask.ext.wtf.form import _Auto
 from wtforms import ValidationError
 from gather.extensions import cache
 
@@ -13,6 +14,20 @@ class Form(_Form):
     """
     让 CSRF 成为基于 Cache 的一次性字符
     """
+
+    def __init__(self, formdata=_Auto, obj=None, prefix='', csrf_context=None,
+                 secret_key=None, csrf_enabled=None, *args, **kwargs):
+        if csrf_enabled is None:
+            ctx = _request_ctx_stack.top
+            if ctx is not None:
+                if ctx.request.path.startswith("/api/"):
+                    csrf_enabled = False
+                    # Disbale CSRF on API Pages
+        super(Form, self).__init__(formdata, obj, prefix,
+                                   csrf_context=csrf_context,
+                                   secret_key=secret_key,
+                                   csrf_enabled=csrf_enabled,
+                                   *args, **kwargs)
 
     def generate_csrf_token(self, csrf_context=None):
         if not self.csrf_enabled:
