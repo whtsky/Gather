@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import Blueprint, request, abort
+from flask import Blueprint
 from flask import render_template, redirect, url_for
 
 from gather.account.utils import require_staff
@@ -27,14 +27,9 @@ def create():
     return render_template("node/create.html", form=form)
 
 
-@bp.route("/<slug>")
-def node(slug):
-    try:
-        page = int(request.args.get('page', 1))
-    except ValueError:
-        return abort(404)
-    if not page:
-        return abort(404)
+@bp.route("/<slug>", defaults={'page': 1})
+@bp.route("/<slug>/page/<int:page>")
+def node(slug, page):
     node = Node.query.filter_by(slug=slug).first_or_404()
     topics = Topic.query.filter_by(node=node)
     paginator = topics.order_by(Topic.updated.desc()).paginate(page)

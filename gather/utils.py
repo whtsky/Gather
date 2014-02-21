@@ -12,17 +12,6 @@ def send_mail(msg):
         mail.send(msg)
 
 
-def get_page():
-    try:
-        page = int(request.args.get('page', 1))
-    except ValueError:
-        abort(404)
-    else:
-        if page:
-            return page
-    abort(404)
-
-
 def no_xhr(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):

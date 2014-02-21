@@ -2,7 +2,7 @@
 
 from flask import Blueprint
 from flask import url_for, g, redirect, render_template, abort
-from gather.utils import get_page, no_xhr
+from gather.utils import no_xhr
 from gather.account.utils import require_login, require_staff, require_admin
 from .forms import CreateTopicForm, ChangeTopicForm, ReplyForm, ChangeReplyForm
 from .models import Topic, Reply
@@ -10,9 +10,9 @@ from .models import Topic, Reply
 bp = Blueprint("topic", __name__, url_prefix="/topic")
 
 
-@bp.route("/")
-def index():
-    page = get_page()
+@bp.route("/", defaults={'page': 1})
+@bp.route('/page/<int:page>')
+def index(page):
     paginator = Topic.query.order_by(Topic.created.desc()).paginate(page)
     return render_template('topic/index.html', paginator=paginator)
 
@@ -27,9 +27,9 @@ def create():
     return render_template("topic/create.html", form=form)
 
 
-@bp.route("/<int:topic_id>", methods=("GET", "POST"))
-def topic(topic_id):
-    page = get_page()
+@bp.route("/<int:topic_id>", methods=("GET", "POST"), defaults={'page': 1})
+@bp.route("/<int:topic_id>/page/<int:page>", methods=("GET", "POST"))
+def topic(topic_id, page):
     topic = Topic.query.get_or_404(topic_id)
     form = ReplyForm()
     if g.user and form.validate_on_submit():

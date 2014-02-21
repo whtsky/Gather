@@ -3,7 +3,6 @@
 from flask import Blueprint, abort, jsonify
 from flask import request, g
 from flask.ext.classy import FlaskView, route
-from gather.utils import get_page
 from gather.account.forms import LoginForm, RegisterForm, SettingsForm
 from gather.account.models import Account
 from gather.node.models import Node
@@ -40,7 +39,7 @@ class GatherModelView(GatherAPIView):
         self.model_name_s = self.model_name + "s"
 
     def index(self):
-        page = get_page()
+        page = int(request.values.get("page", 1))
         Model = self.model
         models = Model.query.order_by(Model.id.desc())
         paginator = models.paginate(page=page)
