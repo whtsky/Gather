@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}{% endblock %} | Gather</title>
+  <title>{% block title %}{% endblock %}{% if paginator %} | Page {{ paginator.page }}{% endif %} | Gather</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" />
