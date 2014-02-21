@@ -15,7 +15,7 @@
     {{ topic_list(paginator.items) }}
       <footer>
       {% from "snippet/pagination.html" import pagination %}
-      {{ pagination(paginator, url_for(".index")) }}
+      {{ pagination(paginator, url_for(".topic")) }}
     </footer>
   </div>
 {% endblock %}
