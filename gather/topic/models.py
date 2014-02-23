@@ -20,6 +20,50 @@ class ReadTopic(db.Model):
     topic = db.relationship("Topic")
 
 
+class Reply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text(), nullable=True, default="")
+    author_id = db.Column(
+        db.Integer,
+        db.ForeignKey('account.id'), nullable=False
+    )
+    author = db.relationship(Account)
+    topic_id = db.Column(
+        db.Integer,
+        db.ForeignKey('topic.id'), index=True, nullable=False
+    )
+    topic = db.relationship("Topic")
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    changed = db.Column(
+        db.DateTime,
+        nullable=True,
+        onupdate=datetime.utcnow
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "author": self.author_id,
+            "topic": self.topic_id,
+            "created": self.created,
+            "changed": self.changed
+        }
+
+    def save(self):
+        if self.id:
+            # Update reply
+            self.changed = datetime.utcnow()
+        else:
+            topic = self.topic
+            topic.updated = datetime.utcnow()
+            topic.clear_read()
+            topic.save()
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -35,7 +79,10 @@ class Topic(db.Model):
     )
     node = db.relationship(Node)
     created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    replies = db.relationship("Reply", lazy='dynamic')
+    replies = db.relationship(
+        "Reply", lazy='dynamic',
+        order_by=Reply.id.asc()
+    )
     updated = db.Column(
         db.DateTime,
         default=datetime.utcnow,
@@ -106,50 +153,6 @@ class Topic(db.Model):
         self.replies.delete()
         self.clear_read()
         db.session.delete(self)
-        db.session.commit()
-        return self
-
-
-class Reply(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text(), nullable=True, default="")
-    author_id = db.Column(
-        db.Integer,
-        db.ForeignKey('account.id'), nullable=False
-    )
-    author = db.relationship(Account)
-    topic_id = db.Column(
-        db.Integer,
-        db.ForeignKey('topic.id'), index=True, nullable=False
-    )
-    topic = db.relationship(Topic)
-    created = db.Column(db.DateTime, default=datetime.utcnow)
-    changed = db.Column(
-        db.DateTime,
-        nullable=True,
-        onupdate=datetime.utcnow
-    )
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "content": self.content,
-            "author": self.author_id,
-            "topic": self.topic_id,
-            "created": self.created,
-            "changed": self.changed
-        }
-
-    def save(self):
-        if self.id:
-            # Update reply
-            self.changed = datetime.utcnow()
-        else:
-            topic = self.topic
-            topic.updated = datetime.utcnow()
-            topic.clear_read()
-            topic.save()
-        db.session.add(self)
         db.session.commit()
         return self
 
