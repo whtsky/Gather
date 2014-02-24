@@ -134,3 +134,10 @@ def xmldatetime(value):
     if not isinstance(value, datetime.datetime):
         return value
     return value.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def url_for_other_page(page):
+    from flask import request, url_for
+    args = request.view_args.copy()
+    args["page"] = int(page)
+    return url_for(request.endpoint, **args)

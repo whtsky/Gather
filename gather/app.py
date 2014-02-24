@@ -8,7 +8,7 @@ from flask import Flask, g
 from flask.ext.turbolinks import turbolinks
 from gather.extensions import db, assets, mail, cache
 from gather.settings import load_settings
-from gather.filters import sanitize, get_site_status, content_to_html, xmldatetime
+from gather.filters import sanitize, get_site_status, content_to_html, xmldatetime, url_for_other_page
 from gather.account.utils import get_current_user
 
 
@@ -72,3 +72,4 @@ def register_jinja(app):
     app.jinja_env.filters['sanitize'] = sanitize
     app.jinja_env.filters['content_to_html'] = content_to_html
     app.jinja_env.filters['xmldatetime'] = xmldatetime
+    app.jinja_env.filters['url_for_other_page'] = url_for_other_page

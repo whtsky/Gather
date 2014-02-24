@@ -5,7 +5,7 @@
         {% if page == paginator.page %}
           <li class="active">{{ page }}</li>
         {% else %}
-          <li><a href="{{ url }}?page={{ page }}">{{ page }}</a></li>
+          <li><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
         {% endif %}
       {% else %}
         <li class="disabled">…</li>
