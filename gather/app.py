@@ -61,7 +61,7 @@ def register_hooks(app):
     def load_user():
         g.user = get_current_user()
         if "page" in request.args:
-            page = request.args.pop("page")
+            page = request.args.get("page", 1)
             try:
                 page = int(page)
             except:
