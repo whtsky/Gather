@@ -27,6 +27,13 @@
       {% endif %}
       </div>
     </header>
-    {{ user.description|content_to_html }}
+    {% if user.description %}
+    <div>
+      {{ user.description|content_to_html }}
+    </div>
+    {% endif %}
+    <footer>
+      <a href="{{ url_for("user.topic", name=user.username) }}">更多{{ user.username }}发表的主题</a>
+    </footer>
   </div>
 {% endmacro %}
