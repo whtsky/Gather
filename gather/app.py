@@ -72,4 +72,6 @@ def register_jinja(app):
     app.jinja_env.filters['sanitize'] = sanitize
     app.jinja_env.filters['content_to_html'] = content_to_html
     app.jinja_env.filters['xmldatetime'] = xmldatetime
-    app.jinja_env.filters['url_for_other_page'] = url_for_other_page
+    app.jinja_env.globals.update(
+        url_for_other_page=url_for_other_page
+    )
