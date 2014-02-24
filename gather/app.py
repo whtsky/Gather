@@ -4,7 +4,7 @@ import os
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
-from flask import Flask, g
+from flask import Flask, g, request, redirect
 from flask.ext.turbolinks import turbolinks
 from gather.extensions import db, assets, mail, cache
 from gather.settings import load_settings
@@ -60,6 +60,14 @@ def register_hooks(app):
     @app.before_request
     def load_user():
         g.user = get_current_user()
+        if "page" in request.args:
+            page = request.args.pop("page")
+            try:
+                page = int(page)
+            except:
+                pass
+            else:
+                return redirect(url_for_other_page(page), 301)
 
 
 def register_jinja(app):
