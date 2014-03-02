@@ -19,7 +19,7 @@ class Node(db.Model):
 
     @classmethod
     def query_all(cls):
-        return cls.query.all()
+        return cls.query.order_by(Node.name.asc()).all()
 
     def to_dict(self):
         return dict(
