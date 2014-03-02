@@ -4,29 +4,24 @@
 @import "variables"
 
 #main
-  width: 98%
   @extend %centered
+  @include prefix(box-sizing, border-box)
+  width: 98%
   margin-bottom: 30px
 
   @include desktop
     vertical-align: top
-    @include prefixer(box-sizing, border-box, moz webkit spec)
     display: inline-block
     padding-right: 10px
-    width: $desktop-width*0.66
-
-  @include large
-    width: $large-width*0.66
+    width: 66.6%
 
 
 #sidebar
   @extend #main
+  display: none
 
   @include desktop
     padding-right: 0
     padding-left: 10px
+    width: 33%
     display: inline-block
-    width: $desktop-width*0.33
-
-  @include large
-    width: $large-width*0.33

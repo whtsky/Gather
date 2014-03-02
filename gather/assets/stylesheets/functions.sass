@@ -12,3 +12,6 @@
 
 %clearfix
   @include clearfix
+
+@mixin prefix($property, $value)
+  @include prefixer($property, $value, moz webkit ms o spec)
