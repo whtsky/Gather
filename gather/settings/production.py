@@ -10,3 +10,6 @@ PASSWORD_SECRET = "reset this"
 SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://gather@localhost/gather"
 
 GOOGLE_ANALYTICS = ""
+
+CACHE_TYPE = "memcached"
+CACHE_KEY_PREFIX = "gather_"

@@ -12,11 +12,6 @@ PRODUCTION_USER = "gather"
 
 GRAVATAR_BASE_URL = "http://cn.gravatar.com/avatar/"
 
-CACHE_TYPE = "memcached"
-CACHE_KEY_PREFIX = "gather_"
-
 SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
 ASSETS_LOAD_PATH = [os.path.join(gather_base_dir, "assets")]
-DEBUG_TB_PROFILER_ENABLED = True
-DEBUG_TB_TEMPLATE_EDITOR_ENABLED = True
