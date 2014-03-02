@@ -6,20 +6,22 @@
 {% block nav %}{{ navigation('node') }}{% endblock %}
 
 {% block content %}
-  {% for node in items %}
-  <div class="node-card">
-    {% if node.icon %}
-      <a href="{{ url_for('.node', slug=node.slug) }}"><img src="{{ node.icon }}"></a>
-    {% endif %}
-    <header>
-      <a href="{{ url_for('.node', slug=node.slug) }}">{{ node.name }}</a>
-      {% if g.user and g.user.is_staff %}
-        <a href="{{ url_for('.change', slug=node.slug) }}"><i class="icon-settings"></i></a>
+  <div id="nodes-wrap">
+    {% for node in items %}
+    <div class="node-card">
+      {% if node.icon %}
+        <a href="{{ url_for('.node', slug=node.slug) }}"><img src="{{ node.icon }}"></a>
       {% endif %}
-    </header>
-    {{ node.description|content_to_html }}
+      <header>
+        <a href="{{ url_for('.node', slug=node.slug) }}">{{ node.name }}</a>
+        {% if g.user and g.user.is_staff %}
+          <a href="{{ url_for('.change', slug=node.slug) }}"><i class="icon-settings"></i></a>
+        {% endif %}
+      </header>
+      {{ node.description|content_to_html }}
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
   {% if g.user and g.user.is_staff %}
   <div>
     <a href="{{ url_for(".create") }}" class="button">创建节点</a>

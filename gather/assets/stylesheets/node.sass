@@ -1,0 +1,28 @@
+@import "functions"
+@import "responsive"
+
+div#nodes-wrap
+  @extend %flex
+  @include prefix(flex-wrap, wrap)
+  @include prefix(flex-direction, row)
+  @include prefix(justify-content, space-around)
+
+
+div.node-card
+  @extend %clearfix
+  @extend %card
+  min-width: 270px
+  margin-bottom: 10px
+
+  img
+    float: left
+    width: 80px
+    height: 80px
+    margin-right: 10px
+
+  height: auto
+  margin-left: auto
+  margin-right: auto
+
+  @include tablets
+    display: inline-block

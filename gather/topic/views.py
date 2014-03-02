@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 
 from flask import Blueprint
-from flask import url_for, g, redirect, render_template, abort
+from flask import url_for, g, redirect, render_template, abort, request
 from gather.utils import no_xhr
 from gather.account.utils import require_login, require_staff, require_admin
+from gather.node.models import Node
 from .forms import CreateTopicForm, ChangeTopicForm, ReplyForm, ChangeReplyForm
 from .models import Topic, Reply
 
@@ -21,6 +22,13 @@ def index(page):
 @require_login
 def create():
     form = CreateTopicForm()
+    if "node" in request.args:
+        try:
+            nid = int(request.args.get("node"))
+        except ValueError:
+            pass
+        else:
+            form.node.data = Node.query.get_or_404(nid)
     if form.validate_on_submit():
         topic = form.create()
         return redirect(url_for(".topic", topic_id=topic.id))

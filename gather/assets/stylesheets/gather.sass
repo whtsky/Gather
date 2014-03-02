@@ -15,6 +15,7 @@
 @import "icons"
 @import "topic"
 @import "form"
+@import "node"
 
 html
   text-rendering: optimizeLegibility
@@ -53,61 +54,7 @@ a
     width: $large-width
 
 div.card
-  box-shadow: 0 0 0 1px #DDD
-  vertical-align: top
-  border-bottom: 2px solid #e2e2e9
-  overflow: hidden
-  background-color: $card-background-color
-  padding: 20px
-  margin-bottom: 10px
-  word-break: break-all
-
-  header
-    font-size: 18px
-    padding-bottom: 10px
-    margin-bottom: 10px
-    border-bottom: 1px solid black(.1)
-
-  footer
-    border-top: 1px solid black(.1)
-    padding-top: 10px
-    margin-top: 10px
-
-  header + footer
-    border-top: none
-
-div.signal-form
-  @extend .card
-  width: 98%
-  max-width: 500px
-  @extend %centered
-
-  h2
-    text-align: center
-
-  .form-controls
-    width: 50%
-    @extend %centered
-
-div.node-card
-  @extend %clearfix 
-  @extend .card
-  width: 270px
-  height: auto
-  margin-bottom: 10px
-  margin-left: auto
-  margin-right: auto
-
-  img
-    float: left
-    width: 80px
-    height: 80px
-    margin-right: 10px
-
-  @include tablets
-    display: inline-block
-    margin-right: 30px
-
+  @extend %card
 
 div.user-card
   @extend div.node-card

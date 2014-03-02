@@ -1,5 +1,19 @@
 @import "bourbon/bourbon"
+@import "functions"
 @import "variables"
+
+div.signal-form
+  @extend %card
+  width: 98%
+  max-width: 500px
+  @extend %centered
+
+  h2
+    text-align: center
+
+  .form-controls
+    width: 50%
+    @extend %centered
 
 button, .button
   @include button($base-color: $button-color)
