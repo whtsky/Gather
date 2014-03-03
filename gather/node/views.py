@@ -22,8 +22,11 @@ def index():
 def create():
     form = CreateNodeForm()
     if form.validate_on_submit():
+        print "validate"
         form.create()
         return redirect(url_for(".node", slug=form.node.slug))
+    else:
+        print form.errors
     return render_template("node/create.html", form=form)
 
 
