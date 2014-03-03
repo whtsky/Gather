@@ -15,7 +15,7 @@
 @import "icons"
 @import "topic"
 @import "form"
-@import "node"
+@import "card"
 
 html
   text-rendering: optimizeLegibility
@@ -52,16 +52,6 @@ a
 
   @include large
     width: $large-width
-
-div.card
-  @extend %card
-
-div.user-card
-  @extend div.node-card
-  max-height: 300px
-
-  img
-    border-radius: 8px
 
 div#user-profile
   @extend .card

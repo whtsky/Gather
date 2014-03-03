@@ -6,9 +6,9 @@
 {% block nav %}{{ navigation('node') }}{% endblock %}
 
 {% block content %}
-  <div id="nodes-wrap">
+  <div id="cards-list">
     {% for node in items %}
-    <div class="node-card">
+    <div>
       {% if node.icon %}
         <a href="{{ url_for('.node', slug=node.slug) }}"><img src="{{ node.icon }}"></a>
       {% endif %}
