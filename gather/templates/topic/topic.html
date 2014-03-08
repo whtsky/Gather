@@ -34,7 +34,7 @@
         {% set author_url = url_for("user.profile", name=reply.author.username) %}
         <div class="reply-list" data-floor="{{ floor_num }}" id="reply_{{ floor_num }}">
           <a href="{{ author_url }}">
-            <img src="{{ reply.author.avatar(60) }}" class="reply-avatar" alt="{{ reply.author.username }}"/>
+            <img src="{{ reply.author.avatar(48) }}" class="avatar" alt="{{ reply.author.username }}"/>
           </a>
           {% if g.user and g.user.is_staff %}
             <a href="{{ url_for('.change_reply', topic_id=topic.id, reply_id=reply.id) }}"><i class="icon-settings"></i></a>

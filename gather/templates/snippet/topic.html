@@ -24,7 +24,7 @@
 
       {% set author_url = url_for("user.profile", name=topic.author.username) %}
       <a href="{{ author_url }}" class="user-link">
-        <img src="{{ topic.author.avatar(60) }}" class="topic-avatar" alt="{{ topic.author.username }}"/>
+        <img src="{{ topic.author.avatar(48) }}" class="avatar" alt="{{ topic.author.username }}"/>
       </a>
       <div class="topic-info">
         <a href="{{ topic_url }}" class="topics-title">{{ topic.title }}</a>

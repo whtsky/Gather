@@ -16,6 +16,7 @@
 @import "topic"
 @import "form"
 @import "card"
+@import "user"
 
 html
   @include tablets
@@ -37,24 +38,6 @@ a
 
   &:visited
     color: rgb(22, 39, 234)
-
-div#user-profile
-  @extend .card
-  header
-    @include clearfix
-  img.avatar
-    width: 100px
-    height: 100px
-    float: left
-    margin-right: 20px
-
-ul#user-profile-info
-  list-style: none
-  font-size: 14px
-  li
-    margin-bottom: 10px
-  i.fa
-    margin-right: 8px
 
 .pagination
   float: right
@@ -82,19 +65,6 @@ ul#user-profile-info
 
   span
     border: 1px solid #ddd
-
-div.sidebar-user-card
-  @extend .card
-  header
-    img
-      width: $small-avatar-size
-      height: $small-avatar-size
-      float: left
-      margin-right: 10px
-    @include clearfix
-
-    .small
-      padding-top: 10px
 
 .dark-link
   color: $dark-link-color

@@ -1,0 +1,43 @@
+@import "helpers/functions"
+@import "helpers/variables"
+
+.avatar
+  float: left
+  vertical-align: top
+
+  &:hover
+    @include animation(spin .4s infinite linear)
+
+div.sidebar-user-card
+  @extend .card
+  header
+    img
+      width: $medium-avatar-size
+      height: $medium-avatar-size
+      border-radius: $medium-avatar-size/2
+      float: left
+      margin-right: 10px
+    @include clearfix
+
+    .small
+      padding-top: 10px
+
+div#user-profile
+  @extend .card
+  header
+    text-align: center
+  .avatar
+    width: $large-avatar-size
+    height: $large-avatar-size
+    border-radius: $large-avatar-size/2
+    float: none
+    display: block
+    @include centered
+
+ul#user-profile-info
+  text-align: center
+  list-style: none
+  li
+    margin-bottom: 10px
+  i.fa
+    margin-right: 8px

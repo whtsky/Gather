@@ -12,19 +12,21 @@
   <div id="user-profile">
     <header>
       <img src="{{ user.avatar(100) }}" class="avatar"/>
-      {{ user.username }}
-      <ul id="user-profile-info">
-        <li>
-          <i class="fa fa-clock-o"></i>第 {{ user.id }} 名用户 注册于 {{ user.created.strftime("%Y-%m-%d") }}
-        </li>
-        {% if user.website %}
-        <li>
-          <i class="fa fa-globe"></i><a href="{{ user.website }}"{% if not user.is_admin %} rel="nofollow"{% endif %}>{{ user.website }}</a>
-        </li>
-        {% endif %}
-      </ul>
+      <h1>{{ user.username }}</h1>
+      {{ user.description|content_to_html }}
     </header>
-    {{ user.description|content_to_html }}
+
+    <ul id="user-profile-info">
+      <li>
+        <i class="fa fa-clock-o"></i>第 {{ user.id }} 名用户 注册于 {{ user.created.strftime("%Y-%m-%d") }}
+      </li>
+      {% if user.website %}
+      <li>
+        <i class="fa fa-globe"></i><a href="{{ user.website }}"{% if not user.is_admin %} rel="nofollow"{% endif %}>{{ user.website }}</a>
+      </li>
+      {% endif %}
+    </ul>
+
     {% if g.user and g.user.is_admin and g.user != user %}
     <footer data-no-turbolink>
       {% if user.is_staff %}

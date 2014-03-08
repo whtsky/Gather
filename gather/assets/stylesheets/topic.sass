@@ -2,32 +2,30 @@
 @import "helpers/variables"
 
 .topic-list
+  @include border-box
   width: 98%
   @include centered
   @include clearfix
   min-height: $small-avatar-size
   padding-bottom: 10px
   padding-top: 10px
-  border-bottom: 1px solid black(.2)
+  border-bottom: 1px solid black(.1)
+  padding-left: $small-avatar-size/2 + 10px
+  margin-left: $small-avatar-size/2
+  border-left: 1px solid black(.2)
+  position: relative
 
-  &:last-child
-    border-bottom: none
-
-.topic-info, .reply-info
-  margin-left: $small-avatar-size + 10px
+  .avatar
+    margin-left: -($small-avatar-size + 10px)
+    height: $small-avatar-size
+    width: $small-avatar-size
+    border-radius: $small-avatar-size/2
 
 .topics-title
-  font-size: 16px
+  font-size: 1em
 
 .topic-meta
-  margin-top: 15px
-
-.topic-avatar, .reply-avatar
-  float: left
-  vertical-align: top
-  height: $small-avatar-size
-  width: $small-avatar-size
-  border-radius: $small-avatar-size/15
+  margin-top: .9em
 
 .node-label
   background-color: slategray
