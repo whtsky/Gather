@@ -11,7 +11,7 @@
 {% block main %}
   <div id="user-profile">
     <header>
-      <img src="{{ user.avatar(100) }}" class="avatar"/>
+      <img src="{{ user.avatar(120) }}" class="avatar" alt="{{ user.username }}"/>
       <h1>{{ user.username }}</h1>
       {{ user.description|content_to_html }}
     </header>
