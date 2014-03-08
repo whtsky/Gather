@@ -10,7 +10,6 @@
 {% macro topic_list(topics, to_last_page=False) %}
   {% for topic in topics %}
     <div class="topic-list">
-
       {% if to_last_page %}
         {% set topic_url = url_for("topic.topic", topic_id=topic.id, page=topic.last_page) %}
       {% else %}
@@ -24,7 +23,9 @@
       </a>
 
       {% set author_url = url_for("user.profile", name=topic.author.username) %}
-      <a href="{{ author_url }}" class="user-link"><img src="{{ topic.author.avatar(60) }}" class="topic-avatar"/></a>
+      <a href="{{ author_url }}" class="user-link">
+        <img src="{{ topic.author.avatar(60) }}" class="topic-avatar" alt="{{ topic.author.username }}"/>
+      </a>
       <div class="topic-info">
         <a href="{{ topic_url }}" class="topics-title">{{ topic.title }}</a>
         <div class="topic-meta">
