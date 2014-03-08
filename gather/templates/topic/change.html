@@ -6,12 +6,12 @@
 {% block nav %}{{ navigation('topic') }}{% endblock %}
 
 {% block content %}
-  {% from "snippet/form.html" import form_field, select_field %}
+  {% from "snippet/form.html" import form_field %}
   <div class="signal-form">
       <header>修改话题</header>
       <form method="post" action="">
         {{ form.csrf_token }}
-        {{ select_field(form.node) }}
+        {{ form_field(form.node) }}
         {{ form_field(form.title) }}
         {{ form_field(form.content) }}
         <div class="form-controls">
