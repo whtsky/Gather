@@ -1,6 +1,6 @@
-@import "../helpers/functions"
-@import "../helpers/responsive"
-@import "../helpers/variables"
+@import "helpers/functions"
+@import "helpers/responsive"
+@import "helpers/variables"
 
 #site-footer
   border-top: 1px solid black(0.1)
@@ -11,7 +11,7 @@
   color: #7b7b7b
 
   width: 100%
-  @extend %centered
+  @include centered
 
   @include tablets
     width: $tablet-width
@@ -21,3 +21,6 @@
 
   @include large
     width: $large-width
+
+  a
+    color: $dark-link-color

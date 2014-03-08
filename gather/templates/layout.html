@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}{% endblock %}{% if paginator %} | Page {{ paginator.page }}{% endif %} | Gather</title>
+  <title>{% block title %}{% endblock %}{% if paginator %} &middot; Page {{ paginator.page }}{% endif %} &middot; Gather</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" />
@@ -33,7 +33,7 @@
 <body>
 {% if g.user and g.user.css %}
   <style>
-    {{ g.user.css|safe }}
+    {{ g.user.css }}
   </style>
 {% endif %}
 {% if g.user %}
@@ -42,19 +42,19 @@
     window.feeling_lucky = {{ g.user.feeling_lucky|tojson }};
   </script>
 {% endif %}
+<div id="nav-wrapper">
+  <div id="nav">
+    <a href="/" id="site-name">{{ config.FORUM_TITLE }}</a>
+    {% from "snippet/nav.html" import navigation %}
+    {% block nav %}{{ navigation() }}{% endblock %}
+  </div>
+</div>
 <div id="spinner">
   <div class="rect1"></div>
   <div class="rect2"></div>
   <div class="rect3"></div>
   <div class="rect4"></div>
   <div class="rect5"></div>
-</div>
-<div id="nav-wrapper">
-<div id="nav">
-  <a href="/" id="site-name">{{ config.FORUM_TITLE }}</a>
-  {% from "snippet/nav.html" import navigation %}
-  {% block nav %}{{ navigation() }}{% endblock %}
-</div>
 </div>
 <div id="wraps">
   {% block content %}
@@ -83,8 +83,10 @@
   {% endblock %}
 </div>
 <footer id="site-footer">
-  Powered by <a href="https://github.com/whtsky/Gather/tree/master" class="dark-link">Gather v3</a> |
-  Made by <a href="http://whouz.com" class="dark-link">whtsky</a>
+  Powered by <a href="https://github.com/whtsky/Gather/tree/master">Gather v3</a> &middot;
+  Made by <a href="http://whouz.com">whtsky</a> &middot;
+  <a href="http://me.alipay.com/whtsky">Donate</a> &middot;
+  <a href="https://github.com/whtsky/Gather/issues/new">Feedback</a>
 </footer>
 {% block js %}
 {% endblock %}

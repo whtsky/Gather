@@ -1,0 +1,37 @@
+@import "vendor/bourbon/bourbon"
+@import "helpers/functions"
+@import "helpers/responsive"
+@import "helpers/variables"
+
+#wraps
+  width: 100%
+  @include flexbox
+  @include centered
+  @include clearfix
+  @include prefix(flex-direction, column)
+
+  @include tablets
+    width: $tablet-width
+
+  @include desktop
+    @include prefix(flex-direction, row)
+    width: $desktop-width
+
+  @include large
+    width: $large-width
+
+#main
+  max-width: 90%
+  @include centered
+  @include flex(2)
+
+  @include desktop
+    margin-right: 15px
+
+#sidebar
+  max-width: 90%
+  @include centered
+  @include flex(1)
+
+  @include desktop
+    margin-left: 15px

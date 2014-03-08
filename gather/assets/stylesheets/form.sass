@@ -1,24 +1,19 @@
-@import "../vendor/bourbon/bourbon"
-@import "../helpers/functions"
-@import "../helpers/variables"
+@import "vendor/bourbon/bourbon"
+@import "helpers/functions"
+@import "helpers/variables"
 
 div.signal-form
   @extend %card
   width: 98%
   max-width: 500px
-  @extend %centered
+  @include centered
 
   h2
     text-align: center
 
   .form-controls
     width: 50%
-    @extend %centered
-
-button, .button
-  @include button($base-color: $button-color)
-  font-size: 14px
-  font-weight: normal
+    @include centered
 
 div.form-field
   width: 100%

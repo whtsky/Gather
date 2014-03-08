@@ -21,10 +21,10 @@
       {{ node.description|content_to_html }}
     </div>
     {% endfor %}
+    {% if g.user and g.user.is_staff %}
+    <div>
+      <a href="{{ url_for(".create") }}" class="button">创建节点</a>
+    </div>
+    {% endif %}
   </div>
-  {% if g.user and g.user.is_staff %}
-  <div>
-    <a href="{{ url_for(".create") }}" class="button">创建节点</a>
-  </div>
-  {% endif %}
 {% endblock %}

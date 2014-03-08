@@ -7,23 +7,23 @@
 @import "helpers/variables"
 @import "vendor/pygments"
 @import "vendor/jquery.atwho"
-@import "partials/sphinner"
+@import "sphinner"
 
-@import "partials/grid"
-@import "partials/nav"
-@import "partials/footer"
-@import "partials/icons"
-@import "partials/topic"
-@import "partials/form"
-@import "partials/card"
+@import "grid"
+@import "nav"
+@import "footer"
+@import "icons"
+@import "topic"
+@import "form"
+@import "card"
 
 html
-  text-rendering: optimizeLegibility
+  @include tablets
+    font-size: 87.5%
 
 body
   font-family: $site-font-family
-  background-color: $background-color-yellow
-  font-size: 14px
+  background-color: #eeeeee
 
 img
   max-width: 100%
@@ -38,25 +38,10 @@ a
   &:visited
     color: rgb(22, 39, 234)
 
-#wraps
-  width: 100%
-  @extend %centered
-  @extend %clearfix 
-
-  @include tablets
-    margin-top: 70px
-    width: $tablet-width
-
-  @include desktop
-    width: $desktop-width
-
-  @include large
-    width: $large-width
-
 div#user-profile
   @extend .card
   header
-    @extend %clearfix 
+    @include clearfix
   img.avatar
     width: 100px
     height: 100px
@@ -71,18 +56,32 @@ ul#user-profile-info
   i.fa
     margin-right: 8px
 
-ul.pagination
+.pagination
+  float: right
+  position: relative
+  left: -9px
+  margin-left: 0
   list-style: none
-  font-size: 14px
+
   li
-    padding: 4px 8px
-    display: inline
-    background-color: white
-    border: 1px solid black(.9)
-    &.active
-      background-color: $background-color-yellow
-    &.disabled
-      background-color: gray
+    float: left
+    margin-right: 2px
+
+    a, span
+      display: block
+      padding: 7px 9px
+      line-height: 1
+      border-radius: 3px
+
+    a
+      color: #0f0f0f
+      &:focus, &:hover
+        text-decoration: none
+        background-color: #0f0f0f
+        color: #fff
+
+  span
+    border: 1px solid #ddd
 
 div.sidebar-user-card
   @extend .card
@@ -92,7 +91,7 @@ div.sidebar-user-card
       height: $small-avatar-size
       float: left
       margin-right: 10px
-    @extend %clearfix
+    @include clearfix
 
     .small
       padding-top: 10px
@@ -106,8 +105,17 @@ div.sidebar-user-card
   &:hover
     border-bottom: 1px solid $dark-link-color
 
-.user-link
-  @extend .dark-link
-
-.small
-  font-size: .8em
+button, .button
+  &:disabled, &.disabled
+    opacity: 0.5
+    cursor: not-allowed
+  border: 1px solid black(.3)
+  &:hover:not(:disabled)
+    color: black(.9)
+  border-radius: 3px
+  padding: 7px 18px
+  text-decoration: none
+  color: black(.7)
+  background-color: #fff
+  &:visited
+    color: black(.7)

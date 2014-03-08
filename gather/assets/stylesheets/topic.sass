@@ -1,14 +1,17 @@
-@import "../helpers/functions"
-@import "../helpers/variables"
+@import "helpers/functions"
+@import "helpers/variables"
 
 .topic-list
   width: 98%
-  @extend %centered
-  @extend %clearfix
+  @include centered
+  @include clearfix
   min-height: $small-avatar-size
   padding-bottom: 10px
   padding-top: 10px
   border-bottom: 1px solid black(.2)
+
+  &:last-child
+    border-bottom: none
 
 .topic-info, .reply-info
   margin-left: $small-avatar-size + 10px

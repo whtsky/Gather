@@ -1,17 +1,17 @@
-@import "../helpers/functions"
-@import "../helpers/responsive"
+@import "helpers/functions"
+@import "helpers/responsive"
 
 div.card
   @extend %card
 
 div#cards-list
-  @extend %flex
+  @include flexbox
   @include prefix(flex-wrap, wrap)
   @include prefix(flex-direction, row)
   @include prefix(justify-content, space-between)
 
   > div
-    @extend %clearfix
+    @include clearfix
     @extend %card
     width: 250px
     max-width: 75%

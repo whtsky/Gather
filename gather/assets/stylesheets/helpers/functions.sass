@@ -7,25 +7,39 @@
 @function white($opacity)
   @return rgba(255,255,255, $opacity)
 
-%centered
+@mixin centered
   margin-left: auto
   margin-right: auto
 
-%clearfix
-  @include clearfix
+@mixin prefix($property, $value)
+  @include prefixer($property, $value, moz webkit ms o spec)
+
+@mixin flexbox
+  display: -moz-flex
+  display: -webkit-flex
+  display: -ms-flex
+  display: -o-flex
+  display: flex
+
+@mixin flex($fg: 1, $fs: null, $fb: null)
+  @include prefix(box-flex, $fg)
+  @include prefix(flex, $fg $fs $fb)
+
+@mixin border-box
+  @include prefix(box-sizing, border-box)
 
 %card
-  box-shadow: 0 0 0 1px #DDD
+  @include border-box
+  border-radius: 5px
   vertical-align: top
-  border-bottom: 2px solid #e2e2e9
   overflow: hidden
-  background-color: $card-background-color
   padding: 20px
   margin-bottom: 10px
   word-break: break-all
+  background-color: #fff
 
   header
-    font-size: 18px
+    font-size: 1.2em
     padding-bottom: 10px
     margin-bottom: 10px
     border-bottom: 1px solid black(.1)
@@ -37,13 +51,3 @@
 
   header + footer
     border-top: none
-
-@mixin prefix($property, $value)
-  @include prefixer($property, $value, moz webkit ms o spec)
-
-%flex
-  display: -moz-flex
-  display: -webkit-flex
-  display: -ms-flex
-  display: -o-flex
-  display: flex

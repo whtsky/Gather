@@ -29,10 +29,12 @@ def clear_cache():
 @manager.command
 def livereload():
     db.create_all()
+    app.debug = True
     server = Server(app)
     server.watch("gather/*.py")
     server.watch("gather/templates/*.html")
     server.watch("gather/assets/stylesheets/*.sass")
+    server.watch("gather/assets/stylesheets/*/*.sass")
     server.watch("gather/assets/javascripts/*.coffee")
     server.serve(port=8000)
 

@@ -13,9 +13,8 @@
     <header>{{ user.username }} 发布的话题</header>
     {% from "snippet/topic.html" import topic_list %}
     {{ topic_list(paginator.items) }}
-      <footer>
-      {% from "snippet/pagination.html" import pagination %}
-      {{ pagination(paginator, url_for(".topic", name=user.username)) }}
-    </footer>
+
+    {% from "snippet/pagination.html" import pagination %}
+    {{ pagination(paginator, url_for(".topic", name=user.username)) }}
   </div>
 {% endblock %}

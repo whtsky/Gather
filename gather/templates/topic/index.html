@@ -10,9 +10,8 @@
     <header>话题列表</header>
     {% from "snippet/topic.html" import topic_list %}
     {{ topic_list(paginator.items) }}
-    <footer>
-      {% from "snippet/pagination.html" import pagination %}
-      {{ pagination(paginator, url_for(".index")) }}
-    </footer>
+
+    {% from "snippet/pagination.html" import pagination %}
+    {{ pagination(paginator, url_for(".index")) }}
   </div>
 {% endblock %}

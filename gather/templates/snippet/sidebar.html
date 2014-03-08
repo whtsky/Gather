@@ -6,9 +6,11 @@
         <a href="{{ url_for('node.change', slug=node.slug) }}"><i class="icon-settings"></i></a>
       {% endif %}
     </header>
-    <div>
-      {{ node.description|content_to_html }}
-    </div>
+    {% if node.description %}
+      <div>
+        {{ node.description|content_to_html }}
+      </div>
+    {% endif %}
     <footer>
       <a href="{{ url_for("topic.create") }}?node={{ node.id }}" class="button">在此节点新建话题</a>
     </footer>
