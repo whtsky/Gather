@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ config.FORUM_TITLE }}</title>
+    <link href="{{ url_for(".feed", _external=True) }}" rel="self" />
+    <link href="{{ url_for(".index", _external=True) }}" />
+    <id>{{ url_for(".index", _external=True) }}</id>
+    {% for topic in topics %}
+    <entry>
+        <title><![CDATA[{{ topic.title }}]]></title>
+        <link href="{{ url_for("topic.topic", topic_id=topic.id, _external=True)  }}"/>
+        <id>{{ url_for("topic.topic", topic_id=topic.id, _external=True)  }}</id>
+        <content type="html">
+            <![CDATA[
+                {{ topic.content|content_to_html }}
+            ]]>
+        </content>
+    </entry>
+    {% endfor %}
+</feed>
