@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from flask import g, _request_ctx_stack, current_app
+from flask import g, _request_ctx_stack
 from flask.ext.wtf import Form as _Form
 from flask.ext.wtf.csrf import generate_csrf, validate_csrf
 from flask.ext.wtf.form import _Auto
@@ -32,8 +32,6 @@ class Form(_Form):
     def generate_csrf_token(self, csrf_context=None):
         if not self.csrf_enabled:
             return None
-        if current_app.debug:
-            return None
         csrf = generate_csrf(self.SECRET_KEY, self.TIME_LIMIT)
         if g.user:
             cache_value = g.user.id
@@ -49,8 +47,6 @@ class Form(_Form):
             raise ValidationError("Wrong CSRF Token")
 
     def validate_csrf_data(self, data):
-        if current_app.debug:
-            return True
         if not validate_csrf(data, self.SECRET_KEY, self.TIME_LIMIT):
             return False
         cache_value = cache.get(data)
