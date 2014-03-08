@@ -1,5 +1,6 @@
 {% macro navigation(current='') %}
   <div id="nav-main">
+    <a href="{{ url_for('frontend.index') }}"{% if current == 'home' %} class="active"{% endif %}>首页</a>
     <a href="{{ url_for('topic.index') }}"{% if current == 'topic' %} class="active"{% endif %}>话题</a>
     <a href="{{ url_for('node.index') }}"{% if current == 'node' %} class="active"{% endif %}>节点</a>
     <a href="{{ url_for('user.index') }}"{% if current == 'user' %} class="active"{% endif %}>用户</a>
