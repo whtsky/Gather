@@ -46,6 +46,7 @@ class GatherModelView(GatherAPIView):
         return jsonify({
             'page': page,
             'total': paginator.total,
+            'total_page': paginator.pages,
             self.model_name_s: [m.to_dict() for m in paginator.items]}
         )
 

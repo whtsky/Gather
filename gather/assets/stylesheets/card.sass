@@ -13,8 +13,8 @@ div#cards-list
   > div
     @extend %clearfix
     @extend %card
-    width: 300px
-    margin-bottom: 30px
+    width: 250px
+    margin: 15px auto
 
     img
       float: left
@@ -24,3 +24,8 @@ div#cards-list
 
     @include tablets
       display: inline-block
+      width: 300px
+      margin: 15px
+
+    @include desktop
+      margin: 15px 0
