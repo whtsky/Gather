@@ -150,7 +150,7 @@ class Topic(db.Model):
         return self
 
     def delete(self):
-        self.replies.delete()
+        Reply.query.filter_by(topic=self).delete()
         self.clear_read()
         db.session.delete(self)
         db.session.commit()

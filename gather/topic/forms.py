@@ -69,7 +69,10 @@ class ChangeTopicForm(CreateTopicForm):
 
 
 class ReplyForm(Form):
-    content = TextAreaField("正文", validators=[Required()])
+    content = TextAreaField("正文", [
+        Required(),
+        Length(min=3, max=1000000),
+    ])
 
     def create(self, topic):
         reply = Reply(
@@ -80,14 +83,7 @@ class ReplyForm(Form):
         return reply.save()
 
 
-class ChangeReplyForm(Form):
-    content = TextAreaField(
-        "正文", [
-            Required(),
-            Length(min=3, max=1000000),
-        ],
-    )
-
+class ChangeReplyForm(ReplyForm):
     def save(self, reply):
         if self.content.data != reply.content:
             content = self.content.data

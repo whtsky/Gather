@@ -42,8 +42,7 @@ def topic(topic_id, page):
     form = ReplyForm()
     if g.user and form.validate_on_submit():
         form.create(topic=topic)
-        base_url = url_for(".topic", topic_id=topic.id)
-        return redirect("%s?page=%s" % (base_url, topic.last_page))
+        return redirect(url_for(".topic", topic_id=topic.id, page=topic.last_page))
     replies = Reply.query.filter_by(topic=topic).order_by(Reply.id.asc())
     paginator = replies.paginate(page)
     if g.user:
