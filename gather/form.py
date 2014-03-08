@@ -37,7 +37,7 @@ class Form(_Form):
             cache_value = g.user.id
         else:
             cache_value = 0
-        cache.set(csrf, cache_value, self.TIME_LIMIT)
+        cache.set("csrf_%s" % csrf, cache_value, self.TIME_LIMIT)
         return csrf
 
     def validate_csrf_token(self, field):
@@ -49,8 +49,9 @@ class Form(_Form):
     def validate_csrf_data(self, data):
         if not validate_csrf(data, self.SECRET_KEY, self.TIME_LIMIT):
             return False
-        cache_value = cache.get(data)
-        cache.delete(data)
+        key = "csrf_%s" % data
+        cache_value = cache.get(key)
+        cache.delete(key)
         if cache_value is not None:
             if cache_value == 0:
                 return True
