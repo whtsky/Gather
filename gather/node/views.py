@@ -13,7 +13,7 @@ bp = Blueprint("node", __name__, url_prefix="/node")
 
 @bp.route("/")
 def index():
-    items = Node.query.all()
+    items = Node.query_all()
     return render_template("node/index.html", items=items)
 
 
