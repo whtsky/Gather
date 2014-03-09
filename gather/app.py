@@ -4,8 +4,9 @@ import os
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
-from flask import Flask, g, request, redirect
+from flask import Flask, g
 from flask.ext.turbolinks import turbolinks
+from jinja2 import MemcachedBytecodeCache
 from gather.extensions import db, assets, mail, cache
 from gather.settings import load_settings
 from gather.filters import sanitize, get_site_status, content_to_html, xmldatetime, url_for_other_page
@@ -75,3 +76,6 @@ def register_jinja(app):
     app.jinja_env.globals.update(
         url_for_other_page=url_for_other_page
     )
+
+    app.jinja_env.bytecode_cache = MemcachedBytecodeCache(cache)
+

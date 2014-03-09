@@ -55,6 +55,7 @@ def update():
     update_from_github()
     migrate_databases()
     reload_gunicorn()
+    clear_cache()
 
 
 def fullyupdate():
