@@ -10,8 +10,9 @@
     {% for user in paginator.items %}
       <div>
         {% set user_profile = url_for('.profile', name=user.username) %}
-        <a href="{{ user_profile }}"><img src="{{ user.avatar(size=80) }}"></a>
-        <header><a href="{{ user_profile }}">{{ user.username }}</a></header>
+        <header>
+          <a href="{{ user_profile }}"><img src="{{ user.avatar(size=80) }}">{{ user.username }}</a>
+        </header>
         {% if user.website %}
           <a href="{{ user.website }}" rel="nofollow">{{ user.website }}</a>
         {% else %}
@@ -20,6 +21,8 @@
       </div>
     {% endfor %}
   </div>
-  {% from "snippet/pagination.html" import pagination %}
-      {{ pagination(paginator, url_for(".index")) }}
+  <div class="card">
+    {% from "snippet/pagination.html" import pagination %}
+    {{ pagination(paginator, url_for(".index")) }}
+  </div>
 {% endblock %}

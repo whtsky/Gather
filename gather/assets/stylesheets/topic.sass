@@ -3,7 +3,6 @@
 
 .topic-list
   @include border-box
-  width: 98%
   @include centered
   @include clearfix
   min-height: $small-avatar-size
@@ -21,25 +20,15 @@
     width: $small-avatar-size
     border-radius: $small-avatar-size/2
 
-.topics-title
-  font-size: 1em
-
 .topic-meta
-  margin-top: .9em
+  margin-top: 9px
 
 .node-label
-  background-color: slategray
-  color: white
-  padding: 3px 5px
-  border-radius: 5px
-  margin-right: 5px
-
-  &:visited
-    color: white
+  @extend .dark-link
+  margin-left: 3px
 
 .topic-reply-count
   float: right
-  font-size: 14px
   line-height: 20px
   background-color: slateblue
   border-radius: 15px

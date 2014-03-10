@@ -5,6 +5,8 @@ div.card
   @extend %card
 
 div#cards-list
+  width: 100%
+  display: block
   @include flexbox
   @include prefix(flex-wrap, wrap)
   @include prefix(flex-direction, row)
@@ -19,9 +21,13 @@ div#cards-list
 
     img
       float: left
-      width: 80px
-      height: 80px
+      height: $medium-avatar-size
+      width: $medium-avatar-size
+      border-radius: $medium-avatar-size/2
       margin-right: 10px
+
+      &:hover
+        @include animation(spin .3s infinite linear)
 
     @include tablets
       display: inline-block

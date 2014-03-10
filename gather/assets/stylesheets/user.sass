@@ -17,6 +17,9 @@ div.sidebar-user-card
       border-radius: $medium-avatar-size/2
       float: left
       margin-right: 10px
+
+      &:hover
+        @include animation(spin .3s infinite linear)
     @include clearfix
 
     .small
@@ -34,6 +37,9 @@ div#user-profile
     display: block
     @include centered
 
+    &:hover
+      @include animation(spin .2s infinite linear)
+
 ul#user-profile-info
   text-align: center
   list-style: none
@@ -41,3 +47,6 @@ ul#user-profile-info
     margin-bottom: 10px
   i.fa
     margin-right: 8px
+
+.user-link
+  @extend .dark-link

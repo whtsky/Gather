@@ -1,9 +1,9 @@
 {% macro topic_info(topic) %}
-  <a href="{{ url_for("node.node", slug=topic.node.slug) }}" class="node-label">{{ topic.node.name }}</a>
   <a href="{{ url_for("user.profile", name=topic.author.username) }}" class="user-link">{{ topic.author }}</a> &middot;
-  <time datetime="{{ topic.created|xmldatetime }}"></time>
+  <i class="fa fa-tag"></i><a href="{{ url_for("node.node", slug=topic.node.slug) }}" class="node-label">{{ topic.node.name }}</a> &middot;
+  <time datetime="{{ topic.created|xmldatetime }}"></time>发布
   {% if topic.changed %}
-    / <time datetime="{{ topic.changed|xmldatetime }}"></time>
+     &middot; <time datetime="{{ topic.changed|xmldatetime }}"></time>修改
   {% endif %}
 {% endmacro %}
 
