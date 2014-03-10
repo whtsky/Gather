@@ -20,6 +20,9 @@
     width: $small-avatar-size
     border-radius: $small-avatar-size/2
 
+  &:last-of-type
+    border-bottom: none
+
 .topic-meta
   margin-top: 9px
 
@@ -54,4 +57,4 @@
   margin-right: 10px
 
   a.reply_the_floor
-    color: slategray
+    @extend .dark-link
