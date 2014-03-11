@@ -60,8 +60,10 @@
         </div>
         {% set floor_num = floor_num + 1 %}
       {% endfor %}
-      {% from "snippet/pagination.html" import pagination %}
-      {{ pagination(paginator, url_for(".topic", topic_id=topic.id)) }}
+      <footer>
+        {% from "snippet/pagination.html" import pagination %}
+        {{ pagination(paginator, url_for(".topic", topic_id=topic.id)) }}
+      </footer>
     </div>
   {% endif %}
   {% if g.user %}
