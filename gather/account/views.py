@@ -16,7 +16,7 @@ def login():
     next_url = request.args.get('next', "/")
     form = LoginForm()
     if form.validate_on_submit():
-        user = form.login()
+        form.login()
         return redirect(next_url)
     return render_template("account/login.html", form=form)
 
