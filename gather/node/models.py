@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from flask.ext.sqlalchemy import models_committed
+from __future__ import unicode_literals
+
 from gather.extensions import db, cache
 
 
@@ -10,6 +11,16 @@ class Node(db.Model):
     slug = db.Column(db.String(100), nullable=False, unique=True, index=True)
     description = db.Column(db.String(500), nullable=True, default="")
     icon = db.Column(db.String(100), nullable=True, default="")
+    parent_node_id = db.Column(
+        db.Integer,
+        db.ForeignKey('node.id'), index=True, nullable=True
+    )
+    parent_node = db.relationship("Node", uselist=False)
+
+    @property
+    def children_node(self):
+        childrens = Node.query.filter_by(parent_node=self)
+        return childrens.order_by(Node.name.asc()).all()
 
     def __str__(self):
         return self.name

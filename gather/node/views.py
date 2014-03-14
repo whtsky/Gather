@@ -44,6 +44,6 @@ def change(slug):
     node = Node.query.filter_by(slug=slug).first_or_404()
     form = ChangeNodeForm(obj=node)
     if form.validate_on_submit():
-        form.save(node=node)
+        form.save()
         return redirect(url_for(".node", slug=node.slug))
     return render_template("node/change.html", form=form)

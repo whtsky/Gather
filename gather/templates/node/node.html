@@ -27,4 +27,20 @@
 {% block sidebar %}
 {% from "snippet/sidebar.html" import node_sidebar %}
 {{ node_sidebar(node) }}
+{% if node.parent_node or node.children_node %}
+<div class="card">
+  <header>节点关系</header>
+  {% if node.parent_node %}
+  <p>父节点： <a href="{{ url_for("node.node", slug=node.parent_node.slug) }}">{{ node.parent_node.name }}</a></p>
+  {% endif %}
+  {% if node.children_node %}
+  <p>子节点</p>
+  <ul>
+    {% for child_node in node.children_node %}
+      <li><a href="{{ url_for("node.node", slug=child_node.slug) }}">{{ child_node.name }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endif %}
 {% endblock %}
