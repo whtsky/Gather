@@ -9,7 +9,6 @@ from flask.ext.turbolinks import turbolinks
 from jinja2 import MemcachedBytecodeCache
 from gather.extensions import db, assets, mail, cache
 from gather.settings import load_settings
-from gather.filters import sanitize, get_site_status, content_to_html, xmldatetime, url_for_other_page
 from gather.account.utils import get_current_user
 
 
@@ -64,6 +63,11 @@ def register_hooks(app):
 
 
 def register_jinja(app):
+    from gather.filters import (
+        sanitize, get_site_status,
+        content_to_html, xmldatetime,
+        url_for_other_page, url_for_with_token
+    )
     @app.context_processor
     def register_context():
         return dict(
@@ -74,7 +78,8 @@ def register_jinja(app):
     app.jinja_env.filters['content_to_html'] = content_to_html
     app.jinja_env.filters['xmldatetime'] = xmldatetime
     app.jinja_env.globals.update(
-        url_for_other_page=url_for_other_page
+        url_for_other_page=url_for_other_page,
+        url_for_with_token=url_for_with_token
     )
 
     app.jinja_env.bytecode_cache = MemcachedBytecodeCache(cache)

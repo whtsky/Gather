@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 
 from flask import Blueprint, abort
-from flask import request, url_for, flash
+from flask import request, url_for
 from flask import g, render_template, redirect
-from gather.account.models import db, Account
 from gather.account.forms import (LoginForm, RegisterForm,
                                   FindForm, ResetForm, SettingsForm)
 from gather.account.utils import require_login, login_user, logout_user, verify_reset_token
+from gather.utils import require_token
 
 bp = Blueprint("account", __name__, url_prefix="/account")
 
@@ -32,8 +32,9 @@ def register():
     return render_template("account/register.html", form=form)
 
 
-@bp.route("/logout")
+@bp.route("/logout/<token>")
 @require_login
+@require_token
 def logout():
     next_url = request.args.get('next', "/")
     logout_user()

@@ -4,7 +4,7 @@ import re
 import bleach
 import datetime
 
-from flask import url_for
+from flask import url_for, g
 from flask.ext.sqlalchemy import models_committed
 from markupsafe import Markup
 from tornado.escape import xhtml_escape, to_unicode, _URL_RE
@@ -15,6 +15,7 @@ from gather.account.models import Account
 from gather.node.models import Node
 from gather.topic.models import Topic, Reply
 from gather.extensions import cache
+from gather.utils import gen_action_token
 
 
 _CODE_RE = re.compile(r'```(\w+)(.+?)```', re.S)
@@ -141,3 +142,10 @@ def url_for_other_page(page):
     args = request.view_args.copy()
     args["page"] = int(page)
     return url_for(request.endpoint, **args)
+
+
+def url_for_with_token(endpoint, **values):
+    if not g.user:
+        return
+    values["token"] = gen_action_token(40)
+    return url_for(endpoint, **values)
