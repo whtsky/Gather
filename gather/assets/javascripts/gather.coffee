@@ -44,7 +44,7 @@ gather_main = ->
     init_at_who()
   $("time").timeago(selector: 'time')
 
-  $('.reply_the_floor').click ->
+  $('.reply-this-floor').click ->
     reply = $(this)
     floor = reply.data('floor')
     user = reply.data('user')

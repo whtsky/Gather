@@ -26,6 +26,13 @@
 .topic-meta
   margin-top: 9px
 
+#topic-control
+  display: none
+  float: right
+
+  header:hover > &
+    display: block
+
 .node-label
   @extend .dark-link
   margin-left: 3px
@@ -51,10 +58,20 @@
   display: inline-block
   vertical-align: text-top
 
-.reply-actions
-  float: right
+.reply-floor
   color: slategray
+  float: right
   margin-right: 10px
 
-  a.reply_the_floor
-    @extend .dark-link
+.reply-control
+  display: none
+  float: right
+  margin-right: 10px
+
+  .reply-list:hover > &
+    display: block
+
+
+.reply-this-floor
+  @extend .dark-link
+  margin-right: 5px

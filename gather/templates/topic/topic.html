@@ -14,7 +14,9 @@
     <header>
       {{ topic.title }}
       {% if g.user and g.user.is_staff %}
-        <a href="{{ url_for('.change_topic', topic_id=topic.id) }}"><i class="icon-edit"></i></a>
+        <div id="topic-control">
+          <a href="{{ url_for('.change_topic', topic_id=topic.id) }}"><i class="icon-edit"></i></a>
+        </div>
       {% endif %}
     </header>
     {% if topic.content %}
@@ -36,14 +38,14 @@
           <a href="{{ author_url }}">
             <img src="{{ reply.author.avatar(48) }}" class="avatar" alt="{{ reply.author.username }}"/>
           </a>
-          {% if g.user and g.user.is_staff %}
-            <a href="{{ url_for('.change_reply', topic_id=topic.id, reply_id=reply.id) }}"><i class="icon-edit"></i></a>
-          {% endif %}
-          <div class="reply-actions">
-            <a href="#" class="reply_the_floor" data-floor="{{ floor_num }}" data-user="{{ reply.author.username }}">
+          <span class="reply-floor">#{{ floor_num }}</span>
+          <div class="reply-control">
+            <a href="#" class="reply-this-floor" data-floor="{{ floor_num }}" data-user="{{ reply.author.username }}">
               @
             </a>
-            <span>#{{ floor_num }}</span>
+            {% if g.user and g.user.is_staff %}
+              <a href="{{ url_for('.change_reply', topic_id=topic.id, reply_id=reply.id) }}"><i class="icon-edit"></i></a>
+            {% endif %}
           </div>
           <div class="reply-info">
             <div class="reply-meta">
