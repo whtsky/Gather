@@ -27,14 +27,16 @@
   margin-top: 9px
 
 #topic-control
-  display: none
   float: right
 
   a
     margin-left: 5px
 
-  header:hover > &
-    display: block
+  @include desktop
+    display: none
+
+    header:hover > &
+      display: block
 
 .node-label
   @extend .dark-link
@@ -67,7 +69,6 @@
   margin-right: 10px
 
 .reply-control
-  display: none
   float: right
   margin-right: 10px
 
@@ -81,5 +82,7 @@
     &:hover
       color: $hover-red
 
-  .reply-list:hover > &
-    display: block
+  @include desktop
+    display: none
+    .reply-list:hover > &
+      display: block
