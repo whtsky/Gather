@@ -1,17 +1,31 @@
 {% macro navigation(current='') %}
   <div id="nav-main">
-    <a href="{{ url_for('frontend.index') }}"{% if current == 'home' %} class="active"{% endif %}>首页</a>
-    <a href="{{ url_for('topic.index') }}"{% if current == 'topic' %} class="active"{% endif %}>话题</a>
-    <a href="{{ url_for('node.index') }}"{% if current == 'node' %} class="active"{% endif %}>节点</a>
-    <a href="{{ url_for('user.index') }}"{% if current == 'user' %} class="active"{% endif %}>用户</a>
+    <a href="{{ url_for('frontend.index') }}"{% if current == 'home' %} class="active"{% endif %}>
+      <i class="fa fa-home"></i>首页
+    </a>
+    <a href="{{ url_for('topic.index') }}"{% if current == 'topic' %} class="active"{% endif %}>
+      <i class="fa fa-comments-o"></i>话题
+    </a>
+    <a href="{{ url_for('node.index') }}"{% if current == 'node' %} class="active"{% endif %}>
+      <i class="fa fa-tags"></i>节点
+    </a>
+    <a href="{{ url_for('user.index') }}"{% if current == 'user' %} class="active"{% endif %}>
+      <i class="fa fa-users"></i>用户
+    </a>
   </div>
 
   <div id="nav-user">
   {% if g.user %}
     <a href="{{ url_for('user.profile', name=g.user.username) }}">{{ g.user.username }}</a>
-    <a href="{{ url_for('topic.create') }}"{% if current == 'create' %} class="active"{% endif %}>新建话题</a>
-    <a href="{{ url_for('account.settings') }}"{% if current == 'settings' %} class="active"{% endif %}>设置</a>
-    <a href="{{ url_for_with_token('account.logout') }}">退出</a>
+    <a href="{{ url_for('topic.create') }}"{% if current == 'create' %} class="active"{% endif %}>
+      <i class="fa fa-edit"></i>
+    </a>
+    <a href="{{ url_for('account.settings') }}"{% if current == 'settings' %} class="active"{% endif %}>
+      <i class="fa fa-gear"></i>
+    </a>
+    <a href="{{ url_for_with_token('account.logout') }}">
+      <i class="fa fa-sign-out"></i>
+    </a>
   {% else %}
     <a href="{{ url_for('account.register') }}"{% if current == 'register' %} class="active"{% endif %}>注册</a>
     <a href="{{ url_for('account.login') }}"{% if current == 'login' %} class="active"{% endif %}>登录</a>
