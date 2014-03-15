@@ -16,6 +16,9 @@
       {% if g.user and g.user.is_staff %}
         <div id="topic-control">
           <a href="{{ url_for('.change_topic', topic_id=topic.id) }}"><i class="icon-edit"></i></a>
+          {% if g.user.is_admin %}
+            <a href="{{ url_for_with_token('.remove_topic', topic_id=topic.id) }}"><i class="icon-remove"></i></a>
+          {% endif %}
         </div>
       {% endif %}
     </header>
