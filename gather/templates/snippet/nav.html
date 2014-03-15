@@ -27,8 +27,12 @@
       <i class="fa fa-sign-out"></i>
     </a>
   {% else %}
-    <a href="{{ url_for('account.register') }}"{% if current == 'register' %} class="active"{% endif %}>注册</a>
-    <a href="{{ url_for('account.login') }}"{% if current == 'login' %} class="active"{% endif %}>登录</a>
+    <a href="{{ url_for('account.register') }}"{% if current == 'register' %} class="active"{% endif %}>
+      <i class="fa fa-plus-circle"></i>注册
+    </a>
+    <a href="{{ url_for('account.login') }}"{% if current == 'login' %} class="active"{% endif %}>
+      <i class="fa fa-sign-in"></i>登录
+    </a>
   {% endif %}
   </div>
 {% endmacro %}
