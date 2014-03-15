@@ -58,6 +58,13 @@ gather_main = ->
     reply_content.focus().val reply_content.val() + new_text
     return false
 
+  $('.duixing-this-floor').click ->
+    reply = $(this)
+
+    content_textarea = $("#content")
+    content_textarea.focus().val  reply.data('content')
+    return false
+
   random_int = (max) ->
     Math.floor(Math.random()*(max-1))
 

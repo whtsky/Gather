@@ -34,7 +34,7 @@
 <body>
 {% if g.user and g.user.css %}
   <style>
-    {{ g.user.css }}
+    {{ g.user.css|safe }}
   </style>
 {% endif %}
 {% if g.user %}

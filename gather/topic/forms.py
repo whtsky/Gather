@@ -71,7 +71,7 @@ class ChangeTopicForm(CreateTopicForm):
 class ReplyForm(Form):
     content = TextAreaField("正文", [
         Required(),
-        Length(min=3, max=1000000),
+        Length(max=10000),
     ])
 
     def create(self, topic):

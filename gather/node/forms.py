@@ -33,7 +33,7 @@ class ChangeNodeForm(Form):
     ])
 
     def validate_parent_node(self, field):
-        if field.data == self.obj:
+        if field.data and field.data == self.obj:
             raise ValueError("父节点不能是自己= =")
 
     def save(self):

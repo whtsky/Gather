@@ -72,11 +72,14 @@
   margin-right: 10px
 
   a
+    color: slategray
     margin-left: 5px
+
+    &:visited
+      color: slategray
+
+    &:hover
+      color: $hover-red
 
   .reply-list:hover > &
     display: block
-
-
-.reply-this-floor
-  @extend .dark-link

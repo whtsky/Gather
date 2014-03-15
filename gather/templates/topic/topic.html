@@ -43,6 +43,9 @@
           </a>
           <span class="reply-floor">#{{ floor_num }}</span>
           <div class="reply-control">
+            {% if reply.content|length < 50 %}
+              <a href="#" class="duixing-this-floor" data-content="{{ reply.content }}">队形</a>
+            {% endif %}
             <a href="#" class="reply-this-floor" data-floor="{{ floor_num }}" data-user="{{ reply.author.username }}">
               @
             </a>
