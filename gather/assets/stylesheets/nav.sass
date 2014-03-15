@@ -25,6 +25,18 @@
   @include large
     width: $large-width
 
+  > div
+    @include centered
+    display: block
+    text-align: center
+
+    @include tablets
+      text-align: left
+
+    > a
+      padding-left: 15px
+      padding-right: 15px
+
 #nav-wrapper
   border-bottom: 1px solid black(.1)
   margin-top: 0
@@ -38,21 +50,15 @@
     text-decoration: none
 
 #nav-main
-  @include centered
-  display: block
-  text-align: center
-
   @include tablets
-    text-align: left
     float: left
 
-  > a
-    padding-left: 15px
-    padding-right: 15px
+  i.fa
+    display: none
+    @include tablets
+      display: inline-block
 
 #nav-user
-  @extend #nav-main
-
   @include tablets
     float: right
 
