@@ -45,3 +45,11 @@ class Node(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
+
+    def delete(self):
+        from gather.topic.models import Topic
+        for topic in Topic.query.filter_by(node=self).all():
+            topic.delete()
+        db.session.delete(self)
+        db.session.commit()
+        return self
