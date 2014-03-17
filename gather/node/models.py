@@ -13,9 +13,9 @@ class Node(db.Model):
     icon = db.Column(db.String(100), nullable=True, default="")
     parent_node_id = db.Column(
         db.Integer,
-        db.ForeignKey('node.id'), index=True, nullable=True
+        db.ForeignKey('node.id'), index=True
     )
-    parent_node = db.relationship("Node", uselist=False)
+    parent_node = db.relationship("Node")
 
     @property
     def children_node(self):

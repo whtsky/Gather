@@ -1,7 +1,7 @@
 {% macro pagination(paginator, url) %}
   <ul class="pagination">
     {% if paginator.has_prev %}
-      <li><a href="{{ url_for_other_page(paginator.prev_num) }}">&larr;</a></li>
+      <li><a href="{{ url_for_other_page(paginator.prev_num) }}"><i class="fa fa-arrow-circle-o-left"></i></a></li>
     {% endif %}
     {% for page in paginator.iter_pages() %}
       {% if page %}
@@ -15,7 +15,7 @@
       {% endif %}
     {% endfor %}
     {% if paginator.has_next %}
-      <li><a href="{{ url_for_other_page(paginator.next_num) }}">&rarr;</a></li>
+      <li><a href="{{ url_for_other_page(paginator.next_num) }}"><i class="fa fa-arrow-circle-o-right"></i></a></li>
     {% endif %}
   </ul>
 {% endmacro %}

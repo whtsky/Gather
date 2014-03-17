@@ -14,9 +14,9 @@ div#cards-list
 
   > div
     @include clearfix
-    @extend %card
+    @extend .card
     width: 250px
-    max-width: 75%
+    max-width: 80%
     margin: 15px auto
 
     img
@@ -36,3 +36,20 @@ div#cards-list
 
     @include desktop
       margin: 15px 0
+
+
+
+#pagination-card
+  width: 100%
+  background-color: #fff
+  height: 5em
+  text-align: center
+
+  ul
+    line-height: 5em
+    text-align: center
+    float: none
+
+  li
+    float: none
+    display: inline-block

@@ -21,7 +21,10 @@
       </div>
     {% endfor %}
   </div>
-  <div class="card">
+{% endblock %}
+
+{% block before_footer %}
+  <div id="pagination-card">
     {% from "snippet/pagination.html" import pagination %}
     {{ pagination(paginator, url_for(".index")) }}
   </div>
