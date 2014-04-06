@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
 from __future__ import unicode_literals
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from gather.form import Form
 from wtforms import TextField, TextAreaField
@@ -16,14 +15,6 @@ class ChangeNodeForm(Form):
     slug = TextField("Slug", validators=[
         DataRequired()
     ], description="就是会出现在 URL 里面的那坨字母~"
-    )
-    parent_node = QuerySelectField(
-        "父节点",
-        validators=[Optional()],
-        query_factory=Node.query_all,
-        get_pk=lambda a: a.id,
-        get_label=lambda a: a.name,
-        allow_blank=True
     )
     description = TextAreaField("简介", validators=[
         Optional(), Length(max=500)

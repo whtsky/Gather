@@ -11,16 +11,6 @@ class Node(db.Model):
     slug = db.Column(db.String(100), nullable=False, unique=True, index=True)
     description = db.Column(db.String(500), nullable=True, default="")
     icon = db.Column(db.String(100), nullable=True, default="")
-    parent_node_id = db.Column(
-        db.Integer,
-        db.ForeignKey('node.id'), index=True
-    )
-    parent_node = db.relationship("Node")
-
-    @property
-    def children_node(self):
-        childrens = Node.query.filter_by(parent_node=self)
-        return childrens.order_by(Node.name.asc()).all()
 
     def __str__(self):
         return self.name
