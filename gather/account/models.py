@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import hashlib
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import current_app
 from werkzeug import security
 from gather.extensions import db
@@ -111,3 +111,15 @@ class Account(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
+
+    @classmethod
+    def clean_junk_users(cls):
+        a_month_ago = datetime.utcnow() - timedelta(days=30)
+        from gather.topic.models import Topic, Reply
+        for user in cls.query.all():
+            if user.created >= a_month_ago:
+                pass
+            if not Topic.query.filter_by(author=user).count():
+                if not Reply.query.filter_by(author=user).count():
+                    db.session.delete(user)
+        db.session.commit()

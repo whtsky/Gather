@@ -27,6 +27,13 @@ def clear_cache():
 
 
 @manager.command
+def clean_junk_users():
+    from gather.account.models import Account
+    with app.app_context():
+        Account.clean_junk_users()
+
+
+@manager.command
 def livereload():
     db.create_all()
     app.debug = True
