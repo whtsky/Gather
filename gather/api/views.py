@@ -75,19 +75,6 @@ class UserView(GatherModelView):
             error=form.errors.values()[0]
         )
 
-    def post(self):
-        form = RegisterForm()
-        if form.validate_on_submit():
-            user = form.save()
-            return jsonify(
-                msg="Registered user",
-                user=user.to_dict()
-            )
-        return jsonify(
-            error=form.errors.values()[0]
-        )
-
-
     @route("/authorize/", methods=["POST"])
     def authorize(self):
         form = LoginForm()
