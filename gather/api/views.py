@@ -7,7 +7,7 @@ from gather.account.forms import LoginForm, RegisterForm, SettingsForm
 from gather.account.models import Account
 from gather.node.models import Node
 from gather.topic.forms import CreateTopicForm, ReplyForm
-from gather.topic.models import Topic
+from gather.topic.models import Topic, Reply
 
 
 bp = Blueprint("api", __name__, url_prefix="/api")
@@ -119,6 +119,7 @@ NodeView.register(bp)
 
 
 class ReplyView(GatherModelView):
+    model = Reply
     def post(self):
         form = ReplyForm()
         if form.validate_on_submit():
