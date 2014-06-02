@@ -115,6 +115,8 @@ TopicView.register(bp)
 class NodeView(GatherModelView):
     model = Node
 
+NodeView.register(bp)
+
 
 class ReplyView(GatherModelView):
     def post(self):
@@ -129,3 +131,4 @@ class ReplyView(GatherModelView):
             error=form.errors.values()[0]
         )
 
+ReplyView.register(bp)
