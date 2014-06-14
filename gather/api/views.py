@@ -120,10 +120,12 @@ NodeView.register(bp)
 
 class ReplyView(GatherModelView):
     model = Reply
+
     def post(self):
         form = ReplyForm()
+        topic = Topic.query.get_or_404(request.form["topic_id"])
         if form.validate_on_submit():
-            topic = form.create()
+            reply = form.create(topic=topic)
             return jsonify(
                 msg="Created reply",
                 reply=reply.to_dict()
