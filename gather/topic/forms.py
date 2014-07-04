@@ -29,7 +29,6 @@ class CreateTopicForm(Form):
 
     def create(self):
         topic = Topic(
-            author=g.user,
             **self.data
         )
         return topic.save()

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from datetime import datetime
+from flask import g
 from gather.extensions import cache
 from gather.account.models import Account
 from gather.node.models import Node
@@ -40,6 +41,9 @@ class Reply(db.Model):
         onupdate=datetime.utcnow
     )
 
+    def have_read(self):
+        return False
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -64,13 +68,18 @@ class Reply(db.Model):
         return self
 
 
+def _get_author_id():
+    return g.user and g.user.id or g.token_user.id
+
+
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text(), nullable=True, default="")
     author_id = db.Column(
         db.Integer,
-        db.ForeignKey('account.id'), index=True, nullable=False
+        db.ForeignKey('account.id'), index=True, nullable=False,
+        default=_get_author_id
     )
     author = db.relationship(Account)
     node_id = db.Column(
@@ -107,7 +116,9 @@ class Topic(db.Model):
     def read_cache_key(self):
         return "read_topic_%s" % self.id
 
-    def have_read(self, user):
+    def have_read(self, user=None):
+        if not user:
+            user = g.user or g.token_user
         read_list = cache.get(self.read_cache_key)
         if read_list and user.id in read_list:
             return True

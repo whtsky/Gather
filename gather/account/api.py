@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from flask import request, jsonify
+from flask import g, jsonify
 from gather.account.models import Account
+from gather.api import need_auth, EXCLUDE_COLUMNS
 from gather.extensions import api_manager
 
 
@@ -14,17 +15,15 @@ def patch_single_preprocessor(instance_id=None, data=None, **kw):
     to change on the instance.
 
     """
-    token = request.headers.get("token", None)
-    user = Account.query.filter_by(api_token=token).first()
-    return user and user.id == instance_id
+    return g.token_user.id == instance_id
 
 
 # 需要一点小 hack ..
 bp = api_manager.create_api_blueprint(
     Account,
     methods=["GET", "PUT"],
-    preprocessors=dict(PUT_SINGLE=[patch_single_preprocessor],),
-    include_columns=["created", "css", "description", "email", "feeling_lucky", "id", "role", "username", "website"],
+    preprocessors=dict(PUT_SINGLE=[need_auth, patch_single_preprocessor],),
+    exclude_columns=EXCLUDE_COLUMNS
 )
 
 

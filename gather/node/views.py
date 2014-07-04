@@ -4,7 +4,6 @@ from flask import Blueprint
 from flask import render_template, redirect, url_for
 
 from gather.account.utils import require_staff
-from gather.topic.models import Topic
 from .forms import CreateNodeForm, ChangeNodeForm
 from .models import Node
 
@@ -33,6 +32,7 @@ def create():
 @bp.route("/<slug>", defaults={'page': 1})
 @bp.route("/<slug>/page/<int:page>")
 def node(slug, page):
+    from gather.topic.models import Topic
     node = Node.query.filter_by(slug=slug).first_or_404()
     topics = Topic.query.filter_by(node=node)
     paginator = topics.order_by(Topic.updated.desc()).paginate(page)
