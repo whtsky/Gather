@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from gather.extensions import db, cache
+from gather.extensions import db
 
 
 class Node(db.Model):
@@ -21,15 +21,6 @@ class Node(db.Model):
     @classmethod
     def query_all(cls):
         return cls.query.order_by(Node.name.asc()).all()
-
-    def to_dict(self):
-        return dict(
-            id=self.id,
-            name=self.name,
-            slug=self.slug,
-            description=self.description,
-            icon=self.icon
-        )
 
     def save(self):
         db.session.add(self)

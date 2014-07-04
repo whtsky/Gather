@@ -103,20 +103,6 @@ class Topic(db.Model):
     def last_page(self):
         return Reply.query.filter_by(topic=self).paginate(1).pages or 1
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "author": self.author_id,
-            "node": self.node_id,
-            "content": self.content,
-            "created": self.created,
-            "repliy_count": self.replies.count(),
-            "updated": self.updated,
-            "changed": self.changed,
-            "replies": [reply.to_dict() for reply in self.replies]
-        }
-
     @property
     def read_cache_key(self):
         return "read_topic_%s" % self.id

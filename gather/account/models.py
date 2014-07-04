@@ -89,16 +89,6 @@ class Account(db.Model):
         self.password = self.create_password(raw)
         self.token = self.create_token()
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "email_md5": hashlib.md5(self.email).hexdigest(),
-            "role": self.role,
-            "website": self.website,
-            "description": self.description
-        }
-
     def generate_api_token(self):
         token = security.gen_salt(40)
         while Account.query.filter_by(api_token=token).count():

@@ -6,6 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
 from flask.ext.mail import Mail
 from flask.ext.cache import Cache
+from flask.ext.restless import APIManager
 
 db = SQLAlchemy()
 assets = Environment()
@@ -36,3 +37,4 @@ assets.register("css_all", css_all)
 
 mail = Mail()
 cache = Cache()
+api_manager = APIManager()

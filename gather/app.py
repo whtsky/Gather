@@ -7,9 +7,8 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 from flask import Flask, g
 from flask.ext.turbolinks import turbolinks
 from jinja2 import MemcachedBytecodeCache
-from gather.extensions import db, assets, mail, cache
+from gather.extensions import db, assets, mail, cache, api_manager
 from gather.settings import load_settings
-from gather.account.utils import get_current_user
 
 
 def create_app():
@@ -32,6 +31,7 @@ def register_extensions(app):
     mail.init_app(app)
     turbolinks(app)
     cache.init_app(app)
+    api_manager.init_app(app, flask_sqlalchemy_db=db)
 
     if app.debug:
         from flask_debugtoolbar import DebugToolbarExtension
@@ -45,7 +45,6 @@ def register_blurprints(app):
     import gather.node
     import gather.topic
     import gather.admin
-    import gather.api
 
     app.register_blueprint(gather.frontend.bp)
     app.register_blueprint(gather.account.bp)
@@ -53,10 +52,14 @@ def register_blurprints(app):
     app.register_blueprint(gather.node.bp)
     app.register_blueprint(gather.topic.bp)
     app.register_blueprint(gather.admin.bp)
-    app.register_blueprint(gather.api.bp)
+
+    app.register_blueprint(gather.account.api.bp)
+    app.register_blueprint(gather.node.api.bp)
 
 
 def register_hooks(app):
+    from gather.account.utils import get_current_user
+
     @app.before_request
     def load_user():
         g.user = get_current_user()
