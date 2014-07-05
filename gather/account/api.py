@@ -27,7 +27,7 @@ bp = api_manager.create_api_blueprint(
 )
 
 
-@bp.route("/authorize/", methods=["POST"])
+@bp.route("/account/authorize/", methods=["POST"])
 def _account_authorize():
     from .forms import LoginForm
     form = LoginForm()

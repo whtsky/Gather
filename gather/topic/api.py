@@ -3,7 +3,7 @@
 from gather.api import need_auth, EXCLUDE_COLUMNS
 
 from gather.extensions import api_manager
-from gather.topic.models import Topic
+from gather.topic.models import Topic, Reply
 
 
 bp = api_manager.create_api_blueprint(
@@ -13,5 +13,14 @@ bp = api_manager.create_api_blueprint(
         'POST': [need_auth],
     },
     include_methods=["have_read"],
+    exclude_columns=EXCLUDE_COLUMNS
+)
+
+reply_bp = api_manager.create_api_blueprint(
+    Reply,
+    methods=["POST"],
+    preprocessors={
+        'POST': [need_auth],
+    },
     exclude_columns=EXCLUDE_COLUMNS
 )

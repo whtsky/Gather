@@ -21,12 +21,17 @@ class ReadTopic(db.Model):
     topic = db.relationship("Topic")
 
 
+def _get_author_id():
+    return g.user and g.user.id or g.token_user.id
+
+
 class Reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text(), nullable=True, default="")
     author_id = db.Column(
         db.Integer,
-        db.ForeignKey('account.id'), nullable=False
+        db.ForeignKey('account.id'), nullable=False,
+        default=_get_author_id
     )
     author = db.relationship(Account)
     topic_id = db.Column(
@@ -66,10 +71,6 @@ class Reply(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
-
-
-def _get_author_id():
-    return g.user and g.user.id or g.token_user.id
 
 
 class Topic(db.Model):
