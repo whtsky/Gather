@@ -4,7 +4,7 @@ import os
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
-from flask import Flask, g
+from flask import Flask, g, request
 from flask.ext.turbolinks import turbolinks
 from jinja2 import MemcachedBytecodeCache
 from gather.extensions import db, assets, mail, cache, api_manager
@@ -64,6 +64,13 @@ def register_hooks(app):
     @app.before_request
     def load_user():
         g.user = get_current_user()
+        from gather.account.models import Account
+
+        token = request.headers.get("token", None)
+        if token:
+            g.token_user = Account.query.filter_by(api_token=token).first()
+        else:
+            g.token_user = None
 
 
 def register_jinja(app):
