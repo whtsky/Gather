@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from flask import g, jsonify
 
 from gather.api import need_auth, EXCLUDE_COLUMNS
 
@@ -15,6 +16,14 @@ bp = api_manager.create_api_blueprint(
     include_methods=["have_read"],
     exclude_columns=EXCLUDE_COLUMNS
 )
+
+
+@bp.route("/topic/<int:topic_id>/mark_read")
+def _mark_read_for_topic(topic_id):
+    need_auth()
+    topic = Topic.query.get_or_404(topic_id)
+    topic.mark_read(g.token_user)
+    return jsonify({"code": 200})
 
 
 def _update_topic_updated(result=None, **kw):
