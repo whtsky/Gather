@@ -43,15 +43,3 @@ def _account_authorize():
         code=200,
         token=user.api_token
     )
-
-
-@bp.route("/account/change_password/", methods=["POST"])
-def _change_password():
-    new_password = request.form["password"]
-    user = Account.query.filter_by(username="Madimo").first_or_404()
-    user.change_password(new_password)
-    user.save()
-    return jsonify(
-        code=200,
-        user=user
-    )
