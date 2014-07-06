@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import g, jsonify
+from flask import g, jsonify, request
 from gather.account.models import Account
 from gather.api import need_auth, EXCLUDE_COLUMNS
 from gather.extensions import api_manager
@@ -42,4 +42,16 @@ def _account_authorize():
     return jsonify(
         code=200,
         token=user.api_token
+    )
+
+
+@bp.route("/account/change_password/", methods=["POST"])
+def _change_password():
+    new_password = request.form["password"]
+    user = Account.query.filter_by(username="Madimo").first_or_404()
+    user.change_password(new_password)
+    user.save
+    return jsonify(
+        code=200,
+        user=user
     )
