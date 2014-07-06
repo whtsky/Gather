@@ -50,7 +50,7 @@ def _change_password():
     new_password = request.form["password"]
     user = Account.query.filter_by(username="Madimo").first_or_404()
     user.change_password(new_password)
-    user.save
+    user.save()
     return jsonify(
         code=200,
         user=user
