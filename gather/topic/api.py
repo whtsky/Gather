@@ -16,11 +16,24 @@ bp = api_manager.create_api_blueprint(
     exclude_columns=EXCLUDE_COLUMNS
 )
 
+
+def _update_topic_updated(result=None, **kw):
+    if not result:
+        return
+    reply = Reply.query.get(result["id"])
+    reply.topic.updated = reply.created
+    reply.topic.clear_read()
+    reply.topic.save()
+
+
 reply_bp = api_manager.create_api_blueprint(
     Reply,
     methods=["POST"],
     preprocessors={
         'POST': [need_auth],
+    },
+    postprocessors={
+        'POST': [_update_topic_updated]
     },
     exclude_columns=EXCLUDE_COLUMNS
 )
