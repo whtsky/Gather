@@ -1,0 +1,13 @@
+.DS_Store
+log/**/*
+tmp/**/*
+bin/*
+vendor/gems/*
+!vendor/gems/cache/
+.sass-cache/*
+db/*.db
+.*.sw*
+gather/config/development.rb
+gather/config/production.rb
+Gather/config/development.rb
+Gather/config/production.rb

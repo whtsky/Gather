@@ -1,0 +1,22 @@
+- @u = User.where(id: @t.author)[0]
+h3= @t.title
+.content= @t.content
+p
+  | by 
+  = link_to @u.name, to('/user/' + @u.name)
+  |  at  
+  = @t.created_at
+
+h3 回复
+- @r.each_with_index do |x,y|
+	.reply_content=x.content
+	p
+	  | #
+      = (y+1).to_s
+	  |  by  
+	  - @ru = User.where(id: x.author)[0]
+	  = link_to @ru.name, to('/user/' + @ru.name)
+	  |  at  
+	  = x.created_at
+
+

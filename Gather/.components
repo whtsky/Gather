@@ -1,0 +1,9 @@
+---
+:orm: mongoid
+:test: none
+:mock: none
+:script: jquery
+:renderer: slim
+:stylesheet: none
+:namespace: Gather
+:migration_format: number

@@ -1,0 +1,19 @@
+development:
+ sessions:
+   default:
+     database: gather
+     hosts:
+       - localhost:27017
+production:
+ sessions:
+   default:
+     database: gather
+     hosts:
+       - localhost:27017
+test:
+ sessions:
+   default:
+     database: gather
+     hosts:
+       - localhost:27017
+
