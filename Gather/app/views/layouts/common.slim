@@ -2,7 +2,16 @@ doctype 5
 html
   header
   	title Gather
+    = stylesheet_link_tag '/assets/application'
+    | <link href='http://www.youziku.com/webfont/NameCSS/46752' rel='stylesheet' type='text/css'/>
+    = javascript_include_tag '/assets/application'
   body
-    h2 Gather(Read-Only Mode)
-    h3 先凑合着用吧
-    =yield
+  	#header
+  	  ul.navi
+  	  	li.f-left.logo
+  	  	  ==link_to "Gather", '/'
+  	  	li.f-right
+  	  	  ==link_icon_to "circle-o", "Nodes", "/nodes"
+  	  	li.f-right
+  	  	  ==link_icon_to "comments", "Topics", "/topic/list/1"
+    #body==yield

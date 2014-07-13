@@ -1,6 +1,17 @@
+GIT
+  remote: git://github.com/nightsailer/padrino-sprockets.git
+  revision: ae18862677fe8a6fe36c85dbc5b016ed919421ba
+  specs:
+    padrino-sprockets (0.0.3)
+      sprockets
+
 GEM
   remote: https://ruby.taobao.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     actionpack (4.1.4)
       actionview (= 4.1.4)
       activesupport (= 4.1.4)
@@ -25,6 +36,8 @@ GEM
     daemons (1.1.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    execjs (2.2.1)
+    hike (1.2.3)
     http_router (0.11.1)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
@@ -48,6 +61,8 @@ GEM
       bson (~> 2.2)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
+    multi_json (1.10.1)
+    open4 (1.3.4)
     optionable (0.2.0)
     origin (2.1.1)
     padrino (0.12.2)
@@ -98,6 +113,11 @@ GEM
     slim (2.0.3)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
+    sprockets (2.12.1)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
     temple (0.6.8)
     thin (1.6.2)
       daemons (>= 1.0.9)
@@ -111,8 +131,13 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
+    uglifier (2.1.1)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
     url_mount (0.2.1)
       rack
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
@@ -122,6 +147,9 @@ DEPENDENCIES
   kaminari (~> 0.16.1)
   mongoid (~> 4.0.0)
   padrino (= 0.12.2)
+  padrino-sprockets!
   rake
   slim
   thin
+  uglifier (= 2.1.1)
+  yui-compressor (= 0.9.6)

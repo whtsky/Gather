@@ -1,0 +1,88 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ * require_self: Puts the CSS contained within this file at the precise location (puts this command
+ * at the top of the generated css file
+ * require_tree . means, that requiring all stylesheets from the current directory.
+ *
+ *= require_self
+ *= require font-awesome.min
+*/
+
+.f-left {
+	float: left !important;
+}
+.f-right {
+	float: right !important;
+}
+
+html, body {
+	background: #CDE2FF;
+	padding: 0;
+	margin: 0;
+	font-family: "BotonProB46216", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
+}
+#header {
+	background: #697892;
+	width: 100%;
+	top: 0;
+	height: 12em;
+	position: absolute;
+	color: white;
+
+}
+#header a {
+	color: white;
+	text-decoration: none;
+}
+#header span {
+	padding-left: 0.3em;
+	font-size: 0.5em;
+}
+#header .navi {
+	list-style: none;
+	padding: 2em 8%;
+	font-size: 3em;
+}
+#header .navi li {
+	float: left;
+	margin-left: 0.5em;
+	background: #48A9EB;
+	padding: 0.5em;
+	border-radius: 1em;
+	transition: all 0.3s;
+}
+#header .navi li:hover {
+	background: #F25F6E;
+}
+.logo {
+	padding-top: 7em !important;
+	margin-top: -6em;
+	position: relative;
+	left: -0.5em;
+}
+#body {
+	width: 90%;
+	margin: 19em auto 0px auto;
+	background: #60D18F;
+	border-radius: 3em 3em 0em 0em;
+	padding: 0px;
+	color: #FFF;
+}
+#body #page-title {
+	position: relative;
+	font-size: 2.8em;
+	top: 0.35em;
+	left: 1.1em;
+}
+#body .container {
+	background: #316866;
+	position: relative;
+	top: -1em;
+	padding: 1em 3em;
+	color: #FFF;
+}
+#body .container a{
+	color: white;
+}

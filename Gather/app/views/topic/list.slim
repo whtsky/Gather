@@ -1,4 +1,6 @@
-- @topics.each do |p|
-  p
-    =link_to p.title, '/topic/view/' + p.id
+p#page-title Topics
+.container
+  - @topics.each do |p|
+    p
+      =link_to p.title, '/topic/view/' + p.id
 
