@@ -10,4 +10,4 @@ p#page-title Topics
       .topic-list-info
         p.topic-list-title=link_to p.title, '/topic/view/' + p.id
         p.topic-list-description
-          == icon('user') +  " " + link_to(@u.name, "/user/") +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
+          == icon('user') +  " " + link_to(@u.name, "/user/" + @u.name) +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
