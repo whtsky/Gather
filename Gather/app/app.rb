@@ -5,7 +5,7 @@ module Gather
     register Padrino::Helpers
 
     register Padrino::Sprockets
-    sprockets :minify => (Padrino.env == :production)
+    sprockets 
     
     enable :sessions
 
