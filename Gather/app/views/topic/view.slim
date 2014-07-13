@@ -1,21 +1,27 @@
-p#page-title Topics
+p#page-title=@t.title
 .container
-  - @u = User.where(id: @t.author)[0]
-  h3= @t.title
-  .content= @t.content
+  .inner-box.topic-content
+    =@t.content
+    .topic-avatar.f-right
+      a href=("/user/" + @u.name)
+        ==avatar @u.email, 80
   p
     | by 
     = link_to @u.name, to('/user/' + @u.name)
     |  at  
     = @t.created_at
-  h3 回复
+  h1 Echoing
   - @r.each_with_index do |x,y|
-      .reply_content=x.content
-	  p
-	    | #
+    .inner-box.topic-reply
+      - @ru = get_user x.author
+      .reply-avatar.f-left
+        a href=("/user/" + @ru.name)
+          ==avatar @ru.email, 80
+  	  p.reply-info
+  	    | #
         = (y+1).to_s
-	    |  by  
-	    - @ru = User.where(id: x.author)[0]
-	    = link_to @ru.name, to('/user/' + @ru.name)
-	    |  at  
-	    = x.created_at
+  	    |  by  
+  	    = link_to @ru.name, to('/user/' + @ru.name)
+  	    |  at  
+  	    == timeago x.created_at
+      .reply-content=x.content
