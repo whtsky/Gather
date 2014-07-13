@@ -1,9 +1,13 @@
 Gather::App.controllers :topic do
   layout :common
 	get :view, :with => :id do
-		@t = Topic.any_of({id: params[:id]}, {old_id: params[:id].to_i})[0]
-    @r = Reply.where(:topic => @t.id)
-		render :view
+		@t = match_topic params[:id]
+    if @t
+      @r = Reply.where(:topic => @t.id)
+  		render :view
+    else
+      halt 404 
+    end
 	end
 	get :list, :with => :page do
 		@topics = Topic.desc(:last_replied_at).page(params[:page])
