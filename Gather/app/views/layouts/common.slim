@@ -10,8 +10,8 @@ html
   	  ul.navi
   	  	li.f-left.logo
   	  	  ==link_to "Gather", '/'
-  	  	li.f-right
+  	  	li.f-right.navi-btn#node-btn
   	  	  ==link_icon_to "circle-o", "Nodes", "/nodes"
-  	  	li.f-right
+  	  	li.f-right.navi-btn#topic-btn
   	  	  ==link_icon_to "comments", "Topics", "/topic/list/1"
     #body==yield
