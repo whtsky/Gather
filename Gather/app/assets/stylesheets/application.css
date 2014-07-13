@@ -114,3 +114,42 @@ html, body {
 #body .container a{
 	color: white;
 }
+.topic-list-item {
+	margin-bottom: 1.5em;
+}
+.topic-list-avatar {
+	float: left;
+}
+.topic-list-avatar a img {
+	border-radius: 100px;
+}
+.topic-list-count {
+	background: rgb(243, 117, 117);
+	font-size: 1em;
+	width: 2em;
+	padding: 0.4em 0em;
+	text-align: center;
+	border-radius: 100px;
+	position: absolute;
+	right: 1.9em;
+}
+.topic-list-count a {
+	text-decoration: none;
+
+}
+.topic-list-info {
+	padding: 0em 12%;
+}
+.topic-list-title {
+	font-size: 1.5em;
+	line-height: 1em;
+}
+.topic-list-description {
+	position: relative;
+	top: -0.85em;
+}
+
+
+
+
+

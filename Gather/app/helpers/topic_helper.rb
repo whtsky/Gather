@@ -20,6 +20,9 @@ module Gather
       	end
       	@t
       end
+      def get_reply_count id 
+        Reply.where(topic: id).count
+      end
       # def simple_helper_method
       # ...
       # end

@@ -1,6 +1,13 @@
 p#page-title Topics
 .container
   - @topics.each do |p|
-    p
-      =link_to p.title, '/topic/view/' + p.id
-
+    -@u = get_user p.author
+    .topic-list-item
+      .topic-list-avatar
+        .topic-list-count=link_to get_reply_count(p.id),'/topic/view/' + p.id 
+        a href=("/user/" + @u.name)
+          ==avatar @u.email, 50
+      .topic-list-info
+        p.topic-list-title=link_to p.title, '/topic/view/' + p.id
+        p.topic-list-description
+          == icon('user') +  " " + link_to(@u.name, "/user/") +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
