@@ -6,9 +6,10 @@ require "pbkdf2"
 Mongoid.load!(File.join('./config', 'database.yml'), "production")
 ActiveRecord::Base.establish_connection(    
   :adapter  => 'postgresql',     
+  :host => '0.0.0.0',
   :database => 'gather', 
-  :username => 'gather',     
-  :password => '')   
+  :username => 'postgres',     
+  :password => 'pg_gather')   
 
 #This script will migrate your data from Gather v3
 #Remind that histories, read contings will be dropped.
