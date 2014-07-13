@@ -42,13 +42,13 @@
 }
 
 html, body {
-	background: #CDE2FF;
+	background: #CECECE;
 	padding: 0;
 	margin: 0;
 	font-family: "BotonProB46216", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
 }
 #header {
-	background: #697892;
+	background: #FFF;
 	width: 100%;
 	top: 0;
 	height: 12em;
@@ -72,7 +72,7 @@ html, body {
 #header .navi li {
 	float: left;
 	margin-left: 0.5em;
-	background: #ADAD66;
+	background: #254F85;
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s;
@@ -93,7 +93,7 @@ html, body {
 #body {
 	width: 90%;
 	margin: 19em auto 0px auto;
-	background: #60D18F;
+	background: #DB1337;
 	border-radius: 3em 3em 0em 0em;
 	padding: 0px;
 	color: #FFF;
@@ -103,9 +103,10 @@ html, body {
 	font-size: 2.8em;
 	top: 0.35em;
 	left: 1.1em;
+	padding-right: 2em;
 }
 #body .container {
-	background: #316866;
+	background: #A82020;
 	position: relative;
 	top: -1em;
 	padding: 1em 3em;
@@ -148,8 +149,23 @@ html, body {
 	position: relative;
 	top: -0.85em;
 }
-
-
+.inner-box {
+	background: rgb(116, 0, 0);
+	border-radius: 2em;
+	padding: 2em 3em;
+	min-height: 5em;
+	margin-top: 0.7em;
+}
+.topic-avatar img {
+	border-radius: 100px;
+}
+.reply-avatar img {
+	margin: 1em;
+	border-radius: 100px;
+}
+.reply-info {
+	text-align: right;
+}
 
 
 

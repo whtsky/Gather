@@ -4,6 +4,7 @@ Gather::App.controllers :topic do
 		@t = match_topic params[:id]
     if @t
       @r = Reply.where(:topic => @t.id)
+      @u = get_user @t.author
   		render :view
     else
       halt 404 
