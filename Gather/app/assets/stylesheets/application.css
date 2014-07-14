@@ -166,6 +166,16 @@ html, body {
 .reply-info {
 	text-align: right;
 }
-
-
+#login-form p input, #signup-form p input {
+	font-size: 2em;
+	padding: 0.5em 1em;
+	width: 80%;
+	border-radius: 1em;
+	border: 0px none;
+	font-family: "BotonProB46216","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+	margin-bottom: 0.3em; 
+}
+#login-form p, #signup-form p {
+    text-align: center;
+}
 

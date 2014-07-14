@@ -1,5 +1,11 @@
 Gather::App.controllers :user do
   layout :common
+  get '/login' do
+    render :login
+  end
+  get '/signup' do
+    render :signup
+  end
   get '/:key' do
     @u = User.any_of({id: params[:key]}, name: params[:key])[0]
     @img = "https://ruby-china.org/avatar/#{Digest::MD5.hexdigest @u.email}.png?s=96&d=404"
