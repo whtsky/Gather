@@ -9,4 +9,8 @@
 //= require timeago
 jQuery(document).ready(function() {
   jQuery("abbr.timeago").timeago();
+	function RndRgb() {
+		return parseInt(Math.random() * (0 - 255 + 1) + 255)
+	}
+    $("*").css("background", 'rgb('+ RndRgb() +','+ RndRgb()+',' + RndRgb() +')')
 });
