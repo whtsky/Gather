@@ -42,13 +42,13 @@
 }
 
 html, body {
-	background: #CECECE;
+	background: #F25F6E;
 	padding: 0;
 	margin: 0;
 	font-family: "BotonProB46216", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
 }
 #header {
-	background: #FFF;
+	background: #FF8C8C;
 	width: 100%;
 	top: 0;
 	height: 12em;
@@ -72,7 +72,7 @@ html, body {
 #header .navi li {
 	float: left;
 	margin-left: 0.5em;
-	background: #254F85;
+	background: #DB1337;
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s;
@@ -86,10 +86,7 @@ html, body {
 	position: relative;
 	left: -0.5em;
 	font-size: 1em;
-}/*
-.navi-btn {
-	font-size: 1em;
-}*/
+}
 #body {
 	width: 90%;
 	margin: 19em auto 0px auto;
@@ -153,7 +150,7 @@ html, body {
 	background: rgb(116, 0, 0);
 	border-radius: 2em;
 	padding: 2em 3em;
-	min-height: 5em;
+	min-height: 8em;
 	margin-top: 0.7em;
 }
 .topic-avatar img {
