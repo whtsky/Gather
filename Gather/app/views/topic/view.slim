@@ -1,27 +1,28 @@
+-@a = @t
 p#page-title=@t.title
 .container
   .inner-box.topic-content
-    =@t.content
     .topic-avatar.f-right
       a href=("/user/" + @u.name)
         ==avatar @u.email, 80
+    ==parse_content @a.content
   p
     | by 
     = link_to @u.name, to('/user/' + @u.name)
     |  at  
-    = @t.created_at
+    = @a.created_at
   h1 Echoing
   - @r.each_with_index do |x,y|
-    .inner-box.topic-reply
+    .inner-box.topic-reply id=('reply-' + (y+1).to_s)
       - @ru = get_user x.author
-      .reply-avatar.f-left
-        a href=("/user/" + @ru.name)
-          ==avatar @ru.email, 80
-  	  p.reply-info
-  	    | #
+      p.reply-info
+        | #
         = (y+1).to_s
-  	    |  by  
-  	    = link_to @ru.name, to('/user/' + @ru.name)
-  	    |  at  
-  	    == timeago x.created_at
-      .reply-content=x.content
+        |  by  
+        = link_to @ru.name, to('/user/' + @ru.name)
+        |  at  
+        == timeago x.created_at
+        .reply-avatar.f-right
+          a href=("/user/" + @ru.name)
+            ==avatar @ru.email, 80
+      .reply-content==parse_content x.content

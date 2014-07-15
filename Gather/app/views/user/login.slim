@@ -1,0 +1,10 @@
+p#page-title Login
+.container
+  form#login-form
+    p
+      ==input_tag :text, :placeholder => "Username/Email", :id => "login-username"
+    p
+      ==input_tag :password, :placeholder => "Password", :id => "login-password" 
+    p
+      ==input_tag :submit, :id => "login-btn", :value => "Login"
+

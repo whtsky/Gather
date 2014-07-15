@@ -1,0 +1,12 @@
+p#page-title Signup
+.container
+  form#signup-form
+    p
+      ==input_tag :text, :placeholder => "Email", :id => "signup-email"
+    p
+      ==input_tag :text, :placeholder => "Username", :id => "signup-username"
+    p
+      ==input_tag :password, :placeholder => "Password", :id => "signup-password" 
+    p
+      ==input_tag :submit, :id => "signup-btn", :value => "Signup"
+
