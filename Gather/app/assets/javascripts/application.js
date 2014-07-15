@@ -13,10 +13,3 @@ jQuery(document).ready(function() {
 	function RndRgb() {
 		return parseInt(Math.random() * (0 - 255 + 1) + 255)
 	}
-<<<<<<< HEAD
-    
-});
-=======
-/*    $("*").css("background", 'rgb('+ RndRgb() +','+ RndRgb()+',' + RndRgb() +')')*/
-});
->>>>>>> e5560a82d29d9971788c27e6cfc9149d7bd0e42b
