@@ -37,7 +37,7 @@ def make_content(text, extra_params='rel="nofollow"'):
 
         if '.' in href:
             name_extension = href.split('.')[-1].lower()
-            if name_extension in ('jpg', 'png', 'git', 'jpeg'):
+            if name_extension in ('jpg', 'png', 'gif', 'jpeg'):
                 return u'<img src="%s" />' % href
 
         return u'<a href="%s"%s>%s</a>' % (href, params, url)
