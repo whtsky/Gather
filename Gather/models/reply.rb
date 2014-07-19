@@ -4,8 +4,10 @@ class Reply
 
   # field <name>, :type => <type>, :default => <value>
   field :content, :type => String
-  field :topic
   field :author
+
+  belongs_to :topic
+  belongs_to :user
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

@@ -109,6 +109,13 @@ end
 New::Reply.all.each do |x| 
 	New::Topic.where(id: x.topic)[0].update(:last_replied_at => x.created_at) 
 end
+
+New::Topic.collection.find().update_all({:$rename=>{"author"=>"user_id"}})
+New::Topic.all.each do |x|
+	x.update(:tag_ids => [x.node_id])
+end
+New::Reply.collection.find().update_all(:$rename => {"author"=>"user_id", "topic"=>"topic_id"})
+New::Topic.collection.database[:nodes].rename "tags"
 puts "Enjoy 0.0"
 
 

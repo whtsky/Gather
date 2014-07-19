@@ -5,11 +5,14 @@ class Topic
   # field <name>, :type => <type>, :default => <value>
   field :title, :type => String
   field :content, :type => String
-  field :author
-  field :node, :type => String
+  field :node_name, :type => String
   field :last_replied_at, :type => DateTime
   field :old_id
 
+  has_and_belongs_to_many :tags
+
+  belongs_to :user
+  has_many :replies
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

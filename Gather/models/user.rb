@@ -11,6 +11,9 @@ class User
   field :info, :type => String
   field :css, :type => String
 
+  has_many :topics
+  has_many :replies
+
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 
