@@ -1,16 +1,34 @@
 Gather::App.controllers :user do
   layout :common
-  get '/login' do
+  get :login, :map => '/login' do
     render :login
   end
-  get '/signup' do
+  get :signup, :map => '/signup' do
     render :signup
   end
+  get :pub, :map => '/get_pk' do
+    settings.rsa_pub.to_s
+  end
+  post :call_sign, :map => '/sign' do
+    begin
+      @j = params[:encrypted_json]
+      @h = JSON.parse(settings.rsa_pk.decrypt(@j))
+    rescue
+      redirect to("/")
+    else
+      case @h["method"]
+        when "login" then sign('in', @h)
+        when "signup" then sign('up', @h)
+        end
+    end
+  end
+
   get '/:key' do
     @u = User.any_of({id: params[:key]}, name: params[:key])[0]
     @img = "https://ruby-china.org/avatar/#{Digest::MD5.hexdigest @u.email}.png?s=96&d=404"
     render :view
   end
+
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'

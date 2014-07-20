@@ -7,6 +7,9 @@
 //= require jquery
 //= require jquery-ujs
 //= require timeago
+//= require rsa
+//= require user
+
 
 jQuery(document).ready(function() {
   jQuery("abbr.timeago").timeago();

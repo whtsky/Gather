@@ -14,7 +14,7 @@ gem 'thin' # or mongrel
 gem 'rake'
 
 # Component requirements
-
+gem 'rsa'
 gem 'slim'
 gem 'mongoid', '~>4.0.0'
 gem 'actionpack', '~>4.1.4'

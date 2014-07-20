@@ -5,7 +5,6 @@ class Topic
   # field <name>, :type => <type>, :default => <value>
   field :title, :type => String
   field :content, :type => String
-  field :node_name, :type => String
   field :last_replied_at, :type => DateTime
   field :old_id
 

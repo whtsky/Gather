@@ -9,7 +9,9 @@
  *= require_self
  *= require font-awesome.min
 */
-
+* {
+	outline: none;
+}
 .f-left {
 	float: left !important;
 }
@@ -160,6 +162,16 @@ html, body {
 	margin: 1em;
 	border-radius: 100px;
 }
+.topic-avatar {
+	position: relative;
+	right: -4em;
+	top: -3em;
+}
+.reply-avatar {
+	position: relative;
+	right: -7em;
+	top: -4em;
+}
 .reply-info {
 	text-align: right;
 }
@@ -171,8 +183,17 @@ html, body {
 	border: 0px none;
 	font-family: "BotonProB46216","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 	margin-bottom: 0.3em; 
+	transition: all 0.3s;
+	background: rgb(146, 11, 11);
+	color: white;
+}
+#login-form p input:focus, #signup-form p input:focus, #login-form p input:hover, #signup-form p input:hover {
+	box-shadow: 0 0 1px rgb(255, 0, 132);
 }
 #login-form p, #signup-form p {
     text-align: center;
+}
+#login-btn, #login-btn {
+
 }
 
