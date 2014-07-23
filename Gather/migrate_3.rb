@@ -3,7 +3,7 @@ require "pg"
 require "active_record"
 require "pbkdf2"
 
-Mongoid.load!(File.join('./config', 'database.yml'), "production")
+Mongoid.load!(File.join('./config', 'database.yml'), "development")
 ActiveRecord::Base.establish_connection(    
   :adapter  => 'postgresql',     
   :host => '0.0.0.0',
@@ -85,7 +85,7 @@ Old::Topic.all.each do |x|
 	@topic = New::Topic.new(
 		:title => x.title,
 		:content => x.content,
-		:author => users[x.author_id.to_s],
+		:user_id => users[x.author_id.to_s],
 		:node => nodes[x.node_id.to_s],
 		:created_at => x.created,
 		:updated_at => x.updated,
@@ -98,24 +98,16 @@ topics = topics.to_h
 Old::Reply.all.each do |x|
 	New::Reply.create(
 		:content => x.content,
-		:topic => topics[x.topic_id.to_s],
-		:author => users[x.author_id.to_s],
-		:created_at => x.created,
+		:topic_id => topics[x.topic_id.to_s],
+		:user_id => users[x.author_id.to_s],
+		:created_at => x.created
 	)
 end
 New::Topic.all.each do |x| 
 	x.update(:last_replied_at => x.updated_at) 
 end
 New::Reply.all.each do |x| 
-	New::Topic.where(id: x.topic)[0].update(:last_replied_at => x.created_at) 
+	New::Topic.where(id: x.topic_id)[0].update(:last_replied_at => x.created_at) 
 end
-
-New::Topic.collection.find().update_all({:$rename=>{"author"=>"user_id"}})
-New::Topic.all.each do |x|
-	x.update(:tag_ids => [x.node_id])
-end
-New::Reply.collection.find().update_all(:$rename => {"author"=>"user_id", "topic"=>"topic_id"})
-New::Topic.collection.database[:nodes].rename "tags"
+New::Topic.collection.find().update_all(:$rename => {"node" => "node_id"})
 puts "Enjoy 0.0"
-
-

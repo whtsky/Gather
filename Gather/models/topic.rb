@@ -8,7 +8,7 @@ class Topic
   field :last_replied_at, :type => DateTime
   field :old_id
 
-  has_and_belongs_to_many :tags
+  belongs_to :tags
 
   belongs_to :user
   has_many :replies
