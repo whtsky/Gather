@@ -118,7 +118,7 @@ function bnpFromInt(x) {
   this.t = 1;
   this.s = (x<0)?-1:0;
   if(x > 0) this[0] = x;
-  else if(x < -1) this[0] = x+DV;
+  else if(x < -1) this[0] = x+this.DV;
   else this.t = 0;
 }
 
@@ -361,7 +361,7 @@ function bnpDivRemTo(m,q,r) {
   }
   if(r == null) r = nbi();
   var y = nbi(), ts = this.s, ms = m.s;
-  var nsh = this.DB-nbits(pm[pm.t-1]);	// normalize modulus
+  var nsh = this.DB-nbits(pm[pm.t-1]);  // normalize modulus
   if(nsh > 0) { pm.lShiftTo(nsh,y); pt.lShiftTo(nsh,r); }
   else { pm.copyTo(y); pt.copyTo(r); }
   var ys = y.t;
@@ -376,12 +376,12 @@ function bnpDivRemTo(m,q,r) {
     r.subTo(t,r);
   }
   BigInteger.ONE.dlShiftTo(ys,t);
-  t.subTo(y,y);	// "negative" y so we can replace sub with am later
+  t.subTo(y,y); // "negative" y so we can replace sub with am later
   while(y.t < ys) y[y.t++] = 0;
   while(--j >= 0) {
     // Estimate quotient digit
     var qd = (r[--i]==y0)?this.DM:Math.floor(r[i]*d1+(r[i-1]+e)*d2);
-    if((r[i]+=y.am(0,qd,r,j,0,ys)) < qd) {	// Try it out
+    if((r[i]+=y.am(0,qd,r,j,0,ys)) < qd) {  // Try it out
       y.dlShiftTo(j,t);
       r.subTo(t,r);
       while(r[i] < --qd) r.subTo(t,r);
@@ -393,7 +393,7 @@ function bnpDivRemTo(m,q,r) {
   }
   r.t = ys;
   r.clamp();
-  if(nsh > 0) r.rShiftTo(nsh,r);	// Denormalize remainder
+  if(nsh > 0) r.rShiftTo(nsh,r);  // Denormalize remainder
   if(ts < 0) BigInteger.ZERO.subTo(r,r);
 }
 
@@ -436,13 +436,13 @@ function bnpInvDigit() {
   if(this.t < 1) return 0;
   var x = this[0];
   if((x&1) == 0) return 0;
-  var y = x&3;		// y == 1/x mod 2^2
-  y = (y*(2-(x&0xf)*y))&0xf;	// y == 1/x mod 2^4
-  y = (y*(2-(x&0xff)*y))&0xff;	// y == 1/x mod 2^8
-  y = (y*(2-(((x&0xffff)*y)&0xffff)))&0xffff;	// y == 1/x mod 2^16
+  var y = x&3;    // y == 1/x mod 2^2
+  y = (y*(2-(x&0xf)*y))&0xf;  // y == 1/x mod 2^4
+  y = (y*(2-(x&0xff)*y))&0xff;  // y == 1/x mod 2^8
+  y = (y*(2-(((x&0xffff)*y)&0xffff)))&0xffff; // y == 1/x mod 2^16
   // last step - calculate inverse mod DV directly;
   // assumes 16 < DB <= 32 and assumes ability to handle 48-bit ints
-  y = (y*(2-x*y%this.DV))%this.DV;		// y == 1/x mod 2^dbits
+  y = (y*(2-x*y%this.DV))%this.DV;    // y == 1/x mod 2^dbits
   // we really want the negative inverse, and -DV < y < DV
   return (y>0)?this.DV-y:-y;
 }
@@ -476,7 +476,7 @@ function montRevert(x) {
 
 // x = x/R mod m (HAC 14.32)
 function montReduce(x) {
-  while(x.t <= this.mt2)	// pad x so am has enough room later
+  while(x.t <= this.mt2)  // pad x so am has enough room later
     x[x.t++] = 0;
   for(var i = 0; i < this.m.t; ++i) {
     // faster way of calculating u0 = x[i]*mp mod DV
@@ -557,332 +557,307 @@ BigInteger.prototype.modPowInt = bnModPowInt;
 // "constants"
 BigInteger.ZERO = nbv(0);
 BigInteger.ONE = nbv(1);
+// prng4.js - uses Arcfour as a PRNG
 
-var RSAPublicKey = function($modulus, $encryptionExponent) {
-    this.modulus = new BigInteger(Hex.encode($modulus), 16);
-    this.encryptionExponent = new BigInteger(Hex.encode($encryptionExponent), 16);
+function Arcfour() {
+  this.i = 0;
+  this.j = 0;
+  this.S = new Array();
 }
 
-var UTF8 = {
-    encode: function($input) {
-        $input = $input.replace(/\r\n/g,"\n");
-        var $output = "";
-        for (var $n = 0; $n < $input.length; $n++) {
-            var $c = $input.charCodeAt($n);
-            if ($c < 128) {
-                $output += String.fromCharCode($c);
-            } else if (($c > 127) && ($c < 2048)) {
-                $output += String.fromCharCode(($c >> 6) | 192);
-                $output += String.fromCharCode(($c & 63) | 128);
-            } else {
-                $output += String.fromCharCode(($c >> 12) | 224);
-                $output += String.fromCharCode((($c >> 6) & 63) | 128);
-                $output += String.fromCharCode(($c & 63) | 128);
-            }
-        }
-        return $output;
-    },
-    decode: function($input) {
-        var $output = "";
-        var $i = 0;
-        var $c = $c1 = $c2 = 0;
-        while ( $i < $input.length ) {
-            $c = $input.charCodeAt($i);
-            if ($c < 128) {
-                $output += String.fromCharCode($c);
-                $i++;
-            } else if(($c > 191) && ($c < 224)) {
-                $c2 = $input.charCodeAt($i+1);
-                $output += String.fromCharCode((($c & 31) << 6) | ($c2 & 63));
-                $i += 2;
-            } else {
-                $c2 = $input.charCodeAt($i+1);
-                $c3 = $input.charCodeAt($i+2);
-                $output += String.fromCharCode((($c & 15) << 12) | (($c2 & 63) << 6) | ($c3 & 63));
-                $i += 3;
-            }
-        }
-        return $output;
-    }
-};
-
-var Base64 = {
-    base64: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-    encode: function($input) {
-        if (!$input) {
-            return false;
-        }
-        //$input = UTF8.encode($input);
-        var $output = "";
-        var $chr1, $chr2, $chr3;
-        var $enc1, $enc2, $enc3, $enc4;
-        var $i = 0;
-        do {
-            $chr1 = $input.charCodeAt($i++);
-            $chr2 = $input.charCodeAt($i++);
-            $chr3 = $input.charCodeAt($i++);
-            $enc1 = $chr1 >> 2;
-            $enc2 = (($chr1 & 3) << 4) | ($chr2 >> 4);
-            $enc3 = (($chr2 & 15) << 2) | ($chr3 >> 6);
-            $enc4 = $chr3 & 63;
-            if (isNaN($chr2)) $enc3 = $enc4 = 64;
-            else if (isNaN($chr3)) $enc4 = 64;
-            $output += this.base64.charAt($enc1) + this.base64.charAt($enc2) + this.base64.charAt($enc3) + this.base64.charAt($enc4);
-        } while ($i < $input.length);
-        return $output;
-    },
-    decode: function($input) {
-        if(!$input) return false;
-        $input = $input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-        var $output = "";
-        var $enc1, $enc2, $enc3, $enc4;
-        var $i = 0;
-        do {
-            $enc1 = this.base64.indexOf($input.charAt($i++));
-            $enc2 = this.base64.indexOf($input.charAt($i++));
-            $enc3 = this.base64.indexOf($input.charAt($i++));
-            $enc4 = this.base64.indexOf($input.charAt($i++));
-            $output += String.fromCharCode(($enc1 << 2) | ($enc2 >> 4));
-            if ($enc3 != 64) $output += String.fromCharCode((($enc2 & 15) << 4) | ($enc3 >> 2));
-            if ($enc4 != 64) $output += String.fromCharCode((($enc3 & 3) << 6) | $enc4);
-        } while ($i < $input.length);
-        return $output; //UTF8.decode($output);
-    }
-};
-
-var Hex = {
-    hex: "0123456789abcdef",
-    encode: function($input) {
-        if(!$input) return false;
-        var $output = "";
-        var $k;
-        var $i = 0;
-        do {
-            $k = $input.charCodeAt($i++);
-            $output += this.hex.charAt(($k >> 4) &0xf) + this.hex.charAt($k & 0xf);
-        } while ($i < $input.length);
-        return $output;
-    },
-    decode: function($input) {
-        if(!$input) return false;
-        $input = $input.replace(/[^0-9abcdef]/g, "");
-        var $output = "";
-        var $i = 0;
-        do {
-            $output += String.fromCharCode(((this.hex.indexOf($input.charAt($i++)) << 4) & 0xf0) | (this.hex.indexOf($input.charAt($i++)) & 0xf));
-        } while ($i < $input.length);
-        return $output;
-    }
-};
-
-var ASN1Data = function($data) {
-    this.error = false;
-    this.parse = function($data) {
-        if (!$data) {
-            this.error = true;
-            return null;
-        }
-        var $result = [];
-        while($data.length > 0) {
-            // get the tag
-            var $tag = $data.charCodeAt(0);
-            $data = $data.substr(1);
-            // get length
-            var $length = 0;
-            // ignore any null tag
-            if (($tag & 31) == 0x5) $data = $data.substr(1);
-            else {
-                if ($data.charCodeAt(0) & 128) {
-                    var $lengthSize = $data.charCodeAt(0) & 127;
-                    $data = $data.substr(1);
-                    if($lengthSize > 0) $length = $data.charCodeAt(0);
-                    if($lengthSize > 1)    $length = (($length << 8) | $data.charCodeAt(1));
-                    if($lengthSize > 2) {
-                        this.error = true;
-                        return null;
-                    }
-                    $data = $data.substr($lengthSize);
-                } else {
-                    $length = $data.charCodeAt(0);
-                    $data = $data.substr(1);
-                }
-            }
-            // get value
-            var $value = "";
-            if($length) {
-                if ($length > $data.length){
-                    this.error = true;
-                    return null;
-                }
-                $value = $data.substr(0, $length);
-                $data = $data.substr($length);
-            }
-            if ($tag & 32)
-                $result.push(this.parse($value)); // sequence
-            else
-                $result.push(this.value(($tag & 128) ? 4 : ($tag & 31), $value));
-        }
-        return $result;
-    };
-    this.value = function($tag, $data) {
-        if ($tag == 1)
-            return $data ? true : false;
-        else if ($tag == 2) //integer
-            return $data;
-        else if ($tag == 3) //bit string
-            return this.parse($data.substr(1));
-        else if ($tag == 5) //null
-            return null;
-        else if ($tag == 6){ //ID
-            var $res = [];
-            var $d0 = $data.charCodeAt(0);
-            $res.push(Math.floor($d0 / 40));
-            $res.push($d0 - $res[0]*40);
-            var $stack = [];
-            var $powNum = 0;
-            var $i;
-            for($i=1;$i<$data.length;$i++){
-                var $token = $data.charCodeAt($i);
-                $stack.push($token & 127);
-                if ( $token & 128 )
-                    $powNum++;
-                else {
-                    var $j;
-                    var $sum = 0;
-                    for($j=0;$j<$stack.length;$j++)
-                        $sum += $stack[$j] * Math.pow(128, $powNum--);
-                    $res.push($sum);
-                    $powNum = 0;
-                    $stack = [];
-                }
-            }
-            return $res.join(".");
-        }
-        return null;
-    }
-    this.data = this.parse($data);
-};
-
-var RSA = {
-    getPublicKey: function($pem) {
-        if($pem.length<50) return false;
-        if($pem.substr(0,26)!="-----BEGIN PUBLIC KEY-----") return false;
-        $pem = $pem.substr(26);
-        if($pem.substr($pem.length-24)!="-----END PUBLIC KEY-----") return false;
-        $pem = $pem.substr(0,$pem.length-24);
-        $pem = new ASN1Data(Base64.decode($pem));
-        if($pem.error) return false;
-        $pem = $pem.data;
-        if($pem[0][0][0]=="1.2.840.113549.1.1.1")
-            return new RSAPublicKey($pem[0][1][0][0], $pem[0][1][0][1]);
-        return false;
-    },
-    encrypt: function($data, $pubkey) {
-        if (!$pubkey) return false;
-        var bytes = ($pubkey.modulus.bitLength()+7)>>3;
-        $data = this.pkcs1pad2($data,bytes);
-        if(!$data) return false;
-        $data = $data.modPowInt($pubkey.encryptionExponent, $pubkey.modulus);
-        if(!$data) return false;
-        $data = $data.toString(16);
-        while ($data.length < bytes*2)
-            $data = '0' + $data;
-        return Base64.encode(Hex.decode($data));
-    },
-    pkcs1pad2: function($data, $keysize) {
-        if($keysize < $data.length + 11)
-            return null;
-        var $buffer = [];
-        var $i = $data.length - 1;
-        while($i >= 0 && $keysize > 0)
-            $buffer[--$keysize] = $data.charCodeAt($i--);
-        $buffer[--$keysize] = 0;
-        while($keysize > 2)
-            $buffer[--$keysize] = Math.floor(Math.random()*254) + 1;
-        $buffer[--$keysize] = 2;
-        $buffer[--$keysize] = 0;
-        return new BigInteger($buffer);
-    }
+// Initialize arcfour context from key, an array of ints, each from [0..255]
+function ARC4init(key) {
+  var i, j, t;
+  for(i = 0; i < 256; ++i)
+    this.S[i] = i;
+  j = 0;
+  for(i = 0; i < 256; ++i) {
+    j = (j + this.S[i] + key[i % key.length]) & 255;
+    t = this.S[i];
+    this.S[i] = this.S[j];
+    this.S[j] = t;
+  }
+  this.i = 0;
+  this.j = 0;
 }
 
-function sha1(msg)
-{
-    // constants
-    var K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
+function ARC4next() {
+  var t;
+  this.i = (this.i + 1) & 255;
+  this.j = (this.j + this.S[this.i]) & 255;
+  t = this.S[this.i];
+  this.S[this.i] = this.S[this.j];
+  this.S[this.j] = t;
+  return this.S[(t + this.S[this.i]) & 255];
+}
 
-    // PREPROCESSING
-    msg += String.fromCharCode(0x80);  // add trailing '1' bit to string
+Arcfour.prototype.init = ARC4init;
+Arcfour.prototype.next = ARC4next;
 
-    // convert string msg into 512-bit/16-integer blocks arrays of ints
-    var l = Math.ceil(msg.length/4) + 2;  // long enough to contain msg plus 2-word length
-    var N = Math.ceil(l/16);              // in N 16-int blocks
-    var M = new Array(N);
+// Plug in your RNG constructor here
+function prng_newstate() {
+  return new Arcfour();
+}
 
-    for (var i=0; i<N; i++) {
-        M[i] = new Array(16);
-        for (var j=0; j<16; j++)  // encode 4 chars per integer, big-endian encoding
-            M[i][j] = (msg.charCodeAt(i*64+j*4)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16) | (msg.charCodeAt(i*64+j*4+2)<<8) | (msg.charCodeAt(i*64+j*4+3));
-        // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
+// Pool size must be a multiple of 4 and greater than 32.
+// An array of bytes the size of the pool will be passed to init()
+var rng_psize = 256;
+// Random number generator - requires a PRNG backend, e.g. prng4.js
+
+// For best results, put code like
+// <body onClick='rng_seed_time();' onKeyPress='rng_seed_time();'>
+// in your main HTML document.
+
+var rng_state;
+var rng_pool;
+var rng_pptr;
+
+// Mix in a 32-bit integer into the pool
+function rng_seed_int(x) {
+  rng_pool[rng_pptr++] ^= x & 255;
+  rng_pool[rng_pptr++] ^= (x >> 8) & 255;
+  rng_pool[rng_pptr++] ^= (x >> 16) & 255;
+  rng_pool[rng_pptr++] ^= (x >> 24) & 255;
+  if(rng_pptr >= rng_psize) rng_pptr -= rng_psize;
+}
+
+// Mix in the current time (w/milliseconds) into the pool
+function rng_seed_time() {
+  rng_seed_int(new Date().getTime());
+}
+
+// Initialize the pool with junk if needed.
+if(rng_pool == null) {
+  rng_pool = new Array();
+  rng_pptr = 0;
+  var t;
+  if(window.crypto && window.crypto.getRandomValues) {
+    // Use webcrypto if available
+    var ua = new Uint8Array(32);
+    window.crypto.getRandomValues(ua);
+    for(t = 0; t < 32; ++t)
+      rng_pool[rng_pptr++] = ua[t];
+  }
+  if(navigator.appName == "Netscape" && navigator.appVersion < "5" && window.crypto) {
+    // Extract entropy (256 bits) from NS4 RNG if available
+    var z = window.crypto.random(32);
+    for(t = 0; t < z.length; ++t)
+      rng_pool[rng_pptr++] = z.charCodeAt(t) & 255;
+  }  
+  while(rng_pptr < rng_psize) {  // extract some randomness from Math.random()
+    t = Math.floor(65536 * Math.random());
+    rng_pool[rng_pptr++] = t >>> 8;
+    rng_pool[rng_pptr++] = t & 255;
+  }
+  rng_pptr = 0;
+  rng_seed_time();
+  //rng_seed_int(window.screenX);
+  //rng_seed_int(window.screenY);
+}
+
+function rng_get_byte() {
+  if(rng_state == null) {
+    rng_seed_time();
+    rng_state = prng_newstate();
+    rng_state.init(rng_pool);
+    for(rng_pptr = 0; rng_pptr < rng_pool.length; ++rng_pptr)
+      rng_pool[rng_pptr] = 0;
+    rng_pptr = 0;
+    //rng_pool = null;
+  }
+  // TODO: allow reseeding after first request
+  return rng_state.next();
+}
+
+function rng_get_bytes(ba) {
+  var i;
+  for(i = 0; i < ba.length; ++i) ba[i] = rng_get_byte();
+}
+
+function SecureRandom() {}
+
+SecureRandom.prototype.nextBytes = rng_get_bytes;
+// Depends on jsbn.js and rng.js
+
+// Version 1.1: support utf-8 encoding in pkcs1pad2
+
+// convert a (hex) string to a bignum object
+function parseBigInt(str,r) {
+  return new BigInteger(str,r);
+}
+
+function linebrk(s,n) {
+  var ret = "";
+  var i = 0;
+  while(i + n < s.length) {
+    ret += s.substring(i,i+n) + "\n";
+    i += n;
+  }
+  return ret + s.substring(i,s.length);
+}
+
+function byte2Hex(b) {
+  if(b < 0x10)
+    return "0" + b.toString(16);
+  else
+    return b.toString(16);
+}
+
+// PKCS#1 (type 2, random) pad input string s to n bytes, and return a bigint
+function pkcs1pad2(s,n) {
+  if(n < s.length + 11) { // TODO: fix for utf-8
+    alert("Message too long for RSA");
+    return null;
+  }
+  var ba = new Array();
+  var i = s.length - 1;
+  while(i >= 0 && n > 0) {
+    var c = s.charCodeAt(i--);
+    if(c < 128) { // encode using utf-8
+      ba[--n] = c;
     }
-
-    // add length (in bits) into final pair of 32-bit integers (big-endian)
-    // note: most significant word would be ((len-1)*8 >>> 32, but since JS converts
-    // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
-    M[N-1][14] = ((msg.length-1)*8) / Math.pow(2, 32); M[N-1][14] = Math.floor(M[N-1][14])
-    M[N-1][15] = ((msg.length-1)*8) & 0xffffffff;
-
-    // set initial hash value
-    var H0 = 0x67452301;
-    var H1 = 0xefcdab89;
-    var H2 = 0x98badcfe;
-    var H3 = 0x10325476;
-    var H4 = 0xc3d2e1f0;
-
-    // HASH COMPUTATION
-    var W = new Array(80);
-    var a, b, c, d, e;
-
-    for (var i=0; i<N; i++) {
-        // 1 - prepare message schedule 'W'
-        for (var t=0;  t<16; t++) W[t] = M[i][t];
-        for (var t=16; t<80; t++) {
-            W[t] = W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16];
-            W[t] = (W[t] << 1) | (W[t]>>>31);
-        }
-
-        // 2 - initialise five working variables a, b, c, d, e with previous hash value
-        a = H0; b = H1; c = H2; d = H3; e = H4;
-
-        // 3 - main loop
-        for (var t=0; t<80; t++) {
-            var s = Math.floor(t/20); // seq for blocks of 'f' functions and 'K' constants
-            var T = ((a<<5) | (a>>>27)) + e + K[s] + W[t];
-            switch(s) {
-            case 0: T += (b & c) ^ (~b & d); break;          // Ch()
-            case 1: T += b ^ c ^ d; break;                   // Parity()
-            case 2: T += (b & c) ^ (b & d) ^ (c & d); break; // Maj()
-            case 3: T += b ^ c ^ d; break;                   // Parity()
-            }
-            e = d;
-            d = c;
-            c = (b << 30) | (b>>>2);
-            b = a;
-            a = T;
-        }
-
-        // 4 - compute the new intermediate hash value
-        H0 = (H0+a) & 0xffffffff;  // note 'addition modulo 2^32'
-        H1 = (H1+b) & 0xffffffff;
-        H2 = (H2+c) & 0xffffffff;
-        H3 = (H3+d) & 0xffffffff;
-        H4 = (H4+e) & 0xffffffff;
+    else if((c > 127) && (c < 2048)) {
+      ba[--n] = (c & 63) | 128;
+      ba[--n] = (c >> 6) | 192;
     }
+    else {
+      ba[--n] = (c & 63) | 128;
+      ba[--n] = ((c >> 6) & 63) | 128;
+      ba[--n] = (c >> 12) | 224;
+    }
+  }
+  ba[--n] = 0;
+  var rng = new SecureRandom();
+  var x = new Array();
+  while(n > 2) { // random non-zero pad
+    x[0] = 0;
+    while(x[0] == 0) rng.nextBytes(x);
+    ba[--n] = x[0];
+  }
+  ba[--n] = 2;
+  ba[--n] = 0;
+  return new BigInteger(ba);
+}
 
-    var hex = "";
-    for (var i=7; i>=0; i--) { var v = (H0>>>(i*4)) & 0xf; hex += v.toString(16); }
-    for (var i=7; i>=0; i--) { var v = (H1>>>(i*4)) & 0xf; hex += v.toString(16); }
-    for (var i=7; i>=0; i--) { var v = (H2>>>(i*4)) & 0xf; hex += v.toString(16); }
-    for (var i=7; i>=0; i--) { var v = (H3>>>(i*4)) & 0xf; hex += v.toString(16); }
-    for (var i=7; i>=0; i--) { var v = (H4>>>(i*4)) & 0xf; hex += v.toString(16); }
-    return hex;
+// "empty" RSA key constructor
+function RSAKey() {
+  this.n = null;
+  this.e = 0;
+  this.d = null;
+  this.p = null;
+  this.q = null;
+  this.dmp1 = null;
+  this.dmq1 = null;
+  this.coeff = null;
+}
+
+// Set the public key fields N and e from hex strings
+function RSASetPublic(N,E) {
+  if(N != null && E != null && N.length > 0 && E.length > 0) {
+    this.n = parseBigInt(N,16);
+    this.e = parseInt(E,16);
+  }
+  else
+    alert("Invalid RSA public key");
+}
+
+// Perform raw public operation on "x": return x^e (mod n)
+function RSADoPublic(x) {
+  return x.modPowInt(this.e, this.n);
+}
+
+// Return the PKCS#1 RSA encryption of "text" as an even-length hex string
+function RSAEncrypt(text) {
+  var m = pkcs1pad2(text,(this.n.bitLength()+7)>>3);
+  if(m == null) return null;
+  var c = this.doPublic(m);
+  if(c == null) return null;
+  var h = c.toString(16);
+  if((h.length & 1) == 0) return h; else return "0" + h;
+}
+
+// Return the PKCS#1 RSA encryption of "text" as a Base64-encoded string
+//function RSAEncryptB64(text) {
+//  var h = this.encrypt(text);
+//  if(h) return hex2b64(h); else return null;
+//}
+
+// protected
+RSAKey.prototype.doPublic = RSADoPublic;
+
+// public
+RSAKey.prototype.setPublic = RSASetPublic;
+RSAKey.prototype.encrypt = RSAEncrypt;
+//RSAKey.prototype.encrypt_b64 = RSAEncryptB64;
+
+var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+var b64padchar="=";
+
+function hex2b64(h) {
+  var i;
+  var c;
+  var ret = "";
+  for(i = 0; i+3 <= h.length; i+=3) {
+    c = parseInt(h.substring(i,i+3),16);
+    ret += b64map.charAt(c >> 6) + b64map.charAt(c & 63);
+  }
+  if(i+1 == h.length) {
+    c = parseInt(h.substring(i,i+1),16);
+    ret += b64map.charAt(c << 2);
+  }
+  else if(i+2 == h.length) {
+    c = parseInt(h.substring(i,i+2),16);
+    ret += b64map.charAt(c >> 2) + b64map.charAt((c & 3) << 4);
+  }
+  while((ret.length & 3) > 0) ret += b64padchar;
+  return ret;
+}
+
+// convert a base64 string to hex
+function b64tohex(s) {
+  var ret = ""
+  var i;
+  var k = 0; // b64 state, 0-3
+  var slop;
+  for(i = 0; i < s.length; ++i) {
+    if(s.charAt(i) == b64padchar) break;
+    v = b64map.indexOf(s.charAt(i));
+    if(v < 0) continue;
+    if(k == 0) {
+      ret += int2char(v >> 2);
+      slop = v & 3;
+      k = 1;
+    }
+    else if(k == 1) {
+      ret += int2char((slop << 2) | (v >> 4));
+      slop = v & 0xf;
+      k = 2;
+    }
+    else if(k == 2) {
+      ret += int2char(slop);
+      ret += int2char(v >> 2);
+      slop = v & 3;
+      k = 3;
+    }
+    else {
+      ret += int2char((slop << 2) | (v >> 4));
+      ret += int2char(v & 0xf);
+      k = 0;
+    }
+  }
+  if(k == 1)
+    ret += int2char(slop << 2);
+  return ret;
+}
+
+// convert a base64 string to a byte/number array
+function b64toBA(s) {
+  //piggyback on b64tohex for now, optimize later
+  var h = b64tohex(s);
+  var i;
+  var a = new Array();
+  for(i = 0; 2*i < h.length; ++i) {
+    a[i] = parseInt(h.substring(2*i,2*i+2),16);
+  }
+  return a;
 }

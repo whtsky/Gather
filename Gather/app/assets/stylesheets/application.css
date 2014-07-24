@@ -44,13 +44,13 @@
 }
 
 html, body {
-	background: #F25F6E;
+	background: #0C97AA;
 	padding: 0;
 	margin: 0;
 	font-family: "BotonProB46216", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
 }
 #header {
-	background: #FF8C8C;
+	background: #43C0D1;;
 	width: 100%;
 	top: 0;
 	height: 12em;
@@ -74,7 +74,7 @@ html, body {
 #header .navi li {
 	float: left;
 	margin-left: 0.5em;
-	background: #DB1337;
+	background: #076E88;
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s;
@@ -92,7 +92,7 @@ html, body {
 #body {
 	width: 90%;
 	margin: 19em auto 0px auto;
-	background: #DB1337;
+	background: #0D545E;
 	border-radius: 3em 3em 0em 0em;
 	padding: 0px;
 	color: #FFF;
@@ -105,7 +105,7 @@ html, body {
 	padding-right: 2em;
 }
 #body .container {
-	background: #A82020;
+	background: #0C6672;
 	position: relative;
 	top: -1em;
 	padding: 1em 3em;
@@ -124,7 +124,7 @@ html, body {
 	border-radius: 100px;
 }
 .topic-list-count {
-	background: rgb(243, 117, 117);
+	background: #093D44;
 	font-size: 1em;
 	width: 2em;
 	padding: 0.4em 0em;
@@ -149,7 +149,7 @@ html, body {
 	top: -0.85em;
 }
 .inner-box {
-	background: rgb(116, 0, 0);
+	background: rgb(26, 118, 126);
 	border-radius: 2em;
 	padding: 2em 3em;
 	min-height: 8em;
@@ -170,7 +170,7 @@ html, body {
 .reply-avatar {
 	position: relative;
 	right: -7em;
-	top: -4em;
+	top: -6.5em;
 }
 .reply-info {
 	text-align: right;
@@ -184,11 +184,11 @@ html, body {
 	font-family: "BotonProB46216","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 	margin-bottom: 0.3em; 
 	transition: all 0.3s;
-	background: rgb(146, 11, 11);
+	background: rgb(26, 118, 126);
 	color: white;
 }
 #login-form p input:focus, #signup-form p input:focus, #login-form p input:hover, #signup-form p input:hover {
-	box-shadow: 0 0 1px rgb(255, 0, 132);
+	box-shadow: 0 0 1px rgb(88, 34, 124);
 }
 #login-form p, #signup-form p {
     text-align: center;
