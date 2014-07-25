@@ -12,7 +12,7 @@ Gather::App.controllers :user do
   post :call_sign, :map => '/sign' do
     begin
       @j = params[:encrypted_json]
-      @h = JSON.parse(settings.rsa_pk.decrypt(@j))
+      @h = JSON.parse(Base64.decode64(@j))
     rescue
       redirect to("/")
     else

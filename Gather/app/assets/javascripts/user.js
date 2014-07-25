@@ -1,18 +1,15 @@
 
+
 user = {
 	login: function(){
-		$.get("/get_pk", function(d){
-			pk = eval(d);
-			key = new RSAKey();
-			key.setPublic(pk[1],pk[0]);
-			$("#login-form").submit(function(e){
-				e.preventDefault();
-				
-				
-				var data = $("#login-form").serializeArray();
-				console.log(key.encrypt("miao"));
-	  		});
-		});
+		$("#login-form").submit(function(e){
+			e.preventDefault();
+			b64 = new Base64()
+			data = b64.encode($("#login-form").serializeArray());
+			$.post("/sign", {encrypted_json: data},function(result){
+				console.log(result);
+			});
+  		});
 
 	},
 	signup: function(){

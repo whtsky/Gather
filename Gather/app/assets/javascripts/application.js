@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery-ujs
 //= require timeago
-//= require rsa
+//= require b64
 //= require user
 
 
@@ -17,3 +17,4 @@ jQuery(document).ready(function() {
 		return parseInt(Math.random() * (0 - 255 + 1) + 255);
 	}
 });
+
