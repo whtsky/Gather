@@ -9,7 +9,7 @@ Gather::App.helpers do
   	User.where(id: id).first
   end
   def avatar_url email, a
-  	"http://ruby-china.org/avatar/#{Digest::MD5.hexdigest email}.png?s=#{a.to_i.to_s}&d=404"
+  	"//ruby-china.org/avatar/#{Digest::MD5.hexdigest email}.png?s=#{a.to_i.to_s}&d=404"
   end
   def avatar email, a
   	"\<img src=\"" + self.avatar_url(email,a) + "\" \>"
