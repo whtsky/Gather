@@ -47,7 +47,7 @@ html, body {
 	background: #0C97AA;
 	padding: 0;
 	margin: 0;
-	font-family: "BotonProB46216", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
+	font-family: "ff-enzo-web", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
 }
 #header {
 	background: #43C0D1;;
@@ -88,6 +88,7 @@ html, body {
 	position: relative;
 	left: -0.5em;
 	font-size: 1em;
+	font-weight: 800;
 }
 #body {
 	width: 90%;
@@ -181,7 +182,7 @@ html, body {
 	width: 80%;
 	border-radius: 1em;
 	border: 0px none;
-	font-family: "BotonProB46216","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+	font-family: "ff-enzo-web","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 	margin-bottom: 0.3em; 
 	transition: all 0.3s;
 	background: rgb(26, 118, 126);

@@ -32,6 +32,10 @@ GEM
       tzinfo (~> 1.1)
     bson (2.3.0)
     builder (3.2.2)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.0)
     connection_pool (2.0.0)
     daemons (1.1.9)
     erubis (2.7.0)
@@ -106,7 +110,6 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.3.2)
-    rsa (0.1.4)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -145,12 +148,12 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack (~> 4.1.4)
+  coffee-script
   kaminari (~> 0.16.1)
   mongoid (~> 4.0.0)
   padrino (= 0.12.2)
   padrino-sprockets!
   rake
-  rsa
   slim
   thin
   uglifier (= 2.1.1)

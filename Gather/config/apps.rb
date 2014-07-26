@@ -29,12 +29,8 @@
 Padrino.configure_apps do
   # enable :sessions
   require Padrino.root('config/' + Padrino.env.to_s + '.rb')  
-  kp = RSA::KeyPair.generate(512)
   set :protection, :except => :path_traversal
   set :protect_from_csrf, true
-  set :rsa_kp, kp
-  set :rsa_pub, [kp.to_hash[:e].to_s(16).to_s,kp.to_hash[:n]]
-  kp = nil
 end
 
 # Mounts the core application for this project

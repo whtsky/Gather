@@ -47,6 +47,13 @@ module Gather
 	get "/" do
 		redirect to("/topic/list/1")
 	end
+    get :csrf_token, :map => '/csrf_token', :provides => :json do
+      logger.debug 'Retrieving csrf_token'
+      result = {
+          :csrf => session[:csrf]
+      }
+      JSON.pretty_generate result
+    end
     ##
     # You can configure for a specified environment like:
     #
