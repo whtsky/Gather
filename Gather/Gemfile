@@ -21,6 +21,7 @@ gem 'kaminari','~> 0.16.1', :require => 'kaminari/sinatra'
 # Test requirements
 
 # Padrino Stable Gem
+gem "coffee-script"
 gem 'padrino', '0.12.2'
 gem 'padrino-sprockets', :require => 'padrino/sprockets', :git => 'git://github.com/nightsailer/padrino-sprockets.git'
 gem 'uglifier', '2.1.1'

@@ -1,6 +1,6 @@
 p#page-title Signup
 .container
-  form#signup-form
+  form#signup-form action="#"  method="post"
     p
       ==input_tag :text, :placeholder => "Email", :id => "signup-email"
     p
@@ -9,4 +9,7 @@ p#page-title Signup
       ==input_tag :password, :placeholder => "Password", :id => "signup-password" 
     p
       ==input_tag :submit, :id => "signup-btn", :value => "Signup"
-
+javascript:
+	$(document).ready(function(){
+		user.signup();
+	})

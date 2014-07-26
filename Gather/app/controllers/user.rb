@@ -11,10 +11,12 @@ Gather::App.controllers :user do
   end
   post :call_sign, :map => '/sign' do
     begin
-      @j = params[:encrypted_json]
+      @j = params[:j]
+      puts @j
       @h = JSON.parse(Base64.decode64(@j))
+      puts @h
     rescue
-      redirect to("/")
+      halt 404
     else
       case @h["method"]
         when "login" then sign('in', @h)
