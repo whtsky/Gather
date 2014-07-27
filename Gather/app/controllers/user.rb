@@ -1,28 +1,36 @@
 Gather::App.controllers :user do
   layout :common
   get :login, :map => '/login' do
+    guest_required
     render :login
   end
   get :signup, :map => '/signup' do
+    guest_required
     render :signup
   end
-  get :pub, :map => '/get_pk' do
-    settings.rsa_pub.to_s
-  end
   post :call_sign, :map => '/sign' do
+    guest_required
     begin
       @j = params[:j]
-      puts @j
       @h = JSON.parse(Base64.decode64(@j))
-      puts @h
     rescue
       halt 404
     else
       case @h["method"]
-        when "login" then sign('in', @h)
-        when "signup" then sign('up', @h)
+        when "in"
+          login @h
+        when "up"
+          signup @h
         end
     end
+  end
+  get :session, :map => '/session' do
+    session[:user].to_s
+  end
+  get :logout, :map => '/logout' do
+    session[:user] = nil
+    nil
+    "exit!" if ajax?
   end
 
   get '/:key' do
