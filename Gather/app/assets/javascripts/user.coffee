@@ -25,7 +25,8 @@ self.user = {
 			configureCSRF()
 			console.log data
 			$.post "/sign", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
-				console.log(result)
+				if result != "" & result != "nil" & result != "fail"
+					window.location.href="/"
 	signup: ->
 		$("#signup-form").submit (e)->
 			e.preventDefault()
@@ -40,5 +41,6 @@ self.user = {
 			configureCSRF()
 			console.log data
 			$.post "/sign", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
-				console.log(result)
+				if result != "" & result != "nil" & result != "fail"
+					window.location.href="/"
 }

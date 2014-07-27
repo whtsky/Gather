@@ -2,10 +2,11 @@ p#page-title Topics
 .container
   - @topics.each do |p|
     .topic-list-item
+      .topic-list-count=link_to get_reply_count(p.id),'/topic/view/' + p.id 
       .topic-list-avatar
-        .topic-list-count=link_to get_reply_count(p.id),'/topic/view/' + p.id 
+
         a href=("/user/" + p.user.name)
-          ==avatar p.user.email, 50
+          ==avatar p.user.email, 80
       .topic-list-info
         p.topic-list-title=link_to p.title, '/topic/view/' + p.id
         p.topic-list-description

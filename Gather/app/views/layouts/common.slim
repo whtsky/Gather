@@ -12,6 +12,18 @@ html
   	#header
   	  ul.navi
   	  	li.f-left.logo
+          .user-box
+            - if logged_in?
+              p miao
+            - else
+              .user-box-avatar
+                ==avatar "none@none.none", 30
+              p
+                | Hi, guest
+              p 
+                ==link_to "Login", '/login'
+                |  or  
+                ==link_to "Sign up", '/signup'
   	  	  ==link_to "Gather", '/'
   	  	li.f-right.navi-btn#node-btn
   	  	  ==link_icon_to "circle-o", "Nodes", "/nodes"
