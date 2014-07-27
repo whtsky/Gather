@@ -2,11 +2,11 @@ p#page-title Signup
 .container
   form#signup-form action="#"  method="post"
     p
-      ==input_tag :text, :placeholder => "Email", :id => "signup-email"
+      ==input_tag :text, :placeholder => "Email", :id => "signup-email", :required => "required"
     p
-      ==input_tag :text, :placeholder => "Username", :id => "signup-username"
+      ==input_tag :text, :placeholder => "Username", :id => "signup-username", :required => "required"
     p
-      ==input_tag :password, :placeholder => "Password", :id => "signup-password" 
+      ==input_tag :password, :placeholder => "Password", :id => "signup-password", :required => "required"
     p
       ==input_tag :submit, :id => "signup-btn", :value => "Signup"
 javascript:

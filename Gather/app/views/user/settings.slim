@@ -1,0 +1,20 @@
+p#page-title=current_user.name + '#' + current_user.email
+.container
+  form#settings-form action="#" method="post"
+    p
+      ==input_tag :text, :placeholder => "http://your.web.site/", :name => "site", :id => "settings-site", :value => (current_user.site)
+    p
+      |Your Self-introdution
+      #settings-info contentEditable="true"
+        ==current_user.info
+    p
+      |Your CSS-reset
+      p#settings-css contentEditable="true"
+        ==current_user.css
+    p
+      ==input_tag :submit, :id => "settings-btn", :value => "Update"
+
+javascript:
+	$(document).ready(function(){
+		user.settings();
+	})

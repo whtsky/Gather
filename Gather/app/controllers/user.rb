@@ -1,5 +1,9 @@
 Gather::App.controllers :user do
   layout :common
+  get :users, :map => '/users' do
+    login_required
+    render :users
+  end
   get :login, :map => '/login' do
     guest_required
     render :login
@@ -7,6 +11,32 @@ Gather::App.controllers :user do
   get :signup, :map => '/signup' do
     guest_required
     render :signup
+  end
+  get :settings, :map => "/settings" do
+    login_required
+    render :settings
+  end
+  post :settings, :map => "/settings" do
+    login_required
+    if params[:j]
+      begin
+        a = JSON.parse(Base64.decode64 params[:j])
+        puts a
+        css = a["css"]
+        info = a["info"]
+        site = ""
+        info = Sanitize.fragment(info, Sanitize::Config::BASIC)
+        site = a["site"] if !!(a["site"] =~ /^(http|https)\:\/\/(.+)\.(.+)$/)
+        current_user.update(
+            css: css,
+            info: info,
+            site: site
+          )
+        "Success!"
+      rescue
+        "Fail!"
+      end
+    end
   end
   post :call_sign, :map => '/sign' do
     guest_required
@@ -31,7 +61,6 @@ Gather::App.controllers :user do
 
   get '/:key' do
     @u = User.any_of({id: params[:key]}, name: params[:key])[0]
-    @img = "https://ruby-china.org/avatar/#{Digest::MD5.hexdigest @u.email}.png?s=96&d=404"
     render :view
   end
 

@@ -1,4 +1,10 @@
 p#page-title=@u.name
 .container
-  img src=(@img)
-  p=@u.info
+  p.view-avatar
+    ==avatar @u.email, 96
+  - if !(@u.site == nil) & !(@u.site == "")
+  	p.view-site
+  	  ==link_to @u.site, @u.site
+  .view-info==@u.info
+  - if @u.topics.count != 0
+  	|mioa

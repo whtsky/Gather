@@ -43,4 +43,23 @@ self.user = {
 			$.post "/sign", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
 				if result != "" & result != "nil" & result != "fail"
 					window.location.href="/"
+	settings: ->
+		$("#settings-form").submit (e)->
+			e.preventDefault()
+			b64 = new Base64()
+			info = $("#settings-info")[0].innerHTML
+			info = info.replace("<div>", "<p>")
+			info = info.replace("</div>", "</p>")
+			css = $("#settings-css")[0].innerHTML
+			css = css.replace(/(\<)(.*)(\>)/ig, "")
+			data_array = {
+				site: $("#settings-site")[0].value,
+				info: info,
+				css: css
+			}
+			data = b64.encode(JSON.stringify data_array)
+			configureCSRF()
+			console.log data
+			$.post "/settings", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
+				alert(result)
 }
