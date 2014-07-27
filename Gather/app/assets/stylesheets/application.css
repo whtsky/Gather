@@ -217,53 +217,83 @@ html, body {
 .reply-info {
 	text-align: right;
 }
-#login-form p input, #signup-form p input {
+#settings-css, #settings-info, #login-form p input, #signup-form p input, #settings-form p input, #settings-form p textarea {
 	font-size: 2em;
 	padding: 0.5em 1em;
 	width: 80%;
 	border-radius: 1em;
 	border: 0px none;
 	font-family: "museo-slab","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+	margin: auto;
 	margin-bottom: 0.3em; 
 	transition: all 0.3s;
 	background: rgb(26, 118, 126);
 	color: white;
 }
-#login-form p input:focus, #signup-form p input:focus, #login-form p input:hover, #signup-form p input:hover {
+#settings-info:focus, #settings-css:focus, #settings-info:hover, #settings-css:hover, #settings-form p textarea:focus, #login-form p input:focus, #signup-form p input:focus, #settings-form p input:focus, #settings-form p textarea:hover, #login-form p input:hover, #signup-form p input:hover, #settings-form p input:hover {
 	box-shadow: 0 0 1px rgb(88, 34, 124);
 }
-#login-form p, #signup-form p {
+
+#login-form p, #signup-form p, #settings-form p {
     text-align: center;
 }
-#login-btn, #login-btn {
+#login-btn, #login-btn, #settings-btn {
 	background: rgb(26, 118, 126) !important;
 }
 .user-box {
 	position: absolute;
-	margin: 0px -1em;
-	top: 12em;
+	top: 10em;
 	font-size: 0.3em;
-	width: 10.6em;
+	margin: 0 -1.7em;
+	width: 12.7em;
 	font-weight: 300;
-	padding: 0 0.5em;
 	word-break: break-all;
+	background: rgb(102, 136, 158);
+	transition: all 0.3s;
+}
+.user-box:hover {
+	box-shadow: 0 0 18em rgb(80, 81, 83) inset;
 }
 .user-box p {
-	margin: 0.6em 0;
+	text-align: center;
+	margin: 0.8em 0;
 }
 .user-box a {
 	text-decoration: underline !important;
+	font-weight: 700;
+}
+.user-box-btns {
+	font-size: 1.2em;
+}
+.user-box-btns a {
+	padding: 0 0.5em;
+	text-decoration: none !important;
+	transition: all 0.3s;
+}
+.user-box-btns a:hover {
+	text-shadow: 0px 0px 10px rgb(34, 150, 187);
 }
 .user-box-avatar {
-	border-radius: 50em;
-	height: 60px;
-	width: 60px;
-	float: left;
-	margin: 0 0.6em 1em -0.5em;
-}
+	border-radius: 100em;
+	text-align: center;
+ }
 .user-box-avatar img {
 	border-radius: 100em;
-	height: 60px;
-	width: 60px;
+	height: 6em;
+	width: 6em;
 }
-
+#users_cloud {
+	word-break: break-all;
+}
+#users_cloud a {
+	padding: 0 0.1em;
+}
+.view-avatar {
+	text-align: center;
+}
+.view-avatar img {
+	border-radius: 100em;
+}
+.view-site, .view-info {
+	text-align: center;
+}

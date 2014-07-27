@@ -17,5 +17,5 @@ Gather::App.helpers do
   def timeago time
   	"<abbr class=\"timeago\" title=\"#{time}\"></abbr>"
   end
-
 end
+

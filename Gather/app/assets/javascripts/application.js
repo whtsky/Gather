@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery-ujs
 //= require timeago
+//= require tagcloud
 //= require b64
 //= require user
 

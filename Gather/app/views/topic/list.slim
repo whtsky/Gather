@@ -4,7 +4,6 @@ p#page-title Topics
     .topic-list-item
       .topic-list-count=link_to get_reply_count(p.id),'/topic/view/' + p.id 
       .topic-list-avatar
-
         a href=("/user/" + p.user.name)
           ==avatar p.user.email, 80
       .topic-list-info
