@@ -14,10 +14,16 @@ html
   	  	li.f-left.logo
           .user-box
             - if logged_in?
-              p miao
+              .user-box-avatar
+                ==avatar current_user.email, 60
+              p
+                | Hi,  
+                ==link_to current_user.name, '/user/' + current_user.name
+              p 
+                ==link_to "Log out", '/logout'
             - else
               .user-box-avatar
-                ==avatar "none@none.none", 30
+                ==avatar "none@none.none", 60
               p
                 | Hi, guest
               p 

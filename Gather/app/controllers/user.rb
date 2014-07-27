@@ -24,13 +24,9 @@ Gather::App.controllers :user do
         end
     end
   end
-  get :session, :map => '/session' do
-    session[:user].to_s
-  end
   get :logout, :map => '/logout' do
     session[:user] = nil
-    nil
-    "exit!" if ajax?
+    redirect to("/")
   end
 
   get '/:key' do
