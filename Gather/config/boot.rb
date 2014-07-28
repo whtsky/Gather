@@ -41,6 +41,7 @@ end
 # Add your after (RE)load hooks here
 #
 Padrino.after_load do
+	puts "    \033[32m喵！\033[0m\n"
 end
 
 Padrino.load!

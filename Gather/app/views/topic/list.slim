@@ -10,3 +10,12 @@ p#page-title Topics
         p.topic-list-title=link_to p.title, '/topic/view/' + p.id
         p.topic-list-description
           == icon('user') +  " " + link_to(p.user.name, "/user/" + p.user.name) +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
+  p.page-ctrl
+    - if !@topics.first_page?
+      a.f-left href=("/topic/list/" + @topics.prev_page.to_s)
+        i.fa.fa-chevron-circle-left
+        | Previous  
+    - if !@topics.last_page?
+      a.f-right href=("/topic/list/" + @topics.next_page.to_s)
+        |  Next  
+        i.fa.fa-chevron-circle-right

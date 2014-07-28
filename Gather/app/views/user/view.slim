@@ -1,5 +1,5 @@
 p#page-title=@u.name
-.container
+.container.view-container
   p.view-avatar
     ==avatar @u.email, 96
   - if !(@u.site == nil) & !(@u.site == "")
@@ -7,4 +7,16 @@ p#page-title=@u.name
   	  ==link_to @u.site, @u.site
   .view-info==@u.info
   - if @u.topics.count != 0
-  	|mioa
+  	.view-list
+  	  h1=@u.name + "'s Topics"
+  	  hr.no-view
+	  - @u.topics.page(1).each do |t|
+        .topic-list-item
+          .topic-list-count=link_to get_reply_count(t.id),'/topic/view/' + t.id 
+          .topic-list-avatar
+            a href=("/user/" + t.user.name)
+              ==avatar t.user.email, 80
+          .topic-list-info
+            p.topic-list-title=link_to t.title, '/topic/view/' + t.id
+            p.topic-list-description
+              == icon('user') +  " " + link_to(t.user.name, "/user/" + t.user.name) +  " " + icon('clock-o') + " " + timeago(t.created_at)+ " " + icon('comments-o') + " " + timeago(t.last_replied_at) 

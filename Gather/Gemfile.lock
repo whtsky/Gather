@@ -121,6 +121,8 @@ GEM
       crass (~> 0.2.0)
       nokogiri (>= 1.4.4)
       nokogumbo (= 1.1.9)
+    sass (3.3.0)
+      rake
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -167,6 +169,7 @@ DEPENDENCIES
   pbkdf2-ruby
   rake
   sanitize (~> 3.0.0)
+  sass
   slim
   thin
   uglifier (= 2.1.1)
