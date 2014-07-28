@@ -1,6 +1,7 @@
 p#page-title=current_user.name + '#' + current_user.email
 .container
   form#settings-form action="#" method="post"
+    p Your Website
     p
       ==input_tag :text, :placeholder => "http://your.web.site/", :name => "site", :id => "settings-site", :value => (current_user.site)
     p

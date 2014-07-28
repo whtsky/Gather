@@ -10,6 +10,7 @@
 //= require tagcloud
 //= require b64
 //= require user
+//= require jquery.qeditor
 
 
 jQuery(document).ready(function() {

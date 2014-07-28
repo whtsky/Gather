@@ -3,7 +3,6 @@ module Gather
     register Kaminari::Helpers::SinatraHelpers
     register Padrino::Mailer
     register Padrino::Helpers
-
     register Padrino::Sprockets
     sprockets 
     
@@ -45,8 +44,9 @@ module Gather
     # layout  :my_layout            # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 	get "/" do
-		redirect to("/topic/list/1")
+		redirect to("/topic/list")
 	end
+    
     get :csrf_token, :map => '/csrf_token', :provides => :json do
       logger.debug 'Retrieving csrf_token'
       result = {
