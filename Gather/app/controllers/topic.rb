@@ -54,6 +54,7 @@ Gather::App.controllers :topic do
         r.user = current_user
          nil
         r.save!
+        r.topic.update(last_replied_at: r.created_at)
         r.id.to_s
     end
   end
