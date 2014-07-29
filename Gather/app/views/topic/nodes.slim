@@ -1,0 +1,17 @@
+p#page-title Nodes
+.container
+  #users_cloud
+    - Node.all.shuffle.each do |u|
+    	a href=("/node/" + u.slug) rel=(rand(99)) 
+    	  - if u.icon
+    	  	img src=(u.icon)
+          ==u.name
+javascript:
+	$.fn.tagcloud.defaults = {
+	  size: {start: 1, end: 5, unit: 'em'},
+	  color: {start: '40B16D', end: '#FC5100'}
+	};
+
+	$(function () {
+	  $('#users_cloud a').tagcloud();
+	});

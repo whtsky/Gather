@@ -128,3 +128,9 @@
  /home/admin/.rvm/gems/ruby-2.1.1/bin/rackup:23:in `<main>'
  /home/admin/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `eval'
  /home/admin/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `<main>'
+[0;31m  ERROR[0m - [0;33m29/Jul/2014 14:59:50[0m LoadError - cannot load such file -- /Volumes/data/g/Gather/config/production.rb:
+ /Volumes/data/g/Gather/config/apps.rb:31:in `require'
+[0;31m  ERROR[0m - [0;33m29/Jul/2014 14:59:50[0m LoadError - cannot load such file -- /Volumes/data/g/Gather/config/production.rb:
+ /Volumes/data/g/Gather/config/apps.rb:31:in `require'
+[0;31m  ERROR[0m - [0;33m29/Jul/2014 14:59:50[0m LoadError - cannot load such file -- /Volumes/data/g/Gather/config/production.rb:
+ /Volumes/data/g/Gather/config/apps.rb:31:in `require'

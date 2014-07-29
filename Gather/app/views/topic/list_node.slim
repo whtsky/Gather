@@ -1,0 +1,24 @@
+p#page-title=@n.name
+.container.view-container
+  - if @n.description
+    p.center=@n.description
+  .view-list
+    - @topics.each do |p|
+      .topic-list-item
+        .topic-list-count=link_to get_reply_count(p.id),'/topic/view/' + p.id 
+        .topic-list-avatar
+          a href=("/user/" + p.user.name)
+            ==avatar p.user.email, 80
+        .topic-list-info
+          p.topic-list-title=link_to p.title, '/topic/view/' + p.id
+          p.topic-list-description
+            == icon('user') +  " " + link_to(p.user.name, "/user/" + p.user.name) +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
+    p.page-ctrl
+      - if !@topics.first_page?
+        a.f-left href=("?page=" + @topics.prev_page.to_s)
+          i.fa.fa-chevron-circle-left
+          | Previous  
+      - if !@topics.last_page?
+        a.f-right href=("?page=" + @topics.next_page.to_s)
+          |  Next  
+          i.fa.fa-chevron-circle-right

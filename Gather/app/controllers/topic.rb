@@ -29,7 +29,20 @@ Gather::App.controllers :topic do
 		@topics = Topic.desc(:last_replied_at).page(params[:page])
 		render :list, :layout => true
 	end
-
+  get :node, :map => "/node" ,:with => :slug do
+    @n = Node.where(slug: params[:slug])
+    if !!@n.exists?
+      @n = @n.first
+      @topics = @n.topics.desc(:last_replied_at).page(params[:page])
+      render :list_node
+    else
+      halt 404
+    end
+  end
+  get :nodes, :map => "/nodes" do
+    @n = Node.all
+    render :nodes
+  end
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'
