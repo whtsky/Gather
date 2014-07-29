@@ -11,6 +11,9 @@
 //= require b64
 //= require user
 //= require jquery.qeditor
+//= require jquery.autoheight
+//= require topic
+
 
 
 jQuery(document).ready(function() {

@@ -309,8 +309,7 @@ html {
 	background: white;
 }
 #users_cloud {
-	background: white;
-	box-shadow: 0 0 20em #468B96 inset;
+	background: rgb(49, 119, 133);
 	padding: 3em;
 	border-radius: 3em;
 	text-align: center;
@@ -347,14 +346,46 @@ html {
 	position: relative;
 	height: 3em;
 }
-.page-ctrl a {
+.page-ctrl a, #new-reply-btn {
 	background: rgb(109, 180, 155);
 	padding: 0.5em 0.8em;
 	font-size: 1.5em;
 	text-decoration: none !important;
 	border-radius: 0.8em;
 	transition: all 0.3s;
+	border: 0;
+	color: white;
 }
-.page-ctrl a:hover {
+.page-ctrl a:hover, #new-reply-btn:hover {
 	background: #F25F6E;
+}
+#new-topic-title {
+	width: 90%;
+	font-size: 1em;
+	background: 0;
+	border: 0;
+	outline: 0;
+	color: white;
+}
+#new-topic-content, #new-reply-content {
+	background: 0;
+	font-size: 1em;
+	color: white;
+	border: 0;
+	width: 90%;
+	height: auto;
+	overflow-y: hidden;
+	resize:none;
+}
+#new-reply-content {
+	width: auto !important;
+}
+#users_cloud a span {
+	display: none;
+}
+#cloud-find {
+	width: 95%;
+	border: 0;
+	background: 0;
+	color: white;
 }

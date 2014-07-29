@@ -20,7 +20,7 @@ html
                 | Hi,  
                 ==link_to current_user.name, '/user/' + current_user.name
               p.user-box-btns
-                
+                ==link_icon_to "plus", "/topic/create"
                 ==link_icon_to "users", "/users"
                 ==link_icon_to "sliders", "/settings"
                 ==link_icon_to "sign-out", '/logout'

@@ -4,7 +4,7 @@ class Reply
 
   # field <name>, :type => <type>, :default => <value>
   field :content, :type => String
-  field :author
+
 
   belongs_to :topic
   belongs_to :user

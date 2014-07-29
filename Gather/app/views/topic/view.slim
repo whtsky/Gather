@@ -1,7 +1,7 @@
 -t = @t
 p#page-title=t.title
 .container
-  .inner-box.topic-content
+  .inner-box.topic-content data-id=(t.id.to_s)
     .topic-avatar.f-right
       a href=("/user/" + t.user.name)
         ==avatar t.user.email, 80
@@ -34,3 +34,21 @@ p#page-title=t.title
       a.f-right href=("/topic/view" + "/" + t.id.to_s + "/" + @r.next_page.to_s)
         |  Next  
         i.fa.fa-chevron-circle-right
+  -if logged_in?
+    form#new-reply-form
+      .inner-box.topic-reply
+        p.reply-info
+          | #?  
+          |  by  
+          = link_to current_user.name, to('/user/' + current_user.name)
+          .reply-avatar.f-right
+            a href=("/user/" + current_user.name)
+              ==avatar current_user.email, 80
+        
+        textarea#new-reply-content.reply-content required="required" placeholder="type something..." 
+        p==input_tag :submit, :id => "new-reply-btn", :value => "Post"
+-if logged_in?
+  javascript:
+    $("document").ready(function() {
+      topic.reply_fun();
+    });

@@ -21,6 +21,42 @@ Gather::App.controllers :topic do
       halt 404 
     end
   end
+
+  get "/create" do
+    render :new
+  end
+
+  post "/create" do
+    login_required
+    if params[:j]
+        a = JSON.parse(Base64.decode64 params[:j])
+        content = Sanitize.fragment(a["content"], {:elements=> []})
+        title = a["title"]
+        t = current_user.topics.new(
+            title: title,
+            content: content
+          )
+        nil
+        t.save!
+        t.update(last_replied_at: t.created_at)
+        t.id.to_s
+    end
+  end
+  post "/reply" do
+    login_required
+    if params[:j]
+        a = JSON.parse(Base64.decode64 params[:j])
+        content = Sanitize.fragment(a["content"], {:elements=> []})
+        t = a["topic"]
+        r = (match_topic t).replies.new(
+            content: content
+          )
+        r.user = current_user
+         nil
+        r.save!
+        r.id.to_s
+    end
+  end
   get "/list" do
     @topics = Topic.desc(:last_replied_at).page(1)
     render :list, :layout => true
@@ -29,6 +65,7 @@ Gather::App.controllers :topic do
 		@topics = Topic.desc(:last_replied_at).page(params[:page])
 		render :list, :layout => true
 	end
+
   get :node, :map => "/node" ,:with => :slug do
     @n = Node.where(slug: params[:slug])
     if !!@n.exists?
@@ -39,6 +76,7 @@ Gather::App.controllers :topic do
       halt 404
     end
   end
+
   get :nodes, :map => "/nodes" do
     @n = Node.all
     render :nodes
