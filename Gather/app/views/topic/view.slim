@@ -11,6 +11,8 @@ p#page-title=t.title
     = link_to t.user.name, to('/user/' + t.user.name)
     |  at  
     = t.created_at
+    |  in  
+    = link_to t.node.name, to('/node/' + t.node.slug)
   h1 Echoing
   - @r.each_with_index do |x,y|
     .inner-box.topic-reply id=('reply-' + (y+1).to_s)
