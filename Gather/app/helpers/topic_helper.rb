@@ -30,13 +30,13 @@ module Gather
           @sa = []
           s.split(" ").each do |x|
             #Urls and Images
-            @x = x
-            @t = x  
+            @x = (escape_html x)
+            @t = (escape_html x)
             if !@t.gsub! /(http|https)(.*)(\.jpg|\.png|\.svg|\.gif|\.jpeg|\.bmp)/ , '<img src="\0" / >'
               @t.gsub! /(http|https)(.*)/, '<a href="\0">\0</a>'
             else
               #Emoji
-              @t = @x if !@t.gsub(/::(.*)::/, '<img src="/images/emoji/\0.gif" / >')
+              @t = @x if !@t.gsub("\"", '').gsub(/::(.*)::/, '<img src="/images/emoji/\0.gif" / >')
             end
             @sa << @t
           end

@@ -73,14 +73,8 @@ self.topic = {
         }
       data = b64.encode(JSON.stringify dataa)
       configureCSRF()
-      console.log data
-      $.post("/topic/reply", {j: data, authenticity_token: CSRF_TOKEN}, {
-        before: ()->
-          console.log "???"
-        success: (result)->
-            console.log "miao"
-        }
-      )
-
-
+      $("#new-reply-form").slideUp()
+      $.post "/topic/reply", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
+          window.location = "/topic/view/" + $(".topic-content").data("id")
+      $("#new-reply-form").slideDown()
 }
