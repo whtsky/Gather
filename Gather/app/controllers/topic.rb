@@ -21,6 +21,7 @@ Gather::App.controllers :topic do
   end
 
   get "/create" do
+    login_required
     render :new
   end
 
@@ -35,6 +36,7 @@ Gather::App.controllers :topic do
             content: content
           )
         nil
+        t.node = Node.where(slug: a["node"]).first
         t.save!
         t.update(last_replied_at: t.created_at)
         t.id.to_s

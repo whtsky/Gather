@@ -46,7 +46,8 @@ self.topic = {
       b64 = new Base64()
       dataa = {
           title: $("#new-topic-title")[0].value,
-          content: $("#new-topic-content")[0].value
+          content: $("#new-topic-content")[0].value,
+          node: node
         }
       data = b64.encode(JSON.stringify dataa)
       configureCSRF()
