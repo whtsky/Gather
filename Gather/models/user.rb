@@ -17,7 +17,9 @@ class User
 
   validates_presence_of :name, :email, :salt, :hashed_password
   validates_uniqueness_of :name, :email
-
+  validates_format_of :name, :with => /([a-zA-z0-9]|\.|-|_)+/
+  validates_format_of :email, :with => /([a-zA-z0-9]|\.|-|_)+\@([a-zA-z0-9]|\.|-|_)+\.([a-zA-z0-9]|\.|-|_)+/
+  
   def self.get(hash)
     user = self.where(hash)
     if user.exists?

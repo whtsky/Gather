@@ -41,7 +41,37 @@ module Gather
           end
           @rca << '<p>' + (@sa.join ' ') + '</p>' 
         end
-        @rca.join
+        
+        Sanitize.fragment(@rca.join, Sanitize::Config.merge(Sanitize::Config::BASIC,
+          :elements        => ['img', 'p', 'a'],
+          :remove_contents => false,
+          :attributes => {
+            'img'        => ['alt', 'src', 'title'],
+            'p'          => [],
+            'a'          => ["href"]
+          }
+        ))
+      end
+      def parse_title c
+          @sa = []
+          c.split(" ").each do |x|
+            #Urls and Images
+            @x = x.html_safe
+            @t = x.html_safe
+            if !@t.gsub! /^(http:\/\/|https:\/\/|\/){1}([a-zA-z0-9]|\.|\-|\/|\%|\?|\$)+(\.jpg|\.png|\.svg|\.gif|\.jpeg|\.bmp)$/ , '<img src="\0" / >'
+              if !@t.gsub! /^(http|https):\/\/([a-zA-z0-9]|\.|\-|\/|\%|\?|\$)+$/, '<a href="\0">\0</a>'
+                @t = @x
+              end
+            end
+            @sa << @t
+          end
+          Sanitize.fragment((@sa.join ' '), Sanitize::Config.merge(Sanitize::Config::BASIC,
+            :elements        => ['img'],
+            :remove_contents => false,
+            :attributes => {
+              'img'        => ['alt', 'src', 'title']
+            }
+          ))
       end
       # def simple_helper_method
       # ...

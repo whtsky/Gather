@@ -389,3 +389,9 @@ html {
 	background: 0;
 	color: white;
 }
+.topic-list-title img, #page-title img {
+	height: 1em;
+}
+.inner-box img {
+	max-width: 90%;
+}

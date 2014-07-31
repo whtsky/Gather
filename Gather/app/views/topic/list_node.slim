@@ -10,7 +10,7 @@ p#page-title=@n.name
           a href=("/user/" + p.user.name)
             ==avatar p.user.email, 80
         .topic-list-info
-          p.topic-list-title=link_to p.title, '/topic/view/' + p.id
+          p.topic-list-title==link_to (parse_title p.title).html_safe, '/topic/view/' + p.id
           p.topic-list-description
             == icon('user') +  " " + link_to(p.user.name, "/user/" + p.user.name) +  " " + icon('clock-o') + " " + timeago(p.created_at)+ " " + icon('comments-o') + " " + timeago(p.last_replied_at) 
     p.page-ctrl

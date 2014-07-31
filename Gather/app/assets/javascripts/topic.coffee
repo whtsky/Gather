@@ -55,7 +55,7 @@ self.topic = {
     submit_content = (node)->
       b64 = new Base64()
       dataa = {
-          title: $("#new-topic-title")[0].value,
+          title: emoji.replace_colons(emoji.replace_unified($("#new-topic-title")[0].value)),
           content: ali.replace_colons(emoji.replace_colons(emoji.replace_unified($("#new-topic-content")[0].value))),
           node: node
         }
