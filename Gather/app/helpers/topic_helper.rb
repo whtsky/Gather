@@ -24,19 +24,18 @@ module Gather
         Reply.where(topic: id).count
       end
       def parse_content c
-        @ca = c.each_line
+        @ca =  c.each_line
         @rca = []
         @ca.each do |s|
           @sa = []
           s.split(" ").each do |x|
             #Urls and Images
-            @x = (escape_html x)
-            @t = (escape_html x)
-            if !@t.gsub! /(http|https)(.*)(\.jpg|\.png|\.svg|\.gif|\.jpeg|\.bmp)/ , '<img src="\0" / >'
-              @t.gsub! /(http|https)(.*)/, '<a href="\0">\0</a>'
-            else
-              #Emoji
-              @t = @x if !@t.gsub("\"", '').gsub(/::(.*)::/, '<img src="/images/emoji/\0.gif" / >')
+            @x = x.html_safe
+            @t = x.html_safe
+            if !@t.gsub! /^(http:\/\/|https:\/\/|\/){1}([a-zA-z0-9]|\.|\-|\/|\%|\?|\$)+(\.jpg|\.png|\.svg|\.gif|\.jpeg|\.bmp)$/ , '<img src="\0" / >'
+              if !@t.gsub! /^(http|https):\/\/([a-zA-z0-9]|\.|\-|\/|\%|\?|\$)+$/, '<a href="\0">\0</a>'
+                @t = @x
+              end
             end
             @sa << @t
           end

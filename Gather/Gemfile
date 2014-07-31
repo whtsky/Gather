@@ -29,6 +29,7 @@ gem 'yui-compressor', '0.9.6'
 gem "pbkdf2-ruby", :require => "pbkdf2"
 gem 'sanitize', '~> 3.0.0'
 gem "sass"
+gem 'turbolinks'
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

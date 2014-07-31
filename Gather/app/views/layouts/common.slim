@@ -19,11 +19,12 @@ html
               p
                 | Hi,  
                 ==link_to current_user.name, '/user/' + current_user.name
-              p.user-box-btns
+              p.user-box-btns 
                 ==link_icon_to "plus", "/topic/create"
                 ==link_icon_to "users", "/users"
                 ==link_icon_to "sliders", "/settings"
-                ==link_icon_to "sign-out", '/logout'
+                a href='/logout' data-no-turbolnk="true"
+                  ==icon "sign-out"
             - else
               p.user-box-avatar
                 ==avatar "none@none.none", 130

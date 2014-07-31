@@ -5,7 +5,7 @@ p#page-title=t.title
     .topic-avatar.f-right
       a href=("/user/" + t.user.name)
         ==avatar t.user.email, 80
-    ==parse_content t.content.html_safe
+    ==(parse_content (t.content))
   p
     | by 
     = link_to t.user.name, to('/user/' + t.user.name)
@@ -26,7 +26,7 @@ p#page-title=t.title
         .reply-avatar.f-right
           a href=("/user/" + x.user.name)
             ==avatar x.user.email, 80
-      .reply-content==(parse_content x.content)
+      .reply-content==(parse_content (x.content))
   p.page-ctrl
     - if !@r.first_page?
       a.f-left href=("/topic/view" + "/" + t.id.to_s + "/" + @r.prev_page.to_s)

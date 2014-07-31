@@ -1,5 +1,15 @@
+String.prototype.repeat = (num)->
+  return new Array(num + 1).join(this)
+
 CSRF_TOKEN = ''
- 
+
+String.prototype.encodeu = ()->
+  result = ''
+  for x in [0..this.length-1]
+    a = this.charCodeAt(x)
+    result += "\\u" + a
+  return result
+
 configureCSRF = ()->
   $.ajax {
     type: 'GET', url: '/csrf_token',
@@ -46,12 +56,11 @@ self.topic = {
       b64 = new Base64()
       dataa = {
           title: $("#new-topic-title")[0].value,
-          content: $("#new-topic-content")[0].value,
+          content: ali.replace_colons(emoji.replace_colons(emoji.replace_unified($("#new-topic-content")[0].value))),
           node: node
         }
       data = b64.encode(JSON.stringify dataa)
       configureCSRF()
-      console.log data
       $.post("/topic/create", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
         window.location.href="/topic/view/" + result
       ).fail ->
@@ -70,7 +79,7 @@ self.topic = {
       b64 = new Base64()
       dataa = {
           topic: $(".topic-content")[0].getAttribute("data-id"),
-          content: $("#new-reply-content")[0].value
+          content: ali.replace_colons(emoji.replace_colons(emoji.replace_unified($("#new-reply-content")[0].value)))
         }
       data = b64.encode(JSON.stringify dataa)
       configureCSRF()

@@ -29,11 +29,12 @@ Gather::App.controllers :topic do
     login_required
     if params[:j]
         a = JSON.parse(Base64.decode64 params[:j])
-        content = Sanitize.fragment(a["content"], {:elements=> []})
+        content = a["content"]
         title = a["title"]
+        puts title
         t = current_user.topics.new(
             title: title,
-            content: content
+            content: (content)
           )
         nil
         t.node = Node.where(slug: a["node"]).first
@@ -46,10 +47,10 @@ Gather::App.controllers :topic do
     login_required
     if params[:j]
         a = JSON.parse(Base64.decode64 params[:j])
-        content = Sanitize.fragment(a["content"], {:elements=> []})
+        content = a["content"]
         t = a["topic"]
         r = (match_topic t).replies.new(
-            content: content
+            content: (content)
           )
         r.user = current_user
          nil
