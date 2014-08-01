@@ -30,4 +30,8 @@ $(function() {
    jQuery("abbr.timeago").timeago();
 }); $(window).bind('page:change', function() {
   jQuery("abbr.timeago").timeago();
+  $("#loading").hide();
+})
+$(window).bind('page:before-change', function() {
+    $("#loading").show();
 })

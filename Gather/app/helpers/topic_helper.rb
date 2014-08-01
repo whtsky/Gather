@@ -73,6 +73,8 @@ module Gather
             }
           ))
       end
+
+
       # def simple_helper_method
       # ...
       # end

@@ -1,6 +1,6 @@
 class Topic
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Timestamps
 
   # field <name>, :type => <type>, :default => <value>
   field :title, :type => String
@@ -12,6 +12,8 @@ class Topic
 
   belongs_to :user
   has_many :replies
+
+
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

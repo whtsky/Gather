@@ -29,8 +29,8 @@ class User
     end
   end
 
-  def stuff?
-    self.role == 'stuff' || self.role == 'admin'
+  def staff?
+    (self.role == 'staff') || (self.role == 'admin')
   end
   
   def admin?
@@ -76,6 +76,7 @@ class User
     1.upto(8) { |i| newpass << chars[rand(chars.size-1)] }
     newpass
   end
+
 
 end
 class GuestUser

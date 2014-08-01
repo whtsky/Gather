@@ -19,7 +19,31 @@ Gather::App.controllers :topic do
       halt 404 
     end
   end
-
+  get "/edit/:id" do
+	  @t = match_topic params[:id]
+	  if @t
+		  if (current_user == @t.user || current_user.staff?)
+		    render :edit
+		  else
+				halt 404
+			end
+	  else
+		  halt 404
+	  end
+  end
+  post "/edit" do
+	  if params[:j]
+		  a = JSON.parse(Base64.decode64 params[:j])
+		  @t = match_topic a["id"]
+		  if (current_user == @t.user || current_user.staff?)
+			  content = a["content"]
+			  title = a["title"]
+			  @t.update(content: content, title: title)
+			  nil
+			  @t.id.to_s
+			end
+	  end
+  end
   get "/create" do
     login_required
     render :new
@@ -31,7 +55,6 @@ Gather::App.controllers :topic do
         a = JSON.parse(Base64.decode64 params[:j])
         content = a["content"]
         title = a["title"]
-        puts title
         t = current_user.topics.new(
             title: title,
             content: (content)

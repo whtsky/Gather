@@ -5,10 +5,12 @@ html
   	meta content="width=device-width initial-scale=1.0 maximum-scale=1.0 minimum-scale=1.0 user-scalable=no" name="viewport"
     = stylesheet_link_tag '/assets/application'
     = javascript_include_tag '/assets/application'
-    |<script type="text/javascript" src="//use.typekit.net/ksn3mdx.js"></script>
-    |<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-    
+    link href='http://fonts.useso.com/css?family=Nixie+One|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'
+
   body
+    #loading
+      i.fa.fa-circle-o-notch.fa-spin
+      |  Loading
   	#header
   	  ul.navi
   	  	li.f-left.logo

@@ -8,7 +8,7 @@ form#new-topic-form action="#" method="post"
           ==avatar current_user.email, 80
       textarea#new-topic-content placeholder="type something..." 
     p
-      | by 
+      | by&nbsp;
       = link_to current_user.name, to('/user/' + current_user.name)
     h1
       | Post to?  

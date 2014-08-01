@@ -67,6 +67,31 @@ self.topic = {
           alert "Try again~"
           $("#users_cloud").slideDown()
 
+  edit_fun: ->
+    $("#new-topic-content").keyup ->
+      $("#new-topic-content").autosize()
+
+    $("#new-topic-form").submit (e)->
+      e.preventDefault()
+
+    $("form").submit (e)->
+      e.preventDefault()
+      submit_update()
+
+    submit_update = ()->
+      b64 = new Base64()
+      dataa = {
+        title: emoji.replace_colons(emoji.replace_unified($("#new-topic-title")[0].value)),
+        content: ali.replace_colons(emoji.replace_colons(emoji.replace_unified($("#new-topic-content")[0].value))),
+        id: $("form").data("id")
+      }
+      data = b64.encode(JSON.stringify dataa)
+      configureCSRF()
+      $.post("/topic/edit", {j: data, authenticity_token: CSRF_TOKEN}, (result)->
+        window.location.href="/topic/view/" + result
+      ).fail ->
+        alert "Try again~"
+
   reply_fun: ->
     $("#new-reply-content").keyup ->
       $("#new-reply-content").autosize()

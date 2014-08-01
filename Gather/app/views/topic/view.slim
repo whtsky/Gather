@@ -1,4 +1,4 @@
--t = @t
+- t = @t
 p#page-title==parse_title t.title
 .container
   .inner-box.topic-content data-id=(t.id.to_s)
@@ -7,12 +7,15 @@ p#page-title==parse_title t.title
         ==avatar t.user.email, 80
     ==(parse_content (t.content))
   p
-    | by 
+    | &nbsp;by&nbsp;
     = link_to t.user.name, to('/user/' + t.user.name)
-    |  at  
+    | &nbsp;at&nbsp;
     = t.created_at
-    |  in  
+    | &nbsp;in&nbsp;
     = link_to t.node.name, to('/node/' + t.node.slug)
+    span.f-right
+      == (link_to "Edit", "/topic/edit/" + t.id.to_s).html_safe if (current_user == t.user || current_user.staff?)
+
   h1 Echoing
   - @r.each_with_index do |x,y|
     .inner-box.topic-reply id=('reply-' + (y+1).to_s)
@@ -27,6 +30,7 @@ p#page-title==parse_title t.title
           a href=("/user/" + x.user.name)
             ==avatar x.user.email, 80
       .reply-content==(parse_content (x.content))
+
   p.page-ctrl
     - if !@r.first_page?
       a.f-left href=("/topic/view" + "/" + t.id.to_s + "/" + @r.prev_page.to_s)
@@ -36,6 +40,7 @@ p#page-title==parse_title t.title
       a.f-right href=("/topic/view" + "/" + t.id.to_s + "/" + @r.next_page.to_s)
         |  Next  
         i.fa.fa-chevron-circle-right
+
   -if logged_in?
     form#new-reply-form
       .inner-box.topic-reply

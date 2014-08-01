@@ -93,7 +93,7 @@ hr.no-view {
 html, body {
 	padding: 0;
 	margin: 0;
-	font-family: "ff-enzo-web", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
+	font-family: "Nixie One", "Hiragino Sans GB", "Lucida Grande", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti, sans-serif !important;
 }
 html {
 	background: #86C8D1;
@@ -126,6 +126,7 @@ html {
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s;
+    font-family: "Open Sans Condensed","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 }
 #header .navi li:hover {
 	background: #F25F6E;
@@ -140,8 +141,6 @@ html {
 	position: relative;
 	left: -0.5em;
 	font-size: 1em;
-	font-weight: 600;
-	width: 2.8em;
 }
 #body {
 	width: 90%;
@@ -164,7 +163,7 @@ html {
 	top: -1em;
 	padding: 1em 3em;
 	color: #FFF;
-	font-family: "museo-slab","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+	font-family: "Nixie One","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 }
 #body .container a{
 	color: white;
@@ -181,6 +180,7 @@ html {
 .topic-list-avatar a img {
 	border-radius: 100px;
 	height: 80px;
+    width: 80px;
 	background: white;
 }
 .topic-list-count {
@@ -221,12 +221,15 @@ html {
 .topic-avatar img {
 	border-radius: 100px;
 	height: 80px;
+    width: 80px;
+    max-width: 80px !important;
 	background: white;
 }
 .reply-avatar img {
 	margin: 1em;
 	border-radius: 100px;
 	height: 80px;
+    width: 80px;
 	background: white;
 }
 .topic-avatar {
@@ -248,7 +251,7 @@ html {
 	width: 80%;
 	border-radius: 1em;
 	border: 0px none;
-	font-family: "museo-slab","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+	font-family: "Nixie One","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
 	margin: auto;
 	margin-bottom: 0.3em; 
 	transition: all 0.3s;
@@ -329,6 +332,8 @@ html {
 .view-avatar img {
 	border-radius: 100em;
 	height: 96px;
+    width:  96px;
+    max-width: 96px !important;
 	background: white;
 }
 .view-site, .view-info {
@@ -394,4 +399,38 @@ html {
 }
 .inner-box img {
 	max-width: 90%;
+}
+#loading {
+    background: rgb(14, 148, 126);
+    position: fixed;
+    color: white;
+    box-shadow: 0 0 1em white;
+    top: 0;
+    left: 0;
+    margin: 2em 3em;
+    padding: 1em 2em;
+    z-index: 100;
+    display: none;
+    border-radius: .5em;
+    -webkit-transition: 0.3s all;
+    -moz-transition: 0.3s all;
+    -ms-transition: 0.3s all;
+    -o-transition: 0.3s all;
+    transition: 0.3s all;
+}
+#topic-update-btn {
+    font-size: 2em;
+    padding: 0.5em 1em;
+    width: 80%;
+    border-radius: 1em;
+    border: 0px none;
+    font-family: "Nixie One","Hiragino Sans GB","Lucida Grande","Luxi Sans","DejaVu Sans",Tahoma,STHeiti,sans-serif !important;
+    margin: auto;
+    margin-bottom: 0.3em;
+    transition: all 0.3s;
+    background: rgb(26, 118, 126);
+    color: white;
+}
+#topic-update-btn:hover {
+    box-shadow: 0 0 1px rgb(88, 34, 124);
 }
