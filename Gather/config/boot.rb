@@ -1,3 +1,8 @@
+class String 
+	def unescape
+		eval('"' + self + '"').force_encode 
+	end
+end
 # Defines our constants
 RACK_ENV = ENV['RACK_ENV'] ||= 'development'  unless defined?(RACK_ENV)
 PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
@@ -7,6 +12,8 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
 require 'digest/md5'
+
+
 ##
 # ## Enable devel logging
 #

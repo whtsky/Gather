@@ -2,11 +2,9 @@ Gather::App.controllers :topic do
   layout :common
 	get :view, :with => :id do
 		@t = match_topic params[:id]
-    @p = 1
-    @p = params[:page] if params[:page]
     if @t
-      @r = Reply.where(:topic => @t.id).asc(:created_at).page(params[:page])
-  		render :view
+      n = (@t.replies.count / 25) + 1
+      redirect "/topic/view/#{params[:id]}/#{n.to_s}" 
     else
       halt 404 
     end
@@ -21,6 +19,69 @@ Gather::App.controllers :topic do
       halt 404 
     end
   end
+  get "/edit/:id" do
+	  @t = match_topic params[:id]
+	  if @t
+		  if (current_user == @t.user || current_user.staff?)
+		    render :edit
+		  else
+				halt 404
+			end
+	  else
+		  halt 404
+	  end
+  end
+  post "/edit" do
+	  if params[:j]
+		  a = JSON.parse(Base64.decode64 params[:j])
+		  @t = match_topic a["id"]
+		  if (current_user == @t.user || current_user.staff?)
+			  content = a["content"]
+			  title = a["title"]
+			  @t.update(content: content, title: title)
+			  nil
+			  @t.id.to_s
+			end
+	  end
+  end
+  get "/create" do
+    login_required
+    render :new
+  end
+
+  post "/create" do
+    login_required
+    if params[:j]
+        a = JSON.parse(Base64.decode64 params[:j])
+        content = a["content"]
+        title = a["title"]
+        t = current_user.topics.new(
+            title: title,
+            content: (content)
+          )
+        nil
+        t.node = Node.where(slug: a["node"]).first
+        t.save!
+        t.update(last_replied_at: t.created_at)
+        t.id.to_s
+    end
+  end
+  post "/reply" do
+    login_required
+    if params[:j]
+        a = JSON.parse(Base64.decode64 params[:j])
+        content = a["content"]
+        t = a["topic"]
+        r = (match_topic t).replies.new(
+            content: (content)
+          )
+        r.user = current_user
+         nil
+        r.save!
+        r.topic.update(last_replied_at: r.created_at)
+        r.id.to_s
+    end
+  end
   get "/list" do
     @topics = Topic.desc(:last_replied_at).page(1)
     render :list, :layout => true
@@ -30,6 +91,21 @@ Gather::App.controllers :topic do
 		render :list, :layout => true
 	end
 
+  get :node, :map => "/node" ,:with => :slug do
+    @n = Node.where(slug: params[:slug])
+    if !!@n.exists?
+      @n = @n.first
+      @topics = @n.topics.desc(:last_replied_at).page(params[:page])
+      render :list_node
+    else
+      halt 404
+    end
+  end
+
+  get :nodes, :map => "/nodes" do
+    @n = Node.all
+    render :nodes
+  end
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'

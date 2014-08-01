@@ -1,0 +1,19 @@
+form#new-topic-form action="#" method="post" data-id=(@t.id)
+  p#page-title
+    input#new-topic-title placeholder="Title..." required="required" value=(@t.title)
+  .container
+    .inner-box.topic-content
+      .topic-avatar.f-right
+        a href=("/user/" + @t.user.name)
+          ==avatar @t.user.email, 80
+      textarea#new-topic-content placeholder="type something..."
+        == @t.content
+    p
+      | by&nbsp;
+      = link_to @t.user.name, to('/user/' + @t.user.name)
+    p.center
+      ==input_tag :submit, :id => "topic-update-btn", :value => "Update"
+  javascript:
+    $("document").ready(function () {
+      topic.edit_fun();
+    });

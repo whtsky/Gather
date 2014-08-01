@@ -8,9 +8,15 @@
 //= require jquery-ujs
 //= require timeago
 //= require tagcloud
+//= require bin
+//= require ali
 //= require b64
 //= require user
-//= require jquery.qeditor
+//= require jquery.autoheight
+//= require topic
+//= require turbolinks
+//= require_self
+
 
 
 jQuery(document).ready(function() {
@@ -20,3 +26,12 @@ jQuery(document).ready(function() {
 	}
 });
 
+$(function() {
+   jQuery("abbr.timeago").timeago();
+}); $(window).bind('page:change', function() {
+  jQuery("abbr.timeago").timeago();
+  $("#loading").hide();
+})
+$(window).bind('page:before-change', function() {
+    $("#loading").show();
+})

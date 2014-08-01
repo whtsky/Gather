@@ -17,7 +17,9 @@ class User
 
   validates_presence_of :name, :email, :salt, :hashed_password
   validates_uniqueness_of :name, :email
-
+  validates_format_of :name, :with => /([a-zA-z0-9]|\.|-|_)+/
+  validates_format_of :email, :with => /([a-zA-z0-9]|\.|-|_)+\@([a-zA-z0-9]|\.|-|_)+\.([a-zA-z0-9]|\.|-|_)+/
+  
   def self.get(hash)
     user = self.where(hash)
     if user.exists?
@@ -27,8 +29,8 @@ class User
     end
   end
 
-  def stuff?
-    self.role == 'stuff' || self.role == 'admin'
+  def staff?
+    (self.role == 'staff') || (self.role == 'admin')
   end
   
   def admin?
@@ -76,12 +78,6 @@ class User
   end
 
 
-
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
 end
 class GuestUser
   def guest?

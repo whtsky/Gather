@@ -5,10 +5,12 @@ html
   	meta content="width=device-width initial-scale=1.0 maximum-scale=1.0 minimum-scale=1.0 user-scalable=no" name="viewport"
     = stylesheet_link_tag '/assets/application'
     = javascript_include_tag '/assets/application'
-    |<script type="text/javascript" src="//use.typekit.net/ksn3mdx.js"></script>
-    |<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-    
+
+
   body
+    #loading
+      i.fa.fa-circle-o-notch.fa-spin
+      |  Loading
   	#header
   	  ul.navi
   	  	li.f-left.logo
@@ -19,11 +21,12 @@ html
               p
                 | Hi,  
                 ==link_to current_user.name, '/user/' + current_user.name
-              p.user-box-btns
-                
+              p.user-box-btns 
+                ==link_icon_to "plus", "/topic/create"
                 ==link_icon_to "users", "/users"
                 ==link_icon_to "sliders", "/settings"
-                ==link_icon_to "sign-out", '/logout'
+                a href='/logout' data-no-turbolnk="true"
+                  ==icon "sign-out"
             - else
               p.user-box-avatar
                 ==avatar "none@none.none", 130

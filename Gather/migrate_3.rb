@@ -53,13 +53,14 @@ end
 nodes = []
 users = []
 Old::Node.all.each do |x|
-	nodes << [x.id.to_s, x.slug]
-	New::Node.create(
+	n = New::Node.create(
 		:slug => x.slug,
 		:name => x.name,
 		:description => x.description,
 		:icon => x.icon
 		)
+	n.save
+	nodes << [x.id.to_s, n.id]
 end
 #PBKDF2.new(:password=>pass + pwd_key, :salt=>salt, :iterations=>1000, :hash_function=>OpenSSL::Digest::SHA1.new).hex_string
 Old::Account.all.each do |x|
@@ -86,7 +87,7 @@ Old::Topic.all.each do |x|
 		:title => x.title,
 		:content => x.content,
 		:user_id => users[x.author_id.to_s],
-		:node => nodes[x.node_id.to_s],
+		:node_id => nodes[x.node_id.to_s],
 		:created_at => x.created,
 		:updated_at => x.updated,
 		:old_id => x.id
@@ -109,5 +110,4 @@ end
 New::Reply.all.each do |x| 
 	New::Topic.where(id: x.topic_id)[0].update(:last_replied_at => x.created_at) 
 end
-New::Topic.collection.find().update_all(:$rename => {"node" => "node_id"})
 puts "Enjoy 0.0"

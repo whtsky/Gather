@@ -1,0 +1,27 @@
+form#new-topic-form action="#" method="post"
+  p#page-title
+    input#new-topic-title placeholder="Title..." required="required"
+  .container
+    .inner-box.topic-content
+      .topic-avatar.f-right
+        a href=("/user/" + current_user.name)
+          ==avatar current_user.email, 80
+      textarea#new-topic-content placeholder="type something..." 
+    p
+      | by&nbsp;
+      = link_to current_user.name, to('/user/' + current_user.name)
+    h1
+      | Post to?  
+    #users_cloud
+      p
+        ==icon "search"
+        |&nbsp;
+        input#cloud-find placeholder="find your node here..."
+      - Node.all.shuffle.each do |u|
+    	  a.topic-submit href="#" rel=(rand(99)) data-node-slug=(u.slug)
+    	    =u.name
+    	    span=u.slug.downcase
+javascript:
+  $("document").ready(function() {
+  	topic.create_fun();
+  });

@@ -1,15 +1,23 @@
 p#page-title Users
 .container
   #users_cloud
+    p
+      ==icon "search"
+      |&nbsp;
+      input#cloud-find placeholder="type the name, find the sublime"
+
     - User.all.shuffle.each do |u|
     	a href=("/user/" + u.name) rel=(rand(99)) 
           ==u.name
 javascript:
-	$.fn.tagcloud.defaults = {
-	  size: {start: 2, end: 5, unit: 'em'},
-	  color: {start: '#cde', end: '#f52'}
-	};
+	$("document").ready(function(){
+		topic.cloud_find();
+		$.fn.tagcloud.defaults = {
+		  size: {start: 1, end: 3, unit: 'em'},
+		  color: {start: '#cde', end: '#f52'}
+		};
 
-	$(function () {
-	  $('#users_cloud a').tagcloud();
+		$(function () {
+		  $('#users_cloud a').tagcloud();
+		});
 	});
