@@ -4,7 +4,7 @@ p#page-title Users
     p
       ==icon "search"
       |&nbsp;
-      input#cloud-find placeholder="find your node here..."
+      input#cloud-find placeholder="type the name, find the sublime"
 
     - User.all.shuffle.each do |u|
     	a href=("/user/" + u.name) rel=(rand(99)) 
